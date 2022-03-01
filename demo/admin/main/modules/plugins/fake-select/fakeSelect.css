@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+.fakeSelect-content {
+	display: none;
+	padding: 0;
+	position: absolute;
+	z-index: 90;
+	background-color: white;
+	margin-top: 10px;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .7);
+}
+
+.fakeSelect-content::after {
+	content: '';
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 10px solid white;
+	position: absolute;
+	top: -10px;
+	left: 40px;
+}
+
+.fakeSelect-title {
+	height: 35px;
+	line-height: 35px;
+	border-bottom: 2px solid gainsboro;
+	color: gray;
+}
+
+.fakeSelect-title-item {
+	text-align: center;
+	float: left;
+}
+
+.itemClass {
+	height: 30px;
+	/* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+}
+
+.fakeSelect-table {
+	display: block;
+	max-height: 200px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.fakeSelect-item-Con::after {
+ 	content: '|';
+	float: right;
+	color: rgba(0, 0, 0, 0.20); 
+}
+
+.item-end::after {
+	display: none;
+}
+
+.itemClass:hover {
+	background-color: #f5f7fa;
+}
+
+.fakeSelect-item-Con {
+	height: 30px;
+	line-height: 30px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 14px;
+	float: left;
+	color: #606266;
+}

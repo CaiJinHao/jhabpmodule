@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字典详情</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+    <style>
+        .layui-form-label {
+            width: 115px !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_dictionarydetail_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form"  lay-filter="form_dictionarydetail"  id="form_dictionarydetail">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">字典详情名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="dictionaryDetailName">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">字典类别名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="dictionaryCategoryName">
+                                </div>
+                            </div>
+                            <!-- <div class="layui-inline">
+                                <label class="layui-form-label">字典上级Id：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="dictionaryDetaiParent">
+                                </div>
+                            </div> -->
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">是否禁用：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-search name="deleted" :value="2">
+                                            <option value="0">全部</option>
+                                            <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                        <div class="layui-inline btngroup">
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_dictionarydetail_from" id="btn_dictionarydetail_from_query">查询</a>
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_dictionarydetail_from_export">导出</a> -->
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_dictionarydetail_from_reset">重置</a>
+                        </div>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+                <table id="table_dictionarydetail" class="layui-hide" lay-filter="table_dictionarydetail_list"></table>
+                <div id="table_dictionarydetail_page" class="laypage"></div>
+            </div>
+        </div>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                {{# if(vm.RenderPermission(vm.permissionDefineds.Create)){ }}
+                <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+                {{# }if(vm.RenderPermission(vm.permissionDefineds.BatchDelete)){ }}
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量禁用</button>
+                {{# } }}
+            </div>
+        </script>
+        <script type="text/html" id="tpl_isDeleted">
+            <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="禁用|启用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
+        </script>
+        <script type="text/html" id="table_dictionarydetail_operator">
+            {{# if(d.isDeleted){ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Recover)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">启用</a>
+            {{# } }}
+
+            {{# }else{ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Delete)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">禁用</a>
+            {{# } }}
+
+            {{# } }}
+        </script>
+        <script src="../../layui/layui.js"></script>
+        <script src="../../plugins/vue/vue.min.js"></script>
+        <script src="../../modules/extend/common.js"></script>
+        <script>
+            var vm = new Vue({
+                el: '#page-vm',
+                data: {
+                    currPage: 1,
+                    deletedlist: [],
+                    permissionDefineds: {
+                        Export: 'JhAbpJhSetting.DictionaryDetails.Export',
+                        Detail: 'JhAbpJhSetting.DictionaryDetails.Detail',
+                        Create: 'JhAbpJhSetting.DictionaryDetails.Create',
+                        BatchCreate: 'JhAbpJhSetting.DictionaryDetails.BatchCreate',
+                        Update: 'JhAbpJhSetting.DictionaryDetails.Update',
+                        PortionUpdate: 'JhAbpJhSetting.DictionaryDetails.PortionUpdate',
+                        Delete: 'JhAbpJhSetting.DictionaryDetails.Delete',
+                        BatchDelete: 'JhAbpJhSetting.DictionaryDetails.BatchDelete',
+                        Recover: 'JhAbpJhSetting.DictionaryDetails.Recover',
+                    },
+                    permissions: []
+                },
+                methods: {
+                    RenderDom: function(form, callback){
+                        vm.$forceUpdate();//强制重新渲染 dom
+                        // DOM 还没有更新
+                        vm.$nextTick(function () {
+                            // DOM 现在更新了
+                            form.render();
+                            if (callback) {
+                                callback();
+                            }
+                        });
+                    },
+                    RenderPermission: function (permission) {
+                        var _the = this;
+                        var _pers = this.permissions.filter(function (_el) {
+                            return _el.name == permission;
+                        });
+                        if (_pers.length > 0) {
+                            return _pers[0].granted;
+                        }
+                    }
+                }
+            });
+            layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable', 'excel'], function () {
+                var table = layui.table,
+                    $ = layui.jquery,
+                    layer = layui.layer,
+                    form = layui.form,
+                    laypage = layui.laypage,
+                    ajaxmod = layui.ajaxmod,
+                    excel = layui.excel,
+                    datatable = layui.datatable;
+                var _context = $('.table_dictionarydetail_mg'),
+                    _table_style = { align: 'center' };
+
+                var dictionarydetailObj = {
+                    renderTable: function () {
+                        var _the = this;
+                        var optDefault = {
+                            Page: vm.currPage,
+                            PageSize: PageSize,//common中定义的全局
+                        };
+                        var formfield = form.val('form_dictionarydetail');
+                        $.extend(optDefault, formfield);
+                        let _tableCols = [
+                            { type: 'checkbox' },
+                            //   $.extend({ field: 'id', title: '字典详情Id' }, _table_style),
+                            $.extend({ field: 'dictionaryDetailName', title: '字典详情名称', minWidth: 100 }, _table_style),
+                            $.extend({ field: 'dictionaryDetailValue', title: '字典详情值', minWidth: 100 }, _table_style),
+                            $.extend({ field: 'dictionaryDetailNum', title: '字典详情序号', minWidth: 100 }, _table_style),
+                            $.extend({ field: 'dictionaryCategoryValue', title: '字典类别枚举值', minWidth: 100 }, _table_style),
+                            $.extend({ field: 'dictionaryCategoryName', title: '字典类别名称', minWidth: 100 }, _table_style),
+                            //   $.extend({ field: 'dictionaryDetaiParent', title: '字典详情上级Id' }, _table_style),
+                            $.extend({ field: 'dictionaryDetaiParentName', title: '字典详情上级', minWidth: 100}, _table_style),
+                            //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
+                            $.extend({ field: 'creationTime', title: '创建时间', minWidth: 165}, _table_style),
+                            $.extend({ field: 'lastModificationTime', title: '最后一次修改时间', minWidth: 165}, _table_style)
+                        ];
+                        if (vm.RenderPermission(vm.permissionDefineds.Update)
+                            || vm.RenderPermission(vm.permissionDefineds.Delete)
+                            || vm.RenderPermission(vm.permissionDefineds.Recover)) {
+                            _tableCols.push($.extend({ field: 'id', title: '操作', minWidth: 190, templet: '#table_dictionarydetail_operator', fixed: 'right' }, _table_style));
+                        }
+                        datatable.renderTable(optDefault, {
+                            url: '/dictionarydetail',
+                            tableElem: 'table_dictionarydetail',
+                            tableCols: [_tableCols],
+                        });
+                    },
+                    edit: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '编辑字典详情',
+                            area: ['900px', '500px'],
+                            content: 'view/dictionarydetail/edit.html?id=' + _data.id,
+                        });
+                    },
+                    add: function () {
+                        var _the = this;
+                        datatable.add({
+                            title: '新增字典详情',
+                            area: ['900px', '500px'],
+                            content: 'view/dictionarydetail/edit.html',
+                        });
+                    },
+                    del: function (_data) {
+                        var _the = this;
+                        datatable.del({
+                            url: '/dictionarydetail/' + _data.id,
+                            type: 'Delete',
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    delbatch: function (_data) {
+                        let _the = this;
+                        var checkStatus = table.checkStatus('table_dictionarydetail'),
+                            data = checkStatus.data;
+                       var delIdList = [];
+                        $.each(data, function (k, v) {
+                            delIdList.push(v.id);
+                        });
+                        datatable.delbatch({
+                            url: '/dictionarydetail/keys',
+                            type: 'Delete',
+                            data: delIdList,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    rollbackDel: function (data) {
+                        let _the = this;
+                        _the.patchObj(false, '/dictionarydetail/' + data.id + '/Deleted');
+                    },
+                    patchObj: function (data,url) {
+                        let _the = this;
+                        ajaxmod.requestAuthorize({
+                            url:url,
+                            type: 'Patch',
+                            data: data,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    exportExcel: function (data) {
+                        data = excel.filterExportData(data, [
+                           'dictionaryDetailName',
+                           'dictionaryDetailValue',
+                           'dictionaryDetailNum',
+                           'dictionaryCategoryValue',
+                           'dictionaryCategoryName',
+                           'dictionaryDetaiParent',
+                        ]);
+
+                        data.unshift({
+                            dictionaryDetailName:'字典详情名称',
+                            dictionaryDetailValue:'字典详情值',
+                            dictionaryDetailNum:'字典详情序号',
+                            dictionaryCategoryValue:'字典类别枚举值',
+                            dictionaryCategoryName:'字典类别名称',
+                            dictionaryDetaiParent:'字典详情上级',
+                        });
+
+                        excel.exportExcel({
+                            dictionarydetail: data
+                        }, '字典详情' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                    },
+                    loadtable:function(){
+                        $('#btn_dictionarydetail_from_query').click();
+                    },
+                    loadList: function (_fn) {
+                        var _the = this;
+                        ajaxmod.ajaxArray([
+                            {
+                                url: '/appenums/delete',
+                                type: 'Get',
+                                success: function (response) {
+                                    vm.deletedlist = response;
+                                }
+                            }
+                        ], function () {
+                                vm.RenderDom(form, function () { vm.RenderDom(form, _fn) });
+                        });
+                     },
+                    loadPermissions:function(_fn){
+                        var _the=this;
+                        let _permissions = [
+                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Detail,
+                            vm.permissionDefineds.Create,
+                            vm.permissionDefineds.BatchCreate,
+                            vm.permissionDefineds.Update,
+                            vm.permissionDefineds.PortionUpdate,
+                            vm.permissionDefineds.Delete,
+                            vm.permissionDefineds.BatchDelete,
+                            vm.permissionDefineds.Recover,
+                        ];
+                        ajaxmod.requestAuthorize({
+                            url: '/JhPermissions/PermissionGranted',
+                            type: 'Post',
+                            data: { permissionNames: _permissions },
+                            success: function (response) {
+                                vm.permissions = response;
+                                _fn();
+                            }
+                        });
+                    }
+                };
+
+                 dictionarydetailObj.loadPermissions(function () { dictionarydetailObj.loadList(function () { dictionarydetailObj.renderTable();}); });
+
+             top.tool.subscribe("edit_dictionarydetail_form_refresh", function () {
+                    dictionarydetailObj.renderTable();
+             });
+
+                table.on('tool(table_dictionarydetail_list)', function (obj) {
+                    var data = obj.data;
+                    dictionarydetailObj[obj.event] ? dictionarydetailObj[obj.event].call(dictionarydetailObj, data) : '';
+                });
+
+                table.on('toolbar(table_dictionarydetail_list)', function (obj) {
+                    var data = obj.data;
+                    dictionarydetailObj[obj.event] ? dictionarydetailObj[obj.event].call(dictionarydetailObj, data) : '';
+                });
+
+                form.on('submit(btn_dictionarydetail_from)', function (data) {
+                    vm.currPage = 1;
+                    dictionarydetailObj.renderTable();
+                    return false;
+                });
+
+            form.on('submit(btn_dictionarydetail_from_reset)', function (data) {
+                    $('#form_dictionarydetail')[0].reset();
+                    dictionarydetailObj.renderTable();
+                });
+
+                form.on('submit(btn_dictionarydetail_from_export)', function (data) {
+                    var requestData = { deleted: 2 };
+                    Object.assign(requestData,data);
+                    ajaxmod.requestAuthorize({
+                        url: '/dictionarydetail/all',
+                        type: 'Get',
+                        data: requestData,
+                        success: function (response) {
+                            dictionarydetailObj.exportExcel(response.items);
+                        }
+                    });
+                    return false;
+                });
+
+                form.on('switch(table_tpl_isDeleted)', function (data) {
+                    let _id = data.elem.attributes["data-code"].value;
+                    let _value = false;
+                    if (data.elem.checked) {
+                        _value = false;//启用
+                    } else {
+                        _value = true;//禁用
+                    }
+                    dictionarydetailObj.patchObj(_value,'/dictionarydetail/'+_id+'/Deleted');
+                });
+            });
+        </script>
+    </body>
+    </html>

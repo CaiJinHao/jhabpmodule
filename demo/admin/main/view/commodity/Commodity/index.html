@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品</title>
+    <link href="/main/layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="/main/build/css/common.css" rel="stylesheet" />
+    <style>
+        .layui-form-label{
+            width: 105px !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_commodity_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form"  lay-filter="form_commodity"  id="form_commodity">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">商品名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="commodityName">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">商品副标题：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="commodityTitle">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">商品品牌：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search name="commodityBrandId">
+                                        <option value="">请选择</option>
+                                        <option v-for="item in commodityBrandOptions" v-bind:value="item.id">{{item.commodityBrandName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">商品类别：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search name="commodityCategoryId">
+                                        <option value="">请选择</option>
+                                        <option v-for="item in commodityCategoryOptions" v-bind:value="item.id">{{item.commodityCategoryName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">是否禁用：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-search name="deleted" :value="2">
+                                            <option value="0">全部</option>
+                                            <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                        <div class="layui-inline btngroup">
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commodity_from" id="btn_commodity_from_query">查询</a>
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_commodity_from_export">导出</a> -->
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commodity_from_reset">重置</a>
+                        </div>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+                <table id="table_commodity" class="layui-hide" lay-filter="table_commodity_list"></table>
+                <div id="table_commodity_page" class="laypage"></div>
+            </div>
+        </div>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                {{# if(vm.RenderPermission(vm.permissionDefineds.Create)){ }}
+                <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+                {{# }if(vm.RenderPermission(vm.permissionDefineds.BatchDelete)){ }}
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量禁用</button>
+                {{# } }}
+            </div>
+        </script>
+        <script type="text/html" id="tpl_isDeleted">
+            <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="禁用|启用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
+        </script>
+        <script type="text/html" id="table_commodity_operator">
+            {{# if(d.isDeleted){ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Recover)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">启用</a>
+            {{# } }}
+
+            {{# }else{ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="description" data-code="id">商品描述</a>
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="specification" data-code="id">商品规格</a>
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="commodityMultimediaFiles" data-code="id">商品多媒体文件</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Delete)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">禁用</a>
+            {{# } }}
+
+            {{# } }}
+        </script>
+        <script src="/main/layui/layui.js"></script>
+        <script src="/main/plugins/vue/vue.min.js"></script>
+        <script src="/main/modules/extend/common.js"></script>
+        <script>
+            var vm = new Vue({
+                el: '#page-vm',
+                data: {
+                    currPage: 1,
+                    deletedlist: [],
+                    commodityBrandOptions:[],
+                    commodityCategoryOptions:[],
+                    permissionDefineds: {
+                        Export: 'JhAbpJhCommodity.Commoditys.Export',
+                        Detail: 'JhAbpJhCommodity.Commoditys.Detail',
+                        Create: 'JhAbpJhCommodity.Commoditys.Create',
+                        BatchCreate: 'JhAbpJhCommodity.Commoditys.BatchCreate',
+                        Update: 'JhAbpJhCommodity.Commoditys.Update',
+                        PortionUpdate: 'JhAbpJhCommodity.Commoditys.PortionUpdate',
+                        Delete: 'JhAbpJhCommodity.Commoditys.Delete',
+                        BatchDelete: 'JhAbpJhCommodity.Commoditys.BatchDelete',
+                        Recover: 'JhAbpJhCommodity.Commoditys.Recover',
+                    },
+                    permissions: []
+                },
+                methods: {
+                    RenderDom: function(form, callback){
+                        vm.$forceUpdate();//强制重新渲染 dom
+                        // DOM 还没有更新
+                        vm.$nextTick(function () {
+                            // DOM 现在更新了
+                            form.render();
+                            if (callback) {
+                                callback();
+                            }
+                        });
+                    },
+                    RenderPermission: function (permission) {
+                        var _the = this;
+                        var _pers = this.permissions.filter(function (_el) {
+                            return _el.name == permission;
+                        });
+                        if (_pers.length > 0) {
+                            return _pers[0].granted;
+                        }
+                    }
+                }
+            });
+            layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable', 'excel'], function () {
+                var table = layui.table,
+                    $ = layui.jquery,
+                    layer = layui.layer,
+                    form = layui.form,
+                    laypage = layui.laypage,
+                    ajaxmod = layui.ajaxmod,
+                    excel = layui.excel,
+                    datatable = layui.datatable;
+                var _context = $('.table_commodity_mg'),
+                    _table_style = { align: 'center' };
+
+                var commodityObj = {
+                    renderTable: function () {
+                        var _the = this;
+                        var optDefault = {
+                            Page: vm.currPage,
+                            PageSize: PageSize,//common中定义的全局
+                        };
+                        var formfield = form.val('form_commodity');
+                        $.extend(optDefault, formfield);
+                        let _tableCols = [
+                                { type: 'checkbox'},
+                              $.extend({ field: 'commodityName', title: '商品名称' }, _table_style),
+                              $.extend({ field: 'commodityBrandName', title: '商品品牌' }, _table_style),
+                              $.extend({ field: 'commodityCategoryName', title: '商品类别' }, _table_style),
+                              $.extend({ field: 'commodityTitle', title: '商品副标题' }, _table_style),
+                              $.extend({ field: 'commodityPrice', title: '商品价格' }, _table_style),
+                              $.extend({ field: 'commodityIsVipDiscountName', title: '是否参与会员折扣' }, _table_style),
+                                //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
+                                $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
+                                $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style)
+                        ];
+                        if (vm.RenderPermission(vm.permissionDefineds.Update)
+                            || vm.RenderPermission(vm.permissionDefineds.Delete)
+                            || vm.RenderPermission(vm.permissionDefineds.Recover)) {
+                            _tableCols.push($.extend({ field: 'id', title: '操作', width: 400, templet: '#table_commodity_operator', fixed: 'right' }, _table_style));
+                        }
+                        datatable.renderTable(optDefault, {
+                            url: '/commodity',
+                            apiOption: 2,
+                            tableElem: 'table_commodity',
+                            tableCols: [_tableCols],
+                        });
+                    },
+                    detail: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '商品详情',
+                            area: ['1150px', '800px'],
+                            content: '/main/view/commodity/commodity/edit.html?detail=1&id=' + _data.id,
+                        });
+                    },
+                    edit: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '编辑商品',
+                            area: ['1150px', '800px'],
+                            content: '/main/view/commodity/commodity/edit.html?id=' + _data.id,
+                        });
+                    },
+                    add: function () {
+                        var _the = this;
+                        datatable.add({
+                            title: '新增商品',
+                            area: ['1150px', '800px'],
+                            content: '/main/view/commodity/commodity/edit.html',
+                        });
+                    },
+                    del: function (_data) {
+                        var _the = this;
+                        datatable.del({
+                            url: '/commodity/' + _data.id,
+                            type: 'Delete',
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    delbatch: function (_data) {
+                        let _the = this;
+                        var checkStatus = table.checkStatus('table_commodity'),
+                            data = checkStatus.data;
+                       var delIdList = [];
+                        $.each(data, function (k, v) {
+                            delIdList.push(v.id);
+                        });
+                        datatable.delbatch({
+                            url: '/commodity/keys',
+                            type: 'Delete',
+                            data: delIdList,
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    rollbackDel: function (data) {
+                        let _the = this;
+                        _the.patchObj(false, '/commodity/' + data.id + '/Deleted');
+                    },
+                    patchObj: function (data,url) {
+                        let _the = this;
+                        ajaxmod.requestAuthorize({
+                            url:url,
+                            type: 'Patch',
+                            data: data,
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    exportExcel: function (data) {
+                        data = excel.filterExportData(data, [
+                           'commodityBrandId',
+                           'commodityCategoryId',
+                           'commodityName',
+                           'commodityTitle',
+                        ]);
+
+                        data.unshift({
+                            commodityBrandId:'商品品牌Id',
+                            commodityCategoryId:'商品类别Id',
+                            commodityName:'商品名称',
+                            commodityTitle:'商品副标题',
+                        });
+
+                        excel.exportExcel({
+                            commodity: data
+                        }, '商品' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                    },
+                    loadtable:function(){
+                        $('#btn_commodity_from_query').click();
+                    },
+                    loadList: function (_fn) {
+                        var _the = this;
+                        ajaxmod.ajaxArray([
+                            {
+                                url: '/appenums/delete',
+                                type: 'Get',
+                                success: function (response) {
+                                    vm.deletedlist = response;
+                                }
+                            }, {
+                                url: '/CommodityBrand/options',
+                                type: 'Get',
+                                data: { sorting: 'commodityBrandNum' },
+                                apiOption: 2,
+                                success: function (response) {
+                                    vm.$set(vm, 'commodityBrandOptions', response.items);
+                                }
+                            }, {
+                                url: '/commodityCategory/options',
+                                type: 'Get',
+                                data: { sorting: 'commodityCategoryNum' },
+                                apiOption: 2,
+                                success: function (response) {
+                                    vm.$set(vm, 'commodityCategoryOptions', response.items);
+                                }
+                            }
+                        ], function () {
+                            vm.RenderDom(form, function () { vm.RenderDom(form, _fn) });
+                        });
+                    },
+                    loadPermissions:function(_fn){
+                        var _the=this;
+                        let _permissions = [
+                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Detail,
+                            vm.permissionDefineds.Create,
+                            vm.permissionDefineds.BatchCreate,
+                            vm.permissionDefineds.Update,
+                            vm.permissionDefineds.PortionUpdate,
+                            vm.permissionDefineds.Delete,
+                            vm.permissionDefineds.BatchDelete,
+                            vm.permissionDefineds.Recover,
+                        ];
+                        ajaxmod.requestAuthorize({
+                            url: '/JhPermissions/PermissionGranted',
+                            type: 'Post',
+                            data: { permissionNames: _permissions },
+                            success: function (response) {
+                                vm.permissions = response;
+                                _fn();
+                            }
+                        });
+                    },
+                    description:function(_data){
+                        var _the = this;
+                        datatable.edit({
+                            title: '编辑商品描述',
+                            area: ['1150px', '800px'],
+                            content: '/main/view/commodity/commoditydescription/index.html?commodityId=' + _data.id,
+                        });
+                    },
+                    specification:function(_data){
+                        var _the = this;
+                        datatable.edit({
+                            title: '编辑规格',
+                            area: ['1150px', '800px'],
+                            content: '/main/view/commodity/CommoditySpecification/index.html?commodityId=' + _data.id,
+                        });
+                    },
+                    commodityMultimediaFiles:function(_data){
+                        var _the = this;
+                        datatable.edit({
+                            title: '编辑商品多媒体文件',
+                            area: ['1150px', '800px'],
+                            content: '/main/view/commodity/CommodityMultimediaFilesMap/index.html?commodityId=' + _data.id,
+                        });
+                    },
+                };
+
+                 commodityObj.loadPermissions(function () { commodityObj.loadList(function () { commodityObj.renderTable();}); });
+
+             top.tool.subscribe("edit_commodity_form_refresh", function () {
+                    commodityObj.renderTable();
+             });
+
+                table.on('tool(table_commodity_list)', function (obj) {
+                    var data = obj.data;
+                    commodityObj[obj.event] ? commodityObj[obj.event].call(commodityObj, data) : '';
+                });
+
+                table.on('toolbar(table_commodity_list)', function (obj) {
+                    var data = obj.data;
+                    commodityObj[obj.event] ? commodityObj[obj.event].call(commodityObj, data) : '';
+                });
+
+                form.on('submit(btn_commodity_from)', function (data) {
+                    vm.currPage = 1;
+                    commodityObj.renderTable();
+                    return false;
+                });
+
+            form.on('submit(btn_commodity_from_reset)', function (data) {
+                $('#form_organizationunit')[0].reset();
+                   commodityObj.renderTable();
+            });
+
+                form.on('submit(btn_commodity_from_export)', function (data) {
+                    var requestData = { deleted: 2 };
+                    Object.assign(requestData,data);
+                    ajaxmod.requestAuthorize({
+                        url: '/commodity/all',
+                        type: 'Get',
+                        data: requestData,
+                        apiOption: 2,
+                        success: function (response) {
+                            commodityObj.exportExcel(response.items);
+                        }
+                    });
+                    return false;
+                });
+
+                form.on('switch(table_tpl_isDeleted)', function (data) {
+                    let _id = data.elem.attributes["data-code"].value;
+                    let _value = false;
+                    if (data.elem.checked) {
+                        _value = false;//启用
+                    } else {
+                        _value = true;//禁用
+                    }
+                    commodityObj.patchObj(_value,'/commodity/'+_id+'/Deleted');
+                });
+            });
+        </script>
+    </body>
+    </html>

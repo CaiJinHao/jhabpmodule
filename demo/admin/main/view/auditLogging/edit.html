@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_auditLogging_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="auditLogging.id" />
+                <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">应用名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.applicationName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">用户账号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.userName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">执行时间：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.executionTime">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">持续时间(ms)：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.executionDuration">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">客户端IP：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.clientIpAddress">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">客户端名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.clientName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">客户端ID：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.clientId">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">请求类型：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.httpMethod">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">注释：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.comments">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">Http状态码：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入"
+                                        v-model="auditLogging.httpStatusCode">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12 layui-form-row">
+                        <div class="layui-row">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">请求地址：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入" v-model="auditLogging.url">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12 layui-form-row">
+                        <div class="layui-row">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">浏览器信息：</label>
+                                <div class="layui-input-inline">
+                                    <textarea placeholder="请输入内容" class="layui-textarea"
+                                        v-model="auditLogging.browserInfo"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12 layui-form-row" v-if="auditLogging.actions">
+                        <div class="layui-row">
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">执行服务：</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入内容" class="layui-textarea"
+                                        :value="renderActions(auditLogging.actions)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12 layui-form-row" v-if="auditLogging.entityChanges">
+                        <div class="layui-row">
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">执行改变数据：</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入内容" class="layui-textarea"
+                                        :value="renderEntityChanges(auditLogging.entityChanges)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12 layui-form-row">
+                        <div class="layui-row">
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">执行异常：</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入内容" class="layui-textarea"
+                                        v-model="auditLogging.exceptions"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="layui-row" style="text-align:center;">
+                        <div class="layui-inline">
+                            <a v-if="paramObj.isdetail!=1" class="layui-btn layui-btn-normal" lay-submit
+                                lay-filter="btn_submit_auditLogging_form" href="javascript:;">保存</a>
+                            <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: {},
+                auditLogging: {
+                    applicationName: '',
+                    userId: 0,
+                    userName: '',
+                    tenantId: 0,
+                    tenantName: '',
+                    impersonatorUserId: 0,
+                    impersonatorTenantId: 0,
+                    executionTime: '',
+                    executionDuration: 0,
+                    clientIpAddress: '',
+                    clientName: '',
+                    clientId: '',
+                    correlationId: '',
+                    browserInfo: '',
+                    httpMethod: '',
+                    url: '',
+                    exceptions: '',
+                    comments: '',
+                    httpStatusCode: 0,
+                }
+            },
+            watch: {
+                auditLogging: {
+                    deep: true,
+                    handler: function (val, old_val) {
+                        var _this = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function (form, callback) {
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                },
+                renderActions:function(actions){
+                    var str = '';
+                    $.each(actions, function (index, element) {
+                        str += '服务名称：' + element.serviceName + '方法名称：' + element.methodName + ' 传递参数：' + element.parameters + ' 方法执行时长：' + element.executionDuration + '（毫秒）\n';
+                    });
+                    return str;
+                },
+                renderEntityChanges:function(entityChanges){
+                    return JSON.stringify(entityChanges);
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery', 'laydate', 'formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_auditLogging_form');
+            var _table_style = { align: 'center' };
+
+            var auditLoggingObj = {
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.loadData();
+                },
+                loadData: function () {
+                    if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/auditLogging/' + vm.paramObj.id,
+                            type: 'Get',
+                            success: function (response) {
+                                vm.$set(vm, 'auditLogging', response);
+                                vm.RenderDom(form);
+                            }
+                        });
+                    }
+                }
+            };
+            auditLoggingObj.initPage();
+
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('submit(btn_submit_auditLogging_form)', function (_from_data) {
+                var data = vm.auditLogging;
+                var url = '/auditLogging';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/auditLogging/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    success: function (response) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        top.tool.publish('edit_auditLogging_form_refresh');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑商品排行榜中间表</title>
+    <link href="/main/layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="/main/build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_commoditytopmap_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="commoditytopmap.id" />
+                <div class="layui-row">
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">商品Id：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入商品Id" v-model="commoditytopmap.commodityId">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">商品排行榜Id：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入商品排行榜Id" v-model="commoditytopmap.commodityTopId">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">商品排行榜序号：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入商品排行榜序号" v-model="commoditytopmap.commodityTopMapNum">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">商品排行榜备注：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" placeholder="请输入商品排行榜备注" v-model="commoditytopmap.commodityTopMapRemark">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a v-if="paramObj.detail!=1"  class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_commoditytopmap_form" href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/main/layui/layui.js"></script>
+    <script src="/main/plugins/vue/vue.min.js"></script>
+    <script src="/main/modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: { detail:0 },
+               commoditytopmap:{
+                          commodityId:'',
+                          commodityTopId:'',
+                             commodityTopMapNum: 0,
+                          commodityTopMapRemark:'',
+                concurrencyStamp: '',
+                extraProperties: { }
+               }
+            },
+            watch:{
+                commoditytopmap:{
+                    deep: true,
+                    handler:function(val,old_val){
+                        var _this = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function(form,callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_commoditytopmap_form');
+            var _table_style = { align: 'center' };
+
+            var commoditytopmapObj = {
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.loadData();
+                },
+                loadData: function () {
+					if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/commoditytopmap/' + vm.paramObj.id,
+                            type: 'Get',
+                            apiOption:2,
+                            success: function (response) {
+							    vm.$set(vm, 'commoditytopmap', response);
+							    vm.RenderDom(form);
+                            }
+                        });
+					}
+                }
+            };
+            commoditytopmapObj.initPage();
+
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('submit(btn_submit_commoditytopmap_form)', function (_from_data) {
+                var data = vm.commoditytopmap;
+                var url = '/commoditytopmap';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/commoditytopmap/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    apiOption: 2,
+                    success: function (response) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        top.tool.publish('edit_commoditytopmap_form_refresh');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
