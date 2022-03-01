@@ -10,7 +10,7 @@ export const environment = {
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44324',
+    issuer: 'https://localhost:44360',
     redirectUri: baseUrl,
     clientId: 'JhMenu_App',
     responseType: 'code',
@@ -19,11 +19,11 @@ export const environment = {
   },
   apis: {
     default: {
-      url: 'https://localhost:44324',
+      url: 'https://localhost:44360',
       rootNamespace: 'Jh.Abp.JhMenu',
     },
     JhMenu: {
-      url: 'https://localhost:44344',
+      url: 'https://localhost:44331',
       rootNamespace: 'Jh.Abp.JhMenu',
     },
   },
