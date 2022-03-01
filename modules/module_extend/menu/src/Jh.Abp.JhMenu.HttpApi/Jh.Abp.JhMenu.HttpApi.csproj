@@ -12,4 +12,9 @@
     <ProjectReference Include="..\Jh.Abp.JhMenu.Application.Contracts\Jh.Abp.JhMenu.Application.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Jh.Abp.JhMenu.Application\Jh.Abp.JhMenu.Application.csproj" />
+    <ProjectReference Include="..\Jh.Abp.JhMenu.EntityFrameworkCore\Jh.Abp.JhMenu.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
 </Project>

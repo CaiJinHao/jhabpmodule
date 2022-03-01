@@ -67,4 +67,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.IdentityServer\Jh.Abp.IdentityServer.csproj" />
+    <ProjectReference Include="..\..\..\..\libs\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj" />
+  </ItemGroup>
+
 </Project>

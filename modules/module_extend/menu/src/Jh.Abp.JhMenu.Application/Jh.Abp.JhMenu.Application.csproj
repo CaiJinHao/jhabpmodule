@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Jh.Abp.JhMenu.Domain\Jh.Abp.JhMenu.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Application\Jh.Abp.Application.csproj" />
+  </ItemGroup>
+
 </Project>

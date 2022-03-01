@@ -12,4 +12,9 @@
     <ProjectReference Include="..\Jh.Abp.JhMenu.Domain.Shared\Jh.Abp.JhMenu.Domain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Domain\Jh.Abp.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\libs\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj" />
+  </ItemGroup>
+
 </Project>

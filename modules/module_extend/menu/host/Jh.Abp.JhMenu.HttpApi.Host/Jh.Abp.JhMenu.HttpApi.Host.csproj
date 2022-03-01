@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\src\Jh.Abp.JhMenu.Application\Jh.Abp.JhMenu.Application.csproj" />
     <ProjectReference Include="..\..\src\Jh.Abp.JhMenu.EntityFrameworkCore\Jh.Abp.JhMenu.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Jh.Abp.JhMenu.Host.Shared\Jh.Abp.JhMenu.Host.Shared.csproj" />
+    <ProjectReference Include="..\..\..\..\libs\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj" />
   </ItemGroup>
 
   <ItemGroup>
