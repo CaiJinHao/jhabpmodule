@@ -168,12 +168,6 @@ namespace Jh.Abp.Common.Linq
             }
         }
 
-        /// <summary>
-        /// 将IQueryable转为Expression<Func<TSource, bool>>
-        /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <param name="inputQuery">不支持分页和排序</param>
-        /// <returns></returns>
         public static Expression<Func<TSource, bool>> ToExpression<TSource>(this IQueryable<TSource> inputQuery)
         {
             return inputQuery.Expression != null && inputQuery.Expression is MethodCallExpression methodCallExpression ? GetMethodCallExpression<TSource>(methodCallExpression) : f => true;

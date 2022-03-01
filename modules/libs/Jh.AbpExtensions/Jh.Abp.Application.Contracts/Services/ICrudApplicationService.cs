@@ -50,54 +50,31 @@ namespace Jh.Abp.Extensions
         /// <summary>
         /// 根据条件删除多条[HttpDelete]
         /// </summary>
-        /// <param name="deleteInputDto"></param>
-        /// <param name="autoSave"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除多条[Route("keys")][HttpDelete]
         /// </summary>
-        /// <param name="keys"></param>
-        /// <param name="autoSave"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="autoSave"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键更新部分[HttpPatch]
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="inputDto">更新无法自动赋值的字段时可传null</param>
-        /// <param name="autoSave"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据条件查询(不分页)[Route("list")][HttpGet]
         /// </summary>
-        /// <param name="inputDto"></param>
-        /// <returns></returns>
         Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 重写分页列表 methodStringType
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="methodStringType"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>

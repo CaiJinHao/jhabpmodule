@@ -30,8 +30,6 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// <summary>
         /// 字段默认是否是可空
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="fieldDefaultNullable"></param>
         public virtual bool GetIsNullable()
         {
             if (IsNullable)
