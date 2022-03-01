@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "Jh.Abp.JhIdentity.Domain.Shared": {
+      "path": "src/Jh.Abp.JhIdentity.Domain.Shared/Jh.Abp.JhIdentity.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.Domain": {
+      "path": "src/Jh.Abp.JhIdentity.Domain/Jh.Abp.JhIdentity.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.Application.Contracts": {
+      "path": "src/Jh.Abp.JhIdentity.Application.Contracts/Jh.Abp.JhIdentity.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.Application": {
+      "path": "src/Jh.Abp.JhIdentity.Application/Jh.Abp.JhIdentity.Application.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.EntityFrameworkCore": {
+      "path": "src/Jh.Abp.JhIdentity.EntityFrameworkCore/Jh.Abp.JhIdentity.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.MongoDB": {
+      "path": "src/Jh.Abp.JhIdentity.MongoDB/Jh.Abp.JhIdentity.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.HttpApi": {
+      "path": "src/Jh.Abp.JhIdentity.HttpApi/Jh.Abp.JhIdentity.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.HttpApi.Client": {
+      "path": "src/Jh.Abp.JhIdentity.HttpApi.Client/Jh.Abp.JhIdentity.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.TestBase": {
+      "path": "test/Jh.Abp.JhIdentity.TestBase/Jh.Abp.JhIdentity.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhIdentity.EntityFrameworkCore.Tests": {
+      "path": "test/Jh.Abp.JhIdentity.EntityFrameworkCore.Tests/Jh.Abp.JhIdentity.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhIdentity.MongoDB.Tests": {
+      "path": "test/Jh.Abp.JhIdentity.MongoDB.Tests/Jh.Abp.JhIdentity.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhIdentity.Domain.Tests": {
+      "path": "test/Jh.Abp.JhIdentity.Domain.Tests/Jh.Abp.JhIdentity.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhIdentity.Application.Tests": {
+      "path": "test/Jh.Abp.JhIdentity.Application.Tests/Jh.Abp.JhIdentity.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhIdentity.HttpApi.Host": {
+      "path": "host/Jh.Abp.JhIdentity.HttpApi.Host/Jh.Abp.JhIdentity.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhIdentity.Web": {
+      "path": "src/Jh.Abp.JhIdentity.Web/Jh.Abp.JhIdentity.Web.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Jh.Abp.JhIdentity.HttpApi.Client.ConsoleTestApp/Jh.Abp.JhIdentity.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhIdentity.Web.Host": {
+      "path": "host/Jh.Abp.JhIdentity.Web.Host/Jh.Abp.JhIdentity.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhIdentity.IdentityServer": {
+      "path": "host/Jh.Abp.JhIdentity.IdentityServer/Jh.Abp.JhIdentity.IdentityServer.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhIdentity.Host.Shared": {
+      "path": "host/Jh.Abp.JhIdentity.Host.Shared/Jh.Abp.JhIdentity.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhIdentity.Web.Unified": {
+      "path": "host/Jh.Abp.JhIdentity.Web.Unified/Jh.Abp.JhIdentity.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhIdentity.Blazor": {
+      "path": "src/Jh.Abp.JhIdentity.Blazor/Jh.Abp.JhIdentity.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.Blazor.Host": {
+      "path": "host/Jh.Abp.JhIdentity.Blazor.Host/Jh.Abp.JhIdentity.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhIdentity.Blazor.Server": {
+      "path": "src/Jh.Abp.JhIdentity.Blazor.Server/Jh.Abp.JhIdentity.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.Blazor.WebAssembly": {
+      "path": "src/Jh.Abp.JhIdentity.Blazor.WebAssembly/Jh.Abp.JhIdentity.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhIdentity.Blazor.Server.Host": {
+      "path": "host/Jh.Abp.JhIdentity.Blazor.Server.Host/Jh.Abp.JhIdentity.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}

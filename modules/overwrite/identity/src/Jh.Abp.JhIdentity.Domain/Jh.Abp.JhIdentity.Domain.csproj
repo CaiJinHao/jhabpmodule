@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Jh.Abp.JhIdentity</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="5.1.3" />
+    <ProjectReference Include="..\Jh.Abp.JhIdentity.Domain.Shared\Jh.Abp.JhIdentity.Domain.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Domain\Jh.Abp.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\libs\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj" />
+  </ItemGroup>
+
+</Project>

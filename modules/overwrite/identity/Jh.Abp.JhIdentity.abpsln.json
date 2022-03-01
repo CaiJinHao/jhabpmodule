@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "Jh.Abp.JhIdentity": {
+      "path": "Jh.Abp.JhIdentity.abpmdl.json"
+    }
+  }
+}

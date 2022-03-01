@@ -31,6 +31,9 @@ dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCo
 dotnet add $execPath\src\$slnName.HttpApi\$slnName.HttpApi.csproj reference $execPath\src\$slnName.Application\$slnName.Application.csproj
 dotnet add $execPath\src\$slnName.HttpApi\$slnName.HttpApi.csproj reference $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj
 
+# end module refrence
+
+
 # # 身份服务扩展模块 overwrite
 # dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj reference $Pre/overwrite/identity/src/Jh.Abp.JhIdentity.HttpApi/Jh.Abp.JhIdentity.HttpApi.csproj
 # dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj reference $Pre/overwrite/auditlogging/src/Jh.Abp.JhAuditLogging.HttpApi/Jh.Abp.JhAuditLogging.HttpApi.csproj
