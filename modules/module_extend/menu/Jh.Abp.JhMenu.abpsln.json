@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "Jh.Abp.JhMenu": {
+      "path": "Jh.Abp.JhMenu.abpmdl.json"
+    }
+  }
+}

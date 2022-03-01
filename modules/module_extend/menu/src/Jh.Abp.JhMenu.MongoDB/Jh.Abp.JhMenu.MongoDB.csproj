@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Jh.Abp.JhMenu</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.MongoDB" Version="5.1.3" />
+    <ProjectReference Include="..\Jh.Abp.JhMenu.Domain\Jh.Abp.JhMenu.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

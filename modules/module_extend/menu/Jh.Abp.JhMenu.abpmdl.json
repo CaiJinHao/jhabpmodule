@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "Jh.Abp.JhMenu.Domain.Shared": {
+      "path": "src/Jh.Abp.JhMenu.Domain.Shared/Jh.Abp.JhMenu.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.Domain": {
+      "path": "src/Jh.Abp.JhMenu.Domain/Jh.Abp.JhMenu.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.Application.Contracts": {
+      "path": "src/Jh.Abp.JhMenu.Application.Contracts/Jh.Abp.JhMenu.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.Application": {
+      "path": "src/Jh.Abp.JhMenu.Application/Jh.Abp.JhMenu.Application.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.EntityFrameworkCore": {
+      "path": "src/Jh.Abp.JhMenu.EntityFrameworkCore/Jh.Abp.JhMenu.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.MongoDB": {
+      "path": "src/Jh.Abp.JhMenu.MongoDB/Jh.Abp.JhMenu.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.HttpApi": {
+      "path": "src/Jh.Abp.JhMenu.HttpApi/Jh.Abp.JhMenu.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.HttpApi.Client": {
+      "path": "src/Jh.Abp.JhMenu.HttpApi.Client/Jh.Abp.JhMenu.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.TestBase": {
+      "path": "test/Jh.Abp.JhMenu.TestBase/Jh.Abp.JhMenu.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhMenu.EntityFrameworkCore.Tests": {
+      "path": "test/Jh.Abp.JhMenu.EntityFrameworkCore.Tests/Jh.Abp.JhMenu.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhMenu.MongoDB.Tests": {
+      "path": "test/Jh.Abp.JhMenu.MongoDB.Tests/Jh.Abp.JhMenu.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhMenu.Domain.Tests": {
+      "path": "test/Jh.Abp.JhMenu.Domain.Tests/Jh.Abp.JhMenu.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhMenu.Application.Tests": {
+      "path": "test/Jh.Abp.JhMenu.Application.Tests/Jh.Abp.JhMenu.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhMenu.HttpApi.Host": {
+      "path": "host/Jh.Abp.JhMenu.HttpApi.Host/Jh.Abp.JhMenu.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhMenu.Web": {
+      "path": "src/Jh.Abp.JhMenu.Web/Jh.Abp.JhMenu.Web.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Jh.Abp.JhMenu.HttpApi.Client.ConsoleTestApp/Jh.Abp.JhMenu.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhMenu.Web.Host": {
+      "path": "host/Jh.Abp.JhMenu.Web.Host/Jh.Abp.JhMenu.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhMenu.IdentityServer": {
+      "path": "host/Jh.Abp.JhMenu.IdentityServer/Jh.Abp.JhMenu.IdentityServer.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhMenu.Host.Shared": {
+      "path": "host/Jh.Abp.JhMenu.Host.Shared/Jh.Abp.JhMenu.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhMenu.Web.Unified": {
+      "path": "host/Jh.Abp.JhMenu.Web.Unified/Jh.Abp.JhMenu.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhMenu.Blazor": {
+      "path": "src/Jh.Abp.JhMenu.Blazor/Jh.Abp.JhMenu.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.Blazor.Host": {
+      "path": "host/Jh.Abp.JhMenu.Blazor.Host/Jh.Abp.JhMenu.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhMenu.Blazor.Server": {
+      "path": "src/Jh.Abp.JhMenu.Blazor.Server/Jh.Abp.JhMenu.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.Blazor.WebAssembly": {
+      "path": "src/Jh.Abp.JhMenu.Blazor.WebAssembly/Jh.Abp.JhMenu.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhMenu.Blazor.Server.Host": {
+      "path": "host/Jh.Abp.JhMenu.Blazor.Server.Host/Jh.Abp.JhMenu.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}
