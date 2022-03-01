@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.EntityFrameworkCore"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.QuickComponents", "QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj", "{C02DFE1A-220E-4943-8372-E34A0C8ECF57}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.IdentityServer", "Jh.AbpExtensions\Jh.Abp.IdentityServer\Jh.Abp.IdentityServer.csproj", "{E08B9419-CDDA-4769-88DF-AFE956F7E3B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{C02DFE1A-220E-4943-8372-E34A0C8ECF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C02DFE1A-220E-4943-8372-E34A0C8ECF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C02DFE1A-220E-4943-8372-E34A0C8ECF57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E08B9419-CDDA-4769-88DF-AFE956F7E3B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E08B9419-CDDA-4769-88DF-AFE956F7E3B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E08B9419-CDDA-4769-88DF-AFE956F7E3B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E08B9419-CDDA-4769-88DF-AFE956F7E3B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{BCA8B934-76FA-4E02-88C6-62376631A95D} = {09F5A7EE-75CB-4896-813C-0A797A556A22}
 		{ED0CB9E9-84F2-4430-B890-B940A46834E9} = {09F5A7EE-75CB-4896-813C-0A797A556A22}
 		{C02DFE1A-220E-4943-8372-E34A0C8ECF57} = {40EDC400-7189-4D4C-B529-7369D009B59E}
+		{E08B9419-CDDA-4769-88DF-AFE956F7E3B4} = {09F5A7EE-75CB-4896-813C-0A797A556A22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2CB3F0C0-37A7-446C-8CAB-497E17C67463}

@@ -15,6 +15,7 @@ namespace Jh.Abp.JhIdentity.v1
     //[ApiVersion("1.0")]
     //[ApiVersion("2.0")]
     //[ApiVersion("3.0")]
+    [Authorize]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AccessTokenController : JhIdentityController
     {
@@ -27,7 +28,6 @@ namespace Jh.Abp.JhIdentity.v1
             return await accessTokenAppService.GetAccessTokenAsync(requestDto);
         }
 
-        [AllowAnonymous]
         [HttpPost("Refresh")]
         public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
         {

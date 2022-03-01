@@ -142,7 +142,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
 
         var configurationSection = _configuration.GetSection("IdentityServer:Clients");
 
-        var clientName = _configuration.GetValue<string>("AppSettings:ClientName");
+        var clientName = "WebAppYourName";
         //TODO:Ìí¼ÓJS Client
         var jsClientId = configurationSection[$"{clientName}_Js:ClientId"];
         if (!jsClientId.IsNullOrWhiteSpace())

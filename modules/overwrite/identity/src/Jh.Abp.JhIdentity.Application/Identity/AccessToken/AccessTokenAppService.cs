@@ -1,5 +1,6 @@
 ﻿using IdentityModel;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace Jh.Abp.JhIdentity
             return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 
+        [Authorize]
         public virtual async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken, string organizationName = null)
         {
             var configuration = CreateIdentityClientConfiguration(organizationName);
