@@ -18,7 +18,7 @@ using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
 using ApiScope = Volo.Abp.IdentityServer.ApiScopes.ApiScope;
 using Client = Volo.Abp.IdentityServer.Clients.Client;
 
-namespace Jh.Abp.JhIdentity.IdentityServer;
+namespace Jh.Abp.WebAppYourName.IdentityServer;
 
 public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransientDependency
 {
@@ -65,7 +65,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
 
     private async Task CreateApiScopesAsync()
     {
-        await CreateApiScopeAsync("JhIdentity");
+        await CreateApiScopeAsync("WebAppYourName");
     }
 
     private async Task CreateApiResourcesAsync()
@@ -80,7 +80,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                 "role"
             };
 
-        await CreateApiResourceAsync("JhIdentity", commonApiUserClaims);
+        await CreateApiResourceAsync("WebAppYourName", commonApiUserClaims);
     }
 
     private async Task<ApiResource> CreateApiResourceAsync(string name, IEnumerable<string> claims)
@@ -137,26 +137,51 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                 "role",
                 "phone",
                 "address",
-                "JhIdentity"
+                "WebAppYourName"
             };
 
         var configurationSection = _configuration.GetSection("IdentityServer:Clients");
 
-        //Web Client
-        var webClientId = configurationSection["JhIdentity_Web:ClientId"];
-        if (!webClientId.IsNullOrWhiteSpace())
+        var clientName = _configuration.GetValue<string>("AppSettings:ClientName");
+        //TODO:添加JS Client
+        var jsClientId = configurationSection[$"{clientName}_Js:ClientId"];
+        if (!jsClientId.IsNullOrWhiteSpace())
         {
-            var webClientRootUrl = configurationSection["JhIdentity_Web:RootUrl"].EnsureEndsWith('/');
+            var webClientRootUrl = configurationSection[$"{clientName}_Js:RootUrl"].EnsureEndsWith('/');
+            var redirectUri = configurationSection[$"{clientName}_Js:RedirectUri"];
+            var postLogoutRedirectUri = configurationSection[$"{clientName}_Js:postLogoutRedirectUri"];
+            var frontChannelLogoutUri = configurationSection[$"{clientName}_Js:frontChannelLogoutUri"];
 
             /* JhIdentity_Web client is only needed if you created a tiered
+             * solution. Otherwise, you can delete this client. */
+
+            await CreateClientAsync(
+                name: jsClientId,
+                scopes: commonScopes,
+                grantTypes: new[] { "implicit" },
+                secret: (configurationSection[$"{clientName}_Js:ClientSecret"] ?? "KimHo@666").Sha256(),
+                redirectUri: redirectUri,
+                postLogoutRedirectUri: postLogoutRedirectUri,//需要和客户端配置一致才能跳转
+                frontChannelLogoutUri: frontChannelLogoutUri,
+                corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
+            );
+        }
+
+        //Web Client
+        var webClientId = configurationSection["WebAppYourName_Web:ClientId"];
+        if (!webClientId.IsNullOrWhiteSpace())
+        {
+            var webClientRootUrl = configurationSection["WebAppYourName_Web:RootUrl"].EnsureEndsWith('/');
+
+            /* WebAppYourName_Web client is only needed if you created a tiered
              * solution. Otherwise, you can delete this client. */
 
             await CreateClientAsync(
                 name: webClientId,
                 scopes: commonScopes,
                 grantTypes: new[] { "hybrid" },
-                secret: (configurationSection["JhIdentity_Web:ClientSecret"] ?? "1q2w3e*").Sha256(),
-                redirectUri: $"{webClientRootUrl}signin-oidc",
+                secret: (configurationSection["WebAppYourName_Web:ClientSecret"] ?? "KimHo@666").Sha256(),
+                redirectUri: $"{webClientRootUrl}",//signin-oidc
                 postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
                 frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
                 corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
@@ -164,16 +189,16 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
         }
 
         //Console Test / Angular Client
-        var consoleAndAngularClientId = configurationSection["JhIdentity_App:ClientId"];
+        var consoleAndAngularClientId = configurationSection["WebAppYourName_App:ClientId"];
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
-            var webClientRootUrl = configurationSection["JhIdentity_App:RootUrl"]?.TrimEnd('/');
+            var webClientRootUrl = configurationSection["WebAppYourName_App:RootUrl"]?.TrimEnd('/');
 
             await CreateClientAsync(
                 name: consoleAndAngularClientId,
                 scopes: commonScopes,
                 grantTypes: new[] { "password", "client_credentials", "authorization_code" },
-                secret: (configurationSection["JhIdentity_App:ClientSecret"] ?? "1q2w3e*").Sha256(),
+                secret: (configurationSection["WebAppYourName_App:ClientSecret"] ?? "KimHo@666").Sha256(),
                 requireClientSecret: false,
                 redirectUri: webClientRootUrl,
                 postLogoutRedirectUri: webClientRootUrl,
@@ -182,16 +207,16 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
         }
 
         // Blazor Client
-        var blazorClientId = configurationSection["JhIdentity_Blazor:ClientId"];
+        var blazorClientId = configurationSection["WebAppYourName_Blazor:ClientId"];
         if (!blazorClientId.IsNullOrWhiteSpace())
         {
-            var blazorRootUrl = configurationSection["JhIdentity_Blazor:RootUrl"].TrimEnd('/');
+            var blazorRootUrl = configurationSection["WebAppYourName_Blazor:RootUrl"].TrimEnd('/');
 
             await CreateClientAsync(
                 name: blazorClientId,
                 scopes: commonScopes,
                 grantTypes: new[] { "authorization_code" },
-                secret: configurationSection["JhIdentity_Blazor:ClientSecret"]?.Sha256(),
+                secret: configurationSection["WebAppYourName_Blazor:ClientSecret"]?.Sha256(),
                 requireClientSecret: false,
                 redirectUri: $"{blazorRootUrl}/authentication/login-callback",
                 postLogoutRedirectUri: $"{blazorRootUrl}/authentication/logout-callback",
@@ -200,16 +225,16 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
         }
 
         // Swagger Client
-        var swaggerClientId = configurationSection["JhIdentity_Swagger:ClientId"];
+        var swaggerClientId = configurationSection["WebAppYourName_Swagger:ClientId"];
         if (!swaggerClientId.IsNullOrWhiteSpace())
         {
-            var swaggerRootUrl = configurationSection["JhIdentity_Swagger:RootUrl"].TrimEnd('/');
+            var swaggerRootUrl = configurationSection["WebAppYourName_Swagger:RootUrl"].TrimEnd('/');
 
             await CreateClientAsync(
                 name: swaggerClientId,
                 scopes: commonScopes,
                 grantTypes: new[] { "authorization_code" },
-                secret: configurationSection["JhIdentity_Swagger:ClientSecret"]?.Sha256(),
+                secret: configurationSection["WebAppYourName_Swagger:ClientSecret"]?.Sha256(),
                 requireClientSecret: false,
                 redirectUri: $"{swaggerRootUrl}/swagger/oauth2-redirect.html",
                 corsOrigins: new[] { swaggerRootUrl.RemovePostFix("/") }
@@ -239,6 +264,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                     name
                 )
                 {
+                    AllowAccessTokensViaBrowser=true,//TODO:modify
                     ClientName = name,
                     ProtocolType = "oidc",
                     Description = name,

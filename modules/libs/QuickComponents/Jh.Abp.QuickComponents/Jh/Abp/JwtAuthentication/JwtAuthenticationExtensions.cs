@@ -13,18 +13,6 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
 {
     public static class JwtAuthenticationExtensions
     {
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                 .AddJwtBearer(options =>
-                 {
-                     options.Authority = configuration["AuthServer:Authority"];
-                     options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                     options.Audience = configuration["AuthServer:Audience"];
-                 });
-            return services;
-        }
-
         /// <summary>
         /// 混合模式
         /// web 需要去除AbpAccountWebModule依赖

@@ -49,6 +49,13 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
+using Microsoft.Extensions.Configuration;
+using Jh.Abp.QuickComponents.Swagger;
+using System.Collections.Generic;
+using Jh.Abp.QuickComponents;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Jh.Abp.IdentityServer;
+using EntityFrameworkCore.UseRowNumberForPaging;
 
 namespace Jh.Abp.JhIdentity;
 
@@ -81,29 +88,48 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpTenantManagementHttpApiModule),
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
-    typeof(JhIdentityApplicationContractsModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(JhIdentityHttpApiModule),
+    typeof(AbpQuickComponentsModule)
     )]
 public class JhIdentityIdentityServerModule : AbpModule
 {
+    private Microsoft.Extensions.Configuration.IConfiguration configuration;
+
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
-        var configuration = context.Services.GetConfiguration();
+        configuration = context.Services.GetConfiguration();
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer();
+            options.UseSqlServer(options => {
+                options.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
+            });
         });
 
-        context.Services.AddAbpSwaggerGen(
-            options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "JhIdentity API", Version = "v1" });
-                options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FullName);
-            });
+        var Audience = configuration.GetValue<string>("AuthServer:ApiName");
+        context.Services.AddJhAbpSwagger(configuration,
+           new Dictionary<string, string>
+           {
+                    {Audience, $"{Audience} API"}
+           },
+           new NamespaceAssemblyDto[] {
+                    new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhIdentity", AssemblyXmlComments = typeof(JhIdentityApplicationContractsModule).Assembly },
+                   //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhMenu", AssemblyXmlComments = typeof(JhMenuApplicationContractsModule).Assembly },
+                   //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhAuditLogging", AssemblyXmlComments = typeof(JhAuditLoggingApplicationContractsModule).Assembly },
+                   //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhSetting", AssemblyXmlComments = typeof(JhSettingApplicationContractsModule).Assembly }
+            }
+           );
+
+        //context.Services.AddAbpSwaggerGen(
+        //    options =>
+        //    {
+        //        options.SwaggerDoc("v1", new OpenApiInfo { Title = "JhIdentity API", Version = "v1" });
+        //        options.DocInclusionPredicate((docName, description) => true);
+        //        options.CustomSchemaIds(type => type.FullName);
+        //    });
 
         Configure<AbpLocalizationOptions>(options =>
         {
@@ -132,6 +158,8 @@ public class JhIdentityIdentityServerModule : AbpModule
         {
                 //options.IsEnabledForGetRequests = true;
                 options.ApplicationName = "AuthServer";
+            options.IsEnabledForAnonymousUsers = false;
+            options.EntityHistorySelectors.AddAllEntities();
         });
 
         Configure<AppUrlOptions>(options =>
@@ -186,6 +214,18 @@ public class JhIdentityIdentityServerModule : AbpModule
 #if DEBUG
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
 #endif
+
+        context.Services.AddApiVersion();
+        //context.Services.AddSameSiteCookiePolicy();//去除https
+        //context.Services.AddAuthorizeFilter(configuration);
+
+        context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+        {
+            //配置是否发送错误信息到客户端
+            var _b = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            options.SendExceptionsDetailsToClients = _b;
+            options.SendStackTraceToClients = _b;
+        });
     }
 
     public async override Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
@@ -203,26 +243,36 @@ public class JhIdentityIdentityServerModule : AbpModule
             app.UseHsts();
         }
 
+        //app.ApplicationServices.InitWorkflowDefinition(workflowHost =>
+        //{
+        //    //workflowHost.RegisterWorkflow<LeaveApplicationWorkflow, LeaveApplicationWorkflowDto>();
+        //});
+
         app.UseHttpsRedirection();
         app.UseCorrelationId();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();
-        app.UseJwtTokenMiddleware();
+        app.UseJhJwtTokenMiddleware();//todo:modify
 
         if (MultiTenancyConsts.IsEnabled)
         {
             app.UseMultiTenancy();
         }
 
-        app.UseAbpRequestLocalization();
+        app.UseAbpRequestLocalization(options =>
+        {
+            //默认中文
+            options.RequestCultureProviders.RemoveAll(provider => provider is Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider);
+        });
         app.UseIdentityServer();
         app.UseAuthorization();
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+            options.UseJhSwaggerUiConfig(configuration);
+            //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
@@ -235,9 +285,21 @@ public class JhIdentityIdentityServerModule : AbpModule
     {
         using (var scope = context.ServiceProvider.CreateScope())
         {
-            await scope.ServiceProvider
-                .GetRequiredService<IDataSeeder>()
-                .SeedAsync();
+            var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+            var dataSeedContext = new DataSeedContext();
+            dataSeedContext["AdminEmail"] = "531003539@qq.com";
+            dataSeedContext["AdminPassword"] = "KimHo@123";
+            var roleService = scope.ServiceProvider.GetRequiredService<IIdentityRoleRepository>();
+            var roles = await roleService.GetListAsync();
+            if (roles.Count > 0)
+            {
+                dataSeedContext["RoleId"] = roles.FirstOrDefault()?.Id;//IdentityServerHost创建的角色ID
+
+                //菜单依赖
+                //dataSeedContext["MenuRegisterType"] = MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp;
+            }
+            await data.SeedAsync(dataSeedContext);
         }
     }
 }

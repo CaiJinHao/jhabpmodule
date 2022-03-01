@@ -46,11 +46,5 @@ namespace Jh.Abp.IdentityServer
 
             context.Services.AddTransient<JhAbpClaimsPrincipalContributor>();
         }
-
-        public override void OnApplicationInitialization(Volo.Abp.ApplicationInitializationContext context)
-        {
-            var app = context.GetApplicationBuilder();
-            app.UseJhJwtTokenMiddleware();
-        }
     }
 }

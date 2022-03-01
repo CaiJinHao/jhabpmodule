@@ -5,7 +5,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Jh.Abp.JhIdentity</RootNamespace>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DocumentationFile>Jh.Abp.JhIdentity.Application.Contracts.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Jh.Abp.JhIdentity.Application.Contracts.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Jh.Abp.JhIdentity.Application.Contracts.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="5.1.3" />

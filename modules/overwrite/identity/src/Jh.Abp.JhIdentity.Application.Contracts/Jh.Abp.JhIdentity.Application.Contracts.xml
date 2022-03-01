@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jh.Abp.JhIdentity.Application.Contracts</name>
+    </assembly>
+    <members>
+        <member name="P:Jh.Abp.JhIdentity.AccessTokenRequestDto.UserNameOrEmailAddress">
+            <summary>
+            用户名或者邮箱地址
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.AccessTokenRequestDto.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.AccessTokenResponseDto">
+            <summary>
+            访问令牌服务响应
+            </summary>
+        </member>
+        <member name="M:Jh.Abp.JhIdentity.IAccessTokenAppService.GetAccessTokenAsync(Jh.Abp.JhIdentity.AccessTokenRequestDto)">
+            <summary>
+            加验证码是为了频繁访问数据库验证问题，直接先验证内存，验证内存通过之后验证数据库
+            </summary>
+            <returns>IdentityServer响应结果</returns>
+        </member>
+        <member name="M:Jh.Abp.JhIdentity.IAccessTokenAppService.GetRefreshAccessTokenAsync(System.String,System.String)">
+            <summary>
+            刷新访问令牌
+            </summary>
+            <param name="refreshToken"></param>
+            <param name="organizationName"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

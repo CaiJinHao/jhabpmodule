@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
+    typeof(JhIdentityApplicationModule),
     typeof(JhIdentityApplicationContractsModule),
     typeof(AbpAspNetCoreMvcModule))]
 public class JhIdentityHttpApiModule : AbpModule

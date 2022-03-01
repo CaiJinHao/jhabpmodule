@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Domain.Shared", "src\Jh.Abp.JhIdentity.Domain.Shared\Jh.Abp.JhIdentity.Domain.Shared.csproj", "{D64C1577-4929-4B60-939E-96DE1534891A}"
 EndProject
@@ -49,17 +49,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Host.Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Web.Unified", "host\Jh.Abp.JhIdentity.Web.Unified\Jh.Abp.JhIdentity.Web.Unified.csproj", "{3D872C41-E226-45C8-89C1-9D3DBD7C73F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jh.Abp.JhIdentity.Blazor", "src\Jh.Abp.JhIdentity.Blazor\Jh.Abp.JhIdentity.Blazor.csproj", "{827FCC18-A22B-4175-82CD-1233F6DEE8FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Blazor", "src\Jh.Abp.JhIdentity.Blazor\Jh.Abp.JhIdentity.Blazor.csproj", "{827FCC18-A22B-4175-82CD-1233F6DEE8FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jh.Abp.JhIdentity.Blazor.Host", "host\Jh.Abp.JhIdentity.Blazor.Host\Jh.Abp.JhIdentity.Blazor.Host.csproj", "{D7E0F672-F5E2-4338-AFF4-4E5091C55A62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Blazor.Host", "host\Jh.Abp.JhIdentity.Blazor.Host\Jh.Abp.JhIdentity.Blazor.Host.csproj", "{D7E0F672-F5E2-4338-AFF4-4E5091C55A62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jh.Abp.JhIdentity.Blazor.Server", "src\Jh.Abp.JhIdentity.Blazor.Server\Jh.Abp.JhIdentity.Blazor.Server.csproj", "{299BE52E-823F-408E-9C6D-7E2F81BA34FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Blazor.Server", "src\Jh.Abp.JhIdentity.Blazor.Server\Jh.Abp.JhIdentity.Blazor.Server.csproj", "{299BE52E-823F-408E-9C6D-7E2F81BA34FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jh.Abp.JhIdentity.Blazor.WebAssembly", "src\Jh.Abp.JhIdentity.Blazor.WebAssembly\Jh.Abp.JhIdentity.Blazor.WebAssembly.csproj", "{F0EE5760-262D-456A-AA7C-E84F484A05F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Blazor.WebAssembly", "src\Jh.Abp.JhIdentity.Blazor.WebAssembly\Jh.Abp.JhIdentity.Blazor.WebAssembly.csproj", "{F0EE5760-262D-456A-AA7C-E84F484A05F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jh.Abp.JhIdentity.Blazor.Server.Host", "host\Jh.Abp.JhIdentity.Blazor.Server.Host\Jh.Abp.JhIdentity.Blazor.Server.Host.csproj", "{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Blazor.Server.Host", "host\Jh.Abp.JhIdentity.Blazor.Server.Host\Jh.Abp.JhIdentity.Blazor.Server.Host.csproj", "{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jh.Abp.JhIdentity.Installer", "src\Jh.Abp.JhIdentity.Installer\Jh.Abp.JhIdentity.Installer.csproj", "{BE39FD00-745B-4049-8161-FC129817CBE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.JhIdentity.Installer", "src\Jh.Abp.JhIdentity.Installer\Jh.Abp.JhIdentity.Installer.csproj", "{BE39FD00-745B-4049-8161-FC129817CBE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{00B71512-AAD2-42E2-A330-B85D6555E694}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jh.AbpExtensions", "Jh.AbpExtensions", "{AF83B3B7-4345-4D4A-97B7-C04519F8A584}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.IdentityServer", "..\..\libs\Jh.AbpExtensions\Jh.Abp.IdentityServer\Jh.Abp.IdentityServer.csproj", "{F41BB3E3-8F1C-4585-87FD-32A6CF101F9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QuickComponents", "QuickComponents", "{6A11B774-12E1-4139-9918-8C7FCD3E5574}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.QuickComponents", "..\..\libs\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj", "{61C4AEE2-7997-4EF0-B115-813BFE996180}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +181,14 @@ Global
 		{BE39FD00-745B-4049-8161-FC129817CBE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE39FD00-745B-4049-8161-FC129817CBE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE39FD00-745B-4049-8161-FC129817CBE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F41BB3E3-8F1C-4585-87FD-32A6CF101F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F41BB3E3-8F1C-4585-87FD-32A6CF101F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F41BB3E3-8F1C-4585-87FD-32A6CF101F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F41BB3E3-8F1C-4585-87FD-32A6CF101F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61C4AEE2-7997-4EF0-B115-813BFE996180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61C4AEE2-7997-4EF0-B115-813BFE996180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61C4AEE2-7997-4EF0-B115-813BFE996180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61C4AEE2-7997-4EF0-B115-813BFE996180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,6 +220,10 @@ Global
 		{F0EE5760-262D-456A-AA7C-E84F484A05F6} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
 		{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52} = {E400416D-2895-4512-9D17-90681EEC7E0A}
 		{BE39FD00-745B-4049-8161-FC129817CBE4} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
+		{AF83B3B7-4345-4D4A-97B7-C04519F8A584} = {00B71512-AAD2-42E2-A330-B85D6555E694}
+		{F41BB3E3-8F1C-4585-87FD-32A6CF101F9C} = {AF83B3B7-4345-4D4A-97B7-C04519F8A584}
+		{6A11B774-12E1-4139-9918-8C7FCD3E5574} = {00B71512-AAD2-42E2-A330-B85D6555E694}
+		{61C4AEE2-7997-4EF0-B115-813BFE996180} = {6A11B774-12E1-4139-9918-8C7FCD3E5574}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4324B3B4-B60B-4E3C-91D8-59576B4E26DD}
