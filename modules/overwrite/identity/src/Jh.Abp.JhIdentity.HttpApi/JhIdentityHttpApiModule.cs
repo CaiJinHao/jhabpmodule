@@ -4,12 +4,14 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Microsoft.Extensions.DependencyInjection;
+using Jh.Abp.JhIdentity.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityApplicationContractsModule),
+    typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreMvcModule))]
 public class JhIdentityHttpApiModule : AbpModule
 {
