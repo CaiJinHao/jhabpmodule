@@ -3,14 +3,21 @@
     <LangVersion>latest</LangVersion>
     <Version>5.2.0</Version>
     <NoWarn>$(NoWarn);CS1591;CS0436</NoWarn>
-    <PackageIconUrl>https://abp.io/assets/abp_nupkg.png</PackageIconUrl>
-    <PackageProjectUrl>https://abp.io/</PackageProjectUrl>
+    <PackageIconUrl>https://portrait.gitee.com/uploads/avatars/user/183/550760_CaiJinHao_1616486865.png</PackageIconUrl>
+    <PackageProjectUrl>https://gitee.com/CaiJinHao/jhabpmodule</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/abpframework/abp/</RepositoryUrl>
+    <RepositoryUrl>https://gitee.com/CaiJinHao/jhabpmodule</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Include symbol files (*.pdb) in the built .nupkg -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <Authors>CaiJinHao</Authors>
+    <PackageTags>Abp .Net6 .NetCore CaiJinHao</PackageTags>
+    <Description>Abp Extension</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
+    <!--<IsPackable>true</IsPackable>-->
+    <!--<OutputType>Library</OutputType>-->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
