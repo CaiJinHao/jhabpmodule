@@ -5,7 +5,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Jh.Abp.Workflow</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>Jh.Abp.Workflow.Application.Contracts.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Jh.Abp.Workflow.Application.Contracts.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Jh.Abp.Workflow.Application.Contracts.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="5.1.3" />

@@ -10,9 +10,11 @@ public class WorkflowHttpApiHostMigrationsDbContextFactory : IDesignTimeDbContex
     public WorkflowHttpApiHostMigrationsDbContext CreateDbContext(string[] args)
     {
         var configuration = BuildConfiguration();
+        var connectionString = configuration.GetConnectionString(WorkflowDbProperties.ConnectionStringName);
 
         var builder = new DbContextOptionsBuilder<WorkflowHttpApiHostMigrationsDbContext>()
-            .UseSqlServer(configuration.GetConnectionString("Workflow"));
+            .UseSqlServer(connectionString);
+                 //.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
         return new WorkflowHttpApiHostMigrationsDbContext(builder.Options);
     }

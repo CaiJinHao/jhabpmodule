@@ -42,6 +42,6 @@ public class WorkflowEntityFrameworkCoreModule : AbpModule
         context.Services.AddWorkflowDSL();
         context.Services.Replace(ServiceDescriptor.Singleton<IPersistenceProvider, EntityFrameworkPersistenceProvider>());
         context.Services.Replace(ServiceDescriptor.Transient<ILifeCycleEventPublisher, LifeCycleEventPublisher>());//改为瞬时
-                                                                                                                   //context.Services.Replace(ServiceDescriptor.Singleton<ILifeCycleEventPublisher, JhLifeCycleEventPublisher>());//改为自定义
+        //context.Services.Replace(ServiceDescriptor.Singleton<ILifeCycleEventPublisher, JhLifeCycleEventPublisher>());//改为自定义
     }
 }

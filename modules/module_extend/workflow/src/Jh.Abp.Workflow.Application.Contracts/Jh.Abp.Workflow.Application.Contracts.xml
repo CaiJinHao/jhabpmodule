@@ -1,0 +1,1449 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jh.Abp.Workflow.Application.Contracts</name>
+    </assembly>
+    <members>
+        <member name="P:Jh.Abp.Workflow.PushNotificationsStepDto.Text">
+            <summary>
+            文本
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.LeaveApplicationWorkflowDto">
+            <summary>
+            定义的是整个流程要用得字段   
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.LeaveStartStepDto.Type">
+            <summary>
+            假期类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.LeaveStartStepDto.Day">
+            <summary>
+            几天
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.LeaveStartStepDto.Remark">
+            <summary>
+            请假事由
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.LeaveApprovalStepDto.ApprovalUser">
+            <summary>
+            审批人
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.LeaveApprovalStepDto.ApprovalId">
+            <summary>
+            审批ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.LeaveApprovalStepDto.IsApproved">
+            <summary>
+            是否通过
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowDynamicData">
+            <summary>
+            工作流数据传入对象 注意值类型空判断
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto">
+            <summary>
+            待办事项
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto.WorkflowInstanceId">
+            <summary>
+            WorkflowInstanceId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto.BacklogUserId">
+            <summary>
+            待办人
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto.BacklogUserName">
+            <summary>
+            待办人名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto.BacklogHandleTime">
+            <summary>
+            办理时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto.BacklogResult">
+            <summary>
+            办理结果
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto.BacklogRemark">
+            <summary>
+            办理结果备注
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowBacklogDto">
+            <summary>
+            待办事项
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.WorkflowInstanceId">
+            <summary>
+            WorkflowInstanceId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.BacklogUserId">
+            <summary>
+            待办人
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.BacklogUserName">
+            <summary>
+            待办人名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.BacklogHandleTime">
+            <summary>
+            办理时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.BacklogResult">
+            <summary>
+            办理结果
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.BacklogRemark">
+            <summary>
+            办理结果备注
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.EventName">
+            <summary>
+            用于发布事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.BusinessType">
+            <summary>
+            业务类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogDto.BusinessDataId">
+            <summary>
+            业务数据ID
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowBacklogRetrieveInputDto">
+            <summary>
+            待办事项
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogRetrieveInputDto.BacklogUserId">
+            <summary>
+            待办人
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogRetrieveInputDto.BacklogResult">
+            <summary>
+            办理结果
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogRetrieveInputDto.Deleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto">
+            <summary>
+            待办事项
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.WorkflowInstanceId">
+            <summary>
+            WorkflowInstanceId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.BacklogUserId">
+            <summary>
+            待办人
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.BacklogUserName">
+            <summary>
+            待办人名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.BacklogHandleTime">
+            <summary>
+            办理时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.BacklogResult">
+            <summary>
+            办理结果
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.BacklogRemark">
+            <summary>
+            办理结果备注
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.IsDeleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowBacklogUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto">
+            <summary>
+            工作流定义
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto.Version">
+            <summary>
+            版本
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto.JsonDefinition">
+            <summary>
+            JsonDefinition
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto.InputData">
+            <summary>
+            流程输入数据
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto.FormDefinition">
+            <summary>
+            流程表单定义HTML
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowDefinitionDto">
+            <summary>
+            工作流定义
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionDto.Version">
+            <summary>
+            版本
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionDto.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionDto.JsonDefinition">
+            <summary>
+            JsonDefinition
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionDto.InputData">
+            <summary>
+            流程输入数据
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionDto.FormDefinition">
+            <summary>
+            流程表单定义HTML
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionDto.BusinessType">
+            <summary>
+            业务类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionDto.ConcurrencyStamp">
+            <summary>
+            并发标识
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowDefinitionRetrieveInputDto">
+            <summary>
+            工作流定义
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionRetrieveInputDto.Deleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto">
+            <summary>
+            工作流定义
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.Version">
+            <summary>
+            版本
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.JsonDefinition">
+            <summary>
+            JsonDefinition
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.InputData">
+            <summary>
+            流程输入数据
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.FormDefinition">
+            <summary>
+            流程表单定义HTML
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.BusinessType">
+            <summary>
+            业务类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.IsDeleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowDefinitionUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.Id">
+            <summary>
+            步骤ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.Name">
+            <summary>
+            步骤名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.Description">
+            <summary>
+            步骤功能逻辑描述
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.StepType">
+            <summary>
+            步骤类型 ClassName+AssemblyName
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.Inputs">
+            <summary>
+            步骤输入属性 键值对
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.Outputs">
+            <summary>
+            步骤输出属性 键值对
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.ClassName">
+            <summary>
+            命名空间+类名
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowStepDto.AssemblyName">
+            <summary>
+            程序集名称
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto">
+            <summary>
+            订阅事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.WorkflowId">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.StepId">
+            <summary>
+            StepId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.ExecutionPointerId">
+            <summary>
+            ExecutionPointerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.EventName">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.EventKey">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.SubscribeAsOf">
+            <summary>
+            SubscribeAsOf
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.SubscriptionData">
+            <summary>
+            SubscriptionData
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.ExternalToken">
+            <summary>
+            SubscriptionData
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.ExternalWorkerId">
+            <summary>
+            ExternalWorkerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.ExternalTokenExpiry">
+            <summary>
+            ExternalTokenExpiry
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventSubscriptionDto">
+            <summary>
+            订阅事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.WorkflowId">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.StepId">
+            <summary>
+            StepId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.ExecutionPointerId">
+            <summary>
+            ExecutionPointerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.EventName">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.EventKey">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.SubscribeAsOf">
+            <summary>
+            SubscribeAsOf
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.SubscriptionData">
+            <summary>
+            SubscriptionData
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.ExternalToken">
+            <summary>
+            SubscriptionData
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.ExternalWorkerId">
+            <summary>
+            ExternalWorkerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionDto.ExternalTokenExpiry">
+            <summary>
+            ExternalTokenExpiry
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventSubscriptionRetrieveInputDto">
+            <summary>
+            订阅事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto">
+            <summary>
+            订阅事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.WorkflowId">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.StepId">
+            <summary>
+            StepId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.ExecutionPointerId">
+            <summary>
+            ExecutionPointerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.EventName">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.EventKey">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.SubscribeAsOf">
+            <summary>
+            SubscribeAsOf
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.SubscriptionData">
+            <summary>
+            SubscriptionData
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.ExternalToken">
+            <summary>
+            SubscriptionData
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.ExternalWorkerId">
+            <summary>
+            ExternalWorkerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.ExternalTokenExpiry">
+            <summary>
+            ExternalTokenExpiry
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventSubscriptionUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventCreateInputDto">
+            <summary>
+            事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventCreateInputDto.EventName">
+            <summary>
+            事件名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventCreateInputDto.EventKey">
+            <summary>
+            事件Key
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventCreateInputDto.EventData">
+            <summary>
+            事件参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventCreateInputDto.IsProcessed">
+            <summary>
+            事件是否处理
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventCreateInputDto.EventTime">
+            <summary>
+            事件时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventDto">
+            <summary>
+            事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventDto.EventName">
+            <summary>
+            事件名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventDto.EventKey">
+            <summary>
+            事件Key
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventDto.EventData">
+            <summary>
+            事件参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventDto.IsProcessed">
+            <summary>
+            事件是否处理
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventDto.EventTime">
+            <summary>
+            事件时间
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventRetrieveInputDto">
+            <summary>
+            事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowEventUpdateInputDto">
+            <summary>
+            事件
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventUpdateInputDto.EventName">
+            <summary>
+            事件名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventUpdateInputDto.EventKey">
+            <summary>
+            事件Key
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventUpdateInputDto.EventData">
+            <summary>
+            事件参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventUpdateInputDto.IsProcessed">
+            <summary>
+            事件是否处理
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventUpdateInputDto.EventTime">
+            <summary>
+            事件时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowEventUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowPublishEventDto.BacklogId">
+            <summary>
+            待办事项主键
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionErrorCreateInputDto">
+            <summary>
+            执行错误
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorCreateInputDto.WorkflowId">
+            <summary>
+            工作流ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorCreateInputDto.ExecutionPointerId">
+            <summary>
+            执行节点ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorCreateInputDto.Message">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionErrorDto">
+            <summary>
+            执行错误
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorDto.WorkflowId">
+            <summary>
+            工作流ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorDto.ExecutionPointerId">
+            <summary>
+            执行节点ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorDto.Message">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionErrorRetrieveInputDto">
+            <summary>
+            执行错误
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionErrorUpdateInputDto">
+            <summary>
+            执行错误
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorUpdateInputDto.WorkflowId">
+            <summary>
+            工作流ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorUpdateInputDto.ExecutionPointerId">
+            <summary>
+            执行节点ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorUpdateInputDto.Message">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionErrorUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto">
+            <summary>
+            执行节点
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.WorkflowInstanceId">
+            <summary>
+            工作流实例ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.StepId">
+            <summary>
+            步骤ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.Active">
+            <summary>
+            是否激活
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.SleepUntil">
+            <summary>
+            SleepUntil
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.PersistenceData">
+            <summary>
+            SleepUntil
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.EventName">
+            <summary>
+            事件名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.EventKey">
+            <summary>
+            EventKey
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.EventPublished">
+            <summary>
+            是否事件发布
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.EventData">
+            <summary>
+            事件参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.StepName">
+            <summary>
+            步骤名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.RetryCount">
+            <summary>
+            RetryCount
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.Children">
+            <summary>
+            Children
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.ContextItem">
+            <summary>
+            ContextItem
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.PredecessorId">
+            <summary>
+            上一步骤ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.Outcome">
+            <summary>
+            Outcome
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.Status">
+            <summary>
+            节点状态
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.Scope">
+            <summary>
+            Scope
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionPointerDto">
+            <summary>
+            执行节点
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.WorkflowInstanceId">
+            <summary>
+            工作流实例ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.StepId">
+            <summary>
+            步骤ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.Active">
+            <summary>
+            是否激活
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.SleepUntil">
+            <summary>
+            SleepUntil
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.PersistenceData">
+            <summary>
+            SleepUntil
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.EventName">
+            <summary>
+            事件名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.EventKey">
+            <summary>
+            EventKey
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.EventPublished">
+            <summary>
+            是否事件发布
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.EventData">
+            <summary>
+            事件参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.StepName">
+            <summary>
+            步骤名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.RetryCount">
+            <summary>
+            RetryCount
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.Children">
+            <summary>
+            Children
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.ContextItem">
+            <summary>
+            ContextItem
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.PredecessorId">
+            <summary>
+            上一步骤ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.Outcome">
+            <summary>
+            Outcome
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.Status">
+            <summary>
+            节点状态
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerDto.Scope">
+            <summary>
+            Scope
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionPointerRetrieveInputDto">
+            <summary>
+            执行节点
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto">
+            <summary>
+            执行节点
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.WorkflowInstanceId">
+            <summary>
+            工作流实例ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.StepId">
+            <summary>
+            步骤ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.Active">
+            <summary>
+            是否激活
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.SleepUntil">
+            <summary>
+            SleepUntil
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.PersistenceData">
+            <summary>
+            SleepUntil
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.EventName">
+            <summary>
+            事件名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.EventKey">
+            <summary>
+            EventKey
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.EventPublished">
+            <summary>
+            是否事件发布
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.EventData">
+            <summary>
+            事件参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.StepName">
+            <summary>
+            步骤名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.RetryCount">
+            <summary>
+            RetryCount
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.Children">
+            <summary>
+            Children
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.ContextItem">
+            <summary>
+            ContextItem
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.PredecessorId">
+            <summary>
+            上一步骤ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.Outcome">
+            <summary>
+            Outcome
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.Status">
+            <summary>
+            节点状态
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.Scope">
+            <summary>
+            Scope
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExecutionPointerUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExtensionAttributeCreateInputDto">
+            <summary>
+            扩展属性
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeCreateInputDto.ExecutionPointerId">
+            <summary>
+            ExecutionPointerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeCreateInputDto.AttributeKey">
+            <summary>
+            AttributeKey
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeCreateInputDto.AttributeValue">
+            <summary>
+            AttributeValue
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExtensionAttributeDto">
+            <summary>
+            扩展属性
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeDto.ExecutionPointerId">
+            <summary>
+            ExecutionPointerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeDto.AttributeKey">
+            <summary>
+            AttributeKey
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeDto.AttributeValue">
+            <summary>
+            AttributeValue
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExtensionAttributeRetrieveInputDto">
+            <summary>
+            扩展属性
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowExtensionAttributeUpdateInputDto">
+            <summary>
+            扩展属性
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeUpdateInputDto.ExecutionPointerId">
+            <summary>
+            ExecutionPointerId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeUpdateInputDto.AttributeKey">
+            <summary>
+            AttributeKey
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeUpdateInputDto.AttributeValue">
+            <summary>
+            AttributeValue
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowExtensionAttributeUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="M:Jh.Abp.Workflow.IWorkflowInstanceAppService.StartWorkflowAsync(Jh.Abp.Workflow.WorkflowStartDto)">
+            <summary>
+            启动工作流
+            </summary>
+            <param name="workflowStartDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jh.Abp.Workflow.IWorkflowInstanceAppService.GetWorkflowInstanceDeatilAsync(System.String)">
+            <summary>
+            获取工作流详情
+            </summary>
+            <param name="workflowId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jh.Abp.Workflow.IWorkflowInstanceAppService.WorkflowPublishEventAsync(Jh.Abp.Workflow.WorkflowPublishEventDto)">
+            <summary>
+            发布/触发工作流事件
+            </summary>
+            <param name="workflowPublishEventDto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto">
+            <summary>
+            工作流实例
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.WorkflowDefinitionId">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.Version">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.Reference">
+            <summary>
+            Reference
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.NextExecution">
+            <summary>
+            NextExecution
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.Data">
+            <summary>
+            Data
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.CompleteTime">
+            <summary>
+            CompleteTime
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.BusinessType">
+            <summary>
+            业务类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.BusinessDataId">
+            <summary>
+            业务数据ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowInstanceDto">
+            <summary>
+            工作流实例
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.WorkflowDefinitionId">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.Version">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.Reference">
+            <summary>
+            Reference
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.NextExecution">
+            <summary>
+            NextExecution
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.Data">
+            <summary>
+            Data
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.CompleteTime">
+            <summary>
+            CompleteTime
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.BusinessType">
+            <summary>
+            业务类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceDto.BusinessDataId">
+            <summary>
+            业务数据ID
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowInstanceRetrieveInputDto">
+            <summary>
+            工作流实例
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto">
+            <summary>
+            工作流实例
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.WorkflowDefinitionId">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.Version">
+            <summary>
+            WorkflowDefinitionId
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.Reference">
+            <summary>
+            Reference
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.NextExecution">
+            <summary>
+            NextExecution
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.Data">
+            <summary>
+            Data
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.CompleteTime">
+            <summary>
+            CompleteTime
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.Status">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.BusinessType">
+            <summary>
+            业务类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.BusinessDataId">
+            <summary>
+            业务数据ID
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowScheduledCommandCreateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandCreateInputDto.CommandName">
+            <summary>
+            命令名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandCreateInputDto.Data">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowScheduledCommandDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandDto.CommandName">
+            <summary>
+            命令名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandDto.Data">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowScheduledCommandRetrieveInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.Workflow.WorkflowScheduledCommandUpdateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandUpdateInputDto.CommandName">
+            <summary>
+            命令名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandUpdateInputDto.Data">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowScheduledCommandUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+    </members>
+</doc>
