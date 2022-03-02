@@ -10,7 +10,7 @@ param (
 )
 
 # µ±Ç°Ä¿Â¼
-$CurrentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
+# $CurrentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
 
 $packagesDto =
 

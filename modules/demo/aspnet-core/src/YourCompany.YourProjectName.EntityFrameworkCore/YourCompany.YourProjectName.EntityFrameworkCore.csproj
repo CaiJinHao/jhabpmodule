@@ -8,8 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Jh.Abp.EntityFrameworkCore" Version="5.2.3" />
+    <PackageReference Include="Volo.Abp.Dapper" Version="5.1.3" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.1.3" />
     <ProjectReference Include="..\YourCompany.YourProjectName.Domain\YourCompany.YourProjectName.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YourCompany.YourProjectName.Application.Contracts\YourCompany.YourProjectName.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
