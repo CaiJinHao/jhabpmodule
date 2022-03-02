@@ -39,7 +39,7 @@ namespace Jh.Abp.QuickComponents.Swagger
         }
 
         public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration
-            , Dictionary<string, string> scopes, NamespaceAssemblyDto[] XmlCommentsNamespaceAssemblys = null, Action<SwaggerGenOptions> setupAction = null)
+            , Dictionary<string, string> scopes, Action<SwaggerGenOptions> setupAction = null, params Type[] contractsType)
         {
             services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"], scopes,
@@ -89,19 +89,16 @@ namespace Jh.Abp.QuickComponents.Swagger
                     //var basePath = Directory.GetCurrentDirectory();
                     //var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
 
-                    if (XmlCommentsNamespaceAssemblys != null)
+                    foreach (var item in contractsType)
                     {
-                        foreach (var item in XmlCommentsNamespaceAssemblys)
+                        var embeddedFileProvider = new EmbeddedFileProvider(item.Assembly, item.Namespace);//文件必须是嵌入得资源
+                        var files = embeddedFileProvider.GetDirectoryContents(string.Empty).Where(a => a.Name.EndsWith(".xml"));
+                        foreach (var file in files)
                         {
-                            var embeddedFileProvider = new EmbeddedFileProvider(item.AssemblyXmlComments, item.BaseNamespace);//文件必须是嵌入得资源
-                            var files = embeddedFileProvider.GetDirectoryContents(string.Empty).Where(a => a.Name.EndsWith(".xml"));
-                            foreach (var file in files)
-                            {
-                                var content = file.ReadAsString();
-                                options.IncludeXmlComments(() => {
-                                    return new System.Xml.XPath.XPathDocument(new StringReader(content));
-                                }, true);//为操作、参数和模式注入基于XML注释文件的友好描述
-                            }
+                            var content = file.ReadAsString();
+                            options.IncludeXmlComments(() => {
+                                return new System.Xml.XPath.XPathDocument(new StringReader(content));
+                            }, true);//为操作、参数和模式注入基于XML注释文件的友好描述
                         }
                     }
 

@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "YourCompany.YourProjectName.Domain.Shared": {
+      "path": "src/YourCompany.YourProjectName.Domain.Shared/YourCompany.YourProjectName.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.Domain": {
+      "path": "src/YourCompany.YourProjectName.Domain/YourCompany.YourProjectName.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.Application.Contracts": {
+      "path": "src/YourCompany.YourProjectName.Application.Contracts/YourCompany.YourProjectName.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.Application": {
+      "path": "src/YourCompany.YourProjectName.Application/YourCompany.YourProjectName.Application.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.EntityFrameworkCore": {
+      "path": "src/YourCompany.YourProjectName.EntityFrameworkCore/YourCompany.YourProjectName.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.MongoDB": {
+      "path": "src/YourCompany.YourProjectName.MongoDB/YourCompany.YourProjectName.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.HttpApi": {
+      "path": "src/YourCompany.YourProjectName.HttpApi/YourCompany.YourProjectName.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.HttpApi.Client": {
+      "path": "src/YourCompany.YourProjectName.HttpApi.Client/YourCompany.YourProjectName.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.TestBase": {
+      "path": "test/YourCompany.YourProjectName.TestBase/YourCompany.YourProjectName.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "YourCompany.YourProjectName.EntityFrameworkCore.Tests": {
+      "path": "test/YourCompany.YourProjectName.EntityFrameworkCore.Tests/YourCompany.YourProjectName.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "YourCompany.YourProjectName.MongoDB.Tests": {
+      "path": "test/YourCompany.YourProjectName.MongoDB.Tests/YourCompany.YourProjectName.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "YourCompany.YourProjectName.Domain.Tests": {
+      "path": "test/YourCompany.YourProjectName.Domain.Tests/YourCompany.YourProjectName.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "YourCompany.YourProjectName.Application.Tests": {
+      "path": "test/YourCompany.YourProjectName.Application.Tests/YourCompany.YourProjectName.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "YourCompany.YourProjectName.HttpApi.Host": {
+      "path": "host/YourCompany.YourProjectName.HttpApi.Host/YourCompany.YourProjectName.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "YourCompany.YourProjectName.Web": {
+      "path": "src/YourCompany.YourProjectName.Web/YourCompany.YourProjectName.Web.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/YourCompany.YourProjectName.HttpApi.Client.ConsoleTestApp/YourCompany.YourProjectName.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "YourCompany.YourProjectName.Web.Host": {
+      "path": "host/YourCompany.YourProjectName.Web.Host/YourCompany.YourProjectName.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "YourCompany.YourProjectName.IdentityServer": {
+      "path": "host/YourCompany.YourProjectName.IdentityServer/YourCompany.YourProjectName.IdentityServer.abppkg.json",
+      "folder": "host"
+    },
+    "YourCompany.YourProjectName.Host.Shared": {
+      "path": "host/YourCompany.YourProjectName.Host.Shared/YourCompany.YourProjectName.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "YourCompany.YourProjectName.Web.Unified": {
+      "path": "host/YourCompany.YourProjectName.Web.Unified/YourCompany.YourProjectName.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "YourCompany.YourProjectName.Blazor": {
+      "path": "src/YourCompany.YourProjectName.Blazor/YourCompany.YourProjectName.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.Blazor.Host": {
+      "path": "host/YourCompany.YourProjectName.Blazor.Host/YourCompany.YourProjectName.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "YourCompany.YourProjectName.Blazor.Server": {
+      "path": "src/YourCompany.YourProjectName.Blazor.Server/YourCompany.YourProjectName.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.Blazor.WebAssembly": {
+      "path": "src/YourCompany.YourProjectName.Blazor.WebAssembly/YourCompany.YourProjectName.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "YourCompany.YourProjectName.Blazor.Server.Host": {
+      "path": "host/YourCompany.YourProjectName.Blazor.Server.Host/YourCompany.YourProjectName.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}

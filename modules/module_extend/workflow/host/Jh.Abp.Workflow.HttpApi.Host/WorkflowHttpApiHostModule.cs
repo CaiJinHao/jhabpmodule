@@ -95,10 +95,7 @@ public class WorkflowHttpApiHostModule : AbpModule
             new Dictionary<string, string>
            {
                     {Audience, $"{Audience} API"}
-           }, new NamespaceAssemblyDto[] {
-                   new NamespaceAssemblyDto() { BaseNamespace = typeof(WorkflowApplicationContractsModule).Namespace, AssemblyXmlComments = typeof(WorkflowApplicationContractsModule).Assembly },
-            }
-           );
+           }, contractsType: typeof(WorkflowApplicationContractsModule));
 
         //context.Services.AddAbpSwaggerGenWithOAuth(
         //    configuration["AuthServer:Authority"],

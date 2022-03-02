@@ -111,17 +111,9 @@ public class JhIdentityIdentityServerModule : AbpModule
 
         var Audience = configuration.GetValue<string>("AuthServer:ApiName");
         context.Services.AddJhAbpSwagger(configuration,
-           new Dictionary<string, string>
-           {
-                    {Audience, $"{Audience} API"}
-           },
-           new NamespaceAssemblyDto[] {
-                    new NamespaceAssemblyDto() { BaseNamespace = typeof(JhIdentityApplicationContractsModule).Namespace, AssemblyXmlComments = typeof(JhIdentityApplicationContractsModule).Assembly },
-                   //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhMenu", AssemblyXmlComments = typeof(JhMenuApplicationContractsModule).Assembly },
-                   //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhAuditLogging", AssemblyXmlComments = typeof(JhAuditLoggingApplicationContractsModule).Assembly },
-                   //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhSetting", AssemblyXmlComments = typeof(JhSettingApplicationContractsModule).Assembly }
-            }
-           );
+           new Dictionary<string, string>{
+               {Audience, $"{Audience} API"}
+           }, contractsType: typeof(JhIdentityApplicationContractsModule));
 
         //context.Services.AddAbpSwaggerGen(
         //    options =>

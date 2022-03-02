@@ -97,10 +97,7 @@ public class JhMenuHttpApiHostModule : AbpModule
             new Dictionary<string, string>
            {
                     {Audience, $"{Audience} API"}
-           }, new NamespaceAssemblyDto[] {
-                   new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhMenu", AssemblyXmlComments = typeof(JhMenuApplicationContractsModule).Assembly },
-            }
-           );
+           }, contractsType: typeof(JhMenuApplicationContractsModule));
 
         //context.Services.AddAbpSwaggerGenWithOAuth(
         //    configuration["AuthServer:Authority"],
