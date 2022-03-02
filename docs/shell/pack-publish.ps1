@@ -61,7 +61,7 @@ $packagesDto =
 @{Name = "Jh.Abp.Workflow.Application.Contracts"; Version = "5.2.3"; },
 @{Name = "Jh.Abp.Workflow.Domain"; Version = "5.2.3"; },
 @{Name = "Jh.Abp.Workflow.Domain.Shared"; Version = "5.2.3"; },
-@{Name = "Jh.Abp.Workflow.EntityFrameworkCore"; Version = "5.2.3"; },
+@{Name = "Jh.Abp.Workflow.EntityFrameworkCore"; Version = "5.2.3"; }
 
 # # ÈÕÖ¾Ä£¿é
 
