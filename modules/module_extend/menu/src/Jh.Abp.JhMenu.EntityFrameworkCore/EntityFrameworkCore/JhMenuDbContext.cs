@@ -7,9 +7,8 @@ namespace Jh.Abp.JhMenu.EntityFrameworkCore;
 [ConnectionStringName(JhMenuDbProperties.ConnectionStringName)]
 public class JhMenuDbContext : AbpDbContext<JhMenuDbContext>, IJhMenuDbContext
 {
-    /* Add DbSet for each Aggregate Root here. Example:
-     * public DbSet<Question> Questions { get; set; }
-     */
+    public DbSet<Menu> Menus { get; set; }
+    public DbSet<MenuRoleMap> MenuRoleMaps { get; set; }
 
     public JhMenuDbContext(DbContextOptions<JhMenuDbContext> options)
         : base(options)

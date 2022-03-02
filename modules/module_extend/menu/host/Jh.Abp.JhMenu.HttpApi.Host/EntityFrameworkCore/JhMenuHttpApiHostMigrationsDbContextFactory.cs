@@ -10,9 +10,11 @@ public class JhMenuHttpApiHostMigrationsDbContextFactory : IDesignTimeDbContextF
     public JhMenuHttpApiHostMigrationsDbContext CreateDbContext(string[] args)
     {
         var configuration = BuildConfiguration();
+        var connectionString = configuration.GetConnectionString(JhMenuDbProperties.ConnectionStringName);
 
         var builder = new DbContextOptionsBuilder<JhMenuHttpApiHostMigrationsDbContext>()
-            .UseSqlServer(configuration.GetConnectionString("JhMenu"));
+            .UseSqlServer(connectionString);
+        //.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
         return new JhMenuHttpApiHostMigrationsDbContext(builder.Options);
     }

@@ -33,6 +33,15 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
+using EntityFrameworkCore.UseRowNumberForPaging;
+using Jh.Abp.QuickComponents.Swagger;
+using Jh.Abp.QuickComponents;
+using Volo.Abp.Auditing;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.Threading;
+using Volo.Abp.Data;
+using Volo.Abp.Identity;
+using Volo.Abp.Identity.EntityFrameworkCore;
 
 namespace Jh.Abp.JhMenu;
 
@@ -49,19 +58,22 @@ namespace Jh.Abp.JhMenu;
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpIdentityEntityFrameworkCoreModule),//身份
     typeof(AbpSwashbuckleModule)
     )]
 public class JhMenuHttpApiHostModule : AbpModule
 {
-
+    private IConfiguration configuration;
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
-        var configuration = context.Services.GetConfiguration();
+        configuration = context.Services.GetConfiguration();
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer();
+            options.UseSqlServer(opt => {
+                opt.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
+            });
         });
 
         Configure<AbpMultiTenancyOptions>(options =>
@@ -80,18 +92,28 @@ public class JhMenuHttpApiHostModule : AbpModule
             });
         }
 
-        context.Services.AddAbpSwaggerGenWithOAuth(
-            configuration["AuthServer:Authority"],
+        var Audience = configuration.GetValue<string>("AuthServer:Audience");
+        context.Services.AddJhAbpSwagger(configuration,
             new Dictionary<string, string>
-            {
-                {"JhMenu", "JhMenu API"}
-            },
-            options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo {Title = "JhMenu API", Version = "v1"});
-                options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FullName);
-            });
+           {
+                    {Audience, $"{Audience} API"}
+           }, new NamespaceAssemblyDto[] {
+                   new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhMenu", AssemblyXmlComments = typeof(JhMenuApplicationContractsModule).Assembly },
+            }
+           );
+
+        //context.Services.AddAbpSwaggerGenWithOAuth(
+        //    configuration["AuthServer:Authority"],
+        //    new Dictionary<string, string>
+        //    {
+        //        {"JhMenu", "JhMenu API"}
+        //    },
+        //    options =>
+        //    {
+        //        options.SwaggerDoc("v1", new OpenApiInfo {Title = "JhMenu API", Version = "v1"});
+        //        options.DocInclusionPredicate((docName, description) => true);
+        //        options.CustomSchemaIds(type => type.FullName);
+        //    });
 
         Configure<AbpLocalizationOptions>(options =>
         {
@@ -121,7 +143,7 @@ public class JhMenuHttpApiHostModule : AbpModule
             {
                 options.Authority = configuration["AuthServer:Authority"];
                 options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                options.Audience = "JhMenu";
+                options.Audience = configuration["AuthServer:ApiName"];
             });
 
         Configure<AbpDistributedCacheOptions>(options =>
@@ -154,6 +176,20 @@ public class JhMenuHttpApiHostModule : AbpModule
                     .AllowCredentials();
             });
         });
+
+        context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+        {
+            //配置是否发送错误信息到客户端
+            var _b = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            options.SendExceptionsDetailsToClients = _b;
+            options.SendStackTraceToClients = _b;
+        });
+
+        context.Services.AddApiVersion();
+        //context.Services.AddAuthorizeFilter(configuration);
+        context.Services.AddAlwaysAllowAuthorization();//禁用授权系统方式一
+        //禁用授权系统方式二
+        //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -180,20 +216,48 @@ public class JhMenuHttpApiHostModule : AbpModule
         {
             app.UseMultiTenancy();
         }
-        app.UseAbpRequestLocalization();
+        app.UseAbpRequestLocalization(options =>
+        {
+            options.RequestCultureProviders.RemoveAll(provider => provider is Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider);
+        });
         app.UseAuthorization();
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+            options.UseJhSwaggerUiConfig(configuration);
 
-            var configuration = context.GetConfiguration();
-            options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-            options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-            options.OAuthScopes("JhMenu");
+            //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+
+            //var configuration = context.GetConfiguration();
+            //options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+            //options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
+            //options.OAuthScopes("JhMenu");
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
+        SeedData(context);
+    }
+
+    private void SeedData(ApplicationInitializationContext context)
+    {
+        AsyncHelper.RunSync(async () =>
+        {
+            using (var scope = context.ServiceProvider.CreateScope())
+            {
+                var data = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+                var dataSeedContext = new DataSeedContext();
+                //dataSeedContext.TenantId=
+                var roleService = scope.ServiceProvider.GetRequiredService<IIdentityRoleRepository>();
+                var roles = await roleService.GetListAsync();
+                if (roles.Count > 0)
+                {
+                    dataSeedContext["RoleId"] = roles.FirstOrDefault()?.Id;//IdentityServerHost创建的角色ID
+                    dataSeedContext["MenuRegisterType"] = MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp;
+                }
+                await data.SeedAsync(dataSeedContext);
+            }
+        });
     }
 }

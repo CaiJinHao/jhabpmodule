@@ -67,6 +67,8 @@ namespace Jh.Abp.Extensions
         /// </summary>
         Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
 
+        Task<bool> AnyAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// 根据条件查询(不分页)[Route("list")][HttpGet]
         /// </summary>

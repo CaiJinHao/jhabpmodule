@@ -86,6 +86,12 @@ namespace Jh.Abp.Extensions
             return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, isHard, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
+        public virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(), inputDto, methodStringType);
+            return query.Any();
+        }
+
         public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);

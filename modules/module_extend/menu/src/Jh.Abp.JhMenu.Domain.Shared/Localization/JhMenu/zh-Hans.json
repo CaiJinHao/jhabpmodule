@@ -1,7 +1,7 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "MyAccount": "我的账户",
-    "SamplePageMessage": "JhMenu模块的示例页面"
+    "Permission:MenuRoleMap": "菜单角色中间表",
+    "Permission:Menu": "菜单"
   }
 }
