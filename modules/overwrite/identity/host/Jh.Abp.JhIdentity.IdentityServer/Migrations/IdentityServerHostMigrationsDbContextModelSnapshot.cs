@@ -886,6 +886,15 @@ namespace Jh.Abp.JhIdentity.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
+                    b.Property<Guid?>("LeaderId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("领导ID");
+
+                    b.Property<string>("LeaderName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("领导名称");
+
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 

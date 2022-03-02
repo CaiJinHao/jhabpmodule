@@ -17,6 +17,7 @@ Module 修改参照Demo
     注意添加依赖、typeof(JhIdentityHttpApiModule),typeof(AbpQuickComponentsModule)  
 
 数据迁移  
+    添加modelBuilder.ConfigureJhIdentity();
 
 DataSeedContributor数据播种--批量替换密匙、添加JsClient  
 

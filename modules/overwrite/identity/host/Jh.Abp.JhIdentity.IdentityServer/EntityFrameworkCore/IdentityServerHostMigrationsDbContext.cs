@@ -29,5 +29,8 @@ public class IdentityServerHostMigrationsDbContext : AbpDbContext<IdentityServer
         modelBuilder.ConfigureIdentityServer();
         modelBuilder.ConfigureFeatureManagement();
         modelBuilder.ConfigureTenantManagement();
+
+
+        modelBuilder.ConfigureJhIdentity();
     }
 }

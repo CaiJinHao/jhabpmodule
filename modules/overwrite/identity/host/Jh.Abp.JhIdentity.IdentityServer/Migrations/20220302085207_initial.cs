@@ -102,6 +102,8 @@ namespace Jh.Abp.JhIdentity.Migrations
                     ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Code = table.Column<string>(type: "nvarchar(95)", maxLength: 95, nullable: false),
                     DisplayName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LeaderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true, comment: "领导ID"),
+                    LeaderName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "领导名称"),
                     ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),

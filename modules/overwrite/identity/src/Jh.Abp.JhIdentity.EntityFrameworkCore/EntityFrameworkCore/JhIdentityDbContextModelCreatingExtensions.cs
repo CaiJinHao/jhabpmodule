@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Volo.Abp;
+using Volo.Abp.Identity;
+using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.JhIdentity.EntityFrameworkCore;
 
@@ -9,25 +12,23 @@ public static class JhIdentityDbContextModelCreatingExtensions
         this ModelBuilder builder)
     {
         Check.NotNull(builder, nameof(builder));
+        ConfigureExtensionDomain();
+    }
 
-        /* Configure all entities here. Example:
+    /// <summary>
+    /// 扩展实体
+    /// </summary>
+    public static void ConfigureExtensionDomain()
+    {
+        JhIdentityModuleExtensionConfigurator.Configure();
 
-        builder.Entity<Question>(b =>
+        ObjectExtensionManager.Instance.MapEfCoreProperty<OrganizationUnit, Guid?>(nameof(ObjectExtensionConst.OrganizationUnit.LeaderId), (e, p) =>
         {
-            //Configure table & schema name
-            b.ToTable(JhIdentityDbProperties.DbTablePrefix + "Questions", JhIdentityDbProperties.DbSchema);
-
-            b.ConfigureByConvention();
-
-            //Properties
-            b.Property(q => q.Title).IsRequired().HasMaxLength(QuestionConsts.MaxTitleLength);
-
-            //Relations
-            b.HasMany(question => question.Tags).WithOne().HasForeignKey(qt => qt.QuestionId);
-
-            //Indexes
-            b.HasIndex(q => q.CreationTime);
+            p.HasComment("领导ID");
         });
-        */
+        ObjectExtensionManager.Instance.MapEfCoreProperty<OrganizationUnit, string>(nameof(ObjectExtensionConst.OrganizationUnit.LeaderName), (e, p) =>
+        {
+            p.HasMaxLength(50).HasComment("领导名称");
+        });
     }
 }
