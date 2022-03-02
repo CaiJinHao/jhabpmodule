@@ -33,6 +33,7 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.JhIdentity.EntityFrameworkCore;
 
 namespace Jh.Abp.Workflow;
 
@@ -49,6 +50,7 @@ namespace Jh.Abp.Workflow;
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
+    typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(AbpSwashbuckleModule)
     )]
 public class WorkflowHttpApiHostModule : AbpModule

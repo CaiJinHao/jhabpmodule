@@ -2,6 +2,7 @@
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.Application;
+using Jh.Abp.JhIdentity;
 
 namespace Jh.Abp.Workflow;
 
@@ -9,6 +10,7 @@ namespace Jh.Abp.Workflow;
     typeof(WorkflowDomainModule),
     typeof(WorkflowApplicationContractsModule),
     typeof(AbpDddApplicationModule),
+    typeof(JhIdentityApplicationModule),
     typeof(AbpAutoMapperModule)
     )]
 public class WorkflowApplicationModule : AbpModule

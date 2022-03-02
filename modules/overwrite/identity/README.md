@@ -5,7 +5,6 @@
 3、数据迁移  
 4、DataSeedContributor数据播种--批量替换密匙、添加JsClient  
 
+## 使用注意
 
-## 使用注意：
-
-将所有的权限添加到ApplicationService层
+将所有的权限添加到ApplicationService层  
