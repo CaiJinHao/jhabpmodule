@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Jh.Abp.Workflow</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.MongoDB" Version="5.1.4" />
+    <ProjectReference Include="..\Jh.Abp.Workflow.Domain\Jh.Abp.Workflow.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

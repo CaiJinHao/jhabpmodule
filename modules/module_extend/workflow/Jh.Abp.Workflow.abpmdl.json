@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "Jh.Abp.Workflow.Domain.Shared": {
+      "path": "src/Jh.Abp.Workflow.Domain.Shared/Jh.Abp.Workflow.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.Domain": {
+      "path": "src/Jh.Abp.Workflow.Domain/Jh.Abp.Workflow.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.Application.Contracts": {
+      "path": "src/Jh.Abp.Workflow.Application.Contracts/Jh.Abp.Workflow.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.Application": {
+      "path": "src/Jh.Abp.Workflow.Application/Jh.Abp.Workflow.Application.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.EntityFrameworkCore": {
+      "path": "src/Jh.Abp.Workflow.EntityFrameworkCore/Jh.Abp.Workflow.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.MongoDB": {
+      "path": "src/Jh.Abp.Workflow.MongoDB/Jh.Abp.Workflow.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.HttpApi": {
+      "path": "src/Jh.Abp.Workflow.HttpApi/Jh.Abp.Workflow.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.HttpApi.Client": {
+      "path": "src/Jh.Abp.Workflow.HttpApi.Client/Jh.Abp.Workflow.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.TestBase": {
+      "path": "test/Jh.Abp.Workflow.TestBase/Jh.Abp.Workflow.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Workflow.EntityFrameworkCore.Tests": {
+      "path": "test/Jh.Abp.Workflow.EntityFrameworkCore.Tests/Jh.Abp.Workflow.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Workflow.MongoDB.Tests": {
+      "path": "test/Jh.Abp.Workflow.MongoDB.Tests/Jh.Abp.Workflow.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Workflow.Domain.Tests": {
+      "path": "test/Jh.Abp.Workflow.Domain.Tests/Jh.Abp.Workflow.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Workflow.Application.Tests": {
+      "path": "test/Jh.Abp.Workflow.Application.Tests/Jh.Abp.Workflow.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Workflow.HttpApi.Host": {
+      "path": "host/Jh.Abp.Workflow.HttpApi.Host/Jh.Abp.Workflow.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Workflow.Web": {
+      "path": "src/Jh.Abp.Workflow.Web/Jh.Abp.Workflow.Web.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Jh.Abp.Workflow.HttpApi.Client.ConsoleTestApp/Jh.Abp.Workflow.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Workflow.Web.Host": {
+      "path": "host/Jh.Abp.Workflow.Web.Host/Jh.Abp.Workflow.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Workflow.IdentityServer": {
+      "path": "host/Jh.Abp.Workflow.IdentityServer/Jh.Abp.Workflow.IdentityServer.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Workflow.Host.Shared": {
+      "path": "host/Jh.Abp.Workflow.Host.Shared/Jh.Abp.Workflow.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Workflow.Web.Unified": {
+      "path": "host/Jh.Abp.Workflow.Web.Unified/Jh.Abp.Workflow.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Workflow.Blazor": {
+      "path": "src/Jh.Abp.Workflow.Blazor/Jh.Abp.Workflow.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.Blazor.Host": {
+      "path": "host/Jh.Abp.Workflow.Blazor.Host/Jh.Abp.Workflow.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Workflow.Blazor.Server": {
+      "path": "src/Jh.Abp.Workflow.Blazor.Server/Jh.Abp.Workflow.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.Blazor.WebAssembly": {
+      "path": "src/Jh.Abp.Workflow.Blazor.WebAssembly/Jh.Abp.Workflow.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Workflow.Blazor.Server.Host": {
+      "path": "host/Jh.Abp.Workflow.Blazor.Server.Host/Jh.Abp.Workflow.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}

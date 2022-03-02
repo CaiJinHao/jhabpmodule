@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Jh.Abp.Workflow</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="5.1.4" />
+    <ProjectReference Include="..\Jh.Abp.Workflow.Application.Contracts\Jh.Abp.Workflow.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

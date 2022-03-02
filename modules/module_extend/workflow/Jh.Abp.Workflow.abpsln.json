@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "Jh.Abp.Workflow": {
+      "path": "Jh.Abp.Workflow.abpmdl.json"
+    }
+  }
+}
