@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Jh.Abp.JhIdentity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
@@ -29,5 +30,7 @@ public class IdentityServerHostMigrationsDbContext : AbpDbContext<IdentityServer
         modelBuilder.ConfigureIdentityServer();
         modelBuilder.ConfigureFeatureManagement();
         modelBuilder.ConfigureTenantManagement();
+
+        modelBuilder.ConfigureJhIdentity();
     }
 }

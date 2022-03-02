@@ -13,7 +13,7 @@ using YourCompany.YourProjectName.EntityFrameworkCore;
 namespace YourCompany.YourProjectName.Migrations
 {
     [DbContext(typeof(IdentityServerHostMigrationsDbContext))]
-    [Migration("20220302081722_initial")]
+    [Migration("20220302090446_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -887,6 +887,15 @@ namespace YourCompany.YourProjectName.Migrations
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
+
+                    b.Property<Guid?>("LeaderId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("领导ID");
+
+                    b.Property<string>("LeaderName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("领导名称");
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
