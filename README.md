@@ -27,6 +27,9 @@ xxx.Application.Contracts.xml生成，设置为嵌入的资源，用于Swagger�
 
 启动程序
 
+添加其他模块
+引用MenuHttpApi、添加依赖、创建数据迁移即可
+
 ```
 
 ## 设计
