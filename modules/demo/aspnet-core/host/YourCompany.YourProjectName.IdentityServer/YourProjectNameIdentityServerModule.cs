@@ -58,6 +58,7 @@ using Microsoft.Extensions.Configuration;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Jh.Abp.IdentityServer;
 using Jh.Abp.JhMenu;
+using Jh.Abp.JhMenu.EntityFrameworkCore;
 
 namespace YourCompany.YourProjectName;
 

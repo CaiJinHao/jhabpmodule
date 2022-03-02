@@ -11,9 +11,11 @@ abp new YourCompany.YourProjectName -t module -d ef -cs "server=192.168.12.99;da
 
 .\addrefrence.ps1 -execPath ..\..\modules\module_extend\menu\ -slnName Jh.Abp.JhMenu  
 
+HttpApiModel添加依赖typeof(xxxApplicationModule),typeof(xxxEntityFrameworkCoreModule),
+
 修改appsettings.json参照Demo  
 
-Module 修改参照Demo  
+IdentityServerModule 修改参照Demo  
     注意添加依赖、typeof(JhIdentityHttpApiModule),typeof(AbpQuickComponentsModule)  
 
 数据迁移  

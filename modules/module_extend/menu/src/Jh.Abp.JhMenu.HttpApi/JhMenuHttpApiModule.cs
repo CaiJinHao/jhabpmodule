@@ -4,10 +4,13 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Microsoft.Extensions.DependencyInjection;
+using Jh.Abp.JhMenu.EntityFrameworkCore;
 
 namespace Jh.Abp.JhMenu;
 
 [DependsOn(
+    typeof(JhMenuApplicationModule),
+    typeof(JhMenuEntityFrameworkCoreModule),
     typeof(JhMenuApplicationContractsModule),
     typeof(AbpAspNetCoreMvcModule))]
 public class JhMenuHttpApiModule : AbpModule
