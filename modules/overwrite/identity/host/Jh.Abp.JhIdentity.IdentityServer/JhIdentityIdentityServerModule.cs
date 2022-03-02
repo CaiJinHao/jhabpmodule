@@ -116,7 +116,7 @@ public class JhIdentityIdentityServerModule : AbpModule
                     {Audience, $"{Audience} API"}
            },
            new NamespaceAssemblyDto[] {
-                    new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhIdentity", AssemblyXmlComments = typeof(JhIdentityApplicationContractsModule).Assembly },
+                    new NamespaceAssemblyDto() { BaseNamespace = typeof(JhIdentityApplicationContractsModule).Namespace, AssemblyXmlComments = typeof(JhIdentityApplicationContractsModule).Assembly },
                    //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhMenu", AssemblyXmlComments = typeof(JhMenuApplicationContractsModule).Assembly },
                    //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhAuditLogging", AssemblyXmlComments = typeof(JhAuditLoggingApplicationContractsModule).Assembly },
                    //new NamespaceAssemblyDto() { BaseNamespace = "Jh.Abp.JhSetting", AssemblyXmlComments = typeof(JhSettingApplicationContractsModule).Assembly }

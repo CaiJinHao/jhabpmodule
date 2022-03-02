@@ -33,5 +33,490 @@
             <param name="organizationName"></param>
             <returns></returns>
         </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.NormalizedName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.IsDefault">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.IsStatic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.IsPublic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityRoleDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleDto.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleDto.NormalizedName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleDto.IsDefault">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleDto.IsStatic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleDto.IsPublic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleDto.ConcurrencyStamp">
+            <summary>
+            并发标识
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto.NormalizedName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto.IsDefault">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto.IsStatic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto.IsPublic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.NormalizedName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.IsDefault">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.IsStatic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.IsPublic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityUserCreateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserCreateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityUserDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.NormalizedUserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.Surname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.NormalizedEmail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.EmailConfirmed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.PasswordHash">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.SecurityStamp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.IsExternal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.PhoneNumber">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.PhoneNumberConfirmed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.TwoFactorEnabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.LockoutEnd">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.LockoutEnabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.AccessFailedCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.ConcurrencyStamp">
+            <summary>
+            并发标识
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.NormalizedUserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.Surname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.NormalizedEmail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.EmailConfirmed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.PasswordHash">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.SecurityStamp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.IsExternal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.PhoneNumber">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.PhoneNumberConfirmed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.TwoFactorEnabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.LockoutEnd">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.LockoutEnabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.AccessFailedCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.Deleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto.IsDeleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.OrganizationUnitDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitDto.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitDto.Code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitDto.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitDto.ConcurrencyStamp">
+            <summary>
+            并发标识
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.Code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.Deleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.OrParentId">
+            <summary>
+            组织树查询 上级及下级
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.IsDeleted">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据库中的值一样才会允许更新
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
     </members>
 </doc>
