@@ -57,6 +57,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Jh.Abp.IdentityServer;
+using Jh.Abp.JhMenu;
 
 namespace YourCompany.YourProjectName;
 
@@ -92,6 +93,7 @@ namespace YourCompany.YourProjectName;
     typeof(YourProjectNameApplicationContractsModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(JhIdentityHttpApiModule),
+    typeof(JhMenuHttpApiModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpQuickComponentsModule)
     )]
@@ -279,7 +281,7 @@ public class YourProjectNameIdentityServerModule : AbpModule
                 dataSeedContext["RoleId"] = roles.FirstOrDefault()?.Id;//IdentityServerHost创建的角色ID
 
                 //菜单依赖
-                //dataSeedContext["MenuRegisterType"] = MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp;
+                dataSeedContext["MenuRegisterType"] = MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp;
             }
             await data.SeedAsync(dataSeedContext);
         }
