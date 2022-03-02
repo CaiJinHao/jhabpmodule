@@ -141,7 +141,30 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
             };
 
         var configurationSection = _configuration.GetSection("IdentityServer:Clients");
+        var clientName = _configuration.GetValue<string>("AuthServer:ApiName");
+        //TODO:添加JS Client
+        var jsClientId = configurationSection[$"{clientName}_Js:ClientId"];
+        if (!jsClientId.IsNullOrWhiteSpace())
+        {
+            var webClientRootUrl = configurationSection[$"{clientName}_Js:RootUrl"].EnsureEndsWith('/');
+            var redirectUri = configurationSection[$"{clientName}_Js:RedirectUri"];
+            var postLogoutRedirectUri = configurationSection[$"{clientName}_Js:postLogoutRedirectUri"];
+            var frontChannelLogoutUri = configurationSection[$"{clientName}_Js:frontChannelLogoutUri"];
 
+            /* JhIdentity_Web client is only needed if you created a tiered
+             * solution. Otherwise, you can delete this client. */
+
+            await CreateClientAsync(
+                name: jsClientId,
+                scopes: commonScopes,
+                grantTypes: new[] { "implicit" },
+                secret: (configurationSection[$"{clientName}_Js:ClientSecret"] ?? "KimHo@666").Sha256(),
+                redirectUri: redirectUri,
+                postLogoutRedirectUri: postLogoutRedirectUri,//需要和客户端配置一致才能跳转
+                frontChannelLogoutUri: frontChannelLogoutUri,
+                corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
+            );
+        }
         //Web Client
         var webClientId = configurationSection["YourProjectName_Web:ClientId"];
         if (!webClientId.IsNullOrWhiteSpace())
@@ -155,7 +178,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                 name: webClientId,
                 scopes: commonScopes,
                 grantTypes: new[] { "hybrid" },
-                secret: (configurationSection["YourProjectName_Web:ClientSecret"] ?? "1q2w3e*").Sha256(),
+                secret: (configurationSection["YourProjectName_Web:ClientSecret"] ?? "KimHo@666").Sha256(),
                 redirectUri: $"{webClientRootUrl}signin-oidc",
                 postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
                 frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
@@ -173,7 +196,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                 name: consoleAndAngularClientId,
                 scopes: commonScopes,
                 grantTypes: new[] { "password", "client_credentials", "authorization_code" },
-                secret: (configurationSection["YourProjectName_App:ClientSecret"] ?? "1q2w3e*").Sha256(),
+                secret: (configurationSection["YourProjectName_App:ClientSecret"] ?? "KimHo@666").Sha256(),
                 requireClientSecret: false,
                 redirectUri: webClientRootUrl,
                 postLogoutRedirectUri: webClientRootUrl,
@@ -239,6 +262,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                     name
                 )
                 {
+                    AllowAccessTokensViaBrowser = true,//TODO:modify
                     ClientName = name,
                     ProtocolType = "oidc",
                     Description = name,

@@ -21,8 +21,9 @@ Module 修改参照Demo
 
 DataSeedContributor数据播种--批量替换密匙、添加JsClient  
 
-Contracts.xml生成，设置为嵌入的资源，用于Swagger注释显示  
+xxx.Application.Contracts.xml生成，设置为嵌入的资源，用于Swagger注释显示  
 
+启动程序
 
 ```
 
@@ -37,3 +38,7 @@ Contracts.xml生成，设置为嵌入的资源，用于Swagger注释显示
 ## Support the ABP Framework
 
 如果你觉得这个仓库还不错，请给一个星 :star:
+
+## 规范
+
+将所有自定义ApplicationService层 的方法添加权限  
