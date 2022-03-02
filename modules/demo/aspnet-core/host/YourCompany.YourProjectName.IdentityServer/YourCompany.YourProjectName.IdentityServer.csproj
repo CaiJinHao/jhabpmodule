@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFrameworkCore.UseRowNumberForPaging" Version="0.3.0" />
     <PackageReference Include="Jh.Abp.IdentityServer" Version="5.2.3" />
     <PackageReference Include="Jh.Abp.JhIdentity.HttpApi" Version="5.2.3" />
     <PackageReference Include="Jh.Abp.JhMenu.HttpApi" Version="5.2.3" />

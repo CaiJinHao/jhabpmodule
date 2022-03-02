@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using YourCompany.YourProjectName.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using YourCompany.YourProjectName.EntityFrameworkCore;
 
 #nullable disable
 
 namespace YourCompany.YourProjectName.Migrations
 {
     [DbContext(typeof(IdentityServerHostMigrationsDbContext))]
-    [Migration("20211124020400_Initial")]
-    partial class Initial
+    [Migration("20220302081722_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
