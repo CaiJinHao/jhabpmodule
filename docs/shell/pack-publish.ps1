@@ -4,7 +4,7 @@ using namespace System.Xml;
 [CmdletBinding()]
 param (
     [string] $apiKey,
-    [string] $execPath = '.',
+    [string] $execPath = '../../',
     [string] $outPath = 'G:\Publish\nuget-local',
     [string] $publishSource = "https://api.nuget.org/v3/index.json"
 )
@@ -44,6 +44,12 @@ $packagesDto =
 @{Name = "Jh.Abp.JhIdentity.EntityFrameworkCore"; Version = "5.2.3"; },
 @{Name = "Jh.Abp.JhIdentity.HttpApi"; Version = "5.2.3"; },
 
+# 权限模块
+
+@{Name = "Jh.Abp.JhPermission.Application"; Version = "5.2.3"; },
+@{Name = "Jh.Abp.JhPermission.Application.Contracts"; Version = "5.2.3"; },
+@{Name = "Jh.Abp.JhPermission.Domain.Shared"; Version = "5.2.3"; },
+@{Name = "Jh.Abp.JhPermission.HttpApi"; Version = "5.2.3"; },
 
 # 菜单模块
 
@@ -81,12 +87,7 @@ $packagesDto =
 # @{Name = "Jh.Abp.JhSetting.EntityFrameworkCore"; Version = "5.2.3"; },
 # @{Name = "Jh.Abp.JhSetting.HttpApi"; Version = "5.2.3"; },
 
-# # 权限模块
 
-# @{Name = "Jh.Abp.JhPermission.Application"; Version = "5.2.3"; },
-# @{Name = "Jh.Abp.JhPermission.Application.Contracts"; Version = "5.2.3"; },
-# @{Name = "Jh.Abp.JhPermission.Domain.Shared"; Version = "5.2.3"; },
-# @{Name = "Jh.Abp.JhPermission.HttpApi"; Version = "5.2.3"; },
 
 
 # # 文件系统
@@ -139,10 +140,19 @@ function New-PackByNupkg() {
             # powershell.exe "dotnet pack $($file.FullName) -o $outPath"
             pwsh -Command "dotnet pack $($file.FullName) -o $outPath"
             # cmd /c "dotnet pack $($file.FullName) -o $outPath"
-            if (![System.String]::IsNullOrEmpty($apiKey)) {
-                $publishFile = "$outPath\$($file.BaseName).$($pack.Version).nupkg";
-                pwsh -Command "dotnet nuget push $publishFile --api-key $apiKey --source $publishSource --skip-duplicate";
-            }
+        }
+    }
+
+    Publish-PackNuget;
+}
+
+function Publish-PackNuget()
+{
+    if (![System.String]::IsNullOrEmpty($apiKey)) {
+        $files = Get-ChildItem -Path $outPath | Where-Object -FilterScript { $_.Extension -eq '.nupkg' };
+        foreach ($item in $files) {
+            Write-Host $item
+            # pwsh -Command "dotnet nuget push $item --api-key $apiKey --source $publishSource --skip-duplicate";
         }
     }
 }
