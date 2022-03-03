@@ -146,13 +146,11 @@ function New-PackByNupkg() {
     Publish-PackNuget;
 }
 
-function Publish-PackNuget()
-{
+function Publish-PackNuget() {
     if (![System.String]::IsNullOrEmpty($apiKey)) {
         $files = Get-ChildItem -Path $outPath | Where-Object -FilterScript { $_.Extension -eq '.nupkg' };
         foreach ($item in $files) {
-            Write-Host $item
-            # pwsh -Command "dotnet nuget push $item --api-key $apiKey --source $publishSource --skip-duplicate";
+            pwsh -Command "dotnet nuget push $($item.FullName) --api-key $apiKey --source $publishSource --skip-duplicate";
         }
     }
 }
