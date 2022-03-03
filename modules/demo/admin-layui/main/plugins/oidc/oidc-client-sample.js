@@ -5,12 +5,12 @@ if (location.search.indexOf('_p') != -1) {
 // Oidc.Log.logger = console;
 // Oidc.Log.level = Oidc.Log.INFO;
 var settings = {
-    authority: 'https://localhost:6201',
-    client_id: 'WebAppYourName_Js',
+    authority: 'https://localhost:7001',
+    client_id: 'YourProjectName_Js',
     redirect_uri: window.location.origin + '/ids/callback.html',
     response_type: 'id_token token',
-    scope: 'email openid profile role phone address WebAppYourName offline_access',
-    post_logout_redirect_uri: 'https://localhost:6201/index',
+    scope: 'email openid profile role phone address YourProjectName offline_access',
+    post_logout_redirect_uri: 'https://localhost:7001/index',
 
     filterProtocolClaims: false,
     loadUserInfo: false

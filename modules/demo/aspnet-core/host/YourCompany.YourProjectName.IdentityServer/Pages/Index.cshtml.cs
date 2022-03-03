@@ -1,10 +1,18 @@
+using Microsoft.Extensions.Configuration;
 using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 
-namespace YourCompany.YourProjectName.Pages;
-
-public class IndexModel : AbpPageModel
+namespace Jh.Abp.JhIdentity.Pages
 {
-    public void OnGet()
+    public class IndexModel : AbpPageModel
     {
+        public IConfiguration Configuration { get; init; }
+        public IndexModel(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        public void OnGet()
+        {
+            Response.Redirect(Configuration["App:AppHomeUrl"]);
+        }
     }
 }

@@ -59,6 +59,7 @@ using Volo.Abp.AspNetCore.ExceptionHandling;
 using Jh.Abp.IdentityServer;
 using Jh.Abp.JhMenu;
 using Jh.Abp.JhMenu.EntityFrameworkCore;
+using Jh.Abp.Workflow;
 
 namespace YourCompany.YourProjectName;
 
@@ -95,6 +96,7 @@ namespace YourCompany.YourProjectName;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(JhIdentityHttpApiModule),
     typeof(JhMenuHttpApiModule),
+    typeof(WorkflowHttpApiModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpQuickComponentsModule)
     )]
