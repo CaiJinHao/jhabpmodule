@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "Jh.Abp.JhPermission.Domain.Shared": {
+      "path": "src/Jh.Abp.JhPermission.Domain.Shared/Jh.Abp.JhPermission.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.Domain": {
+      "path": "src/Jh.Abp.JhPermission.Domain/Jh.Abp.JhPermission.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.Application.Contracts": {
+      "path": "src/Jh.Abp.JhPermission.Application.Contracts/Jh.Abp.JhPermission.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.Application": {
+      "path": "src/Jh.Abp.JhPermission.Application/Jh.Abp.JhPermission.Application.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.EntityFrameworkCore": {
+      "path": "src/Jh.Abp.JhPermission.EntityFrameworkCore/Jh.Abp.JhPermission.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.MongoDB": {
+      "path": "src/Jh.Abp.JhPermission.MongoDB/Jh.Abp.JhPermission.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.HttpApi": {
+      "path": "src/Jh.Abp.JhPermission.HttpApi/Jh.Abp.JhPermission.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.HttpApi.Client": {
+      "path": "src/Jh.Abp.JhPermission.HttpApi.Client/Jh.Abp.JhPermission.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.TestBase": {
+      "path": "test/Jh.Abp.JhPermission.TestBase/Jh.Abp.JhPermission.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhPermission.EntityFrameworkCore.Tests": {
+      "path": "test/Jh.Abp.JhPermission.EntityFrameworkCore.Tests/Jh.Abp.JhPermission.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhPermission.MongoDB.Tests": {
+      "path": "test/Jh.Abp.JhPermission.MongoDB.Tests/Jh.Abp.JhPermission.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhPermission.Domain.Tests": {
+      "path": "test/Jh.Abp.JhPermission.Domain.Tests/Jh.Abp.JhPermission.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhPermission.Application.Tests": {
+      "path": "test/Jh.Abp.JhPermission.Application.Tests/Jh.Abp.JhPermission.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhPermission.HttpApi.Host": {
+      "path": "host/Jh.Abp.JhPermission.HttpApi.Host/Jh.Abp.JhPermission.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhPermission.Web": {
+      "path": "src/Jh.Abp.JhPermission.Web/Jh.Abp.JhPermission.Web.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Jh.Abp.JhPermission.HttpApi.Client.ConsoleTestApp/Jh.Abp.JhPermission.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.JhPermission.Web.Host": {
+      "path": "host/Jh.Abp.JhPermission.Web.Host/Jh.Abp.JhPermission.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhPermission.IdentityServer": {
+      "path": "host/Jh.Abp.JhPermission.IdentityServer/Jh.Abp.JhPermission.IdentityServer.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhPermission.Host.Shared": {
+      "path": "host/Jh.Abp.JhPermission.Host.Shared/Jh.Abp.JhPermission.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhPermission.Web.Unified": {
+      "path": "host/Jh.Abp.JhPermission.Web.Unified/Jh.Abp.JhPermission.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhPermission.Blazor": {
+      "path": "src/Jh.Abp.JhPermission.Blazor/Jh.Abp.JhPermission.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.Blazor.Host": {
+      "path": "host/Jh.Abp.JhPermission.Blazor.Host/Jh.Abp.JhPermission.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.JhPermission.Blazor.Server": {
+      "path": "src/Jh.Abp.JhPermission.Blazor.Server/Jh.Abp.JhPermission.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.Blazor.WebAssembly": {
+      "path": "src/Jh.Abp.JhPermission.Blazor.WebAssembly/Jh.Abp.JhPermission.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.JhPermission.Blazor.Server.Host": {
+      "path": "host/Jh.Abp.JhPermission.Blazor.Server.Host/Jh.Abp.JhPermission.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}

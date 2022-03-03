@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "Jh.Abp.JhPermission": {
+      "path": "Jh.Abp.JhPermission.abpmdl.json"
+    }
+  }
+}
