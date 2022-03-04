@@ -48,6 +48,7 @@ $packagesDto =
 
 @{Name = "Jh.Abp.JhPermission.Application"; Version = "5.2.3"; },
 @{Name = "Jh.Abp.JhPermission.Application.Contracts"; Version = "5.2.3"; },
+@{Name = "Jh.Abp.JhPermission.Domain"; Version = "5.2.3"; },
 @{Name = "Jh.Abp.JhPermission.Domain.Shared"; Version = "5.2.3"; },
 @{Name = "Jh.Abp.JhPermission.HttpApi"; Version = "5.2.3"; },
 

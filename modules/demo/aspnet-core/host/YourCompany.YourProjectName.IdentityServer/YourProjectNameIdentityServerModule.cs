@@ -60,6 +60,7 @@ using Jh.Abp.IdentityServer;
 using Jh.Abp.JhMenu;
 using Jh.Abp.JhMenu.EntityFrameworkCore;
 using Jh.Abp.Workflow;
+using Jh.Abp.JhPermission;
 
 namespace YourCompany.YourProjectName;
 
@@ -95,6 +96,7 @@ namespace YourCompany.YourProjectName;
     typeof(YourProjectNameApplicationContractsModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(JhIdentityHttpApiModule),
+    typeof(JhPermissionHttpApiModule),
     typeof(JhMenuHttpApiModule),
     typeof(WorkflowHttpApiModule),
     typeof(AbpSwashbuckleModule),
