@@ -54,9 +54,9 @@
                         <div class="layui-col-sm6">
                             <div class="layui-row">
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">负责人：</label>
+                                    <label class="layui-form-label my-input-required">负责人：</label>
                                     <div class="layui-input-inline">
-                                        <select lay-filter="userfilter" lay-search  :value="organizationunit.extraProperties.LeaderId">
+                                        <select lay-filter="userfilter" lay-search lay-verify="required"  :value="organizationunit.extraProperties.LeaderId">
                                             <option value="">请选择</option>
                                             <option v-for="item in userList" v-bind:value="item.id">{{item.name}}</option>
                                         </select>
@@ -221,13 +221,13 @@
                                 vm.$set(vm, 'OrganizationUnitIdList', response.items);
                             }
                         },
-                        {
-                            url: '/DictionaryDetail/selectvalue?dictionaryCategoryValue=1',
-                            type: 'Get',
-                            success: function (response) {
-                                vm.tagList = response.items;
-                            }
-                        },
+                        // {
+                        //     url: '/DictionaryDetail/selectvalue?dictionaryCategoryValue=1',
+                        //     type: 'Get',
+                        //     success: function (response) {
+                        //         vm.tagList = response.items;
+                        //     }
+                        // },
                         {
                             url: '/IdentityUser/options',
                             type: 'Get',
