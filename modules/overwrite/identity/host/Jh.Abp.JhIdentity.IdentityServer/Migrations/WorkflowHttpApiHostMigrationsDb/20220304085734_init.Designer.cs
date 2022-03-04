@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Jh.Abp.JhIdentity.Migrations.WorkflowHttpApiHostMigrationsDb
 {
     [DbContext(typeof(WorkflowHttpApiHostMigrationsDbContext))]
-    [Migration("20220304081014_init")]
+    [Migration("20220304085734_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

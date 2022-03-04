@@ -16130,3 +16130,27 @@ StackExchange.Redis.RedisServerException: ERR Error running script (call to f_39
 2022-03-04 16:39:23.823 +08:00 [INF] Executed action Jh.Abp.JhIdentity.v1.OrganizationUnitController.GetAsync (Jh.Abp.JhIdentity.HttpApi) in 84.3306ms
 2022-03-04 16:39:23.823 +08:00 [INF] Executed endpoint 'Jh.Abp.JhIdentity.v1.OrganizationUnitController.GetAsync (Jh.Abp.JhIdentity.HttpApi)'
 2022-03-04 16:39:23.823 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/api/v1/organizationunit/1f94992d-45b2-5cb4-4eac-3a0266420df6?_t=1646383163665 application/json;+charset=utf-8 - - 200 455 application/json;+charset=utf-8 127.1772ms
+2022-03-04 16:55:59.021 +08:00 [INF] Starting web host.
+2022-03-04 16:56:01.143 +08:00 [FTL] Host terminated unexpectedly!
+Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException: Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Jh.Abp.JhIdentity.Program.Main(String[] args) in G:\github\mygithub\jh-abp-module-extension\modules\overwrite\identity\host\Jh.Abp.JhIdentity.IdentityServer\Program.cs:line 38
+2022-03-04 16:56:38.567 +08:00 [INF] Starting web host.
+2022-03-04 16:56:40.181 +08:00 [FTL] Host terminated unexpectedly!
+Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException: Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Jh.Abp.JhIdentity.Program.Main(String[] args) in G:\github\mygithub\jh-abp-module-extension\modules\overwrite\identity\host\Jh.Abp.JhIdentity.IdentityServer\Program.cs:line 38
+2022-03-04 16:57:32.066 +08:00 [INF] Starting web host.
+2022-03-04 16:57:33.702 +08:00 [FTL] Host terminated unexpectedly!
+Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException: Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Jh.Abp.JhIdentity.Program.Main(String[] args) in G:\github\mygithub\jh-abp-module-extension\modules\overwrite\identity\host\Jh.Abp.JhIdentity.IdentityServer\Program.cs:line 38
