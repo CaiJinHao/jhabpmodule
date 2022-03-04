@@ -8,7 +8,7 @@ public class JhPermissionPermissionDefinitionProvider : PermissionDefinitionProv
 {
     public override void Define(IPermissionDefinitionContext context)
     {
-        var myGroup = context.AddGroup(JhPermissionPermissions.GroupName, L("Permission:JhPermission"));
+        // var myGroup = context.AddGroup(JhPermissionPermissions.GroupName, L("Permission:JhPermission"));
     }
 
     private static LocalizableString L(string name)

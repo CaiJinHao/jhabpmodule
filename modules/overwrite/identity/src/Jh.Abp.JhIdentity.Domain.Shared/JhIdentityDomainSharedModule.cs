@@ -5,11 +5,14 @@ using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Validation;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.Domain.Localization;
+using Jh.Abp.Domain.Shared;
 
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
-    typeof(AbpValidationModule)
+    typeof(AbpValidationModule),
+    typeof(JhAbpExtensionsDomainSharedModule)
 )]
 public class JhIdentityDomainSharedModule : AbpModule
 {
@@ -25,6 +28,7 @@ public class JhIdentityDomainSharedModule : AbpModule
             options.Resources
                 .Add<JhIdentityResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
+                .AddBaseTypes(typeof(JhAbpExtensionsResource))
                 .AddVirtualJson("/Localization/JhIdentity");
         });
 

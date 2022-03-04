@@ -56,6 +56,7 @@ using Jh.Abp.QuickComponents;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Jh.Abp.IdentityServer;
 using EntityFrameworkCore.UseRowNumberForPaging;
+using Jh.Abp.JhPermission;
 
 namespace Jh.Abp.JhIdentity;
 
@@ -91,6 +92,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
     typeof(JhIdentityHttpApiModule),
+    typeof(JhPermissionHttpApiModule),
     typeof(AbpQuickComponentsModule)
     )]
 public class JhIdentityIdentityServerModule : AbpModule

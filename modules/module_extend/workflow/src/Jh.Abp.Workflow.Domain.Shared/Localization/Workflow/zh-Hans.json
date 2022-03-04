@@ -1,7 +1,9 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "MyAccount": "我的账户",
-    "SamplePageMessage": "Workflow模块的示例页面"
+    "Permission:JhAbpWorkflow": "工作流模块",
+    "Permission:Backlogs": "待办事项",
+    "Permission:WorkflowDefinitions": "工作流定义",
+    "Permission:WorkflowInstances": "工作流实例"
   }
 }

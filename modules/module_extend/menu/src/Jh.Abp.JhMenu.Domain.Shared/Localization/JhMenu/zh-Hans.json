@@ -1,6 +1,7 @@
 {
   "culture": "zh-Hans",
   "texts": {
+    "Permission:JhAbpJhMenu":"菜单模块",
     "Permission:MenuRoleMap": "菜单角色中间表",
     "Permission:Menu": "菜单"
   }

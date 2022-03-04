@@ -12,11 +12,11 @@
   <ItemGroup>
     <PackageReference Include="EntityFrameworkCore.UseRowNumberForPaging" Version="0.3.0" />
     <PackageReference Include="Jh.Abp.IdentityServer" Version="5.2.3" />
-    <PackageReference Include="Jh.Abp.JhIdentity.HttpApi" Version="5.2.4" />
-    <PackageReference Include="Jh.Abp.JhMenu.HttpApi" Version="5.2.4" />
+    <PackageReference Include="Jh.Abp.JhIdentity.HttpApi" Version="5.2.6" />
+    <PackageReference Include="Jh.Abp.JhMenu.HttpApi" Version="5.2.6" />
     <PackageReference Include="Jh.Abp.JhPermission.HttpApi" Version="5.2.3" />
     <PackageReference Include="Jh.Abp.QuickComponents" Version="5.2.3" />
-    <PackageReference Include="Jh.Abp.Workflow.HttpApi" Version="5.2.3" />
+    <PackageReference Include="Jh.Abp.Workflow.HttpApi" Version="5.2.6" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="6.0.0" />

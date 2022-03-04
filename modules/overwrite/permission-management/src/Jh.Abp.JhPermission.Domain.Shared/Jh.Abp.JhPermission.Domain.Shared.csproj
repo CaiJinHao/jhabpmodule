@@ -21,4 +21,8 @@
     <Content Remove="Localization\JhPermission\*.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Domain.Shared\Jh.Abp.Domain.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

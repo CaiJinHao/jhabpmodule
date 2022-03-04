@@ -5,6 +5,7 @@ using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Validation;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.Domain.Localization;
 
 namespace Jh.Abp.JhPermission;
 
@@ -25,6 +26,7 @@ public class JhPermissionDomainSharedModule : AbpModule
             options.Resources
                 .Add<JhPermissionResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
+                .AddBaseTypes(typeof(JhAbpExtensionsResource))
                 .AddVirtualJson("/Localization/JhPermission");
         });
 

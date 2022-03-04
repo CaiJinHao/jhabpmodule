@@ -13,6 +13,10 @@ abp new YourCompany.YourProjectName -t module -d ef -cs "server=192.168.12.99;da
 
 HttpApiModel添加依赖typeof(xxxApplicationModule),typeof(xxxEntityFrameworkCoreModule),
 
+DomainSharedModule添加本地资源继承   
+    .AddBaseTypes(typeof(Jh.Abp.Domain.Localization.JhAbpExtensionsResource))
+    添加模块依赖：typeof(Jh.Abp.Domain.Shared.JhAbpExtensionsDomainSharedModule)
+
 修改appsettings.json参照Demo  
 
 IdentityServerModule 修改参照Demo  
