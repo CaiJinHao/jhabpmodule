@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑文章</title>
+    <link href="/main/layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="/main/build/css/common.css" rel="stylesheet" />
+    <style>
+        .layui-form-label {
+            width: 105px !important;
+        }
+    
+        .layui-input-block {
+            margin-left: 135px !important;
+        }
+        .layui-form-item{
+            margin-bottom: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_article_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="article.id" />
+                <div class="layui-row">
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label  my-input-required">文章类别：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-search lay-filter="articleCategoryfilter" lay-verify="required"  :value="article.articleCategoryId">
+                                            <option value="">请选择</option>
+                                            <option v-for="item in articleCategoryOptions" v-bind:value="item.id">{{item.articleCategoryName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文章类型：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章类型" v-model="article.articleType">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文章序号：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章唯一序号" v-model="article.articleSerialNumber">
+                                    </div>
+                                </div>
+                                <div class="layui-inline layui-word-aux">用于文章排序，数字越小越在前面，同数字时按照时间倒叙排序</div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label my-input-required">文章标签：</label>
+                                    <div class="layui-input-block">
+                                        <div id="articleLables" style="width: 577px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label my-input-required">文章标题：</label>
+                                    <div class="layui-input-block">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章标题" v-model="article.articleTitle">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">文章是否加密：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="checkbox" name="articleIsEncrypt"  lay-filter="articleIsEncryptfilter" lay-skin="switch" lay-text="是|否" value="true" :checked="article.articleIsEncrypt">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6" v-if="article.articleIsEncrypt">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">文章加密密码：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" placeholder="请输入文章加密密码" v-model="article.articleEncryptPwd">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6" v-show="article.articleIsEncrypt">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">资源加锁：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-search lay-filter="rresourceLockfilter" :value="article.rresourceLockId">
+                                            <option value="">请选择</option>
+                                            <option v-for="item in rresourceLockOptions"  v-bind:value="item.id">{{item.rresourceLockName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文章打赏总金额：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章打赏总金额" v-model="article.articleMoney">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文章点赞数量：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章点赞数量" v-model="article.articleLikeNum">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文章收藏数量：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章收藏数量" v-model="article.articleCollectNum">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文章正在观看数量：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章正在观看数量" v-model="article.articleWatchingNum">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文章访问数量：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入文章访问数量" v-model="article.articleVisitNum">
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label my-input-required">文章内容：</label>
+                                    <div class="layui-input-block">
+                                        <script id="articleEditor" type="text/plain" style="width:100%;height:500px;position:relative"></script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label my-input-required">文章附件类别：</label>
+                                        <div class="layui-input-inline">
+                                            <select lay-search lay-filter="fileCategoryfilter" lay-verify="required" :value="fileCategoryId">
+                                                <option value="">请选择</option>
+                                                <option v-for="item in fileCategoryOptions" v-bind:value="item.id">{{item.fileCategoryName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label my-input-required">文章附件：</label>
+                                    <div class="layui-input-block">
+                                        <div class="layui-upload-drag" id="articleAccessory" style="width:92%">
+                                            <i class="layui-icon"></i>
+                                            <p>点击上传，或将文件拖拽到此处</p>
+                                          </div>
+                                        <div>
+                                            <table class="layui-table">
+                                                <colgroup>
+                                                    <col>
+                                                    <col width="200">
+                                                    <col width="200">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th>文件名称</th>
+                                                        <th>文件大小</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(item,index) in showFiles">
+                                                        <td>{{item.fileName}}</td>
+                                                        <td>{{Math.round(item.fileSize*100/1024)/100}}kb</td>
+                                                        <td>
+                                                            <div class="layui-btn layui-btn-xs layui-btn-danger" v-on:click="delete_id_attachmet(index,item)">删除
+                                                            </div>
+                                                            <a v-if="item.id" class="layui-btn layui-btn-xs layui-btn-normal" :href="item.fileAddress"
+                                                                target="_blank">查看</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a v-if="paramObj.detail!=1"  class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_article_form" href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/main/layui/layui.js"></script>
+    <script src="/main/plugins/vue/vue.min.js"></script>
+    <script src="/main/modules/extend/common.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/main/plugins/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/main/plugins/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/main/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script src="/main/plugins/xm-select/xm-select.js"></script>
+    <script>
+        var articleObj={};
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: { detail: 0 },
+                article: {
+                    rresourceLockId: '',
+                    articleCategoryId: '',
+                    articleSerialNumber: '',
+                    articleType: 0,
+                    articleTitle: '',
+                    articleIsEncrypt: false,
+                    articleEncryptPwd: '',
+                    articleMoney: 0,
+                    articleLikeNum: 1,
+                    articleCollectNum: 1,
+                    articleWatchingNum: 1,
+                    articleVisitNum: 1,
+                    concurrencyStamp: '',
+                    extraProperties: {},
+                    articleExtension: {
+                        articleContent: ''
+                    },
+                },
+                fileCategoryId:'',
+                fileCategoryOptions:[],
+               articleCategoryOptions:[],
+               rresourceLockOptions:[],
+               selectedArticleLables:[],
+               showFiles:[],
+            },
+            watch:{
+                article:{
+                    deep: true,
+                    handler:function(val,old_val){
+                        var _this = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function(form,callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                },
+                delete_id_attachmet:function(index,item){
+                    console.log(item);
+                    articleObj.deleteArticleAccessory(item.articleAccessory.id, function () {
+                        articleObj.deleteFile(item.id);
+                        vm.showFiles.splice(index, 1);
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate','upload'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                upload = layui.upload,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_article_form');
+            var _table_style = { align: 'center' };
+
+            articleObj = {
+                articleUeditor:{},
+                articleLablesSelects:{},
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.renderFiles();
+                    _the.renderUpload();
+                    _the.loadArticleLables();
+                    _the.loadSelects(function(){
+                        _the.loadData();
+                    });
+                    _the.articleUeditor=UE.getEditor('articleEditor',{zIndex: "0"});
+                },
+                loadData: function () {
+                    var _the = this;
+                    if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/article/' + vm.paramObj.id,
+                            type: 'Get',
+                            apiOption: 2,
+                            success: function (response) {
+                                // Object.assign(vm.article,response); //TODO: 有需要扩展字段的时候使用，一般用不到
+                                vm.$set(vm, 'article', response);
+                                _the.articleUeditor.ready(function () {
+                                    //设置编辑器的内容
+                                    _the.articleUeditor.setContent(response.articleExtension.articleContent);
+                                });
+                                vm.RenderDom(form);
+                            }
+                        });
+                    }
+                },
+                loadSelects: function (_fn) {
+                    let _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/articleCategory/options',
+                            type: 'Get',
+                            data: { sorting: 'articleCategoryNum' },
+                            apiOption: 2,
+                            success: function (response) {
+                                vm.$set(vm, 'articleCategoryOptions', response.items);
+                            }
+                        },
+                        {
+                            url: '/RresourceLock/options',
+                            type: 'Get',
+                            data: { sorting: 'rresourceLockOpenType' },
+                            apiOption: 2,
+                            success: function (response) {
+                                vm.$set(vm, 'rresourceLockOptions', response.items);
+                            }
+                        },
+                        {
+                            url: '/FileCategory/options',
+                            type: 'Get',
+                            data: { sorting: 'fileCategoryNum' },
+                            apiOption: 2,
+                            success: function (response) {
+                                vm.$set(vm, 'fileCategoryOptions', response.items);
+                            }
+                        },
+                    ], function () {
+                            vm.RenderDom(form, function () { _fn(); });
+                        });
+                },
+                setArticleLablesValue:function(_fn){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/article/' + vm.paramObj.id + '/articlelables',
+                        apiOption: 2,
+                        type: 'Get',
+                        success: function (response) {
+                            if (_fn) {
+                                _fn(response);
+                            }
+                        }
+                    });
+                },
+                loadArticleLables:function(_fn){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/ArticleLable/options',
+                        data: { sorting: 'articleLableNum' },
+                        apiOption: 2,
+                        type: 'Get',
+                        success: function (response) {
+                            let _ArticleLablesValue = [];
+                            function _render() {
+                                _the.articleLablesSelects = xmSelect.render({
+                                    el: '#articleLables',
+                                    language: 'zn',
+                                    initValue: _ArticleLablesValue,
+                                    data: response.items
+                                });
+                            }
+                            if (vm.paramObj.id) {
+                                _the.setArticleLablesValue(function (roles) {
+                                    roles.items.forEach(element => {
+                                        _ArticleLablesValue.push(element.value);
+                                    });
+                                    _render();
+                                });
+                            } else {
+                                _render();
+                            }
+                            if (_fn) {
+                                _fn();
+                            }
+                        }
+                    });
+                },
+                renderUpload:function(){
+                    var _the = this;
+                    upload.render({
+                        elem: '#articleAccessory',
+                        auto: false,
+                        accept: 'file',
+                        field: 'file',
+                        multiple: true,
+                        drag: true,
+                        choose: function (obj) {
+                            obj.preview(function (index, file, result) {
+                                _the.submitFile(file, function (accessoryItem) {
+                                    vm.showFiles.push(accessoryItem);
+                                });
+                            });
+                        }
+                    });
+                },
+                deleteArticleAccessory:function(articleAccessoryId,_fn){
+                    if(articleAccessoryId){
+                        ajaxmod.requestAuthorize({
+                            url: '/ArticleAccessory/' + articleAccessoryId,
+                            type: 'Delete',
+                            apiOption: 2,
+                            success: function (response) {
+                                _fn();
+                            }
+                        });
+                    }
+                },
+                deleteFile:function(fileid){
+                    if(fileid){
+                        ajaxmod.requestAuthorize({
+                            url: '/file/' + fileid,
+                            type: 'Delete',
+                            apiOption: 2,
+                            success: function (response) {
+                            }
+                        });
+                    }
+                },
+                submitFile:function(file,_fn){
+                    var _the=this;
+                    if (!vm.fileCategoryId) {
+                        layer.msg('请选择文件附件类别', { icon: 5, time: 5000 });
+                        return;
+                    }
+                    var formData = new FormData();
+                    var _postdata = {
+                        fileCategoryId: vm.fileCategoryId,
+                    };
+                    for (var key in _postdata) {
+                        formData.append(key, _postdata[key]);
+                    }
+                    formData.append('file', file);
+                    ajaxmod.requestAuthorize({
+                        url: '/file',
+                        type: 'Post',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        apiOption: 2,
+                        success: function (accessoryFile) {
+                            _the.createArticleAccessory(accessoryFile,function(tempAccessory){
+                                accessoryFile.articleAccessory = tempAccessory;
+                                if (_fn) _fn(accessoryFile);
+                            });
+                        }
+                    });
+                },
+                loadAccessorys:function(articleAccessory,_fn){
+                    ajaxmod.requestAuthorize({
+                        url: '/file/' + articleAccessory.fileId,
+                        type: 'Get',
+                        apiOption: 2,
+                        success: function (response) {
+                            _fn(response);
+                        }
+                    });
+                },
+                renderFiles:function(){
+                    var _the=this;
+                    if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/ArticleAccessory/all',
+                            data: { articleId: vm.paramObj.id },
+                            type: 'Get',
+                            apiOption: 2,
+                            success: function (response) {
+                                $.each(response.items,function(_i,tempAccessory){
+                                    _the.loadAccessorys(tempAccessory,function(accessoryFile){
+                                        accessoryFile.articleAccessory = tempAccessory;
+                                        vm.showFiles.push(accessoryFile);
+                                        if(_i==0){
+                                            vm.fileCategoryId=accessoryFile.fileCategoryId;
+                                            vm.RenderDom(form);
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    }
+                },
+                //添加时批量添加附件
+                createArticleAccessorys: function (articleId, _fn) {
+                    var articleAccessory = [];
+                    vm.showFiles.forEach(function (item) {
+                        if (!item.articleAccessory) {
+                            articleAccessory.push({
+                                articleId: articleId,
+                                articleAccessoryShowType: 0,
+                                articleAccessoryMoney: 0,
+                                fileId: item.id
+                            });
+                        }
+                    });
+                    ajaxmod.requestAuthorize({
+                        url: '/ArticleAccessory/items',
+                        data: articleAccessory,
+                        type: 'Post',
+                        apiOption: 2,
+                        success: function (response) {
+                            _fn(response);
+                        }
+                    });
+                },
+                //编辑时创建附件
+                createArticleAccessory: function (file, _fn) {
+                    if (vm.paramObj.id) {
+                        var articleAccessory = {
+                            articleId: vm.paramObj.id,
+                            articleAccessoryShowType: 0,
+                            articleAccessoryMoney: 0,
+                            fileId: file.id
+                        };
+                        ajaxmod.requestAuthorize({
+                            url: '/ArticleAccessory',
+                            data: articleAccessory,
+                            type: 'Post',
+                            apiOption: 2,
+                            success: function (response) {
+                                _fn(response);
+                            }
+                        });
+                    }else{
+                        _fn();
+                    }
+                },
+            };
+            articleObj.initPage();
+
+            form.on('select(fileCategoryfilter)', function (data) {
+                vm.fileCategoryId = data.value;
+            });
+
+            form.on('select(articleCategoryfilter)', function (data) {
+                vm.article.articleCategoryId = data.value;
+            });
+
+            form.on('select(rresourceLockfilter)', function (data) {
+                vm.article.rresourceLockId = data.value;
+            });
+
+            form.on('switch(articleIsEncryptfilter)', function (data) {
+                vm.article.articleIsEncrypt =data.elem.checked;
+            });
+            
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('submit(btn_submit_article_form)', function (_from_data) {
+                var data = vm.article;
+                data.articleExtension.articleContent = articleObj.articleUeditor.getContent();
+                if(data.articleExtension.articleContent.length<1){
+                    layer.msg('请编辑文章内容', {icon: 5,time: 5000});
+                    return false;
+                }
+                data.articleLables = articleObj.articleLablesSelects.getValue('value');
+                var url = '/article';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/article/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    apiOption: 2,
+                    success: function (response) {
+                        function closeIframe() {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                            top.tool.publish('edit_article_form_refresh');
+                        }
+                        if (!vm.paramObj.id) {
+                            articleObj.createArticleAccessorys(response.id, function () {
+                                closeIframe();
+                            });
+                        } else {
+                            closeIframe();
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

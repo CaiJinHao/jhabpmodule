@@ -59,10 +59,11 @@ namespace Jh.Abp.JhIdentity
             }
             if (input.ExtraProperties.Count > 0)
             {
-                organizationUnit.ExtraProperties.Clear();
+                //organizationUnit.ExtraProperties.Clear();
                 foreach (var item in input.ExtraProperties)
                 {
-                    organizationUnit.ExtraProperties.Add(item.Key, item.Value);
+                    organizationUnit.SetProperty(item.Key, item.Value);
+                    //organizationUnit.ExtraProperties.Add(item.Key, item.Value);
                 }
             }
             await organizationUnitManager.CreateAsync(organizationUnit);

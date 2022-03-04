@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择步骤</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+    <style>
+        .step{
+            background-color: #ccc;
+            margin: 5px;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .step.selected{
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="page-vm">
+        <form class="layui-form ">
+            <div class="layui-fluid">
+                <div class="layui-row">
+                    <div class="layui-col-sm3 step" v-for="item in steps" v-on:click="selectedStep(item)" :class="{selected:containsStep(item)}">
+                        <div>{{item.name}}</div>
+                        <div>{{item.description}}</div>
+                        <div>输入参数：</div>
+                        <div v-for="p in item.inputs">
+                            <div>{{p}}：{{item.inputs[p]}}</div>
+                        </div>
+                        <div>输出参数：</div>
+                        <div v-for="p in item.outputs">
+                            <div>{{p}}：{{item.outputs[p]}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a  class="layui-btn" lay-submit
+                            lay-filter="btn_submit_steps_ok_form" href="javascript:;">确定</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: {},
+                steps: [],
+                selectedSteps:[]
+            },
+            methods: {
+                selectedStep:function(step){
+                    var _the = this;
+                    var _i = 0;
+                    var hasSteps = _the.selectedSteps.filter(function (item, index) {
+                        if (item.id == step.id) {
+                            _i = index;
+                            return true;
+                        }
+                    });
+                    if (hasSteps.length == 0) {
+                        _the.selectedSteps.push(step);
+                    } else {
+                        _the.selectedSteps.splice(_i,1);
+                    }
+                },
+                containsStep:function(step){
+                    var _the = this;
+                    var hasSteps = _the.selectedSteps.filter(function (item, index) {
+                        return item.id == step.id;
+                    });
+                    if (hasSteps.length == 0) {
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+            }
+        });
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery', 'laydate', 'formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+
+            var stepsObject={
+                loadSteps:function(){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/WorkflowDefinition/Steps',
+                        type: 'Get',
+                        apiOption: 2,
+                        success: function (response) {
+                            vm.steps = response.items;
+                        }
+                    });
+                }
+            }
+
+            stepsObject.loadSteps();
+
+            form.on('submit(btn_submit_steps_ok_form)', function (_from_data) {
+                var data = vm.selectedSteps;
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+                top.tool.publish('btn_submit_steps_selected',data);
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>

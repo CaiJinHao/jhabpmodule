@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文件类别</title>
+    <link href="/main/layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="/main/build/css/common.css" rel="stylesheet" />
+    <style>
+        .layui-form-label{
+            width: 105px !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_filecategory_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form"  lay-filter="form_filecategory"  id="form_filecategory">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">文件类别名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="fileCategoryName">
+                                </div>
+                            </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">是否禁用：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-search name="deleted" :value="2">
+                                            <option value="0">全部</option>
+                                            <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                        <div class="layui-inline btngroup">
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_filecategory_from" id="btn_filecategory_from_query">查询</a>
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_filecategory_from_export">导出</a> -->
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_filecategory_from_reset">重置</a>
+                        </div>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+                <table id="table_filecategory" class="layui-hide" lay-filter="table_filecategory_list"></table>
+                <div id="table_filecategory_page" class="laypage"></div>
+            </div>
+        </div>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                {{# if(vm.RenderPermission(vm.permissionDefineds.Create)){ }}
+                <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+                {{# }if(vm.RenderPermission(vm.permissionDefineds.BatchDelete)){ }}
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量禁用</button>
+                {{# } }}
+            </div>
+        </script>
+        <script type="text/html" id="tpl_isDeleted">
+            <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="禁用|启用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
+        </script>
+        <script type="text/html" id="table_filecategory_operator">
+            {{# if(d.isDeleted){ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Recover)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">启用</a>
+            {{# } }}
+
+            {{# }else{ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Delete)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">禁用</a>
+            {{# } }}
+
+            {{# } }}
+        </script>
+        <script src="/main/layui/layui.js"></script>
+        <script src="/main/plugins/vue/vue.min.js"></script>
+        <script src="/main/modules/extend/common.js"></script>
+        <script>
+            var vm = new Vue({
+                el: '#page-vm',
+                data: {
+                    currPage: 1,
+                    deletedlist: [],
+                    permissionDefineds: {
+                        Export: 'JhAbpJhFile.FileCategorys.Export',
+                        Detail: 'JhAbpJhFile.FileCategorys.Detail',
+                        Create: 'JhAbpJhFile.FileCategorys.Create',
+                        BatchCreate: 'JhAbpJhFile.FileCategorys.BatchCreate',
+                        Update: 'JhAbpJhFile.FileCategorys.Update',
+                        PortionUpdate: 'JhAbpJhFile.FileCategorys.PortionUpdate',
+                        Delete: 'JhAbpJhFile.FileCategorys.Delete',
+                        BatchDelete: 'JhAbpJhFile.FileCategorys.BatchDelete',
+                        Recover: 'JhAbpJhFile.FileCategorys.Recover',
+                    },
+                    permissions: []
+                },
+                methods: {
+                    RenderDom: function(form, callback){
+                        vm.$forceUpdate();//强制重新渲染 dom
+                        // DOM 还没有更新
+                        vm.$nextTick(function () {
+                            // DOM 现在更新了
+                            form.render();
+                            if (callback) {
+                                callback();
+                            }
+                        });
+                    },
+                    RenderPermission: function (permission) {
+                        var _the = this;
+                        var _pers = this.permissions.filter(function (_el) {
+                            return _el.name == permission;
+                        });
+                        if (_pers.length > 0) {
+                            return _pers[0].granted;
+                        }
+                    }
+                }
+            });
+            layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable', 'excel'], function () {
+                var table = layui.table,
+                    $ = layui.jquery,
+                    layer = layui.layer,
+                    form = layui.form,
+                    laypage = layui.laypage,
+                    ajaxmod = layui.ajaxmod,
+                    excel = layui.excel,
+                    datatable = layui.datatable;
+                var _context = $('.table_filecategory_mg'),
+                    _table_style = { align: 'center' };
+
+                var filecategoryObj = {
+                    renderTable: function () {
+                        var _the = this;
+                        var optDefault = {
+                            Page: vm.currPage,
+                            PageSize: PageSize,//common中定义的全局
+                        };
+                        var formfield = form.val('form_filecategory');
+                        $.extend(optDefault, formfield);
+                        let _tableCols = [
+                                { type: 'checkbox'},
+                              $.extend({ field: 'fileCategoryName', title: '文件类别名称' }, _table_style),
+                              $.extend({ field: 'fileCategoryNum', title: '文件类别显示序号' }, _table_style),
+                                //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
+                                $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
+                                $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style)
+                        ];
+                        if (vm.RenderPermission(vm.permissionDefineds.Update)
+                            || vm.RenderPermission(vm.permissionDefineds.Delete)
+                            || vm.RenderPermission(vm.permissionDefineds.Recover)) {
+                            _tableCols.push($.extend({ field: 'id', title: '操作', width: 190, templet: '#table_filecategory_operator', fixed: 'right' }, _table_style));
+                        }
+                        datatable.renderTable(optDefault, {
+                            url: '/filecategory',
+                            apiOption: 2,
+                            tableElem: 'table_filecategory',
+                            tableCols: [_tableCols],
+                        });
+                    },
+                    detail: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '文件类别详情',
+                            area: ['850px', '500px'],
+                            content: '/main/view/file/filecategory/edit.html?detail=1&id=' + _data.id,
+                        });
+                    },
+                    edit: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '编辑文件类别',
+                            area: ['850px', '500px'],
+                            content: '/main/view/file/filecategory/edit.html?id=' + _data.id,
+                        });
+                    },
+                    add: function () {
+                        var _the = this;
+                        datatable.add({
+                            title: '新增文件类别',
+                            area: ['850px', '500px'],
+                            content: '/main/view/file/filecategory/edit.html',
+                        });
+                    },
+                    del: function (_data) {
+                        var _the = this;
+                        datatable.del({
+                            url: '/filecategory/' + _data.id,
+                            type: 'Delete',
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    delbatch: function (_data) {
+                        let _the = this;
+                        var checkStatus = table.checkStatus('table_filecategory'),
+                            data = checkStatus.data;
+                       var delIdList = [];
+                        $.each(data, function (k, v) {
+                            delIdList.push(v.id);
+                        });
+                        datatable.delbatch({
+                            url: '/filecategory/keys',
+                            type: 'Delete',
+                            data: delIdList,
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    rollbackDel: function (data) {
+                        let _the = this;
+                        _the.patchObj(false, '/filecategory/' + data.id + '/Deleted');
+                    },
+                    patchObj: function (data,url) {
+                        let _the = this;
+                        ajaxmod.requestAuthorize({
+                            url:url,
+                            type: 'Patch',
+                            data: data,
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    exportExcel: function (data) {
+                        data = excel.filterExportData(data, [
+                           'fileCategoryName',
+                           'fileCategoryNum',
+                        ]);
+
+                        data.unshift({
+                            fileCategoryName:'文件类别名称',
+                            fileCategoryNum:'文件类别显示序号',
+                        });
+
+                        excel.exportExcel({
+                            filecategory: data
+                        }, '文件类别' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                    },
+                    loadtable:function(){
+                        $('#btn_filecategory_from_query').click();
+                    },
+                    loadList: function (_fn) {
+                        var _the = this;
+                        ajaxmod.ajaxArray([
+                            {
+                                url: '/appenums/delete',
+                                type: 'Get',
+                                success: function (response) {
+                                    vm.deletedlist = response;
+                                }
+                            }
+                        ], function () {
+                                vm.RenderDom(form, function () { vm.RenderDom(form, _fn) });
+                        });
+                     },
+                    loadPermissions:function(_fn){
+                        var _the=this;
+                        let _permissions = [
+                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Detail,
+                            vm.permissionDefineds.Create,
+                            vm.permissionDefineds.BatchCreate,
+                            vm.permissionDefineds.Update,
+                            vm.permissionDefineds.PortionUpdate,
+                            vm.permissionDefineds.Delete,
+                            vm.permissionDefineds.BatchDelete,
+                            vm.permissionDefineds.Recover,
+                        ];
+                        ajaxmod.requestAuthorize({
+                            url: '/JhPermissions/PermissionGranted',
+                            type: 'Post',
+                            data: { permissionNames: _permissions },
+                            success: function (response) {
+                                vm.permissions = response;
+                                _fn();
+                            }
+                        });
+                    }
+                };
+
+                 filecategoryObj.loadPermissions(function () { filecategoryObj.loadList(function () { filecategoryObj.renderTable();}); });
+
+             top.tool.subscribe("edit_filecategory_form_refresh", function () {
+                    filecategoryObj.renderTable();
+             });
+
+                table.on('tool(table_filecategory_list)', function (obj) {
+                    var data = obj.data;
+                    filecategoryObj[obj.event] ? filecategoryObj[obj.event].call(filecategoryObj, data) : '';
+                });
+
+                table.on('toolbar(table_filecategory_list)', function (obj) {
+                    var data = obj.data;
+                    filecategoryObj[obj.event] ? filecategoryObj[obj.event].call(filecategoryObj, data) : '';
+                });
+
+                form.on('submit(btn_filecategory_from)', function (data) {
+                    vm.currPage = 1;
+                    filecategoryObj.renderTable();
+                    return false;
+                });
+
+            form.on('submit(btn_filecategory_from_reset)', function (data) {
+                $('#form_organizationunit')[0].reset();
+                   filecategoryObj.renderTable();
+            });
+
+                form.on('submit(btn_filecategory_from_export)', function (data) {
+                    var requestData = { deleted: 2 };
+                    Object.assign(requestData,data);
+                    ajaxmod.requestAuthorize({
+                        url: '/filecategory/all',
+                        type: 'Get',
+                        data: requestData,
+                        apiOption: 2,
+                        success: function (response) {
+                            filecategoryObj.exportExcel(response.items);
+                        }
+                    });
+                    return false;
+                });
+
+                form.on('switch(table_tpl_isDeleted)', function (data) {
+                    let _id = data.elem.attributes["data-code"].value;
+                    let _value = false;
+                    if (data.elem.checked) {
+                        _value = false;//启用
+                    } else {
+                        _value = true;//禁用
+                    }
+                    filecategoryObj.patchObj(_value,'/filecategory/'+_id+'/Deleted');
+                });
+            });
+        </script>
+    </body>
+    </html>

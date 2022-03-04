@@ -79,6 +79,8 @@
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.IdentityServer\Jh.Abp.IdentityServer.csproj" />
     <ProjectReference Include="..\..\..\..\libs\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj" />
     <ProjectReference Include="..\..\..\permission-management\src\Jh.Abp.JhPermission.HttpApi\Jh.Abp.JhPermission.HttpApi.csproj" />
+    <ProjectReference Include="..\..\..\..\module_extend\menu\src\Jh.Abp.JhMenu.HttpApi\Jh.Abp.JhMenu.HttpApi.csproj" />
+    <ProjectReference Include="..\..\..\..\module_extend\workflow\src\Jh.Abp.Workflow.HttpApi\Jh.Abp.Workflow.HttpApi.csproj" />
   </ItemGroup>
 
 </Project>

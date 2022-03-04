@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>工作流设计器</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/main/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/main/plugins/jsplumb/browser-ui/css/jsplumb.css">
+    <link rel="stylesheet" href="/main/plugins/jsplumb/browser-ui/css/jsplumbtoolkit.css">
+    <link rel="stylesheet" href="/main/plugins/jsplumb/browser-ui/css/jsplumbtoolkit-demo.css">
+    <!-- <link rel="stylesheet" href="/main/plugins/jsplumb/css/demo.css"> -->
+    <link rel="stylesheet" href="/main/plugins/jsplumb/css/designer.css">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div id="page-vm">
+        <div class="layui-row" style="padding:15px;">
+            <div class="layui-col-md12">
+                <button type="button" class="layui-btn" id="createStep">创建步骤</button>
+                <button type="button" class="layui-btn" id="connector">连接</button>
+                <button type="button" class="layui-btn" id="workflowSave">保存</button>
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <div class="designerContainer">
+                    <!-- demo -->
+                    <div class="jtk-demo-canvas canvas-wide drag-drop-demo jtk-surface jtk-surface-nopan"
+                        id="designerCanvas">
+                        <div class="layui-btn" id="StartStep"><span>开始</span></div>
+                        <!-- <div class="layui-btn" id="end" style="left:100px;"><span>结束</span></div> -->
+                    </div>
+                    <!-- /demo -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="tpl_step" type="text/html">
+                <div>
+                    <h4>{{name}}</h4>
+                    <h6>{{description}}</h6>
+                </div>
+        </script>
+
+    <script src="/libs/jquery/jquery.js"></script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script src="/main/plugins/EventTool.js"></script>
+    <script src="/main/plugins/mustache.js"></script>
+    <script src="../../plugins/jsplumb/js/jsplumb.bundle.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: { },
+                designerInstance: {},
+                designerCanvas:'designerCanvas',
+                endpointOption: {
+                    connectorOverlays: [
+                        {
+                            type: "Arrow",
+                            options: {
+                                location: 1,
+                            }
+                        }
+                    ]
+                },
+                Steps: [{ id: 'StartStep', name: '开始', stepType: 'Jh.Abp.Workflow.WorkflowStartStep, Jh.Abp.Workflow.Application', className: 'Jh.Abp.Workflow.WorkflowStartStep', assemblyName: 'Jh.Abp.JhWebApp.Application'}],
+                submitData: {
+                    id:'',
+                    version: 1,
+                    description: "测试",
+                    jsonDefinition: "",
+                },
+                isConnection: false,
+                sourceElement: undefined,
+                errorMsg:function(){},
+                elementClickEvent:function(event){},
+                //输入的值
+                storageInputs:{}
+            },
+            created:function() {
+                var _the=this;
+                _the.createInstance();
+            },
+            methods: {
+                initNodes:function(){
+                    var _the=this;
+                    _the.Steps.forEach(function(node){
+                        if(node.id!='StartStep'){
+                            _the.addNode(node,true);
+                        }
+                    });
+                    if (_the.Steps.length > 1) {
+                        _the.Steps.forEach(function (node) {
+                            _the.addConnector(node);
+                        });
+                    }
+                },
+                addConnector:function(node){
+                    var _the=this;
+                    if (node.nextStepId) {
+                        _the.designerInstance.connect({
+                            source: document.getElementById(node.id),
+                            target: document.getElementById(node.nextStepId),
+                            connector: 'Flowchart',
+                            overlays: _the.endpointOption.connectorOverlays
+                        });
+                    }
+                },
+                elementDblClick: function (event) {
+                    var _the = this;
+                    _the.elementClickEvent(event);
+                },
+                hasConnector:function(event){
+                    var _the = this;
+                    for (var con of _the.designerInstance.connections) {
+                        if (con.sourceId == _the.sourceElement.id && con.targetId == event.target.id) {
+                            _the.errorMsg('当前连接已存在');
+                            _the.sourceElement=undefined;
+                            return true;
+                        }
+                        else if(con.targetId == event.target.id){
+                            _the.errorMsg('一个节点只能有一个入');
+                            _the.sourceElement=undefined;
+                            return true;
+                        }
+                        else if(_the.sourceElement.id == event.target.id){
+                            _the.errorMsg('不支持自己连接自己');
+                            _the.sourceElement=undefined;
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                elementClick: function (event) {
+                    var _the = this;
+                    if (_the.sourceElement && _the.isConnection) {
+                        if (!_the.hasConnector(event)) {
+                            _the.designerInstance.connect({
+                                source: _the.sourceElement,
+                                target: event.target,
+                                connector: 'Flowchart',
+                                overlays: [
+                                    {
+                                        type: "Arrow",
+                                        options: {
+                                            location: 1,
+                                        }
+                                    }
+                                ],
+                            });
+                        }
+                        _the.sourceElement = undefined;
+                    } else if (_the.isConnection) {
+                        _the.sourceElement = event.target;
+                    }
+                },
+                addNode:function(node,notPush){
+                    var _the=this;
+                    var _template= Mustache.render(document.getElementById('tpl_step').innerHTML,node);
+                    var _div= document.createElement('div');
+                    _div.setAttribute('id',node.id);
+                    _div.setAttribute('class','window step');
+                    _div.innerHTML = _template;
+                    _div.style.left = node.x + 'px';
+                    _div.style.top = node.y + 'px';
+                    document.getElementById(_the.designerCanvas).appendChild(_div);
+                    _the.addEndpoint(_div);   
+                    if (!notPush) {
+                        _the.Steps.push(node);
+                    }
+                },
+                addEndpoint: function (element) {
+                    var _the=this;
+                    _the.designerInstance.batch(function () {
+                        _the.designerInstance.addEndpoint(element, _the.endpointOption);
+                    });
+                    $(element).on('dblclick', function (event) { _the.elementDblClick(event); });
+                    $(element).on('click', function (event) { _the.elementClick(event); });
+                },
+                //not use
+                getElementsById: function (elements, id) {
+                    var _the = this;
+                    var datas = elements.forEach(function (item) {
+                        return item.id == id;
+                    });
+                    return datas[0];
+                },
+                updateStepPosition:function(arg){
+                    var _the=this;
+                    _the.Steps.forEach(function (item) {
+                        if (item.id == arg.el.id) {
+                            item.x = arg.elements[0].pos.x;
+                            item.y = arg.elements[0].pos.y;
+                            return true;
+                        }
+                    });
+                },
+                updateNextStep:function(con){
+                    var _the=this;
+                    _the.Steps.forEach(function (item) {
+                        if (item.id == con.sourceId) {
+                            item.nextStepId = con.targetId;
+                            item.sourceEndpointId=con.sourceEndpoint.uuid;
+                            item.targetEndpointId=con.targetEndpoint.uuid;
+                            return true;
+                        }
+                    });
+                },
+                initStart:function(){
+                    var _the=this;
+                    _the.addEndpoint(document.getElementById('StartStep'));
+                    // _the.addEndpoint(document.getElementById('end'));
+                },
+                createInstance:function(){
+                    var _the=this;
+                    jsPlumbBrowserUI.ready(function () {
+                        //传入默认值
+                        _the.designerInstance = jsPlumbBrowserUI.newInstance({
+                            container: document.getElementById(_the.designerCanvas),
+                            dragOptions: {
+                                cursor: 'pointer',
+                                zIndex: 2000,
+                            },
+                            hoverPaintStyle: {
+                                stroke: "red"
+                            },
+                            paintStyle: {
+                                stroke: 'orange',
+                                strokeWidth: 2
+                            },
+                            endpointStyle: {
+                                stroke: '#fff',
+                                strokeWidth: 0
+                            },
+                            endpointHoverStyle: {
+                                fill: "#fff"
+                            },
+                            endpoint: {
+                                type: 'Dot',
+                                options: {
+                                    radius: 6
+                                }
+                            },
+                            anchor: {
+                                type: "Perimeter",
+                                options: {
+                                    shape: "Rectangle",
+                                    anchorCount: 150
+                                }
+                            },
+                            dropOptions: {
+                                activeClass: "dragActive",
+                                hoverClass: "dropHover"
+                            },
+                            connection: {
+                                connector: 'Flowchart'
+                            }
+                        });
+
+                        _the.designerInstance.bind('connection', function (con, event) {
+                            _the.updateNextStep(con);
+                        });
+
+                        _the.designerInstance.bind('connection:dblclick', function (arg, event) {
+                            console.log('dblclick');
+                            console.log(arg);
+                            console.log(event);
+                        });
+
+                        _the.designerInstance.bind('drag:stop', function (arg) {
+                            _the.updateStepPosition(arg);
+                        });
+
+                        _the.initStart();
+                    });
+                },
+                getDataNodes:function(){
+                    var _the = this;
+                    _the.submitData.jsonDefinition = JSON.stringify(_the.Steps);
+                    _the.submitData.inputData=JSON.stringify(_the.storageInputs);
+                    return _the.submitData;
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'jquery', 'datatable','ajaxmod'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                datatable = layui.datatable
+                ;
+                // 注意：每个步骤的参数名不能相同，否则会覆盖
+                // 每次编辑参数，需要全部重新填写
+                // vm.paramObj.id='3a011c45-bedd-920e-f405-61e7434749fc';
+                var designerObject={
+                    loadNodes:function(){
+                        var _the = this;
+                        if (vm.paramObj.id) {
+                            ajaxmod.requestAuthorize({
+                                url: '/WorkflowDefinition/' + vm.paramObj.id,
+                                type: 'Get',
+                                apiOption: 2,
+                                success: function (response) {
+                                    vm.submitData = response;
+                                    if (response.jsonDefinition) {
+                                        vm.Steps = JSON.parse(response.jsonDefinition);
+                                        vm.initNodes();
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    submitSteps: function () {
+                        var url = '/WorkflowDefinition/' + vm.submitData.id;
+                        var type = 'Put';
+                        var data = vm.getDataNodes();
+                        ajaxmod.requestAuthorize({
+                            url: url,
+                            data: data,
+                            type: type,
+                            apiOption: 2,
+                            success: function (response) {
+                                layer.msg('成功');
+                            }
+                        });
+                    },
+                    elementClick: function (event) {
+                        var _the = this;
+                        var node = undefined;
+                        vm.Steps.forEach(function (item) {
+                            if (item.id == event.target.id) {
+                                node =$.extend(true,{},item);
+                                return true;
+                            }
+                        });
+                        //编辑参数
+                        $.extend(node.inputs, vm.storageInputs);
+                        datatable.edit({
+                            title: '编辑步骤参数',
+                            area: ['850px', '500px'],
+                            content: 'stepform.html',
+                            success:function(){
+                                top.tool.publish('btn_edit_step_params', node);
+                            }
+                        });
+                    }
+                };
+
+                designerObject.loadNodes();
+                vm.elementClickEvent = designerObject.elementClick;
+
+                vm.errorMsg=function(msg){
+                    layer.msg(msg);
+                };
+
+            $('#createStep').on('click',function(){
+                var _the = this;
+                datatable.add({
+                    title: '选择步骤',
+                    area: ['850px', '500px'],
+                    content: 'steps.html',
+                });
+            });
+
+            $('#workflowSave').on('click',function(){
+                var _the=this;
+                designerObject.submitSteps();
+            });
+
+            $('#connector').on('click',function(){
+                vm.isConnection=!vm.isConnection;
+                if (vm.isConnection) {
+                    $(this).addClass('layui-btn-normal');
+                } else {
+                    $(this).removeClass('layui-btn-normal');
+                    vm.sourceElement = undefined;
+                }
+            });
+
+            top.tool.subscribe("btn_submit_steps_selected", function (name,data) {
+                data.forEach(function(item){
+                    vm.addNode(item);
+                });
+            });
+
+            top.tool.subscribe("btn_submit_step_params_form", function (name,inputs) {
+                Object.assign(vm.storageInputs,inputs);
+            });
+        });
+    </script>
+</body>
+
+</html>

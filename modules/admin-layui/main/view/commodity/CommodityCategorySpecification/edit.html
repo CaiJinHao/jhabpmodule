@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑自定义规格模板</title>
+    <link href="/main/layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="/main/build/css/common.css" rel="stylesheet" />
+    <style>
+        .layui-input-block {
+            margin-left: 129px !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_commoditycategoryspecification_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="commoditycategoryspecification.id" />
+                <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">商品类别：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search lay-filter="commodityCategoryfilter" :value="commoditycategoryspecification.commodityCategoryId">
+                                        <option value="">请选择</option>
+                                        <option v-for="item in commodityCategoryOptions" v-bind:value="item.id">{{item.commodityCategoryName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">规格模板名称：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入自定义规格模板名称" v-model="commoditycategoryspecification.commodityCategorySpecificationName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">模板显示序号：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入自定义规格模板显示序号" v-model="commoditycategoryspecification.commodityCategorySpecificationNum">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">模板备注：</label>
+                                    <div class="layui-input-block">
+                                            <input type="text" class="layui-input" placeholder="请输入自定义规格模板备注" v-model="commoditycategoryspecification.commodityCategorySpecificationRemark">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a v-if="paramObj.detail!=1"  class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_commoditycategoryspecification_form" href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/main/layui/layui.js"></script>
+    <script src="/main/plugins/vue/vue.min.js"></script>
+    <script src="/main/modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: { detail:0 },
+                commodityCategoryOptions:[],
+               commoditycategoryspecification:{
+                          commodityCategoryId:'',
+                          commodityCategorySpecificationName:'',
+                             commodityCategorySpecificationNum: 0,
+                          commodityCategorySpecificationRemark:'',
+                concurrencyStamp: '',
+                extraProperties: { }
+               }
+            },
+            watch:{
+                commoditycategoryspecification:{
+                    deep: true,
+                    handler:function(val,old_val){
+                        var _this = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function(form,callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_commoditycategoryspecification_form');
+            var _table_style = { align: 'center' };
+
+            var commoditycategoryspecificationObj = {
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.loadSelects(function(){
+                        _the.loadData();
+                    });
+                },
+                loadData: function () {
+					if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/commoditycategoryspecification/' + vm.paramObj.id,
+                            type: 'Get',
+                            apiOption:2,
+                            success: function (response) {
+							    vm.$set(vm, 'commoditycategoryspecification', response);
+							    vm.RenderDom(form);
+                            }
+                        });
+					}
+                },
+                loadSelects: function (_fn) {
+                    let _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/commodityCategory/options',
+                            type: 'Get',
+                            data: { sorting: 'commodityCategoryNum' },
+                            apiOption: 2,
+                            success: function (response) {
+                                vm.$set(vm, 'commodityCategoryOptions', response.items);
+                            }
+                        }], function () {
+                            vm.RenderDom(form, function () { _fn(); });
+                        });
+                },
+            };
+            commoditycategoryspecificationObj.initPage();
+
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('select(commodityCategoryfilter)', function (data) {
+                vm.commoditycategoryspecification.commodityCategoryId = data.value;
+            });
+
+            form.on('submit(btn_submit_commoditycategoryspecification_form)', function (_from_data) {
+                var data = vm.commoditycategoryspecification;
+                var url = '/commoditycategoryspecification';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/commoditycategoryspecification/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    apiOption: 2,
+                    success: function (response) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        top.tool.publish('edit_commoditycategoryspecification_form_refresh');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

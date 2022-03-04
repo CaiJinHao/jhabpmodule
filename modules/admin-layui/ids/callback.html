@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+
+<html>
+
+
+<head>
+    <meta charset="utf-8" />
+    <title>callback</title>
+</head>
+<body>
+    <script src="/main/plugins/oidc/oidc-client.min.js"></script>
+    <script src="/main/plugins/oidc/oidc-client-sample.js"></script>
+    <script>
+    new Oidc.OidcClient().processSigninResponse().then(function (response) {
+        sessionStorage.setItem('signinResponse', JSON.stringify(response));
+        var urlsearch = localStorage.getItem("urlsearch");
+        var redirect = '/main/index.html';
+        if (urlsearch) {
+            redirect += urlsearch;
+        }
+        window.location = redirect;
+    }).catch(function (err) {
+        console.log(err);
+        oidcManager.login();
+    });
+    </script>
+</body>
+</html>

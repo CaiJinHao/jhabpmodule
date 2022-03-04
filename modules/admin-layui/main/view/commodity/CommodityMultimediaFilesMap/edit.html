@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑商品多媒体文件中间表</title>
+    <link href="/main/layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="/main/build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_commoditymultimediafilesmap_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="commoditymultimediafilesmap.id" />
+                <div class="layui-row">
+                    <input type="hidden" class="layui-input"  v-model="commoditymultimediafilesmap.commodityId">
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文件显示类型：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入商品多媒体文件显示类型" v-model="commoditymultimediafilesmap.commodityMultimediaFilesMapShowType">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">文件序号：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入商品多媒体文件序号" v-model="commoditymultimediafilesmap.commodityMultimediaFilesMapNum">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label my-input-required">文件类别：</label>
+                                        <div class="layui-input-inline">
+                                            <select lay-search lay-filter="fileCategoryfilter" lay-verify="required" :value="fileCategoryId">
+                                                <option value="">请选择</option>
+                                                <option v-for="item in fileCategoryOptions" v-bind:value="item.id">{{item.fileCategoryName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label my-input-required">多媒体文件：</label>
+                                    <div class="layui-input-block">
+                                        <div class="layui-upload-drag" id="showCommoditymultimediafile">
+                                            <i class="layui-icon"></i>
+                                            <p>点击上传，或将文件拖拽到此处</p>
+                                            <div v-show="showCommoditymultimediafile">
+                                                <hr>
+                                                <img :src="showCommoditymultimediafile"  style="max-width: 300px">
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a v-if="paramObj.detail!=1"  class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_commoditymultimediafilesmap_form" href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/main/layui/layui.js"></script>
+    <script src="/main/plugins/vue/vue.min.js"></script>
+    <script src="/main/modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: { detail:0 ,commodityId:''},
+               commoditymultimediafilesmap:{
+                          commodityId:'',
+                             commodityMultimediaFilesMapShowType: 0,
+                             commodityMultimediaFilesMapNum: 0,
+                          fileId:'',
+                concurrencyStamp: '',
+                extraProperties: { }
+               },
+               showCommoditymultimediafile:'',
+               selectedCommoditymultimediaFile:{},
+               fileCategoryOptions:[],
+               fileCategoryId:'',
+            },
+            watch:{
+                commoditymultimediafilesmap:{
+                    deep: true,
+                    handler:function(val,old_val){
+                        var _this = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function(form,callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate','upload'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                upload = layui.upload,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_commoditymultimediafilesmap_form');
+            var _table_style = { align: 'center' };
+
+            var commoditymultimediafilesmapObj = {
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    vm.commoditymultimediafilesmap.commodityId=vm.paramObj.commodityId;
+                    _the.renderUpload();
+                    _the.loadSelects(function(){
+                        _the.loadData();
+                    });
+                },
+                loadData: function () {
+                    var _the = this;
+					if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/commoditymultimediafilesmap/' + vm.paramObj.id,
+                            type: 'Get',
+                            apiOption:2,
+                            success: function (response) {
+							    vm.$set(vm, 'commoditymultimediafilesmap', response);
+                                _the.loadCommoditymultimediafile(response,function(){
+                                    vm.RenderDom(form);
+                                });
+                            }
+                        });
+					}
+                },
+                loadCommoditymultimediafile:function(accessoryFile,_fn){
+                    ajaxmod.requestAuthorize({
+                        url: '/file/' + accessoryFile.fileId,
+                        type: 'Get',
+                        apiOption: 2,
+                        success: function (response) {
+                            vm.showCommoditymultimediafile = response.fileAddress;
+                            vm.fileCategoryId = response.fileCategoryId;
+                            _fn();
+                        }
+                    });
+                },
+                renderUpload:function(){
+                    var _the = this;
+                    upload.render({
+                        elem: '#showCommoditymultimediafile',
+                        auto: false,
+                        accept: 'file',
+                        field: 'file',
+                        multiple: true,
+                        drag: true,
+                        choose: function (obj) {
+                            obj.preview(function (index, file, result) {
+                                vm.showCommoditymultimediafile = result;
+                                vm.selectedCommoditymultimediaFile=file;
+                            });
+                        }
+                    });
+                },
+                sumbmitCommoditymultimediaFile:function(_fn){
+                    if (vm.selectedCommoditymultimediaFile) {
+                        var formData = new FormData();
+                        var _postdata = {
+                            fileCategoryId: vm.fileCategoryId,
+                        };
+                        for (var key in _postdata) {
+                            formData.append(key, _postdata[key]);
+                        }
+                        formData.append('file', vm.selectedCommoditymultimediaFile);
+                        ajaxmod.requestAuthorize({
+                            url: '/file',
+                            type: 'Post',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            apiOption: 2,
+                            success: function (accessoryFile) {
+                                if (_fn) _fn(accessoryFile);
+                            }
+                        });
+                    } else {
+                        layer.msg('请选择多媒体文件', { icon: 5, time: 5000 });
+                    }
+                },
+                loadSelects: function (_fn) {
+                    let _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/FileCategory/options',
+                            type: 'Get',
+                            data: { sorting: 'fileCategoryNum' },
+                            apiOption: 2,
+                            success: function (response) {
+                                vm.$set(vm, 'fileCategoryOptions', response.items);
+                            }
+                        },
+                    ], function () {
+                            vm.RenderDom(form, function () { _fn(); });
+                        });
+                },
+            };
+            commoditymultimediafilesmapObj.initPage();
+
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('select(fileCategoryfilter)', function (data) {
+                vm.fileCategoryId = data.value;
+            });
+
+            form.on('submit(btn_submit_commoditymultimediafilesmap_form)', function (_from_data) {
+                var data = vm.commoditymultimediafilesmap;
+                var url = '/commoditymultimediafilesmap';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/commoditymultimediafilesmap/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                commoditymultimediafilesmapObj.sumbmitCommoditymultimediaFile(function (accessoryFile) {
+                    data.fileId=accessoryFile.id;
+                    ajaxmod.requestAuthorize({
+                        url: url,
+                        data: data,
+                        type: type,
+                        apiOption: 2,
+                        success: function (response) {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                            top.tool.publish('edit_commoditymultimediafilesmap_form_refresh');
+                        }
+                    });
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

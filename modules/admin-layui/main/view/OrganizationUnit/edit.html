@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_organizationunit_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="organizationunit.id" />
+                <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">上级组织：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-filter="OrganizationUnitfilter" lay-search   :value="organizationunit.parentId">
+                                        <option value="">请选择</option>
+                                        <option v-for="item in OrganizationUnitIdList" v-bind:value="item.value">{{item.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">组织名称：</label>
+                                    <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入组织名称" v-model="organizationunit.displayName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">标记：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-filter="tagfilter" lay-search lay-verify="required" :value="organizationunit.extraProperties.TagValue">
+                                            <option value="">请选择</option>
+                                            <option v-for="option in tagList" v-bind:value="option.value">{{ option.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="layui-col-sm6">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label my-input-required">负责人：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-filter="userfilter" lay-search lay-verify="required"  :value="organizationunit.extraProperties.LeaderId">
+                                            <option value="">请选择</option>
+                                            <option v-for="item in userList" v-bind:value="item.id">{{item.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 组织不能包含角色，否则用户保存角色有问题 -->
+                        <!-- <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">包含角色：</label>
+                                    <div class="layui-input-inline">
+                                        <div id="roleNames" style="width: 577px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_organizationunit_form" href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <script src="../../modules/extend/common.js"></script>
+    <script src="../../plugins/xm-select/xm-select.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: {},
+                organizationunit: {
+                    tenantId: '',
+                    parentId: '',
+                    code: '',
+                    displayName: '',
+                    roleIds:[],
+                    extraProperties: {
+                        // TagValue: null,
+                        // TagName: null,
+                        // TagCategoryValue:null,
+                        LeaderId: null,
+                        LeaderName: null
+                    },
+                },
+               OrganizationUnitIdList:[],
+               userList:[],
+               tagList:[],
+            },
+            watch:{
+                organizationunit:{
+                    deep: true,
+                    handler:function(val,old_val){
+                        var _this = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function(form,callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_organizationunit_form');
+            var _table_style = { align: 'center' };
+
+            var organizationunitObj = {
+                roleNamesSelects:{},
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.loadSelects(function () {
+                        _the.loadData();
+                        // _the.loadRoleNames(function () {});
+                    });
+                },
+                loadData: function () {
+					if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/organizationunit/' + vm.paramObj.id,
+                            type: 'Get',
+                            success: function (response) {
+							    vm.$set(vm, 'organizationunit', response);
+							    vm.RenderDom(form);
+                            }
+                        });
+					}
+                },
+                setRoleNamesValue:function(_fn){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/organizationunit/'+vm.paramObj.id+'/roles',
+                        type: 'Get',
+                        success: function (response) {
+                            if (_fn) {
+                                _fn(response);
+                            }
+                        }
+                    });
+                },
+                loadRoleNames:function(_fn){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/IdentityRole/select',
+                        type: 'Get',
+                        success: function (response) {
+                            let _rolesValue = [];
+                            function _render() {
+                                _the.roleNamesSelects = xmSelect.render({
+                                    el: '#roleNames',
+                                    language: 'zn',
+                                    initValue: _rolesValue,
+                                    data: response.items
+                                });
+                            }
+                            if (vm.paramObj.id) {
+                                _the.setRoleNamesValue(function (roles) {
+                                    roles.items.forEach(element => {
+                                        _rolesValue.push(element.value);
+                                    });
+                                    _render();
+                                });
+                            } else {
+                                _render();
+                            }
+                            if (_fn) {
+                                _fn();
+                            }
+                        }
+                    });
+                },
+                loadSelects: function (_fn) {
+                    let _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/organizationunit/select',
+                            type: 'Get',
+                            success: function (response) {
+                                vm.$set(vm, 'OrganizationUnitIdList', response.items);
+                            }
+                        },
+                        // {
+                        //     url: '/DictionaryDetail/selectvalue?dictionaryCategoryValue=1',
+                        //     type: 'Get',
+                        //     success: function (response) {
+                        //         vm.tagList = response.items;
+                        //     }
+                        // },
+                        {
+                            url: '/IdentityUser/options',
+                            type: 'Get',
+                            success: function (response) {
+                                vm.userList = response.items;
+                                console.log(vm.userList);
+                            }
+                        }
+                    ], function () {
+                        vm.RenderDom(form, function () { _fn(); });
+                    });
+                }
+            };
+            organizationunitObj.initPage();
+
+            form.on('select(tagfilter)', function (data) {
+                var _v = data.value;
+                if (_v == "") {
+                    vm.organizationunit.extraProperties.TagValue = null;
+                    vm.organizationunit.extraProperties.TagName = "";
+                    vm.organizationunit.extraProperties.TagCategoryValue = "";
+                } else {
+                    vm.organizationunit.extraProperties.TagValue = data.value;
+                    var tagDtos = vm.tagList.filter(function (item) {
+                        return item.value == data.value;
+                    });
+                    vm.organizationunit.extraProperties.TagName = tagDtos[0].name;
+                    vm.organizationunit.extraProperties.TagCategoryValue = tagDtos[0].data.dictionaryCategoryValue;
+                }
+            });
+
+            form.on('select(userfilter)', function (data) {
+                var _v = data.value;
+                if (_v == "") {
+                    vm.organizationunit.extraProperties.LeaderId = null;
+                    vm.organizationunit.extraProperties.LeaderName = null;
+                } else {
+                    vm.organizationunit.extraProperties.LeaderId = data.value;
+                    var userDtos = vm.userList.filter(function (item) {
+                        return item.id == data.value;
+                    });
+                    vm.organizationunit.extraProperties.LeaderName = userDtos[0].name;
+                }
+            });
+
+            form.on('select(OrganizationUnitfilter)', function (data) {
+                vm.organizationunit.parentId = data.value;
+            });
+
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('submit(btn_submit_organizationunit_form)', function (_from_data) {
+                var data = vm.organizationunit;
+                // data.roleIds = organizationunitObj.roleNamesSelects.getValue('value');
+                var url = '/organizationunit';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/organizationunit/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    success: function (response) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        top.tool.publish('edit_organizationunit_form_refresh');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

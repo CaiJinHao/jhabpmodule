@@ -12,11 +12,12 @@ public static class JhIdentityDbContextModelCreatingExtensions
         this ModelBuilder builder)
     {
         Check.NotNull(builder, nameof(builder));
-        ConfigureExtensionDomain();
+
+
     }
 
     /// <summary>
-    /// 扩展实体
+    /// 扩展实体  放到PreConfigureServices
     /// </summary>
     public static void ConfigureExtensionDomain()
     {

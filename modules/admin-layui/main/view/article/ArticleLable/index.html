@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文章标签</title>
+    <link href="/main/layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="/main/build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_articlelable_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form"  lay-filter="form_articlelable"  id="form_articlelable">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">标签名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="articleLableName">
+                                </div>
+                            </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">是否禁用：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-search name="deleted" :value="2">
+                                            <option value="0">全部</option>
+                                            <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                        <div class="layui-inline btngroup">
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_articlelable_from" id="btn_articlelable_from_query">查询</a>
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_articlelable_from_export">导出</a> -->
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_articlelable_from_reset">重置</a>
+                        </div>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+                <table id="table_articlelable" class="layui-hide" lay-filter="table_articlelable_list"></table>
+                <div id="table_articlelable_page" class="laypage"></div>
+            </div>
+        </div>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                {{# if(vm.RenderPermission(vm.permissionDefineds.Create)){ }}
+                <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+                {{# }if(vm.RenderPermission(vm.permissionDefineds.BatchDelete)){ }}
+                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量禁用</button>
+                {{# } }}
+            </div>
+        </script>
+        <script type="text/html" id="tpl_isDeleted">
+            <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="禁用|启用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
+        </script>
+        <script type="text/html" id="table_articlelable_operator">
+            {{# if(d.isDeleted){ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Recover)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">启用</a>
+            {{# } }}
+
+            {{# }else{ }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Update)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
+            {{# } }}
+
+            {{# if(vm.RenderPermission(vm.permissionDefineds.Delete)){ }}
+            <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">禁用</a>
+            {{# } }}
+
+            {{# } }}
+        </script>
+        <script src="/main/layui/layui.js"></script>
+        <script src="/main/plugins/vue/vue.min.js"></script>
+        <script src="/main/modules/extend/common.js"></script>
+        <script>
+            var vm = new Vue({
+                el: '#page-vm',
+                data: {
+                    currPage: 1,
+                    deletedlist: [],
+                    permissionDefineds: {
+                        Export: 'JhAbpJhArticle.ArticleLables.Export',
+                        Detail: 'JhAbpJhArticle.ArticleLables.Detail',
+                        Create: 'JhAbpJhArticle.ArticleLables.Create',
+                        BatchCreate: 'JhAbpJhArticle.ArticleLables.BatchCreate',
+                        Update: 'JhAbpJhArticle.ArticleLables.Update',
+                        PortionUpdate: 'JhAbpJhArticle.ArticleLables.PortionUpdate',
+                        Delete: 'JhAbpJhArticle.ArticleLables.Delete',
+                        BatchDelete: 'JhAbpJhArticle.ArticleLables.BatchDelete',
+                        Recover: 'JhAbpJhArticle.ArticleLables.Recover',
+                    },
+                    permissions: []
+                },
+                methods: {
+                    RenderDom: function(form, callback){
+                        vm.$forceUpdate();//强制重新渲染 dom
+                        // DOM 还没有更新
+                        vm.$nextTick(function () {
+                            // DOM 现在更新了
+                            form.render();
+                            if (callback) {
+                                callback();
+                            }
+                        });
+                    },
+                    RenderPermission: function (permission) {
+                        var _the = this;
+                        var _pers = this.permissions.filter(function (_el) {
+                            return _el.name == permission;
+                        });
+                        if (_pers.length > 0) {
+                            return _pers[0].granted;
+                        }
+                    }
+                }
+            });
+            layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable', 'excel'], function () {
+                var table = layui.table,
+                    $ = layui.jquery,
+                    layer = layui.layer,
+                    form = layui.form,
+                    laypage = layui.laypage,
+                    ajaxmod = layui.ajaxmod,
+                    excel = layui.excel,
+                    datatable = layui.datatable;
+                var _context = $('.table_articlelable_mg'),
+                    _table_style = { align: 'center' };
+
+                var articlelableObj = {
+                    renderTable: function () {
+                        var _the = this;
+                        var optDefault = {
+                            Page: vm.currPage,
+                            PageSize: PageSize,//common中定义的全局
+                        };
+                        var formfield = form.val('form_articlelable');
+                        $.extend(optDefault, formfield);
+                        let _tableCols = [
+                                { type: 'checkbox'},
+                              $.extend({ field: 'articleLableName', title: '标签名称' }, _table_style),
+                              $.extend({ field: 'articleLableNum', title: '标签序号' }, _table_style),
+                                //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
+                                $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
+                                $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style)
+                        ];
+                        if (vm.RenderPermission(vm.permissionDefineds.Update)
+                            || vm.RenderPermission(vm.permissionDefineds.Delete)
+                            || vm.RenderPermission(vm.permissionDefineds.Recover)) {
+                            _tableCols.push($.extend({ field: 'id', title: '操作', width: 190, templet: '#table_articlelable_operator', fixed: 'right' }, _table_style));
+                        }
+                        datatable.renderTable(optDefault, {
+                            url: '/articlelable',
+                            apiOption: 2,
+                            tableElem: 'table_articlelable',
+                            tableCols: [_tableCols],
+                        });
+                    },
+                    detail: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '文章标签详情',
+                            area: ['850px', '500px'],
+                            content: '/main/view/article/articlelable/edit.html?detail=1&id=' + _data.id,
+                        });
+                    },
+                    edit: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '编辑文章标签',
+                            area: ['850px', '500px'],
+                            content: '/main/view/article/articlelable/edit.html?id=' + _data.id,
+                        });
+                    },
+                    add: function () {
+                        var _the = this;
+                        datatable.add({
+                            title: '新增文章标签',
+                            area: ['850px', '500px'],
+                            content: '/main/view/article/articlelable/edit.html',
+                        });
+                    },
+                    del: function (_data) {
+                        var _the = this;
+                        datatable.del({
+                            url: '/articlelable/' + _data.id,
+                            type: 'Delete',
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    delbatch: function (_data) {
+                        let _the = this;
+                        var checkStatus = table.checkStatus('table_articlelable'),
+                            data = checkStatus.data;
+                       var delIdList = [];
+                        $.each(data, function (k, v) {
+                            delIdList.push(v.id);
+                        });
+                        datatable.delbatch({
+                            url: '/articlelable/keys',
+                            type: 'Delete',
+                            data: delIdList,
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    rollbackDel: function (data) {
+                        let _the = this;
+                        _the.patchObj(false, '/articlelable/' + data.id + '/Deleted');
+                    },
+                    patchObj: function (data,url) {
+                        let _the = this;
+                        ajaxmod.requestAuthorize({
+                            url:url,
+                            type: 'Patch',
+                            data: data,
+                            apiOption: 2,
+                            success: function (response) {
+                                _the.renderTable();
+                            }
+                        });
+                    },
+                    exportExcel: function (data) {
+                        data = excel.filterExportData(data, [
+                           'articleLableName',
+                           'articleLableNum',
+                        ]);
+
+                        data.unshift({
+                            articleLableName:'文章标签名称',
+                            articleLableNum:'文章标签序号',
+                        });
+
+                        excel.exportExcel({
+                            articlelable: data
+                        }, '文章标签' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                    },
+                    loadtable:function(){
+                        $('#btn_articlelable_from_query').click();
+                    },
+                    loadList: function (_fn) {
+                        var _the = this;
+                        ajaxmod.ajaxArray([
+                            {
+                                url: '/appenums/delete',
+                                type: 'Get',
+                                success: function (response) {
+                                    vm.deletedlist = response;
+                                }
+                            }
+                        ], function () {
+                                vm.RenderDom(form, function () { vm.RenderDom(form, _fn) });
+                        });
+                     },
+                    loadPermissions:function(_fn){
+                        var _the=this;
+                        let _permissions = [
+                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Detail,
+                            vm.permissionDefineds.Create,
+                            vm.permissionDefineds.BatchCreate,
+                            vm.permissionDefineds.Update,
+                            vm.permissionDefineds.PortionUpdate,
+                            vm.permissionDefineds.Delete,
+                            vm.permissionDefineds.BatchDelete,
+                            vm.permissionDefineds.Recover,
+                        ];
+                        ajaxmod.requestAuthorize({
+                            url: '/JhPermissions/PermissionGranted',
+                            type: 'Post',
+                            data: { permissionNames: _permissions },
+                            success: function (response) {
+                                vm.permissions = response;
+                                _fn();
+                            }
+                        });
+                    }
+                };
+
+                 articlelableObj.loadPermissions(function () { articlelableObj.loadList(function () { articlelableObj.renderTable();}); });
+
+             top.tool.subscribe("edit_articlelable_form_refresh", function () {
+                    articlelableObj.renderTable();
+             });
+
+                table.on('tool(table_articlelable_list)', function (obj) {
+                    var data = obj.data;
+                    articlelableObj[obj.event] ? articlelableObj[obj.event].call(articlelableObj, data) : '';
+                });
+
+                table.on('toolbar(table_articlelable_list)', function (obj) {
+                    var data = obj.data;
+                    articlelableObj[obj.event] ? articlelableObj[obj.event].call(articlelableObj, data) : '';
+                });
+
+                form.on('submit(btn_articlelable_from)', function (data) {
+                    vm.currPage = 1;
+                    articlelableObj.renderTable();
+                    return false;
+                });
+
+            form.on('submit(btn_articlelable_from_reset)', function (data) {
+                $('#form_organizationunit')[0].reset();
+                   articlelableObj.renderTable();
+            });
+
+                form.on('submit(btn_articlelable_from_export)', function (data) {
+                    var requestData = { deleted: 2 };
+                    Object.assign(requestData,data);
+                    ajaxmod.requestAuthorize({
+                        url: '/articlelable/all',
+                        type: 'Get',
+                        data: requestData,
+                        apiOption: 2,
+                        success: function (response) {
+                            articlelableObj.exportExcel(response.items);
+                        }
+                    });
+                    return false;
+                });
+
+                form.on('switch(table_tpl_isDeleted)', function (data) {
+                    let _id = data.elem.attributes["data-code"].value;
+                    let _value = false;
+                    if (data.elem.checked) {
+                        _value = false;//启用
+                    } else {
+                        _value = true;//禁用
+                    }
+                    articlelableObj.patchObj(_value,'/articlelable/'+_id+'/Deleted');
+                });
+            });
+        </script>
+    </body>
+    </html>

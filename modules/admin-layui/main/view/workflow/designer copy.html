@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>工作流设计器</title>
+    <link rel="stylesheet" href="/main/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/main/plugins/jsplumb/browser-ui/css/jsplumb.css">
+    <link rel="stylesheet" href="/main/plugins/jsplumb/browser-ui/css/jsplumbtoolkit.css">
+    <link rel="stylesheet" href="/main/plugins/jsplumb/browser-ui/css/jsplumbtoolkit-demo.css">
+    <!-- <link rel="stylesheet" href="/main/plugins/jsplumb/css/demo.css"> -->
+    <link rel="stylesheet" href="/main/plugins/jsplumb/css/designer.css">
+
+</head>
+<body>
+    <div class="steps">
+        <div class="window step"><span>步骤一</span></div>
+        <div class="window step"><span>步骤二</span></div>
+        <div class="window step"><span>步骤三</span></div>
+        <div class="window connection"><span>连接</span></div>
+        <div class="window" id="export"><span>导出</span></div>
+    </div>
+    <div class="designerContainer">
+        <!-- demo -->
+        <div class="jtk-demo-canvas canvas-wide drag-drop-demo jtk-surface jtk-surface-nopan" id="designerCanvas">
+           
+        </div>
+        <!-- /demo -->
+    </div>
+
+    <!-- <script src="/main/plugins/jsplumb/core/js/jsplumb.core.umd.js"></script>
+    <script src="/main/plugins/jsplumb/browser-ui/js/jsplumb.browser-ui.umd.js"></script> -->
+    <script src="/libs/jquery/jquery.js"></script>
+    <script src="/main/plugins/jsplumb/js/jsplumb.bundle.js"></script>
+    <script src="/main/plugins/jsplumb/js/demo.js"></script>
+</body>
+</html>

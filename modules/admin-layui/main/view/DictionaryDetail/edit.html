@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑字典详情</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+    <style>
+        .layui-form-label {
+            width: 115px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_dictionarydetail_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="dictionarydetail.id" />
+                <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">字典详情名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入字典详情名称"
+                                        v-model="dictionarydetail.dictionaryDetailName">
+                                    <div class="layui-form-mid layui-word-aux">枚举名称</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">字典详情值：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入字典详情值"
+                                        v-model="dictionarydetail.dictionaryDetailValue">
+                                    <div class="layui-form-mid layui-word-aux">枚举值</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">字典详情序号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入字典详情序号"
+                                        v-model="dictionarydetail.dictionaryDetailNum">
+                                    <div class="layui-form-mid layui-word-aux">同一类别下排序按照升序，越小越靠前</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">字典类别枚举值：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required"
+                                        placeholder="请输入字典类别枚举值" v-model="dictionarydetail.dictionaryCategoryValue">
+                                    <div class="layui-form-mid layui-word-aux">类别枚举值，对应系统内部定义，不可随意更改</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">字典类别名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入字典类别名称"
+                                        v-model="dictionarydetail.dictionaryCategoryName">
+                                    <div class="layui-form-mid layui-word-aux">类别枚举值名称，对应系统内部定义，不可随意更改</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">
+                                    字典详情上级：
+                                </label>
+                                <div class="layui-input-inline">
+                                    <select lay-filter="dictionaryDetaiParentfilter" lay-search  :value="dictionarydetail.dictionaryDetaiParent">
+                                        <option value="">请选择</option>
+                                        <option v-for="item in dictionaryDetailList" v-bind:value="item.value">{{item.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label my-input-required">描述：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入描述"
+                                        v-model="dictionarydetail.dictionaryRemark">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_dictionarydetail_form"
+                            href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: {},
+                dictionarydetail: {
+                    dictionaryDetailName: '',
+                    dictionaryDetailValue: 0,
+                    dictionaryDetailNum: 0,
+                    dictionaryCategoryValue: 0,
+                    dictionaryCategoryName: '',
+                    dictionaryDetaiParent: '',
+                    dictionaryRemark:''
+                },
+                dictionaryDetailList:[]
+            },
+            watch: {
+                dictionarydetail: {
+                    deep: true,
+                    handler: function (val, old_val) {
+                        var _this = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function (form, callback) {
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery', 'laydate', 'formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_dictionarydetail_form');
+            var _table_style = { align: 'center' };
+
+            var dictionarydetailObj = {
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.loadSelects(function(){
+                        _the.loadData();
+                    });
+                },
+                loadData: function () {
+                    if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/dictionarydetail/' + vm.paramObj.id,
+                            type: 'Get',
+                            success: function (response) {
+                                vm.$set(vm, 'dictionarydetail', response);
+                                vm.RenderDom(form);
+                            }
+                        });
+                    }
+                },
+                loadSelects: function (_fn) {
+                    let _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/DictionaryDetail/selectid',
+                            type: 'Get',
+                            success: function (response) {
+                                vm.$set(vm, 'dictionaryDetailList', response.items);
+                            }
+                        }], function () {
+                            vm.RenderDom(form,function(){_fn();});
+                        });
+                }
+            };
+            dictionarydetailObj.initPage();
+
+            form.on('select(dictionaryDetaiParentfilter)', function (data) {
+                vm.dictionarydetail.dictionaryDetaiParent = data.value;
+            });
+
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('submit(btn_submit_dictionarydetail_form)', function (_from_data) {
+                var data = vm.dictionarydetail;
+                var url = '/dictionarydetail';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/dictionarydetail/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    success: function (response) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        top.tool.publish('edit_dictionarydetail_form_refresh');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>
