@@ -52,7 +52,7 @@ using Volo.Abp.Localization;");
                         foreach (var item in tables)
                         {
                             var moduleName = $"{item.Name}s";
-                            builder.AppendLine($"\"Permission:{moduleName}\": \"{item.Comment}\",");
+                            builder.AppendLine($"\"Permission:{moduleName}\": \"{item.Comment}管理\",");
                         }
                         builder.AppendLine("\t\t */");
                     }

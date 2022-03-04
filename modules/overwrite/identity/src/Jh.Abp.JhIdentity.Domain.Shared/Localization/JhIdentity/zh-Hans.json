@@ -2,6 +2,6 @@
   "culture": "zh-Hans",
   "texts": {
     "Permission:JhIdentity": "Identity模块",
-    "Permission:OrganizationUnit": "组织"
+    "Permission:OrganizationUnit": "组织管理"
   }
 }

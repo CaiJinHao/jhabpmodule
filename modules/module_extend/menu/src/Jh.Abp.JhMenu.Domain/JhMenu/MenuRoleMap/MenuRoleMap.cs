@@ -16,7 +16,7 @@ namespace Jh.Abp.JhMenu
 {
 
     //[GeneratorClass]
-    [Description("菜单角色中间表")]
+    [Description("角色菜单")]
     public class MenuRoleMap : CreationAuditedEntity<Guid>, IMultiTenant
     {
         public virtual Guid? TenantId { get; set; }

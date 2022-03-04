@@ -52,7 +52,7 @@ public static class JhMenuDbContextModelCreatingExtensions
         });
 
         builder.Entity<MenuRoleMap>(b => {
-            b.HasComment("菜单角色中间表");
+            b.HasComment("角色菜单");
             b.ToTable(JhMenuDbProperties.DbTablePrefix + "MenuRoleMap", JhMenuDbProperties.DbSchema);
             b.ConfigureByConvention();
             b.Property(p => p.Id).ValueGeneratedOnAdd();

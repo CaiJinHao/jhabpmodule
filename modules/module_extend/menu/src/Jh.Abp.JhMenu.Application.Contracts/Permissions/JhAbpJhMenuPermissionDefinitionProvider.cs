@@ -32,11 +32,6 @@ namespace Jh.Abp.JhMenu
 		 MenusPermission.AddChild(JhAbpJhMenuPermissions.Menus.BatchDelete, L("Permission:BatchDelete"));
 		 MenusPermission.AddChild(JhAbpJhMenuPermissions.Menus.Recover, L("Permission:Recover"));
 		 MenusPermission.AddChild(JhAbpJhMenuPermissions.Menus.ManagePermissions, L("Permission:ManagePermissions"));
-		 //Write additional permission definitions
-		 /*
-"Permission:MenuRoleMap": "菜单角色中间表",
-"Permission:Menu": "菜单",
-		 */
 	}
 	 private static LocalizableString L(string name)
 	{

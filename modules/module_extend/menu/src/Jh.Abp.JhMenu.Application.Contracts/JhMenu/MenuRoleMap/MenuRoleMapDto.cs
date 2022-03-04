@@ -5,7 +5,7 @@ using Volo.Abp.Domain.Entities;
 namespace Jh.Abp.JhMenu
 {
 	/// <summary>
-	/// 菜单角色中间表
+	/// 角色菜单
 	/// </summary>
 	public class MenuRoleMapDto: CreationAuditedEntityDto<System.Guid>
 ,IMultiTenant

@@ -6,7 +6,7 @@ using Volo.Abp.Application.Dtos;
 namespace Jh.Abp.JhMenu
 {
 	/// <summary>
-	/// 菜单角色中间表
+	/// 角色菜单
 	/// </summary>
 	public class MenuRoleMapRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<MenuRoleMap>
 ,IMultiTenant

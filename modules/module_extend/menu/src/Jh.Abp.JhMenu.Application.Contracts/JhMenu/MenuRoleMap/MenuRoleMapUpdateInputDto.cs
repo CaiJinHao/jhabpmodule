@@ -7,7 +7,7 @@ using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.JhMenu
 {
 	/// <summary>
-	/// 菜单角色中间表
+	/// 角色菜单
 	/// </summary>
 	public class MenuRoleMapUpdateInputDto: 
 IMethodDto<MenuRoleMap>
