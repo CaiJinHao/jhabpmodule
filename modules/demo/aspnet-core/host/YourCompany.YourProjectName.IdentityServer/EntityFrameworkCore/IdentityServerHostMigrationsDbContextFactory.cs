@@ -13,8 +13,8 @@ public class IdentityServerHostMigrationsDbContextFactory : IDesignTimeDbContext
         var connectionString = configuration.GetConnectionString("Default");
 
         var builder = new DbContextOptionsBuilder<IdentityServerHostMigrationsDbContext>()
-             .UseSqlServer(connectionString);
-        //.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        //.UseSqlServer(connectionString);
+        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
         return new IdentityServerHostMigrationsDbContext(builder.Options);
     }

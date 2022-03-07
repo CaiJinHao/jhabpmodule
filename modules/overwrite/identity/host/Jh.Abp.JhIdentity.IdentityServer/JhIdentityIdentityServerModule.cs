@@ -59,6 +59,7 @@ using EntityFrameworkCore.UseRowNumberForPaging;
 using Jh.Abp.JhPermission;
 using Jh.Abp.Workflow;
 using Jh.Abp.JhMenu;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 
 namespace Jh.Abp.JhIdentity;
 
@@ -72,7 +73,8 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpEntityFrameworkCoreSqlServerModule),
+    //typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCoreMySQLModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),

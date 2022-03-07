@@ -61,6 +61,7 @@ using Jh.Abp.JhMenu;
 using Jh.Abp.JhMenu.EntityFrameworkCore;
 using Jh.Abp.Workflow;
 using Jh.Abp.JhPermission;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 
 namespace YourCompany.YourProjectName;
 
@@ -74,7 +75,8 @@ namespace YourCompany.YourProjectName;
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpEntityFrameworkCoreSqlServerModule),
+    //typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCoreMySQLModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),
@@ -96,7 +98,6 @@ namespace YourCompany.YourProjectName;
     typeof(YourProjectNameApplicationContractsModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(JhIdentityHttpApiModule),
-    typeof(JhPermissionHttpApiModule),
     typeof(JhMenuHttpApiModule),
     typeof(WorkflowHttpApiModule),
     typeof(AbpSwashbuckleModule),
@@ -112,9 +113,10 @@ public class YourProjectNameIdentityServerModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer(options => {
-                options.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
-            });
+            //options.UseSqlServer(options => {
+            //    options.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
+            //});
+            options.UseMySQL();
         });
 
         var Audience = configuration.GetValue<string>("AuthServer:ApiName");
