@@ -110,9 +110,10 @@ public class JhIdentityIdentityServerModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer(options => {
-                options.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
-            });
+            //options.UseSqlServer(options => {
+            //    options.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
+            //});
+            options.UseMySQL();
         });
 
         var Audience = configuration.GetValue<string>("AuthServer:ApiName");
@@ -154,10 +155,11 @@ public class JhIdentityIdentityServerModule : AbpModule
 
         Configure<AbpAuditingOptions>(options =>
         {
-                //options.IsEnabledForGetRequests = true;
-                options.ApplicationName = "AuthServer";
+            //options.IsEnabledForGetRequests = true;
+            options.ApplicationName = "AuthServer";
             options.IsEnabledForAnonymousUsers = false;
-            options.EntityHistorySelectors.AddAllEntities();
+            //options.IgnoredTypes.Add(typeof(Volo.Abp.AuditLogging.AuditLog));//忽略实体更改
+            //options.EntityHistorySelectors.AddAllEntities();//保存所有的实体更改，将需要大量的存储空间
         });
 
         Configure<AppUrlOptions>(options =>

@@ -1,6 +1,8 @@
 {
   "culture": "zh-Hans",
   "texts": {
+    "Permission:JhAuditLogging": "审计日志模块",
+    "Permission:AuditLoggings": "审计日志管理",
     "Permission:JhIdentity": "Identity模块",
     "Permission:OrganizationUnit": "组织管理"
   }

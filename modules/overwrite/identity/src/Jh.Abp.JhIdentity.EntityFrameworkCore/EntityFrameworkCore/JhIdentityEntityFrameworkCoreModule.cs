@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
@@ -6,7 +7,8 @@ namespace Jh.Abp.JhIdentity.EntityFrameworkCore;
 
 [DependsOn(
     typeof(JhIdentityDomainModule),
-    typeof(AbpEntityFrameworkCoreModule)
+    typeof(AbpEntityFrameworkCoreModule),
+    typeof(AbpAuditLoggingEntityFrameworkCoreModule)
 )]
 public class JhIdentityEntityFrameworkCoreModule : AbpModule
 {
