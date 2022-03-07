@@ -3,12 +3,14 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
     typeof(JhIdentityDomainSharedModule),
     typeof(AbpDddApplicationContractsModule),
+    typeof(AbpIdentityApplicationContractsModule),
     typeof(AbpAuthorizationModule)
     )]
 public class JhIdentityApplicationContractsModule : AbpModule

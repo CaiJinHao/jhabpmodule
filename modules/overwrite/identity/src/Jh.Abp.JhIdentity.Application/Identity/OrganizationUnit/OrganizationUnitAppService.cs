@@ -115,6 +115,7 @@ namespace Jh.Abp.JhIdentity
                     entity.ExtraProperties.Add(item.Key, item.Value);
                 }
             }
+            await CurrentUnitOfWork.SaveChangesAsync();
             await organizationUnitManager.MoveAsync(id, input.ParentId);
 			return await MapToGetOutputDtoAsync(entity);
         }

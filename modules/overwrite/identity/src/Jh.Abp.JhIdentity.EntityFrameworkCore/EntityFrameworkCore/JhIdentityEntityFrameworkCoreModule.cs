@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.Identity;
+using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
 namespace Jh.Abp.JhIdentity.EntityFrameworkCore;
@@ -8,7 +10,8 @@ namespace Jh.Abp.JhIdentity.EntityFrameworkCore;
 [DependsOn(
     typeof(JhIdentityDomainModule),
     typeof(AbpEntityFrameworkCoreModule),
-    typeof(AbpAuditLoggingEntityFrameworkCoreModule)
+    typeof(AbpAuditLoggingEntityFrameworkCoreModule),
+    typeof(AbpIdentityEntityFrameworkCoreModule)
 )]
 public class JhIdentityEntityFrameworkCoreModule : AbpModule
 {
@@ -20,9 +23,12 @@ public class JhIdentityEntityFrameworkCoreModule : AbpModule
     {
         context.Services.AddAbpDbContext<JhIdentityDbContext>(options =>
         {
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, EfCoreQuestionRepository>();
-                 */
+            options.AddRepository<IdentityUser, EfCoreIdentityUserRepository>();
+            options.AddRepository<IdentityRole, EfCoreIdentityRoleRepository>();
+            options.AddRepository<IdentityClaimType, EfCoreIdentityClaimTypeRepository>();
+            options.AddRepository<OrganizationUnit, EfCoreOrganizationUnitRepository>();
+            options.AddRepository<IdentitySecurityLog, EFCoreIdentitySecurityLogRepository>();
+            options.AddRepository<IdentityLinkUser, EfCoreIdentityLinkUserRepository>();
         });
     }
 }

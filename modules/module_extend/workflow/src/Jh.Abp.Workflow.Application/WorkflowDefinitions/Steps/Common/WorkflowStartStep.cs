@@ -45,7 +45,8 @@ namespace Jh.Abp.Workflow
 {
   "id":"3a01eab1-42f6-33e9-4dbf-9e8d97e3bb03",
   "data": {
-      "BusinessDataId": "1234567984561646fsxxxx"
+      "BusinessDataId": "1234567984561646fsxxxx",
+      "Day":3
    }
 }
  */

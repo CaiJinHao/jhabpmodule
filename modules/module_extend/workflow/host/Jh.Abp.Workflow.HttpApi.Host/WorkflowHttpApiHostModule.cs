@@ -40,6 +40,7 @@ using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.Threading;
 using Volo.Abp.Data;
 using EntityFrameworkCore.UseRowNumberForPaging;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 
 namespace Jh.Abp.Workflow;
 
@@ -50,13 +51,15 @@ namespace Jh.Abp.Workflow;
     typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpEntityFrameworkCoreSqlServerModule),
+    //typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCoreMySQLModule),
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(JhIdentityEntityFrameworkCoreModule),
+    typeof(AbpQuickComponentsModule),
     typeof(AbpSwashbuckleModule)
     )]
 public class WorkflowHttpApiHostModule : AbpModule
@@ -69,9 +72,10 @@ public class WorkflowHttpApiHostModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer(opt => {
-                opt.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
-            });
+            //options.UseSqlServer(opt => {
+            //    opt.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
+            //});
+            options.UseMySQL();
         });
 
         Configure<AbpMultiTenancyOptions>(options =>
@@ -101,11 +105,11 @@ public class WorkflowHttpApiHostModule : AbpModule
         //    configuration["AuthServer:Authority"],
         //    new Dictionary<string, string>
         //    {
-        //        {"Workflow", "Workflow API"}
+        //        {"WebAppYourName", "WebAppYourName API"}
         //    },
         //    options =>
         //    {
-        //        options.SwaggerDoc("v1", new OpenApiInfo {Title = "Workflow API", Version = "v1"});
+        //        options.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAppYourName API", Version = "v1" });
         //        options.DocInclusionPredicate((docName, description) => true);
         //        options.CustomSchemaIds(type => type.FullName);
         //    });
@@ -182,7 +186,7 @@ public class WorkflowHttpApiHostModule : AbpModule
 
         context.Services.AddApiVersion();
         //context.Services.AddAuthorizeFilter(configuration);
-        context.Services.AddAlwaysAllowAuthorization();//禁用授权系统方式一
+        //context.Services.AddAlwaysAllowAuthorization();//禁用授权系统方式一
         //禁用授权系统方式二
         //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());
     }
@@ -224,13 +228,14 @@ public class WorkflowHttpApiHostModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
+            //需要配置Audience、ApiName，IdentityServer并添加https://localhost:6202CorsOrigins
             options.UseJhSwaggerUiConfig(configuration);
             //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
 
             //var configuration = context.GetConfiguration();
             //options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             //options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-            //options.OAuthScopes("Workflow");
+            //options.OAuthScopes("WebAppYourName");
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();

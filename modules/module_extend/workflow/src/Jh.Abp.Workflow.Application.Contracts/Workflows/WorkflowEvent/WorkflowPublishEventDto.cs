@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Jh.Abp.Workflow
 {
@@ -11,7 +10,7 @@ namespace Jh.Abp.Workflow
 
         //public string EventKey { get; set; }
 
-        public object EventData { get; set; }
+        public dynamic EventData { get; set; }
 
         /// <summary>
         /// 待办事项主键

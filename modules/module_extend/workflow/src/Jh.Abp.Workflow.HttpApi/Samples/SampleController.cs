@@ -11,6 +11,7 @@ namespace Jh.Abp.Workflow.Samples;
 public class SampleController : WorkflowController, ISampleAppService
 {
     private readonly ISampleAppService _sampleAppService;
+    protected Volo.Abp.Identity.IdentityUserManager identityUserManager => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IdentityUserManager>();
 
     public SampleController(ISampleAppService sampleAppService)
     {
@@ -28,6 +29,7 @@ public class SampleController : WorkflowController, ISampleAppService
     [Authorize]
     public async Task<SampleDto> GetAuthorizedAsync()
     {
+        var data= await identityUserManager.GetByIdAsync(new System.Guid("3a02751d-396f-d768-9f76-ab89edf150d4"));
         return await _sampleAppService.GetAsync();
     }
 }

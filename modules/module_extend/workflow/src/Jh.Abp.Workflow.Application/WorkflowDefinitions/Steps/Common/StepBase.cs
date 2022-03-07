@@ -28,7 +28,7 @@ namespace Jh.Abp.Workflow
         protected IDateTimeProvider _datetimeProvider => LazyServiceProvider.LazyGetRequiredService<IDateTimeProvider>();
         protected IWorkflowRegistry workflowRegistry => LazyServiceProvider.LazyGetRequiredService<IWorkflowRegistry>();
         protected IPersistenceProvider persistenceProvider => LazyServiceProvider.LazyGetRequiredService<IPersistenceProvider>();
-
+        protected Volo.Abp.Identity.IdentityUserManager identityUserManager =>LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IdentityUserManager>();
         public abstract ExecutionResult ExecutionRun(IStepExecutionContext context);
 
         [UnitOfWork]

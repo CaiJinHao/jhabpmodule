@@ -37,6 +37,22 @@ namespace Jh.Abp.JhIdentity
 			return await query.ToListAsync(GetCancellationToken(cancellationToken));
 		}
 
+		public virtual async Task<List<Volo.Abp.Identity.OrganizationUnit>> GetOrganizationUnitsAsync(
+			Guid id,
+			CancellationToken cancellationToken = default)
+		{
+			var dbContext = await GetDbContextAsync();
+
+			//获取用户所属组织
+			var query = from user in dbContext.Set<IdentityUser>()
+								 join userOu in dbContext.Set<IdentityUserOrganizationUnit>() on user.Id equals userOu.UserId
+								 join ou in dbContext.OrganizationUnits on userOu.OrganizationUnitId equals ou.Id
+								 where user.Id == id
+							   select ou;
+
+            return await query.ToListAsync(GetCancellationToken(cancellationToken));
+		}
+
 		public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default)
 		{
 			var dbContext = await GetDbContextAsync();

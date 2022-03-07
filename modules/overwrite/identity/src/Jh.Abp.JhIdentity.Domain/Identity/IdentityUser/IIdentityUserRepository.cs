@@ -15,5 +15,7 @@ namespace Jh.Abp.JhIdentity
 			CancellationToken cancellationToken = default);
 
 		Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default);
+
+		Task<List<Volo.Abp.Identity.OrganizationUnit>> GetOrganizationUnitsAsync(Guid id,CancellationToken cancellationToken = default);
 	}
 }
