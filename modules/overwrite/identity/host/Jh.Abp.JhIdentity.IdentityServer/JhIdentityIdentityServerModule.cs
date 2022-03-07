@@ -94,7 +94,6 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
     typeof(JhIdentityHttpApiModule),
-    typeof(JhPermissionHttpApiModule),
     typeof(JhMenuHttpApiModule),
     typeof(WorkflowHttpApiModule),
     typeof(AbpQuickComponentsModule)

@@ -9388,3 +9388,258 @@ StackExchange.Redis.RedisServerException: ERR Error running script (call to f_39
 2022-03-07 10:29:15.718 +08:00 [INF] Executed action Jh.Abp.JhAuditLogging.AuditLoggingController.GetListAsync (Jh.Abp.JhIdentity.HttpApi) in 5.3677ms
 2022-03-07 10:29:15.718 +08:00 [INF] Executed endpoint 'Jh.Abp.JhAuditLogging.AuditLoggingController.GetListAsync (Jh.Abp.JhIdentity.HttpApi)'
 2022-03-07 10:29:15.718 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/api/v1/auditLogging?_t=1646620155686&Page=1&PageSize=10&SkipCount=0&MaxResultCount=10&Sorting=ExecutionTime+DESC&applicationName=&httpMethod=&userId=&startTime=&endTime=&url=&hasException= application/json;+charset=utf-8 - - 200 7181 application/json;+charset=utf-8 27.9483ms
+2022-03-07 11:12:54.448 +08:00 [INF] Starting web host.
+2022-03-07 11:13:01.497 +08:00 [INF] Loaded ABP modules:
+2022-03-07 11:13:01.498 +08:00 [INF] - Jh.Abp.JhIdentity.JhIdentityIdentityServerModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.Account.Web.AbpAccountWebIdentityServerModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.Account.Web.AbpAccountWebModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.Account.AbpAccountApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.Identity.AbpIdentityApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.Identity.AbpIdentityDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.Users.AbpUsersDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.Validation.AbpValidationModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.Localization.AbpLocalizationModule
+2022-03-07 11:13:01.498 +08:00 [INF]                 - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2022-03-07 11:13:01.498 +08:00 [INF]                 - Volo.Abp.Settings.AbpSettingsModule
+2022-03-07 11:13:01.498 +08:00 [INF]                   - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]                   - Volo.Abp.Security.AbpSecurityModule
+2022-03-07 11:13:01.498 +08:00 [INF]                   - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2022-03-07 11:13:01.498 +08:00 [INF]                     - Volo.Abp.Data.AbpDataModule
+2022-03-07 11:13:01.498 +08:00 [INF]                       - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2022-03-07 11:13:01.498 +08:00 [INF]                       - Volo.Abp.Uow.AbpUnitOfWorkModule
+2022-03-07 11:13:01.498 +08:00 [INF]                       - Volo.Abp.EventBus.Abstractions.AbpEventBusAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.Features.AbpFeaturesModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.Authorization.AbpAuthorizationAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.Users.AbpUsersAbstractionModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.EventBus.AbpEventBusModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.Json.AbpJsonModule
+2022-03-07 11:13:01.498 +08:00 [INF]                 - Volo.Abp.Timing.AbpTimingModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.Guids.AbpGuidsModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.BackgroundWorkers.AbpBackgroundWorkersModule
+2022-03-07 11:13:01.498 +08:00 [INF]                 - Volo.Abp.Threading.AbpThreadingModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.DistributedLocking.AbpDistributedLockingAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.Authorization.AbpAuthorizationModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.PermissionManagement.AbpPermissionManagementApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.Application.AbpDddApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.Auditing.AbpAuditingContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.PermissionManagement.AbpPermissionManagementDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.Identity.AspNetCore.AbpIdentityAspNetCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.Identity.AbpIdentityDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.Domain.AbpDddDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.Auditing.AbpAuditingModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.Specifications.AbpSpecificationsModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.Users.AbpUsersDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.AutoMapper.AbpAutoMapperModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.AbpAspNetCoreMvcUiThemeSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.AbpAspNetCoreMvcUiBootstrapModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.AspNetCore.Mvc.UI.AbpAspNetCoreMvcUiModule
+2022-03-07 11:13:01.498 +08:00 [INF]             - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]                 - Volo.Abp.Http.AbpHttpModule
+2022-03-07 11:13:01.498 +08:00 [INF]                   - Volo.Abp.Http.AbpHttpAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]                   - Volo.Abp.Minify.AbpMinifyModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.UI.Navigation.AbpUiNavigationModule
+2022-03-07 11:13:01.498 +08:00 [INF]                 - Volo.Abp.UI.AbpUiModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2022-03-07 11:13:01.498 +08:00 [INF]               - Volo.Abp.Application.AbpDddApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.AspNetCore.Mvc.UI.Packages.AbpAspNetCoreMvcUiPackagesModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.AspNetCore.Mvc.UI.Bundling.AbpAspNetCoreMvcUiBundlingAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.AspNetCore.Mvc.UI.Widgets.AbpAspNetCoreMvcUiWidgetsModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.AspNetCore.Mvc.UI.Bundling.AbpAspNetCoreMvcUiBundlingModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.IdentityServer.AbpIdentityServerDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.IdentityServer.AbpIdentityServerDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.Caching.AbpCachingModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.Serialization.AbpSerializationModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.Account.AbpAccountApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.Identity.AbpIdentityApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.PermissionManagement.AbpPermissionManagementApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.PermissionManagement.AbpPermissionManagementDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.Emailing.AbpEmailingModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.BackgroundJobs.AbpBackgroundJobsAbstractionsModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.TextTemplating.AbpTextTemplatingModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Volo.Abp.TextTemplating.Scriban.AbpTextTemplatingScribanModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Volo.Abp.TextTemplating.AbpTextTemplatingCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.Account.AbpAccountHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.Identity.AbpIdentityHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy.AbpAspNetCoreMvcUiMultiTenancyModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.AspNetCore.MultiTenancy.AbpAspNetCoreMultiTenancyModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.AbpAspNetCoreMvcUiBasicThemeModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.AuditLogging.EntityFrameworkCore.AbpAuditLoggingEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.AuditLogging.AbpAuditLoggingDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.AuditLogging.AbpAuditLoggingDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.Autofac.AbpAutofacModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.Castle.AbpCastleCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.Caching.StackExchangeRedis.AbpCachingStackExchangeRedisModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.EntityFrameworkCore.SqlServer.AbpEntityFrameworkCoreSqlServerModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.Identity.EntityFrameworkCore.AbpIdentityEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.Users.EntityFrameworkCore.AbpUsersEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.IdentityServer.EntityFrameworkCore.AbpIdentityServerEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.PermissionManagement.Identity.AbpPermissionManagementDomainIdentityModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.PermissionManagement.EntityFrameworkCore.AbpPermissionManagementEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.PermissionManagement.HttpApi.AbpPermissionManagementHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.SettingManagement.EntityFrameworkCore.AbpSettingManagementEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.SettingManagement.AbpSettingManagementDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.SettingManagement.AbpSettingManagementDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.SettingManagement.AbpSettingManagementApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.SettingManagement.AbpSettingManagementApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.SettingManagement.AbpSettingManagementHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.FeatureManagement.EntityFrameworkCore.AbpFeatureManagementEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.FeatureManagement.AbpFeatureManagementDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.FeatureManagement.AbpFeatureManagementDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.FeatureManagement.AbpFeatureManagementApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.FeatureManagement.AbpFeatureManagementApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.FeatureManagement.AbpFeatureManagementHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.TenantManagement.EntityFrameworkCore.AbpTenantManagementEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.TenantManagement.AbpTenantManagementDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Volo.Abp.TenantManagement.AbpTenantManagementDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.TenantManagement.AbpTenantManagementApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Volo.Abp.TenantManagement.AbpTenantManagementApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.TenantManagement.AbpTenantManagementHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.AspNetCore.Authentication.JwtBearer.AbpAspNetCoreAuthenticationJwtBearerModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Volo.Abp.Swashbuckle.AbpSwashbuckleModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Jh.Abp.JhIdentity.JhIdentityHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.JhIdentity.JhIdentityApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.JhIdentity.JhIdentityDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Jh.Abp.JhIdentity.JhIdentityDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]           - Jh.Abp.Domain.Shared.JhAbpExtensionsDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.JhIdentity.JhIdentityApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.JhIdentity.EntityFrameworkCore.JhIdentityEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Jh.Abp.JhPermission.JhPermissionHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.JhPermission.JhPermissionApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.JhPermission.JhPermissionDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.JhPermission.JhPermissionApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.JhPermission.JhPermissionDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Jh.Abp.JhMenu.JhMenuHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.JhMenu.JhMenuApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.JhMenu.JhMenuDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Jh.Abp.JhMenu.JhMenuDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.JhMenu.JhMenuApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.JhMenu.EntityFrameworkCore.JhMenuEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Jh.Abp.Workflow.WorkflowHttpApiModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.Workflow.WorkflowApplicationModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.Workflow.WorkflowDomainModule
+2022-03-07 11:13:01.498 +08:00 [INF]         - Jh.Abp.Workflow.WorkflowDomainSharedModule
+2022-03-07 11:13:01.498 +08:00 [INF]       - Jh.Abp.Workflow.WorkflowApplicationContractsModule
+2022-03-07 11:13:01.498 +08:00 [INF]     - Jh.Abp.Workflow.EntityFrameworkCore.WorkflowEntityFrameworkCoreModule
+2022-03-07 11:13:01.498 +08:00 [INF]   - Jh.Abp.QuickComponents.AbpQuickComponentsModule
+2022-03-07 11:13:01.561 +08:00 [DBG] Started background worker: Volo.Abp.IdentityServer.Tokens.TokenCleanupBackgroundWorker
+2022-03-07 11:13:01.608 +08:00 [INF] Starting IdentityServer4 version 4.1.2+997a6cdd643e46cd5762b710c4ddc43574cbec2e
+2022-03-07 11:13:02.506 +08:00 [INF] Using the default authentication scheme Identity.Application for IdentityServer
+2022-03-07 11:13:02.506 +08:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for authentication
+2022-03-07 11:13:02.506 +08:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-in
+2022-03-07 11:13:02.506 +08:00 [DBG] Using Identity.External as default ASP.NET Core scheme for sign-out
+2022-03-07 11:13:02.506 +08:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for challenge
+2022-03-07 11:13:02.506 +08:00 [DBG] Using Identity.Application as default ASP.NET Core scheme for forbid
+2022-03-07 11:13:03.135 +08:00 [INF] User profile is available. Using 'C:\Users\53100\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-03-07 11:13:06.723 +08:00 [WRN] ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+StackExchange.Redis.RedisServerException: ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+   at Volo.Abp.Caching.StackExchangeRedis.AbpRedisCache.SetManyAsync(IEnumerable`1 items, DistributedCacheEntryOptions options, CancellationToken token)
+   at Volo.Abp.Caching.DistributedCache`2.<>c__DisplayClass54_0.<<SetManyAsync>g__SetRealCache|0>d.MoveNext()
+2022-03-07 11:13:06.729 +08:00 [WRN] ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+StackExchange.Redis.RedisServerException: ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+   at Volo.Abp.Caching.StackExchangeRedis.AbpRedisCache.SetManyAsync(IEnumerable`1 items, DistributedCacheEntryOptions options, CancellationToken token)
+   at Volo.Abp.Caching.DistributedCache`2.<>c__DisplayClass54_0.<<SetManyAsync>g__SetRealCache|0>d.MoveNext()
+2022-03-07 11:13:06.732 +08:00 [INF] Initialized all ABP modules.
+2022-03-07 11:13:06.837 +08:00 [WRN] Overriding address(es) 'https://localhost:44354'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2022-03-07 11:13:06.843 +08:00 [INF] Now listening on: https://localhost:6201
+2022-03-07 11:13:06.843 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-03-07 11:13:06.843 +08:00 [INF] Hosting environment: Development
+2022-03-07 11:13:06.843 +08:00 [INF] Content root path: G:\github\mygithub\jh-abp-module-extension\modules\overwrite\identity\host\Jh.Abp.JhIdentity.IdentityServer\
+2022-03-07 11:14:30.174 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/index.html - -
+2022-03-07 11:14:30.302 +08:00 [DBG] Login Url: /Account/Login
+2022-03-07 11:14:30.302 +08:00 [DBG] Login Return Url Parameter: ReturnUrl
+2022-03-07 11:14:30.302 +08:00 [DBG] Logout Url: /Account/Logout
+2022-03-07 11:14:30.302 +08:00 [DBG] ConsentUrl Url: /Consent
+2022-03-07 11:14:30.302 +08:00 [DBG] Consent Return Url Parameter: returnUrl
+2022-03-07 11:14:30.302 +08:00 [DBG] Error Url: /Account/Error
+2022-03-07 11:14:30.302 +08:00 [DBG] Error Id Parameter: errorId
+2022-03-07 11:14:30.526 +08:00 [WRN] ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+StackExchange.Redis.RedisServerException: ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+   at Volo.Abp.Caching.StackExchangeRedis.AbpRedisCache.SetManyAsync(IEnumerable`1 items, DistributedCacheEntryOptions options, CancellationToken token)
+   at Volo.Abp.Caching.DistributedCache`2.<>c__DisplayClass54_0.<<SetManyAsync>g__SetRealCache|0>d.MoveNext()
+2022-03-07 11:14:30.531 +08:00 [WRN] ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+StackExchange.Redis.RedisServerException: ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+   at Volo.Abp.Caching.StackExchangeRedis.AbpRedisCache.SetManyAsync(IEnumerable`1 items, DistributedCacheEntryOptions options, CancellationToken token)
+   at Volo.Abp.Caching.DistributedCache`2.<>c__DisplayClass54_0.<<SetManyAsync>g__SetRealCache|0>d.MoveNext()
+2022-03-07 11:14:30.535 +08:00 [WRN] ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+StackExchange.Redis.RedisServerException: ERR Error running script (call to f_3915ee22fda531a1d5661f2523d0443fd35ff0a4): @user_script:2: @user_script: 2: Wrong number of args calling Redis command From Lua script 
+   at Volo.Abp.Caching.StackExchangeRedis.AbpRedisCache.SetManyAsync(IEnumerable`1 items, DistributedCacheEntryOptions options, CancellationToken token)
+   at Volo.Abp.Caching.DistributedCache`2.<>c__DisplayClass54_0.<<SetManyAsync>g__SetRealCache|0>d.MoveNext()
+2022-03-07 11:14:30.893 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/index.html - - - 200 - text/html;charset=utf-8 718.6334ms
+2022-03-07 11:14:30.906 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/ui/abp.js - -
+2022-03-07 11:14:30.906 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/swagger-ui-standalone-preset.js - -
+2022-03-07 11:14:30.906 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/ui/abp.swagger.js - -
+2022-03-07 11:14:30.906 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/_framework/aspnetcore-browser-refresh.js - -
+2022-03-07 11:14:30.906 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/swagger-ui.css - -
+2022-03-07 11:14:30.906 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/swagger-ui-bundle.js - -
+2022-03-07 11:14:30.910 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/_framework/aspnetcore-browser-refresh.js - - - 200 12022 application/javascript;+charset=utf-8 3.3900ms
+2022-03-07 11:14:30.917 +08:00 [INF] Sending file. Request path: '/swagger/ui/abp.js'. Physical path: 'N/A'
+2022-03-07 11:14:30.917 +08:00 [INF] Sending file. Request path: '/swagger/ui/abp.swagger.js'. Physical path: 'N/A'
+2022-03-07 11:14:30.917 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/ui/abp.js - - - 200 3122 application/javascript 11.0455ms
+2022-03-07 11:14:30.917 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/ui/abp.swagger.js - - - 200 1057 application/javascript 11.0493ms
+2022-03-07 11:14:30.959 +08:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2022-03-07 11:14:30.959 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/swagger-ui-standalone-preset.js - - - 200 337162 application/javascript 52.5719ms
+2022-03-07 11:14:30.972 +08:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2022-03-07 11:14:30.972 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/swagger-ui.css - - - 200 143632 text/css 65.9145ms
+2022-03-07 11:14:30.983 +08:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2022-03-07 11:14:30.983 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/swagger-ui-bundle.js - - - 200 1091362 application/javascript 77.0580ms
+2022-03-07 11:14:31.146 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/v1/swagger.json - -
+2022-03-07 11:14:31.155 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/favicon-32x32.png - -
+2022-03-07 11:14:31.159 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2022-03-07 11:14:31.159 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/favicon-32x32.png - - - 200 628 image/png 4.3406ms
+2022-03-07 11:14:31.409 +08:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/v{apiVersion}/JhPermissions/PermissionGranted" for actions - Jh.Abp.JhPermission.JhPermissionsController.GetPermissionGrantedByNameAsync (Jh.Abp.JhIdentity.HttpApi),Jh.Abp.JhPermission.v1.JhPermission.Extend.JhPermissionsController.GetPermissionGrantedByNameAsync (Jh.Abp.JhPermission.HttpApi). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at IdentityServer4.Hosting.IdentityServerMiddleware.Invoke(HttpContext context, IEndpointRouter router, IUserSession session, IEventService events, IBackChannelLogoutService backChannelLogoutService)
+   at IdentityServer4.Hosting.MutualTlsEndpointMiddleware.Invoke(HttpContext context, IAuthenticationSchemeProvider schemes)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at IdentityServer4.Hosting.BaseUrlMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.RequestLocalization.AbpRequestLocalizationMiddleware.InvokeAsync(HttpContext context, RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.<>c__DisplayClass6_1.<<UseMiddlewareInterface>b__1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Jh.Abp.IdentityServer.JhAbpJwtTokenMiddlewareExtension.<>c__DisplayClass0_0.<<UseJhJwtTokenMiddleware>b__0>d.MoveNext() in G:\github\mygithub\jh-abp-module-extension\modules\libs\Jh.AbpExtensions\Jh.Abp.IdentityServer\ClaimsPrincipal\JhAbpJwtTokenMiddlewareExtension.cs:line 48
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Volo.Abp.AspNetCore.Tracing.AbpCorrelationIdMiddleware.InvokeAsync(HttpContext context, RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.<>c__DisplayClass6_1.<<UseMiddlewareInterface>b__1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2022-03-07 11:14:31.551 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/v1/swagger.json - - - 500 - text/plain;+charset=utf-8 404.8547ms
+2022-03-07 11:14:38.635 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/swagger/v1/swagger.json - -
+2022-03-07 11:14:38.701 +08:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/v{apiVersion}/JhPermissions/PermissionGranted" for actions - Jh.Abp.JhPermission.JhPermissionsController.GetPermissionGrantedByNameAsync (Jh.Abp.JhIdentity.HttpApi),Jh.Abp.JhPermission.v1.JhPermission.Extend.JhPermissionsController.GetPermissionGrantedByNameAsync (Jh.Abp.JhPermission.HttpApi). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at IdentityServer4.Hosting.IdentityServerMiddleware.Invoke(HttpContext context, IEndpointRouter router, IUserSession session, IEventService events, IBackChannelLogoutService backChannelLogoutService)
+   at IdentityServer4.Hosting.MutualTlsEndpointMiddleware.Invoke(HttpContext context, IAuthenticationSchemeProvider schemes)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at IdentityServer4.Hosting.BaseUrlMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.RequestLocalization.AbpRequestLocalizationMiddleware.InvokeAsync(HttpContext context, RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.<>c__DisplayClass6_1.<<UseMiddlewareInterface>b__1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Jh.Abp.IdentityServer.JhAbpJwtTokenMiddlewareExtension.<>c__DisplayClass0_0.<<UseJhJwtTokenMiddleware>b__0>d.MoveNext() in G:\github\mygithub\jh-abp-module-extension\modules\libs\Jh.AbpExtensions\Jh.Abp.IdentityServer\ClaimsPrincipal\JhAbpJwtTokenMiddlewareExtension.cs:line 48
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Volo.Abp.AspNetCore.Tracing.AbpCorrelationIdMiddleware.InvokeAsync(HttpContext context, RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.<>c__DisplayClass6_1.<<UseMiddlewareInterface>b__1>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2022-03-07 11:14:38.718 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/swagger/v1/swagger.json - - - 500 - text/html;+charset=utf-8 83.6985ms
+2022-03-07 11:14:38.742 +08:00 [INF] Request starting HTTP/2 GET https://localhost:6201/_framework/aspnetcore-browser-refresh.js - -
+2022-03-07 11:14:38.742 +08:00 [INF] Request finished HTTP/2 GET https://localhost:6201/_framework/aspnetcore-browser-refresh.js - - - 200 12022 application/javascript;+charset=utf-8 0.2640ms

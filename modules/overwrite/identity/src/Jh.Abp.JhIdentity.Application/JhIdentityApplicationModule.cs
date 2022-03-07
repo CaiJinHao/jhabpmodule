@@ -2,12 +2,14 @@
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.Application;
+using Volo.Abp.PermissionManagement;
 
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
     typeof(JhIdentityDomainModule),
     typeof(JhIdentityApplicationContractsModule),
+    typeof(AbpPermissionManagementApplicationModule),
     typeof(AbpDddApplicationModule),
     typeof(AbpAutoMapperModule)
     )]

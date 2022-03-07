@@ -518,5 +518,10 @@
             方法参数回调
             </summary>
         </member>
+        <member name="P:Jh.Abp.JhPermission.PermissionGrantedCreateInputDto.PermissionNames">
+            <summary>
+            权限名称列表
+            </summary>
+        </member>
     </members>
 </doc>
