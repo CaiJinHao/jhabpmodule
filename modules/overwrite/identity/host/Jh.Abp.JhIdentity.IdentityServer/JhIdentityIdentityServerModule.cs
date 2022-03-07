@@ -156,10 +156,9 @@ public class JhIdentityIdentityServerModule : AbpModule
 
         Configure<AbpAuditingOptions>(options =>
         {
-            //options.IsEnabledForGetRequests = true;
             options.ApplicationName = "AuthServer";
             options.IsEnabledForAnonymousUsers = false;
-            //options.IgnoredTypes.Add(typeof(Volo.Abp.AuditLogging.AuditLog));//忽略实体更改
+            //options.IsEnabledForGetRequests = true;
             //options.EntityHistorySelectors.AddAllEntities();//保存所有的实体更改，将需要大量的存储空间
         });
 
