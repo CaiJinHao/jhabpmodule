@@ -16,6 +16,8 @@ namespace Jh.Abp.JhIdentity.v1
     //[ApiVersion("2.0")]
     //[ApiVersion("3.0")]
     [Authorize]
+    [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
+    [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AccessTokenController : JhIdentityController
     {

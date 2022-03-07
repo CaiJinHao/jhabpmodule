@@ -7,10 +7,14 @@ using Volo.Abp;
 using Volo.Abp.PermissionManagement;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Auditing;
+using Jh.Abp.JhIdentity;
 
 namespace Jh.Abp.JhPermission
 {
-    [RemoteService(Name = PermissionManagementRemoteServiceConsts.RemoteServiceName)]
+    [DisableAuditing]
+    [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
+    [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class JhPermissionsController : PermissionsController
     {

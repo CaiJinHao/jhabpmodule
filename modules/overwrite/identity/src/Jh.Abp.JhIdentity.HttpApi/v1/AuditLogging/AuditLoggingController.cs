@@ -12,7 +12,8 @@ using Volo.Abp.AuditLogging;
 namespace Jh.Abp.JhAuditLogging
 {
     [DisableAuditing]
-    [RemoteService]
+    [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
+    [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AuditLoggingController : JhIdentityController
     {

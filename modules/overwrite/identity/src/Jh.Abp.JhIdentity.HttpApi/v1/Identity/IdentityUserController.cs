@@ -17,10 +17,8 @@ using Volo.Abp.Account;
 
 namespace Jh.Abp.JhIdentity.v1
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	[RemoteService]
+    [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
+    [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class IdentityUserController : JhIdentityController
     {

@@ -150,8 +150,8 @@ public class YourProjectNameIdentityServerModule : AbpModule
 
         Configure<AbpAuditingOptions>(options =>
         {
-                //options.IsEnabledForGetRequests = true;
-                options.ApplicationName = "AuthServer";
+            options.ApplicationName = "AuthServer";
+            //options.IsEnabledForGetRequests = true;
         });
 
         Configure<AppUrlOptions>(options =>

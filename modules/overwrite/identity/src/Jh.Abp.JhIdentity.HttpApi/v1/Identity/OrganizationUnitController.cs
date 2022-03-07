@@ -14,7 +14,8 @@ namespace Jh.Abp.JhIdentity.v1
 	/// <summary>
 	/// 组织管理
 	/// </summary>
-	[RemoteService]
+	[RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
+	[Area(JhIdentityRemoteServiceConsts.ModuleName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class OrganizationUnitController : JhIdentityController
 	{
