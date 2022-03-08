@@ -15,7 +15,7 @@ using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     [Description("工作流实例")]
     public class WorkflowInstance : CreationAuditedEntity<Guid>, IMultiTenant
     {

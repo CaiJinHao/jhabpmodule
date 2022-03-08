@@ -13,7 +13,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     [Description("待办事项")]
     public class WorkflowBacklog : CreationAuditedEntity<Guid>, IMultiTenant
     {

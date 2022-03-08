@@ -16,7 +16,7 @@ using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     [Description("执行节点")]
     public class WorkflowExecutionPointer: Entity<Guid>, IMultiTenant
     {

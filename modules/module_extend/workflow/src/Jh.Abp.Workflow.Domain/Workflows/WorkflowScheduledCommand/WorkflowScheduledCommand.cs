@@ -14,7 +14,7 @@ using Jh.Abp.Common;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     public class WorkflowScheduledCommand:CreationAuditedEntity<Guid>, IMultiTenant
     {
         public virtual Guid? TenantId { get; set; }

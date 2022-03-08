@@ -15,7 +15,7 @@ using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     [Description("工作流定义")]
     public class WorkflowDefinition : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {

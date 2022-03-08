@@ -15,7 +15,7 @@ using Jh.Abp.Common;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     [Description("执行错误")]
     public class WorkflowExecutionError : CreationAuditedEntity<Guid>, IMultiTenant
     {

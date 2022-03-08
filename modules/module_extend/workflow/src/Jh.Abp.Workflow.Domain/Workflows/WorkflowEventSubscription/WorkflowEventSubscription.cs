@@ -14,7 +14,7 @@ using Jh.Abp.Common;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     [Description("订阅事件")]
     public class WorkflowEventSubscription : CreationAuditedEntity<Guid>, IMultiTenant
     {

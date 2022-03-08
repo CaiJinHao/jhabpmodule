@@ -15,7 +15,7 @@ using Volo.Abp.MultiTenancy;
 namespace Jh.Abp.JhMenu
 {
 
-    //[GeneratorClass]
+    
     [Description("角色菜单")]
     public class MenuRoleMap : CreationAuditedEntity<Guid>, IMultiTenant
     {

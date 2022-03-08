@@ -15,7 +15,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace Jh.Abp.Workflow
 {
-    [GeneratorClass]
+    
     [Description("扩展属性")]
     public class WorkflowExtensionAttribute:CreationAuditedEntity<Guid>, IMultiTenant
     {

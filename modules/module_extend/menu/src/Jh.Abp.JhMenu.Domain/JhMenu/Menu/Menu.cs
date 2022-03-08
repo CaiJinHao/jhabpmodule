@@ -16,7 +16,7 @@ using Jh.Abp.Common;
 namespace Jh.Abp.JhMenu
 {
 
-    //[GeneratorClass]
+    
     [Description("菜单")]
     public class Menu : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {
