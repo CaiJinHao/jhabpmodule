@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Auditing;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
@@ -13,6 +14,7 @@ using Volo.Abp.SimpleStateChecking;
 
 namespace Jh.Abp.JhPermission.JhPermission
 {
+    [DisableAuditing]
     public class JhPermissionAppService : PermissionAppService, IJhPermissionAppService, ITransientDependency
     {
         public JhPermissionAppService(IPermissionManager permissionManager, IPermissionDefinitionManager permissionDefinitionManager, IOptions<PermissionManagementOptions> options, ISimpleStateCheckerManager<PermissionDefinition> simpleStateCheckerManager) : base(permissionManager, permissionDefinitionManager, options, simpleStateCheckerManager)
@@ -126,6 +128,7 @@ namespace Jh.Abp.JhPermission.JhPermission
             }
             return result;
         }
+
         /// <summary>
         /// 只要当前用户有一个角色有权限就返回true
         /// </summary>

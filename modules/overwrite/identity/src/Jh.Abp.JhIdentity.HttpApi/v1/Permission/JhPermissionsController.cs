@@ -12,7 +12,6 @@ using Jh.Abp.JhIdentity;
 
 namespace Jh.Abp.JhPermission
 {
-    [DisableAuditing]
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
@@ -24,6 +23,7 @@ namespace Jh.Abp.JhPermission
 
         public IJhPermissionAppService jhPermissionAppService { get; set; }
 
+        [DisableAuditing]
         [HttpPost("PermissionGranted")]
         public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync([FromBody] PermissionGrantedRetrieveInputDto input)
         {
