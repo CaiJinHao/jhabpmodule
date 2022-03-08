@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44375",
-      "sslPort": 44375 
+      "applicationUrl": "http://localhost:55758/",
+      "sslPort": 44378
     }
   },
   "profiles": {
@@ -18,10 +18,10 @@
     "Jh.Abp.Workflow.DemoApp": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44375",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:44375"
     }
   }
 }

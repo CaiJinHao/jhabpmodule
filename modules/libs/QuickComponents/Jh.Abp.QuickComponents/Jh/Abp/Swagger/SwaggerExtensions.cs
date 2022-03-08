@@ -137,6 +137,8 @@ namespace Jh.Abp.QuickComponents.Swagger
 
             options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
+            var Audience = configuration.GetValue<string>("AuthServer:Audience");
+            options.OAuthScopes(Audience);
 
             // Display
             options.DefaultModelExpandDepth(2);//在模型-示例部分，模型的默认扩展深度
