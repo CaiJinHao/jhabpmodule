@@ -1,12 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\configureawait.props" />
   <Import Project="..\..\common.props" />
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>Jh.Abp.QuickComponents</RootNamespace>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Jh\Abp\MiniProfiler\**" />
@@ -14,7 +11,8 @@
     <None Remove="Jh\Abp\MiniProfiler\**" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Localization\JhAbpQuickComponents\zh-Hans.json" />
+    <EmbeddedResource Include="Localization\JhAbpQuickComponents\*.json" />
+    <Content Remove="Localization\JhAbpQuickComponents\*.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="5.1.0" />
