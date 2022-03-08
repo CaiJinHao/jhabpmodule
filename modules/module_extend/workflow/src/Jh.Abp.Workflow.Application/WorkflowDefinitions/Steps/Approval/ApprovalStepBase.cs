@@ -65,9 +65,6 @@ namespace Jh.Abp.Workflow
         /// <summary>
         /// 事件处理
         /// </summary>
-        /// <param name="eventData"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
         protected virtual ExecutionResult EventPublishdHandler(IStepExecutionContext context, WorkflowBacklog backlog)
         {
             return ExecutionResult.Outcome(UtilEnums.GetEnumValueDescription((BacklogResultType)ApprovalResult));
@@ -76,8 +73,6 @@ namespace Jh.Abp.Workflow
         /// <summary>
         /// 更新待办事项状态
         /// </summary>
-        /// <param name="WorkflowExecutionPointerId"></param>
-        /// <returns></returns>
         protected virtual async Task<WorkflowBacklog> UpdateBacklogAsync(Guid WorkflowExecutionPointerId)
         {
             var backlog = await backlogRepository.FindAsync(WorkflowExecutionPointerId);
@@ -100,7 +95,6 @@ namespace Jh.Abp.Workflow
         /// <summary>
         /// 创建待办事项
         /// </summary>
-        /// <returns></returns>
         protected async Task<ExecutionResult> CreateBacklogAsync(Volo.Abp.Identity.IdentityUser backlogUser)
         {
             //发送通知INotificationPublisher

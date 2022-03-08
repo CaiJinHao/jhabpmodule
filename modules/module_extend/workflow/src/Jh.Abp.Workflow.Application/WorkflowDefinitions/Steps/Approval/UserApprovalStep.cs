@@ -11,10 +11,10 @@ using System.Linq;
 
 namespace Jh.Abp.Workflow
 {
-    [Description("用户审批")]
     /// <summary>
     /// 用户审批，指定人员
     /// </summary>
+    [Description("用户审批")]
     public class UserApprovalStep : ApprovalStepBase, ITransientDependency
     {
         /// <summary>

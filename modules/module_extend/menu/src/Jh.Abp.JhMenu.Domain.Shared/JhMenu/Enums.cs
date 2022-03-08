@@ -5,7 +5,7 @@ using System.Text;
 namespace Jh.Abp.JhMenu
 {
     /// <summary>
-    /// 枚举多选使用与&运算。定义值为0,1,2,4,8.....;
+    /// 枚举多选使用与运算。定义值为0,1,2,4,8.....;
     /// 多选赋值7=0+1+2+4
     /// 7=MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File
     /// </summary>

@@ -196,9 +196,6 @@ namespace Jh.Abp.JhIdentity
         /// <summary>
         /// 获取部门领导
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="superiorRole">上级角色</param>
-        /// <returns></returns>
         public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId)
         {
             return await IdentityUserRepository.GetSuperiorUserAsync(userId); 
