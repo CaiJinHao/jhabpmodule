@@ -24,13 +24,13 @@ namespace Jh.Abp.Workflow
             WorkflowInstanceRepository = repository;
         }
 
+        /// <summary>
+        /// 兼容使用JSON注册的工作流
+        /// </summary>
+        /// <param name="workflowStartDto"></param>
+        /// <returns></returns>
         public async Task<string> StartWorkflowAsync(WorkflowStartDto workflowStartDto)
         {
-            var def = await workflowDefinitionAppService.GetAsync(new Guid(workflowStartDto.Id));
-            if (def==null)
-            {
-                throw new DataMisalignedException("没有注册Workflow");
-            }
             var workflowData = new WorkflowDynamicData();
             if (workflowStartDto.Data != null)
             {
@@ -39,16 +39,24 @@ namespace Jh.Abp.Workflow
                     workflowData[item.Name] = item.Value;
                 }
             }
-            if (!string.IsNullOrEmpty(def.InputData))
+
+            var def = await workflowDefinitionAppService.GetAsync(new Guid(workflowStartDto.Id));
+            if (def != null)
             {
-                var inputs = JsonConvert.DeserializeObject<dynamic>(def.InputData);
-                foreach (var item in inputs)
+                if (!string.IsNullOrEmpty(def.InputData))
                 {
-                    workflowData[item.Name] = item.Value;
+                    var inputs = JsonConvert.DeserializeObject<dynamic>(def.InputData);
+                    foreach (var item in inputs)
+                    {
+                        workflowData[item.Name] = item.Value;
+                    }
                 }
+                workflowStartDto.Version = def.Version;
             }
+            //throw new DataMisalignedException("没有定义Workflow"); 可能使用的是Json注册的
+
             //没有部门领导会跳过，自动执行下一步骤
-            return await workflowHost.StartWorkflow(def.Id.ToString(), def.Version, workflowData);
+            return await workflowHost.StartWorkflow(workflowStartDto.Id.ToString(), workflowStartDto.Version, workflowData);
         }
 
         public async Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstanceDeatilAsync(string workflowId)

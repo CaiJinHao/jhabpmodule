@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Jh.Abp.Workflow</RootNamespace>
@@ -21,6 +20,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Localization\Workflow\*.json" />
     <Content Remove="Localization\Workflow\*.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\WorkflowDefinitions\*.json" />
+    <Content Remove="Localization\WorkflowDefinitions\*.json" />
   </ItemGroup>
 
   <ItemGroup>

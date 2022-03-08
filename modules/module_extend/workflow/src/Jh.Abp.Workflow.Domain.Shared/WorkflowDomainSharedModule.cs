@@ -20,7 +20,7 @@ public class WorkflowDomainSharedModule : AbpModule
     {
         Configure<AbpVirtualFileSystemOptions>(options =>
         {
-            options.FileSets.AddEmbedded<WorkflowDomainSharedModule>();
+            options.FileSets.AddEmbedded<WorkflowDomainSharedModule>(typeof(WorkflowDomainSharedModule).Namespace);
         });
 
         Configure<AbpLocalizationOptions>(options =>

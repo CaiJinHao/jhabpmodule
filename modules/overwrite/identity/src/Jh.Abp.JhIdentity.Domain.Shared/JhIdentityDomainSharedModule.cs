@@ -20,7 +20,7 @@ public class JhIdentityDomainSharedModule : AbpModule
     {
         Configure<AbpVirtualFileSystemOptions>(options =>
         {
-            options.FileSets.AddEmbedded<JhIdentityDomainSharedModule>();
+            options.FileSets.AddEmbedded<JhIdentityDomainSharedModule>(typeof(JhIdentityDomainSharedModule).Namespace);
         });
 
         Configure<AbpLocalizationOptions>(options =>

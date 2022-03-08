@@ -1,0 +1,120 @@
+﻿{
+  "Id": "bc8f00ee-635f-c9e8-f097-3a02744165fd",
+  "Version": 1,
+  "Description": "休假审批",
+  "Steps": [
+    {
+      "id": "WorkflowStartStep",
+      "name": "发起流程",
+      "stepType": "Jh.Abp.Workflow.WorkflowStartStep, Jh.Abp.Workflow.Application",
+      "className": "Jh.Abp.Workflow.WorkflowStartStep",
+      "assemblyName": "Jh.Abp.JhWebApp.Application",
+      "nextStepId": "jingli",
+      "sourceEndpointId": null,
+      "targetEndpointId": null,
+      "Inputs": { "BusinessDataId": "data[\"BusinessDataId\"]" }
+    },
+    {
+      "id": "jingli",
+      "name": "经理审批",
+      "stepType": "Jh.Abp.Workflow.SuperiorApprovalStep,Jh.Abp.Workflow.Application",
+      "className": "Jh.Abp.Workflow.SuperiorApprovalStep",
+      "assemblyName": "Jh.Abp.Workflow.Application",
+      "nextStepId": "decide_zhuguan",
+      "Outputs": {
+        "Remark": "step.Remark",
+        "ApprovalResult": "step.ApprovalResult",
+        "ParentApprovalUserId": "step.ParentApprovalUserId"
+      },
+      "x": 242,
+      "y": 331
+    },
+    {
+      "Id": "decide_zhuguan",
+      "StepType": "WorkflowCore.Primitives.Decide, WorkflowCore",
+      "SelectNextStep": {
+        "zhuguan": "Convert.ToInt32(data[\"Day\"])>1&&Convert.ToInt32(data.ApprovalResult)!=2",
+        "WorkflowEndStep": "!(Convert.ToInt32(data[\"Day\"])>1&&Convert.ToInt32(data.ApprovalResult)!=2)"
+      }
+    },
+    {
+      "id": "zhuguan",
+      "name": "主管审批",
+      "stepType": "Jh.Abp.Workflow.SuperiorApprovalStep,Jh.Abp.Workflow.Application",
+      "className": "Jh.Abp.Workflow.SuperiorApprovalStep",
+      "assemblyName": "Jh.Abp.Workflow.Application",
+      "nextStepId": "decide_fuzong",
+      "Inputs": { "ParentApprovalUserId": "data.ParentApprovalUserId" },
+      "Outputs": {
+        "Remark": "step.Remark",
+        "ApprovalResult": "step.ApprovalResult",
+        "ParentApprovalUserId": "step.ParentApprovalUserId"
+      },
+      "x": 242,
+      "y": 331
+    },
+    {
+      "Id": "decide_fuzong",
+      "StepType": "WorkflowCore.Primitives.Decide, WorkflowCore",
+      "SelectNextStep": {
+        "fuzong": "Convert.ToInt32(data[\"Day\"])>=3&&Convert.ToInt32(data.ApprovalResult)!=2",
+        "WorkflowEndStep": "!(Convert.ToInt32(data[\"Day\"])>=3&&Convert.ToInt32(data.ApprovalResult)!=2)"
+      }
+    },
+    {
+      "id": "fuzong",
+      "name": "副总审批",
+      "stepType": "Jh.Abp.Workflow.UserApprovalStep,Jh.Abp.Workflow.Application",
+      "className": "Jh.Abp.Workflow.UserApprovalStep",
+      "assemblyName": "Jh.Abp.Workflow.Application",
+      "nextStepId": "decide_zongjingli",
+      "Inputs": {
+        "Remark": "data.Remark",
+        "ApprovalResult": "data.ApprovalResult",
+        "ParentApprovalUserId": "data.ParentApprovalUserId",
+        "UserId": "\"3a02751d-fc36-0f8a-a76a-c7d3391e9928\""
+      },
+      "Outputs": {
+        "Remark": "step.Remark",
+        "ApprovalResult": "step.ApprovalResult"
+      },
+      "x": 242,
+      "y": 331
+    },
+    {
+      "Id": "decide_zongjingli",
+      "StepType": "WorkflowCore.Primitives.Decide, WorkflowCore",
+      "SelectNextStep": {
+        "zongjingli": "Convert.ToInt32(data[\"Day\"])>=5&&Convert.ToInt32(data.ApprovalResult)!=2",
+        "WorkflowEndStep": "!(Convert.ToInt32(data[\"Day\"])>=5&&Convert.ToInt32(data.ApprovalResult)!=2)"
+      }
+    },
+    {
+      "id": "zongjingli",
+      "name": "总经理审批",
+      "stepType": "Jh.Abp.Workflow.UserApprovalStep,Jh.Abp.Workflow.Application",
+      "className": "Jh.Abp.Workflow.UserApprovalStep",
+      "assemblyName": "Jh.Abp.Workflow.Application",
+      "nextStepId": "WorkflowEndStep",
+      "Inputs": {
+        "ParentApprovalUserId": "data.ParentApprovalUserId",
+        "UserId": "\"3a02751e-acc4-33d1-a037-d55b83965ac2\""
+      },
+      "Outputs": { "Remark": "step.Remark" },
+      "x": 242,
+      "y": 331
+    },
+    {
+      "id": "WorkflowEndStep",
+      "name": "流程结束",
+      "stepType": "Jh.Abp.Workflow.WorkflowEndStep,Jh.Abp.Workflow.Application",
+      "className": "Jh.Abp.Workflow.WorkflowEndStep",
+      "assemblyName": "Jh.Abp.Workflow.Application",
+      "Inputs": { "Remark": "data.Remark" },
+      "x": 242,
+      "y": 331
+    }
+  ],
+  "DataType": "Jh.Abp.Workflow.WorkflowDynamicData,Jh.Abp.Workflow.Application.Contracts",
+  "DefaultErrorBehavior": 2
+}

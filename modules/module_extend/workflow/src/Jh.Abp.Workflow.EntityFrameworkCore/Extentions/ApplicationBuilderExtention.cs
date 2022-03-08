@@ -12,14 +12,15 @@ namespace Jh.Abp.Workflow
         /// <summary>
         /// 初始化工作流定义
         /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <returns></returns>
         public static IServiceProvider InitWorkflowDefinition(this IServiceProvider serviceProvider, Action<IWorkflowHost> registerWorkflowAction = null)
         {
-            serviceProvider.GetRequiredService<IWorkflowDefinitionRepository>().LoadWorkflowDefinitionAsync().Wait();
             var workflowHost = serviceProvider.GetService<IWorkflowHost>();
             registerWorkflowAction?.Invoke(workflowHost);
             workflowHost.Start();
+
+            var workflowDefinitionRepository = serviceProvider.GetRequiredService<IWorkflowDefinitionRepository>();
+            //workflowDefinitionRepository.LoadWorkflowDefinitionAsync().Wait();
+            workflowDefinitionRepository.LoadWorkflowDefinitionAsync("/Localization/WorkflowDefinitions/LeaveApprovalWorkflow.json").Wait();
 
             var appLifetime = serviceProvider.GetService<IHostApplicationLifetime>();
             appLifetime.ApplicationStopping.Register(() =>

@@ -17,7 +17,7 @@ namespace Jh.Abp.Domain.Shared
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.FileSets.AddEmbedded<JhAbpExtensionsDomainSharedModule>();
+                options.FileSets.AddEmbedded<JhAbpExtensionsDomainSharedModule>(typeof(JhAbpExtensionsDomainSharedModule).Namespace);
             });
 
             Configure<AbpLocalizationOptions>(options =>
@@ -26,7 +26,7 @@ namespace Jh.Abp.Domain.Shared
                     .Add<JhAbpExtensionsResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))//继承资源
                      //模块资源按照项目名称+文件夹路径写
-                    .AddVirtualJson("/Jh/Abp/Domain/Shared/Localization/JhAbpExtensions");
+                    .AddVirtualJson("/Localization/JhAbpExtensions");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>

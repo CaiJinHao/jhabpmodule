@@ -35,7 +35,7 @@ namespace Jh.Abp.Workflow
             var workflowInstanceEntity = await workflowInstanceRepository.FindAsync(workflowInstanceId);
             var workflowDef = await workflowDefinitionRepository.FindAsync(workflowDefinitionId);
             workflowInstanceEntity.BusinessDataId = BusinessDataId;
-            workflowInstanceEntity.BusinessType = workflowDef.BusinessType;
+            workflowInstanceEntity.BusinessType = workflowDef?.BusinessType;
         }
     }
 }

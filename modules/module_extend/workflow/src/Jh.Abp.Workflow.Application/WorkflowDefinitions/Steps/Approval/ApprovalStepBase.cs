@@ -38,8 +38,8 @@ namespace Jh.Abp.Workflow
         [UnitOfWork]
         public override ExecutionResult ExecutionRun(IStepExecutionContext context)
         {
-            currentWorkflowDefinition = workflowDefinitionRepository.GetAsync(workflowDefinitionId).Result;
-            currentWorkflowInstance = workflowInstanceRepository.GetAsync(workflowInstanceId).Result;
+            currentWorkflowDefinition = workflowDefinitionRepository.FindAsync(workflowDefinitionId).Result;
+            currentWorkflowInstance = workflowInstanceRepository.FindAsync(workflowInstanceId).Result;
 
             if (!context.ExecutionPointer.EventPublished)
             {
@@ -111,7 +111,7 @@ namespace Jh.Abp.Workflow
                 BacklogResult = BacklogResultType.Untreated,
                 BacklogUserId = backlogUser.Id,
                 BacklogUserName = backlogUser.Name,
-                TenantId = currentWorkflowDefinition.TenantId,
+                TenantId = currentWorkflowDefinition?.TenantId,
             });
             return ExecutionResult.WaitForEvent(Guid.NewGuid().ToString(), workflowInstanceId.ToString(), DateTime.MinValue);
         }

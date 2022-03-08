@@ -36,7 +36,7 @@ namespace Jh.Abp.QuickComponents
 
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.FileSets.AddEmbedded<AbpQuickComponentsModule>();
+                options.FileSets.AddEmbedded<AbpQuickComponentsModule>(typeof(AbpQuickComponentsModule).Namespace);
             });
 
             Configure<AbpJsonOptions>(options =>
@@ -56,7 +56,7 @@ namespace Jh.Abp.QuickComponents
                     .Add<JhAbpQuickComponentsResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
                      //模块资源按照项目名称+文件夹路径写
-                     .AddVirtualJson("/Jh/Abp/QuickComponents/Localization/JhAbpQuickComponents");
+                     .AddVirtualJson("/Localization/JhAbpQuickComponents");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>

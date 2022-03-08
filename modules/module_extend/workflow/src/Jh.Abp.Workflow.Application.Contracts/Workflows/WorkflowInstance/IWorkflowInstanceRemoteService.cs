@@ -1,11 +1,15 @@
 using Jh.Abp.Extensions;
 using System;
 using Jh.Abp.Application.Contracts;
+using System.Threading.Tasks;
+
 namespace Jh.Abp.Workflow
 {
 	public interface IWorkflowInstanceRemoteService
-		: IRequestRemoteService<WorkflowInstance, WorkflowInstanceDto, WorkflowInstanceDto, System.Guid, WorkflowInstanceRetrieveInputDto, WorkflowInstanceCreateInputDto, WorkflowInstanceUpdateInputDto, WorkflowInstanceDeleteInputDto>
- , IWorkflowInstanceBaseAppService
+		: IWorkflowInstanceBaseAppService
 	{
+		Task<string> StartWorkflowAsync(WorkflowStartDto workflowStartDto);
+		Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstanceAsync(string workflowId);
+		Task WorkflowPublishEventAsync(WorkflowPublishEventDto workflowPublishEventDto);
 	}
 }

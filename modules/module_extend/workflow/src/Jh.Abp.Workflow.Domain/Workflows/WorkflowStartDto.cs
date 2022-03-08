@@ -12,6 +12,11 @@ namespace Jh.Abp.Workflow
         public string Id { get; set; }
 
         /// <summary>
+        /// 版本
+        /// </summary>
+        public int? Version { get; set; }
+
+        /// <summary>
         /// 工作流数据
         /// </summary>
         public dynamic Data { get; set; }

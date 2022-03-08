@@ -24,19 +24,20 @@ namespace Jh.Abp.IdentityServer
         )]
     public class JhAbpIdentityServerModule : AbpModule
     {
-        public override void PreConfigureServices(ServiceConfigurationContext context)
-        {
-        }
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            Configure<AbpVirtualFileSystemOptions>(options =>
+            {
+                options.FileSets.AddEmbedded<JhAbpIdentityServerModule>(typeof(JhAbpIdentityServerModule).Namespace);
+            });
+
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
                     .Add<JhAbpIdentityServerResource>("en")
                     .AddBaseTypes(typeof(AbpIdentityServerResource))
                     //模块资源按照项目名称+文件夹路径写
-                    .AddVirtualJson("/Jh/Abp/IdentityServer/Localization/JhAbpIdentityServer");
+                    .AddVirtualJson("/Localization/JhAbpIdentityServer");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>

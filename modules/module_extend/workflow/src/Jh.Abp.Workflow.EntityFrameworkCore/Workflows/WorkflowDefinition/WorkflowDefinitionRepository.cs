@@ -1,10 +1,12 @@
 using Jh.Abp.EntityFrameworkCore.Extensions;
 using Jh.Abp.Workflow.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.VirtualFileSystem;
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
 using WorkflowCore.Services.DefinitionStorage;
@@ -17,7 +19,8 @@ namespace Jh.Abp.Workflow
         /// 工作流通用数据传输类型
         /// </summary>
         private string workflowDataType { get; set; }
-        public IDefinitionLoader definitionLoader => LazyServiceProvider.LazyGetRequiredService<IDefinitionLoader>();
+        protected IDefinitionLoader definitionLoader => LazyServiceProvider.LazyGetRequiredService<IDefinitionLoader>();
+        protected IVirtualFileProvider virtualFileProvider => LazyServiceProvider.LazyGetRequiredService<IVirtualFileProvider>();
         public WorkflowDefinitionRepository(IDbContextProvider<WorkflowDbContext> dbContextProvider) : base(dbContextProvider)
         {
             var _workflowDataType = typeof(WorkflowDynamicData);
@@ -45,11 +48,17 @@ namespace Jh.Abp.Workflow
                     Description = data.Description,
                     Steps = steps,
                     DataType = workflowDataType,
-                    //DataType = "Jh.Abp.Workflow.DynamicData, Jh.Abp.Workflow.Domain",
                     DefaultErrorBehavior = WorkflowErrorHandling.Terminate
                 };
                 definitionLoader.LoadDefinition(JsonConvert.SerializeObject(workflowDefinition), Deserializers.Json);
             }
+        }
+
+        public virtual async Task<WorkflowCore.Models.WorkflowDefinition> LoadWorkflowDefinitionAsync(string virtualFilePath)
+        {
+            var file= virtualFileProvider.GetFileInfo(virtualFilePath);
+            var workflowDefinitionJson = await file.ReadAsStringAsync();
+            return definitionLoader.LoadDefinition(workflowDefinitionJson, Deserializers.Json);
         }
 
         public virtual WorkflowCore.Models.WorkflowDefinition LoadWorkflowDefinition(WorkflowDefinition data)
