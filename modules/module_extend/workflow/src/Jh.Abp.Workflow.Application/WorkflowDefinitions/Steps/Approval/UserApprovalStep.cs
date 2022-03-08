@@ -34,12 +34,11 @@ namespace Jh.Abp.Workflow
             {
                 throw new InvalidOperationException("流程未定义审批人");
             }
-            var approvalUser = await identityUserManager.GetByIdAsync(_approvalUserId);
-            var createUser=await identityUserManager.GetByIdAsync((Guid)currentWorkflowInstance.CreatorId);
+            var approvalUser = await identityUserAppService.GetEntityAsync(_approvalUserId);
+            var createUser=await identityUserAppService.GetEntityAsync((Guid)currentWorkflowInstance.CreatorId);
             var _parentApprovalUserId = ParentApprovalUserId == null ? Guid.Empty : new Guid(ParentApprovalUserId);
             if (_approvalUserId.Equals(currentWorkflowInstance.CreatorId)//判断审批人和创建人是否为同一人
                 || _approvalUserId.Equals(_parentApprovalUserId)//当前审批人是否和上一步骤审批人相同
-                || approvalUser.OrganizationUnits.Any(a=>createUser.OrganizationUnits.Any(b=>b.OrganizationUnitId==a.OrganizationUnitId))//审批人和创建人是不是同一组织
                 )
             {
                 return ExecutionResult.Next();//跳过当前步骤，因为提交人与当前步骤审批人是同一人

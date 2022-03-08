@@ -60,7 +60,7 @@ namespace Jh.Abp.JhIdentity
             var userOrg = await (from user in dbContext.Set<IdentityUser>()
                                     join userOu in dbContext.Set<IdentityUserOrganizationUnit>() on user.Id equals userOu.UserId
 									join ou in dbContext.OrganizationUnits on userOu.OrganizationUnitId equals ou.Id
-                                    where user.Id == userId
+                                    where user.Id == userId orderby userOu.CreationTime descending
                                     select ou).FirstOrDefaultAsync();
             //获取这个组织的负责人
             var superiorUserId = userOrg.GetProperty<Guid>(nameof(ObjectExtensionConst.OrganizationUnit.LeaderId));
