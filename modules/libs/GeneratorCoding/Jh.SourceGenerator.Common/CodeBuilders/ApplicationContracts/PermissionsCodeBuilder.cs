@@ -22,18 +22,19 @@ using Volo.Abp.Reflection;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {PermissionsName}");
+                builder.AppendLine($"\tpublic class {FileName}");
                 builder.AppendLine("\t{");
                 {
                     builder.AppendLine($"\t\tpublic const string GroupName = \"{Domain}\";");
 
                     foreach (var item in tables)
                     {
-                        builder.AppendLine($"\tpublic class {ModuleName} ");
+                        var _moduleName = $"{table.Name}s";
+                        builder.AppendLine($"\tpublic class {_moduleName} ");
                         builder.AppendLine("\t{");
                         {
                             //能查看列表就能导出
-                            builder.AppendLine($"\t\tpublic const string Default = GroupName + \".{ModuleName}\";");
+                            builder.AppendLine($"\t\tpublic const string Default = GroupName + \".{_moduleName}\";");
                             builder.AppendLine($"\t\tpublic const string Detail = Default + \".Detail\";");
                             //能创建就能批量创建
                             builder.AppendLine($"\t\tpublic const string Create = Default + \".Create\";");
@@ -49,7 +50,7 @@ using Volo.Abp.Reflection;");
 
                     builder.AppendLine($"\tpublic static string[] GetAll()");
                     builder.AppendLine("\t{");
-                    builder.AppendLine($"\t\treturn ReflectionHelper.GetPublicConstantsRecursively(typeof({PermissionsName}));");
+                    builder.AppendLine($"\t\treturn ReflectionHelper.GetPublicConstantsRecursively(typeof({FileName}));");
                     builder.AppendLine("\t}");
                 }
                 builder.AppendLine("\t}");

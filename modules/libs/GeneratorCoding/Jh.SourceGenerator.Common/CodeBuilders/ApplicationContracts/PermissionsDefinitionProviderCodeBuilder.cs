@@ -23,7 +23,7 @@ using Volo.Abp.Localization;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {Domain}PermissionDefinitionProvider: PermissionDefinitionProvider");
+                builder.AppendLine($"\tpublic class {FileName}: PermissionDefinitionProvider");
                 builder.AppendLine("\t{");
                 {
                     var permissions = PermissionsName;

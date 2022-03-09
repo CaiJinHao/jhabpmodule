@@ -40,7 +40,7 @@ namespace Jh.Abp.JhMenu
                 CreateHtmlTemplatePath = @"G:\github\mygithub\jh-abp-module-extension\modules\libs\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
             var service = new GeneratorService(domainAssembly, options);
-            var mapTables = service.GetTableClassByGeneratorClass(typeof(IEntity));
+            var mapTables = service.GetTableClassByGeneratorClass(typeof(Entity));
             Assert.True(service.GeneratorCode(mapTables));
 
             //var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
