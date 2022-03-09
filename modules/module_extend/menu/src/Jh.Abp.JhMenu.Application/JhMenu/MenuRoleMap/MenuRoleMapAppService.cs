@@ -22,22 +22,23 @@ namespace Jh.Abp.JhMenu
         {
             MenuRoleMapRepository = repository;
             MenuRoleMapDapperRepository = menurolemapDapperRepository;
-            CreatePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Create;
-            UpdatePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Update;
-            DeletePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Delete;
-            GetPolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Detail;
-            GetListPolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Default;
-            BatchDeletePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.BatchDelete;
+            CreatePolicyName = JhMenuPermissions.MenuRoleMaps.Create;
+            UpdatePolicyName = JhMenuPermissions.MenuRoleMaps.Update;
+            DeletePolicyName = JhMenuPermissions.MenuRoleMaps.Delete;
+            GetPolicyName = JhMenuPermissions.MenuRoleMaps.Detail;
+            GetListPolicyName = JhMenuPermissions.MenuRoleMaps.Default;
+            BatchDeletePolicyName = JhMenuPermissions.MenuRoleMaps.BatchDelete;
         }
 
         public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            var roleMenus = menuRoleMapManager.CreateList(inputDto.RoleIds,inputDto.MenuIds).ToArray();
-            await crudRepository.CreateAsync(roleMenus);
+            await CheckCreatePolicyAsync().ConfigureAwait(false);
+            await menuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds);
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()
         {
+            await CheckGetListPolicyAsync().ConfigureAwait(false);
             var roles = GetRolesAsync();
             var auth_menus_id = (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
@@ -56,6 +57,7 @@ namespace Jh.Abp.JhMenu
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuRoleMapRetrieveInputDto input)
         {
+            await CheckGetListPolicyAsync().ConfigureAwait(false);
             var auth_menus_id =await (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToListAsync();
 
             var resutlMenus = await (await menuRepository.GetQueryableAsync()).AsNoTracking().Select(a =>

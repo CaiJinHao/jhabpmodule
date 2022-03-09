@@ -10,7 +10,7 @@ namespace Jh.Abp.JhMenu
     {
         protected IMenuRoleMapRepository MenuRoleMapRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRoleMapRepository>();
 
-        public IEnumerable<MenuRoleMap> CreateList(Guid[] RoleIds, Guid[] MenuIds)
+        protected virtual IEnumerable<MenuRoleMap> CreateList(Guid[] RoleIds, Guid[] MenuIds)
         {
             Volo.Abp.Check.NotNull(RoleIds,nameof(RoleIds));
             MenuRoleMapRepository.DeleteListAsync(a => RoleIds.Contains(a.RoleId)).Wait();
@@ -21,6 +21,12 @@ namespace Jh.Abp.JhMenu
                     yield return new MenuRoleMap(menuid, roleid);
                 }
             }
+        }
+
+        public virtual async Task CreateAsync(Guid[] RoleIds, Guid[] MenuIds)
+        {
+            var entitys = CreateList(RoleIds,MenuIds);
+            await MenuRoleMapRepository.CreateAsync(entitys.ToArray());
         }
     }
 }

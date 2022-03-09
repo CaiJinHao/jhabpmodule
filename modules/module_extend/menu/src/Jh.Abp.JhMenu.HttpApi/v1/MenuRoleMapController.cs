@@ -18,27 +18,26 @@ namespace Jh.Abp.JhMenu.v1
 	public class MenuRoleMapController : JhMenuController, IMenuRoleMapRemoteService
 	{
 		private readonly IMenuRoleMapAppService MenuRoleMapAppService;
-		public IDataFilter<ISoftDelete> dataFilter { get; set; }
 		public MenuRoleMapController(IMenuRoleMapAppService _MenuRoleMapAppService)
 		{
 			MenuRoleMapAppService = _MenuRoleMapAppService;
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.MenuRoleMaps.Create)]
+		[Authorize(JhMenuPermissions.MenuRoleMaps.Create)]
 		[HttpPost]
 		public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
 			await MenuRoleMapAppService.CreateByRoleAsync(inputDto);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.MenuRoleMaps.Default)]
+		[Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
 		[HttpGet("Trees")]
 		public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()
         {
             return await MenuRoleMapAppService.GetMenusNavTreesAsync();
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.MenuRoleMaps.Default)]
+		[Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
 		[HttpGet("TreesAll")]
 		public virtual async Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuRoleMapRetrieveInputDto input)
         {

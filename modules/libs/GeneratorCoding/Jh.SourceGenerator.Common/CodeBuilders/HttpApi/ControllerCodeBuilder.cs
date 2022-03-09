@@ -37,7 +37,7 @@ using Volo.Abp.Data;");
                 {
 
                     builder.AppendLine($"\t\t protected readonly I{table.Name}AppService {table.Name}AppService;");
-                    builder.AppendLine("\t\t protected IDataFilter<ISoftDelete> dataFilter { get; set; }");
+                    builder.AppendLine("\t\t protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();");
                     builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}AppService _{table.Name}AppService)");
                     {
                         builder.AppendLine("\t\t{");
@@ -51,7 +51,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine($"\t\tpublic virtual async Task<PagedResultDto<{table.Name}Dto>> GetListAsync([FromQuery] {table.Name}RetrieveInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
+                        builder.AppendLine("\t\t\t using (DataFilter.Disable<ISoftDelete>())");
                         builder.AppendLine("\t\t\t{");
                         builder.AppendLine($"\t\t\t\treturn await {table.Name}AppService.GetListAsync(input);");
                         builder.AppendLine("\t\t\t}");
@@ -148,7 +148,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t public async Task RecoverAsync({table.KeyType} id)");
                         {
                             builder.AppendLine("\t\t{");
-                            builder.AppendLine("\t\t\t await {table.Name}AppService.RecoverAsync(id);");
+                            builder.AppendLine($"\t\t\t await {table.Name}AppService.RecoverAsync(id);");
                             builder.AppendLine("\t\t}");
                         }
                         builder.AppendLine();
@@ -156,7 +156,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine("/*");
                     {
-                        builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.BatchDelete)]");
+                       /* builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.BatchDelete)]");
                         builder.AppendLine("\t\t[HttpDelete]");
                         builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
                         {
@@ -176,7 +176,7 @@ using Volo.Abp.Data;");
                             builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
                             builder.AppendLine("\t\t}");
                         }
-                        builder.AppendLine();
+                        builder.AppendLine();*/
 
                         builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Default)]");
                         builder.AppendLine("\t\t[Route(\"options\")]");

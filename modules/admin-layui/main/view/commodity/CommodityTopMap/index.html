@@ -216,7 +216,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/commoditytopmap/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/commoditytopmap/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -341,7 +341,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    commoditytopmapObj.patchObj(_value,'/commoditytopmap/'+_id+'/Deleted');
+                    commoditytopmapObj.patchObj(_value,'/commoditytopmap/'+_id+'/Recover');
                 });
             });
         </script>

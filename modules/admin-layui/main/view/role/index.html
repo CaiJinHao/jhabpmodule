@@ -201,7 +201,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/identityrole/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/identityrole/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -328,7 +328,7 @@
                     } else {
                         _value = true;//删除
                     }
-                    identityroleObj.patchObj(_value,'/identityrole/'+_id+'/Deleted');
+                    identityroleObj.patchObj(_value,'/identityrole/'+_id+'/Recover');
                 });
             });
         </script>

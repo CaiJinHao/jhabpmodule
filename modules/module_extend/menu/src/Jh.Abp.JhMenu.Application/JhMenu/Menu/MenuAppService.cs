@@ -22,12 +22,12 @@ namespace Jh.Abp.JhMenu
         {
             MenuRepository = repository;
             MenuDapperRepository = menuDapperRepository;
-            CreatePolicyName = JhAbpJhMenuPermissions.Menus.Create;
-            UpdatePolicyName = JhAbpJhMenuPermissions.Menus.Update;
-            DeletePolicyName = JhAbpJhMenuPermissions.Menus.Delete;
-            GetPolicyName = JhAbpJhMenuPermissions.Menus.Detail;
-            GetListPolicyName = JhAbpJhMenuPermissions.Menus.Default;
-            BatchDeletePolicyName = JhAbpJhMenuPermissions.Menus.BatchDelete;
+            CreatePolicyName = JhMenuPermissions.Menus.Create;
+            UpdatePolicyName = JhMenuPermissions.Menus.Update;
+            DeletePolicyName = JhMenuPermissions.Menus.Delete;
+            GetPolicyName = JhMenuPermissions.Menus.Detail;
+            GetListPolicyName = JhMenuPermissions.Menus.Default;
+            BatchDeletePolicyName = JhMenuPermissions.Menus.BatchDelete;
         }
 
         public override Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default)
@@ -45,7 +45,7 @@ namespace Jh.Abp.JhMenu
 
         public virtual async Task RecoverAsync(System.Guid id)
         {
-            await CheckPolicyAsync(JhAbpJhMenuPermissions.Menus.Recover).ConfigureAwait(false);
+            await CheckPolicyAsync(JhMenuPermissions.Menus.Recover).ConfigureAwait(false);
             using (DataFilter.Disable<ISoftDelete>())
             {
                 var entity = await crudRepository.FindAsync(id, false);

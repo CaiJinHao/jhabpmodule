@@ -238,7 +238,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/webdictionaryconfiguration/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/webdictionaryconfiguration/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -384,7 +384,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    webdictionaryconfigurationObj.patchObj(_value,'/webdictionaryconfiguration/'+_id+'/Deleted');
+                    webdictionaryconfigurationObj.patchObj(_value,'/webdictionaryconfiguration/'+_id+'/Recover');
                 });
             });
         </script>

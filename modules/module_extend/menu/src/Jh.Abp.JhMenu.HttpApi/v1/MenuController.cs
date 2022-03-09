@@ -16,24 +16,24 @@ namespace Jh.Abp.JhMenu.v1
 	public class MenuController : JhMenuController, IMenuRemoteService
 	{
 		private readonly IMenuAppService MenuAppService;
-		public IDataFilter<ISoftDelete> dataFilter { get; set; }
+		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
 
 		public MenuController(IMenuAppService _MenuAppService)
 		{
 			MenuAppService = _MenuAppService;
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Default)]
+		[Authorize(JhMenuPermissions.Menus.Default)]
 		[HttpGet]
 		public virtual async Task<PagedResultDto<MenuDto>> GetListAsync([FromQuery] MenuRetrieveInputDto input)
 		{
-			using (dataFilter.Disable())
+			using (DataFilter.Disable<ISoftDelete>())
 			{
 				return await MenuAppService.GetListAsync(input);
 			}
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Default)]
+		[Authorize(JhMenuPermissions.Menus.Default)]
 		[Route("all")]
 		[HttpGet]
 		public virtual async Task<ListResultDto<MenuDto>> GetEntitysAsync([FromQuery] MenuRetrieveInputDto inputDto)
@@ -41,28 +41,28 @@ namespace Jh.Abp.JhMenu.v1
 			return await MenuAppService.GetEntitysAsync(inputDto);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Detail)]
+		[Authorize(JhMenuPermissions.Menus.Detail)]
 		[HttpGet("{id}")]
 		public virtual async Task<Menu> GetAsync(System.Guid id)
 		{
 			return await MenuAppService.GetEntityAsync(id);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Create)]
+		[Authorize(JhMenuPermissions.Menus.Create)]
 		[HttpPost]
 		public virtual async Task CreateAsync(MenuCreateInputDto input)
 		{
 			 await MenuAppService.CreateAsync(input,true);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Update)]
+		[Authorize(JhMenuPermissions.Menus.Update)]
 		[HttpPut("{id}")]
 		public virtual async Task<MenuDto> UpdateAsync(System.Guid id, MenuUpdateInputDto input)
 		{
 			return await MenuAppService.UpdateAsync(id, input);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Update)]
+		[Authorize(JhMenuPermissions.Menus.Update)]
 		[HttpPut]
 		[HttpPatch]
 		[Route("{id}")]
@@ -71,14 +71,14 @@ namespace Jh.Abp.JhMenu.v1
 			 await MenuAppService.UpdatePortionAsync(id, inputDto);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Delete)]
+		[Authorize(JhMenuPermissions.Menus.Delete)]
 		[HttpDelete("{id}")]
 		public virtual async Task DeleteAsync(System.Guid id)
 		{
 			 await MenuAppService.DeleteAsync(id);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.BatchDelete)]
+		[Authorize(JhMenuPermissions.Menus.BatchDelete)]
 		[Route("keys")]
 		[HttpDelete]
 		public virtual async Task DeleteAsync([FromBody]System.Guid[] keys)
@@ -86,7 +86,7 @@ namespace Jh.Abp.JhMenu.v1
 			 await MenuAppService.DeleteAsync(keys);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.Recover)]
+		[Authorize(JhMenuPermissions.Menus.Recover)]
 		[HttpPatch]
 		[HttpPut]
 		[Route("{id}/Recover")]

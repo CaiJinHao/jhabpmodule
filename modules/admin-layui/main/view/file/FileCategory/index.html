@@ -225,7 +225,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/filecategory/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/filecategory/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -346,7 +346,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    filecategoryObj.patchObj(_value,'/filecategory/'+_id+'/Deleted');
+                    filecategoryObj.patchObj(_value,'/filecategory/'+_id+'/Recover');
                 });
             });
         </script>

@@ -10,26 +10,8 @@ namespace Jh.Abp.JhMenu
 	/// <summary>
 	/// 角色菜单
 	/// </summary>
-	public class MenuRoleMapCreateInputDto: 
-IMethodDto<MenuRoleMap>
-,IMultiTenant
+	public class MenuRoleMapCreateInputDto
 	{
-		/// <summary>
-		/// 菜单Id
-		/// </summary>
-		[Required]
-		public Guid MenuId { get; set; }
-		/// <summary>
-		/// 用户角色
-		/// </summary>
-		[Required]
-		public Guid RoleId { get; set; }
-		/// <summary>
-		/// 方法参数回调
-		/// </summary>
-		public MethodDto<MenuRoleMap> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
-
 		/// <summary>
 		/// 菜单外键
 		/// </summary>

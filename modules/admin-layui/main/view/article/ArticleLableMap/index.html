@@ -214,7 +214,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/articlelablemap/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/articlelablemap/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -335,7 +335,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    articlelablemapObj.patchObj(_value,'/articlelablemap/'+_id+'/Deleted');
+                    articlelablemapObj.patchObj(_value,'/articlelablemap/'+_id+'/Recover');
                 });
             });
         </script>

@@ -217,7 +217,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/commodityuserlevelinfo/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/commodityuserlevelinfo/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -344,7 +344,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    commodityuserlevelinfoObj.patchObj(_value,'/commodityuserlevelinfo/'+_id+'/Deleted');
+                    commodityuserlevelinfoObj.patchObj(_value,'/commodityuserlevelinfo/'+_id+'/Recover');
                 });
             });
         </script>

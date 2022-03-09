@@ -282,7 +282,7 @@
                 },
                 rollbackDel: function (data) {
                     let _the = this;
-                    _the.patchObj(false, '/organizationunit/' + data.id + '/Deleted');
+                    _the.patchObj(false, '/organizationunit/' + data.id + '/Recover');
                 },
 				patchObj: function (data,url) {
                     let _the = this;
@@ -407,7 +407,7 @@
                 } else {
                     _value = true;//禁用
                 }
-                organizationunitObj.patchObj(_value,'/organizationunit/'+_id+'/Deleted');
+                organizationunitObj.patchObj(_value,'/organizationunit/'+_id+'/Recover');
             });
         });
     </script>

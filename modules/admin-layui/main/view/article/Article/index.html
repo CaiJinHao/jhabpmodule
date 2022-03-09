@@ -246,7 +246,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/article/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/article/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -396,7 +396,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    articleObj.patchObj(_value,'/article/'+_id+'/Deleted');
+                    articleObj.patchObj(_value,'/article/'+_id+'/Recover');
                 });
             });
         </script>

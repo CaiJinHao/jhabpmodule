@@ -233,7 +233,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/commoditybrand/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/commoditybrand/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -356,7 +356,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    commoditybrandObj.patchObj(_value,'/commoditybrand/'+_id+'/Deleted');
+                    commoditybrandObj.patchObj(_value,'/commoditybrand/'+_id+'/Recover');
                 });
             });
         </script>

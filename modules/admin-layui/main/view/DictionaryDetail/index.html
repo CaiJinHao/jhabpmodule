@@ -232,7 +232,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/dictionarydetail/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/dictionarydetail/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -359,7 +359,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    dictionarydetailObj.patchObj(_value,'/dictionarydetail/'+_id+'/Deleted');
+                    dictionarydetailObj.patchObj(_value,'/dictionarydetail/'+_id+'/Recover');
                 });
             });
         </script>

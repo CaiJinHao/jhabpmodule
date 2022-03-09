@@ -232,7 +232,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/commoditycategoryspecification/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/commoditycategoryspecification/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -366,7 +366,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    commoditycategoryspecificationObj.patchObj(_value,'/commoditycategoryspecification/'+_id+'/Deleted');
+                    commoditycategoryspecificationObj.patchObj(_value,'/commoditycategoryspecification/'+_id+'/Recover');
                 });
             });
         </script>

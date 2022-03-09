@@ -299,7 +299,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/articlecategory/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/articlecategory/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -433,7 +433,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    articlecategoryObj.patchObj(_value,'/articlecategory/'+_id+'/Deleted');
+                    articlecategoryObj.patchObj(_value,'/articlecategory/'+_id+'/Recover');
                 });
             });
         </script>

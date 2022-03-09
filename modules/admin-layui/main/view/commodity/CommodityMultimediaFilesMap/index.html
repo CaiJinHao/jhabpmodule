@@ -230,7 +230,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/commoditymultimediafilesmap/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/commoditymultimediafilesmap/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -366,7 +366,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    commoditymultimediafilesmapObj.patchObj(_value,'/commoditymultimediafilesmap/'+_id+'/Deleted');
+                    commoditymultimediafilesmapObj.patchObj(_value,'/commoditymultimediafilesmap/'+_id+'/Recover');
                 });
             });
         </script>
