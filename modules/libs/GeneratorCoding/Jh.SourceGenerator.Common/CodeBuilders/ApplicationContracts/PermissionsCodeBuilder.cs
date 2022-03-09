@@ -29,7 +29,7 @@ using Volo.Abp.Reflection;");
 
                     foreach (var item in tables)
                     {
-                        var _moduleName = $"{table.Name}s";
+                        var _moduleName = $"{item.Name}s";
                         builder.AppendLine($"\tpublic class {_moduleName} ");
                         builder.AppendLine("\t{");
                         {

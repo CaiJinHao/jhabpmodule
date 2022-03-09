@@ -12,8 +12,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public string FilePath { get; set; }
         public string Domain { get { return table.Namespace.Split('.').LastOrDefault(); } }
         public string PermissionsName { get { return $"{table.Namespace.Replace(".", "")}Permissions"; } }
-        public string ModuleName { get { return $"{table.Name}s"; } }
-        public string PermissionsNamePrefix { get { return $"{PermissionsName}.{ModuleName}"; } }
+        public string PermissionsNamePrefix { get { return $"{PermissionsName}.{table.Name}s"; } }
         /// <summary>
         /// 文件名称
         /// </summary>
