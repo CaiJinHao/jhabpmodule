@@ -10,7 +10,8 @@ using System.Linq;
 
 namespace Jh.Abp.JhMenu.v1
 {
-	[RemoteService]
+	[Area(JhMenuRemoteServiceConsts.ModuleName)]
+	[RemoteService(Name = JhMenuRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class MenuController : JhMenuController, IMenuRemoteService
 	{

@@ -9,6 +9,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
     {
         public string DbContext { get; }
         public string Namespace { get; }
+        public string Domain { get { return this.Namespace.Split('.').LastOrDefault(); } }
         public string ControllerBase { get; }
         public TableDto(string dbContext, string namespa, string controllerBase)
         {

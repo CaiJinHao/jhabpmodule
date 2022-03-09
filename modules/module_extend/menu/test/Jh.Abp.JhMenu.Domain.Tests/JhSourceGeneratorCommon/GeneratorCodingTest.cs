@@ -40,11 +40,12 @@ namespace Jh.Abp.JhMenu
                 CreateHtmlTemplatePath = @"G:\github\mygithub\jh-abp-module-extension\modules\libs\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
             var service = new GeneratorService(domainAssembly, options);
-            var mapTables = service.GetTableClassByGeneratorClass(typeof(IAggregateRoot));
-            Assert.True(service.GeneratorCode(mapTables));
+            //var mapTables = service.GetTableClassByGeneratorClass(typeof(IAggregateRoot));
+            //Assert.True(service.GeneratorCode(mapTables));
+
             //var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
             //var mapTables = service.GetLoadableTypes().Where(cla => cla.IsClass && typeof(IAggregateRoot).IsAssignableFrom(cla)).ToArray();
-            //Assert.True(service.GeneratorCode(new Type[] { typeof(Menu) }));
+            Assert.True(service.GeneratorCode(new Type[] { typeof(MenuRoleMap) }));
         }
     }
 }

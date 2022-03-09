@@ -214,7 +214,7 @@
                                 clickClose: true,
                                 // filterable: true,
                                 height: 'auto',
-                                data: response.items,
+                                data: response,
                                 tree: {
                                     //是否显示树状结构
                                     show: true,
@@ -231,9 +231,6 @@
                                 },
                                 on: function (selecteddData) {
                                     if (selecteddData.isAdd) {
-                                        console.log(selecteddData);
-                                        var arr = selecteddData.arr;
-                                        console.log(arr);
                                         return selecteddData.change.slice(0, 1)
                                     }
                                 }

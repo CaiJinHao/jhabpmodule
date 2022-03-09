@@ -29,7 +29,8 @@ using Volo.Abp.Data;");
                 builder.AppendLine($"\t/// <summary>");
                 builder.AppendLine($"\t/// {table.Comment}");
                 builder.AppendLine($"\t/// </summary>");
-                builder.AppendLine("\t[RemoteService]");
+                builder.AppendLine($"\t[Area({table.Domain}RemoteServiceConsts.ModuleName)]");
+                builder.AppendLine($"\t[RemoteService(Name = {table.Domain}RemoteServiceConsts.RemoteServiceName)]");
                 builder.AppendLine("\t[Route(\"api/v{apiVersion:apiVersion}/[controller]\")]");
                 builder.AppendLine($"\tpublic class {FileName} : {table.ControllerBase},I{table.Name}BaseAppService");
                 builder.AppendLine("\t{");
@@ -37,8 +38,8 @@ using Volo.Abp.Data;");
                     var moduleName = $"{table.Name}s";
                     var groupName = $"{table.GetGroupName()}Permissions";
 
-                    builder.AppendLine($"\t\tprivate readonly I{table.Name}AppService {table.Name}AppService;");
-                    builder.AppendLine("\t\tpublic IDataFilter<ISoftDelete> dataFilter { get; set; }");
+                    builder.AppendLine($"\t\t protected readonly I{table.Name}AppService {table.Name}AppService;");
+                    builder.AppendLine("\t\t protected IDataFilter<ISoftDelete> dataFilter { get; set; }");
                     builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}AppService _{table.Name}AppService)");
                     {
                         builder.AppendLine("\t\t{");

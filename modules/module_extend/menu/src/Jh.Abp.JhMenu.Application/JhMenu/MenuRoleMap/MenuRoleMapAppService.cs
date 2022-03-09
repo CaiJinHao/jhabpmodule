@@ -14,41 +14,20 @@ namespace Jh.Abp.JhMenu
         : CrudApplicationService<MenuRoleMap, MenuRoleMapDto, MenuRoleMapDto, System.Guid, MenuRoleMapRetrieveInputDto, MenuRoleMapCreateInputDto, MenuRoleMapUpdateInputDto, MenuRoleMapDeleteInputDto>,
         IMenuRoleMapAppService
     {
-        public IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
-        private readonly IMenuRoleMapRepository MenuRoleMapRepository;
-        private readonly IMenuRoleMapDapperRepository MenuRoleMapDapperRepository;
+        protected MenuRoleMapManager menuRoleMapManager =>LazyServiceProvider.LazyGetRequiredService<MenuRoleMapManager>();
+        protected IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
+        protected readonly IMenuRoleMapRepository MenuRoleMapRepository;
+        protected readonly IMenuRoleMapDapperRepository MenuRoleMapDapperRepository;
         public MenuRoleMapAppService(IMenuRoleMapRepository repository, IMenuRoleMapDapperRepository menurolemapDapperRepository) : base(repository)
         {
             MenuRoleMapRepository = repository;
             MenuRoleMapDapperRepository = menurolemapDapperRepository;
         }
 
-        public override Task<MenuRoleMap> CreateAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
-        }
-
-        public override Task<MenuRoleMap[]> CreateAsync(MenuRoleMapCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual async Task<MenuRoleMap[]> CreateV2Async(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
-        }
-
-        protected virtual IEnumerable<MenuRoleMap> GetCreateEnumerableAsync(MenuRoleMapCreateInputDto inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            foreach (var roleid in inputDtos.RoleIds)
-            {
-                //删除所有角色的权限
-                DeleteAsync(new MenuRoleMapDeleteInputDto() { RoleId = roleid }).Wait();
-                foreach (var menuid in inputDtos.MenuIds)
-                {
-                    yield return new MenuRoleMap(menuid, roleid);
-                }
-            }
+            var roleMenus = menuRoleMapManager.CreateList(inputDto.RoleIds,inputDto.MenuIds).ToArray();
+            await crudRepository.CreateAsync(roleMenus);
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()

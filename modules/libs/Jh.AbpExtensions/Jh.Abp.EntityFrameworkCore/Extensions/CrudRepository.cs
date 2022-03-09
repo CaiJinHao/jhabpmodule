@@ -74,6 +74,10 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
 
         public virtual async Task<TEntity[]> DeleteAsync(bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken), params TEntity[] entitys)
         {
+            if (entitys == null || !entitys.Any())
+            {
+                return default;
+            }
             var _dbSet = await GetDbSetAsync();
             if (isHard)
             {
