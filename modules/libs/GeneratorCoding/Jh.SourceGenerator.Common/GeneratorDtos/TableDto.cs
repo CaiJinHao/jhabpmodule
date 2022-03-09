@@ -9,7 +9,6 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
     {
         public string DbContext { get; }
         public string Namespace { get; }
-        public string Domain { get { return this.Namespace.Split('.').LastOrDefault(); } }
         public string ControllerBase { get; }
         public TableDto(string dbContext, string namespa, string controllerBase)
         {
@@ -227,11 +226,6 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
             //在两个里面都不包含的才返回
             var fields = FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)) && !(FieldsIgnore.Select(b => b.Name).Contains(a.Name)));
             return FieldsIgnore.Concat(fields);
-        }
-
-        public virtual string GetGroupName()
-        {
-            return this.Namespace.Replace(".","");
         }
     }
 }

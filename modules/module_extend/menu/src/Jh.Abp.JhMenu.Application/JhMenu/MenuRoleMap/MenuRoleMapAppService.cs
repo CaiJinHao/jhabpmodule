@@ -22,6 +22,12 @@ namespace Jh.Abp.JhMenu
         {
             MenuRoleMapRepository = repository;
             MenuRoleMapDapperRepository = menurolemapDapperRepository;
+            CreatePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Create;
+            UpdatePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Update;
+            DeletePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Delete;
+            GetPolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Detail;
+            GetListPolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.Default;
+            BatchDeletePolicyName = JhAbpJhMenuPermissions.MenuRoleMaps.BatchDelete;
         }
 
         public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)

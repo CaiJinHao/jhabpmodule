@@ -10,7 +10,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public PermissionsCodeBuilder(IEnumerable<TableDto> tableDto, string filePath) : base(tableDto, filePath)
         {
-            this.FileName = $"{table.GetGroupName()}Permissions";
+            this.FileName = $"{Domain}Permissions";
         }
 
         public override string ToString()
@@ -22,20 +22,18 @@ using Volo.Abp.Reflection;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                var groupName = $"{table.GetGroupName()}";
-                builder.AppendLine($"\tpublic class {groupName}Permissions");
+                builder.AppendLine($"\tpublic class {PermissionsName}");
                 builder.AppendLine("\t{");
                 {
-                    builder.AppendLine($"\t\tpublic const string GroupName = \"{groupName}\";");
+                    builder.AppendLine($"\t\tpublic const string GroupName = \"{Domain}\";");
 
                     foreach (var item in tables)
                     {
-                        var moduleName = $"{item.Name}s";
-                        builder.AppendLine($"\tpublic class {moduleName} ");
+                        builder.AppendLine($"\tpublic class {ModuleName} ");
                         builder.AppendLine("\t{");
                         {
                             //能查看列表就能导出
-                            builder.AppendLine($"\t\tpublic const string Default = GroupName + \".{moduleName}\";");
+                            builder.AppendLine($"\t\tpublic const string Default = GroupName + \".{ModuleName}\";");
                             builder.AppendLine($"\t\tpublic const string Detail = Default + \".Detail\";");
                             //能创建就能批量创建
                             builder.AppendLine($"\t\tpublic const string Create = Default + \".Create\";");
@@ -51,7 +49,7 @@ using Volo.Abp.Reflection;");
 
                     builder.AppendLine($"\tpublic static string[] GetAll()");
                     builder.AppendLine("\t{");
-                    builder.AppendLine($"\t\treturn ReflectionHelper.GetPublicConstantsRecursively(typeof({groupName}Permissions));");
+                    builder.AppendLine($"\t\treturn ReflectionHelper.GetPublicConstantsRecursively(typeof({PermissionsName}));");
                     builder.AppendLine("\t}");
                 }
                 builder.AppendLine("\t}");

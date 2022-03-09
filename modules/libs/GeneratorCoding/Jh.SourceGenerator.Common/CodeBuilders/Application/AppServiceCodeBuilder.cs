@@ -14,10 +14,6 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 
         public override string ToString()
         {
-            var moduleName = $"{table.Name}s";
-            var groupName = $"{table.GetGroupName()}Permissions";
-
-
             var builder = new StringBuilder();
             builder.AppendLine(@"using Jh.Abp.Extensions;
 using System;");
@@ -35,6 +31,12 @@ using System;");
                     builder.AppendLine("\t\t{");
                     builder.AppendLine($"\t\t{table.Name}Repository = repository;");
                     builder.AppendLine($"\t\t{table.Name}DapperRepository = {table.Name.ToLower()}DapperRepository;");
+                    builder.AppendLine($"\t\t CreatePolicyName = {PermissionsNamePrefix}.Create;");
+                    builder.AppendLine($"\t\t UpdatePolicyName = {PermissionsNamePrefix}.Update;");
+                    builder.AppendLine($"\t\t DeletePolicyName = {PermissionsNamePrefix}.Delete;");
+                    builder.AppendLine($"\t\t GetPolicyName = {PermissionsNamePrefix}.Detail;");
+                    builder.AppendLine($"\t\t GetListPolicyName = {PermissionsNamePrefix}.Default;");
+                    builder.AppendLine($"\t\t BatchDeletePolicyName= {PermissionsNamePrefix}.BatchDelete;");
                     builder.AppendLine("\t\t}");
 
                     if (table.IsDelete)

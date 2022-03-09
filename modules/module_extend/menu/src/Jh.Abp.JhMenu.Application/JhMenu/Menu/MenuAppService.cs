@@ -27,6 +27,7 @@ namespace Jh.Abp.JhMenu
             DeletePolicyName = JhAbpJhMenuPermissions.Menus.Delete;
             GetPolicyName = JhAbpJhMenuPermissions.Menus.Detail;
             GetListPolicyName = JhAbpJhMenuPermissions.Menus.Default;
+            BatchDeletePolicyName = JhAbpJhMenuPermissions.Menus.BatchDelete;
         }
 
         public override Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default)

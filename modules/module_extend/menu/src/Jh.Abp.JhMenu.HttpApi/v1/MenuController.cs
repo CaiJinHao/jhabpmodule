@@ -62,7 +62,7 @@ namespace Jh.Abp.JhMenu.v1
 			return await MenuAppService.UpdateAsync(id, input);
 		}
 
-		[Authorize(JhAbpJhMenuPermissions.Menus.PortionUpdate)]
+		[Authorize(JhAbpJhMenuPermissions.Menus.Update)]
 		[HttpPut]
 		[HttpPatch]
 		[Route("{id}")]
