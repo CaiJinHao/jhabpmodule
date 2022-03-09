@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 
 namespace Jh.Abp.JhMenu
@@ -21,10 +22,16 @@ namespace Jh.Abp.JhMenu
         {
             MenuRepository = repository;
             MenuDapperRepository = menuDapperRepository;
+            CreatePolicyName = JhAbpJhMenuPermissions.Menus.Create;
+            UpdatePolicyName = JhAbpJhMenuPermissions.Menus.Update;
+            DeletePolicyName = JhAbpJhMenuPermissions.Menus.Delete;
+            GetPolicyName = JhAbpJhMenuPermissions.Menus.Detail;
+            GetListPolicyName = JhAbpJhMenuPermissions.Menus.Default;
         }
 
         public override Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
+            CheckPolicyAsync(GetListPolicyName);
             if (!string.IsNullOrEmpty(input.OrMenuCode))
             {
                 input.MethodInput = new MethodDto<Menu>()
@@ -33,6 +40,18 @@ namespace Jh.Abp.JhMenu
                 };
             }
             return base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
+        }
+
+        public virtual async Task RecoverAsync(System.Guid id)
+        {
+            await CheckPolicyAsync(JhAbpJhMenuPermissions.Menus.Recover).ConfigureAwait(false);
+            using (DataFilter.Disable<ISoftDelete>())
+            {
+                var entity = await crudRepository.FindAsync(id, false);
+                entity.IsDeleted = false;
+                entity.DeleterId = CurrentUser.Id;
+                entity.DeletionTime = Clock.Now;
+            }
         }
     }
 }

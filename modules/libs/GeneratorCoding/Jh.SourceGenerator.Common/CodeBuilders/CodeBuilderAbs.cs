@@ -10,6 +10,15 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     public abstract class CodeBuilderAbs
     {
         public string FilePath { get; set; }
+        public string PermissionsNamePrefix
+        {
+            get
+            {
+                var moduleName = $"{table.Name}s";
+                var groupName = $"{table.GetGroupName()}Permissions";
+                return $"{groupName}.{moduleName}";
+            }
+        }
         /// <summary>
         /// 文件名称
         /// </summary>

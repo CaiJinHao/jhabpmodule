@@ -35,8 +35,6 @@ using Volo.Abp.Data;");
                 builder.AppendLine($"\tpublic class {FileName} : {table.ControllerBase},I{table.Name}BaseAppService");
                 builder.AppendLine("\t{");
                 {
-                    var moduleName = $"{table.Name}s";
-                    var groupName = $"{table.GetGroupName()}Permissions";
 
                     builder.AppendLine($"\t\t protected readonly I{table.Name}AppService {table.Name}AppService;");
                     builder.AppendLine("\t\t protected IDataFilter<ISoftDelete> dataFilter { get; set; }");
@@ -48,7 +46,7 @@ using Volo.Abp.Data;");
                     }
                     builder.AppendLine();
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Default)]");
                     builder.AppendLine("\t\t[HttpGet]");
                     builder.AppendLine($"\t\tpublic virtual async Task<PagedResultDto<{table.Name}Dto>> GetListAsync([FromQuery] {table.Name}RetrieveInputDto input)");
                     {
@@ -62,7 +60,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Default)]");
                     builder.AppendLine("\t\t[Route(\"all\")]");
                     builder.AppendLine("\t\t[HttpGet]");
                     builder.AppendLine($"\t\tpublic virtual async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
@@ -74,7 +72,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Detail)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Detail)]");
                     builder.AppendLine("\t\t[HttpGet(\"{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}> GetAsync({table.KeyType} id)");
                     {
@@ -85,7 +83,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Create)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Create)]");
                     builder.AppendLine("\t\t[HttpPost]");
                     builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto input)");
                     {
@@ -96,7 +94,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Update)]");
                     builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
                     {
@@ -107,7 +105,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.PortionUpdate)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.PortionUpdate)]");
                     builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
                     builder.AppendLine("\t\t[HttpPatch(\"Patch/{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
@@ -119,7 +117,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Delete)]");
                     builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
                     {
@@ -130,7 +128,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.BatchDelete)]");
                     builder.AppendLine("\t\t[Route(\"keys\")]");
                     builder.AppendLine("\t\t[HttpDelete]");
                     builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
@@ -141,10 +139,24 @@ using Volo.Abp.Data;");
                     }
                     builder.AppendLine();
 
+                    if (table.IsDelete)
+                    {
+                        builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Recover)]");
+                        builder.AppendLine("\t\t[HttpPatch]");
+                        builder.AppendLine("\t\t[HttpPut]");
+                        builder.AppendLine("\t\t[Route(\"{id}/Recover\")]");
+                        builder.AppendLine($"\t\t public async Task RecoverAsync({table.KeyType} id)");
+                        {
+                            builder.AppendLine("\t\t{");
+                            builder.AppendLine("\t\t\t await {table.Name}AppService.RecoverAsync(id);");
+                            builder.AppendLine("\t\t}");
+                        }
+                        builder.AppendLine();
+                    }
 
                     builder.AppendLine("/*");
                     {
-                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
+                        builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.BatchDelete)]");
                         builder.AppendLine("\t\t[HttpDelete]");
                         builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
                         {
@@ -155,7 +167,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine();
 
 
-                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchCreate)]");
+                        builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.BatchCreate)]");
                         builder.AppendLine("\t\t[Route(\"items\")]");
                         builder.AppendLine("\t\t[HttpPost]");
                         builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto[] input)");
@@ -166,33 +178,7 @@ using Volo.Abp.Data;");
                         }
                         builder.AppendLine();
 
-
-                        if (table.IsDelete)
-                        {
-                            builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Recover)]");
-                            builder.AppendLine("\t\t[HttpPatch]");
-                            builder.AppendLine("\t\t[HttpPut]");
-                            builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
-                            builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
-                            {
-                                builder.AppendLine("\t\t{");
-                                builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
-                                builder.AppendLine("\t\t\t{");
-                                builder.AppendLine($"\t\t\t\tawait {table.Name}AppService.UpdatePortionAsync(id, new {table.Name}UpdateInputDto()");
-                                builder.AppendLine("\t\t\t\t{");
-                                builder.AppendLine($"\t\t\t\t\tMethodInput = new MethodDto<{table.Name}>()");
-                                builder.AppendLine("\t\t\t\t\t{");
-                                builder.AppendLine("\t\t\t\t\t\t CreateOrUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted");
-                                builder.AppendLine("\t\t\t\t\t}");
-                                builder.AppendLine("\t\t\t\t});");
-                                builder.AppendLine("\t\t\t}");
-                                builder.AppendLine("\t\t}");
-                            }
-                            builder.AppendLine();
-
-                        }
-
-                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
+                        builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Default)]");
                         builder.AppendLine("\t\t[Route(\"options\")]");
                         builder.AppendLine("\t\t[HttpGet]");
                         builder.AppendLine($"\t\tpublic virtual Task<ListResultDto<{table.Name}Dto>> GetOptionsAsync([FromBody]{table.Name}RetrieveInputDto inputDto)");

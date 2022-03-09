@@ -63,7 +63,9 @@ namespace Jh.Abp.JhMenu.v1
 		}
 
 		[Authorize(JhAbpJhMenuPermissions.Menus.PortionUpdate)]
-		[HttpPatch("{id}")]
+		[HttpPut]
+		[HttpPatch]
+		[Route("{id}")]
 		public virtual async Task UpdatePortionAsync(System.Guid id, MenuUpdateInputDto inputDto)
 		{
 			 await MenuAppService.UpdatePortionAsync(id, inputDto);
@@ -86,19 +88,11 @@ namespace Jh.Abp.JhMenu.v1
 
 		[Authorize(JhAbpJhMenuPermissions.Menus.Recover)]
 		[HttpPatch]
-		[Route("{id}/Deleted")]
-		public virtual async Task UpdateDeletedAsync(System.Guid id, [FromBody] bool isDeleted)
-		{
-			using (dataFilter.Disable())
-			{
-				await MenuAppService.UpdatePortionAsync(id, new MenuUpdateInputDto()
-				{
-					MethodInput = new MethodDto<Menu>()
-					{
-						 CreateOrUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted
-					}
-				});
-			}
+		[HttpPut]
+		[Route("{id}/Recover")]
+		public async Task RecoverAsync(Guid id)
+        {
+			await MenuAppService.RecoverAsync(id);
 		}
     }
 }

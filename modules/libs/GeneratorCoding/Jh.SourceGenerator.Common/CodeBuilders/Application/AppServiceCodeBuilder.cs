@@ -14,6 +14,10 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 
         public override string ToString()
         {
+            var moduleName = $"{table.Name}s";
+            var groupName = $"{table.GetGroupName()}Permissions";
+
+
             var builder = new StringBuilder();
             builder.AppendLine(@"using Jh.Abp.Extensions;
 using System;");
@@ -32,6 +36,24 @@ using System;");
                     builder.AppendLine($"\t\t{table.Name}Repository = repository;");
                     builder.AppendLine($"\t\t{table.Name}DapperRepository = {table.Name.ToLower()}DapperRepository;");
                     builder.AppendLine("\t\t}");
+
+                    if (table.IsDelete)
+                    {
+                        builder.AppendLine($"\t\t public virtual async Task RecoverAsync({table.KeyType} id)");
+                        {
+                            builder.AppendLine("\t\t{");
+                            builder.AppendLine($"\t\t\t await CheckPolicyAsync({PermissionsNamePrefix}.Recover).ConfigureAwait(false);");
+                            builder.AppendLine("\t\t\t using (DataFilter.Disable<ISoftDelete>())");
+                            builder.AppendLine("\t\t\t {");
+                            builder.AppendLine("\t\t\t\t var entity = await crudRepository.FindAsync(id, false);");
+                            builder.AppendLine("\t\t\t\t entity.IsDeleted = false;");
+                            builder.AppendLine("\t\t\t\t entity.DeleterId = CurrentUser.Id;");
+                            builder.AppendLine("\t\t\t\t entity.DeletionTime = Clock.Now;");
+                            builder.AppendLine("\t\t\t }");
+                            builder.AppendLine("\t\t}");
+                        }
+                        builder.AppendLine();
+                    }
                 }
                 builder.AppendLine("\t}");
             }

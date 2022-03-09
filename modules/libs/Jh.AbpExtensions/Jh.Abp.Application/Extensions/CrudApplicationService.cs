@@ -31,6 +31,7 @@ namespace Jh.Abp.Extensions
     {
 
         public ICrudRepository<TEntity, TKey> crudRepository;
+        protected virtual string BatchDeletePolicyName { get; set; }
 
         /// <summary>
         /// 为false时，获取不到扩展字段,默认为false
@@ -46,7 +47,7 @@ namespace Jh.Abp.Extensions
         {
             await CheckCreatePolicyAsync().ConfigureAwait(false);
             var entitys = ObjectMapper.Map<TCreateInputDto[], TEntity[]>(inputDtos);
-            return await crudRepository.CreateAsync(entitys, autoSave, cancellationToken).ConfigureAwait(false);
+            return await crudRepository.CreateAsync(entitys, autoSave, cancellationToken);
         }
 
         public virtual async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
@@ -64,30 +65,31 @@ namespace Jh.Abp.Extensions
                     }
                 }
             }
-            return await crudRepository.CreateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
+            return await crudRepository.CreateAsync(entity, autoSave, cancellationToken);
         }
 
         public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckDeletePolicyAsync().ConfigureAwait(false);
+            await CheckPolicyAsync(BatchDeletePolicyName).ConfigureAwait(false);
             var query = await CreateFilteredQueryAsync(deleteInputDto, methodStringType);
-            return await crudRepository.DeleteEntitysAsync(query, autoSave, isHard, cancellationToken).ConfigureAwait(false);
+            return await crudRepository.DeleteEntitysAsync(query, autoSave, isHard, cancellationToken);
         }
 
         public virtual async Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckDeletePolicyAsync().ConfigureAwait(false);
-            return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, isHard, cancellationToken).ConfigureAwait(false);
+            await CheckPolicyAsync(BatchDeletePolicyName).ConfigureAwait(false);
+            return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, isHard, cancellationToken);
         }
 
         public virtual async Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
-            return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, isHard, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
+            return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, isHard, cancellationToken)).FirstOrDefault();
         }
 
         public virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
+            await CheckGetListPolicyAsync().ConfigureAwait(false);
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(), inputDto, methodStringType);
             return query.Any();
         }
@@ -195,7 +197,7 @@ namespace Jh.Abp.Extensions
         public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);
-            var entity = await crudRepository.FindAsync(key, includeDetails,cancellationToken).ConfigureAwait(false);
+            var entity = await crudRepository.FindAsync(key, includeDetails,cancellationToken);
             EntityOperator.UpdatePortionToEntity(updateInput, entity);
             var methodDto = updateInput as IMethodDto<TEntity>;
             if (methodDto != null)

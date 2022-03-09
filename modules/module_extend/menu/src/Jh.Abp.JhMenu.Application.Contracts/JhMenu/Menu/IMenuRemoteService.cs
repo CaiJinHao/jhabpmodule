@@ -9,6 +9,5 @@ namespace Jh.Abp.JhMenu
 		: IRequestRemoteService<Menu, MenuDto, MenuDto, System.Guid, MenuRetrieveInputDto, MenuCreateInputDto, MenuUpdateInputDto, MenuDeleteInputDto>
  , IMenuBaseAppService
 	{
-		Task UpdateDeletedAsync(System.Guid id,bool isDeleted);
 	}
 }
