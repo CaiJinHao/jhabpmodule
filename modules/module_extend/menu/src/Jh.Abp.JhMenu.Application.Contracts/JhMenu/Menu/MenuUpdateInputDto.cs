@@ -59,10 +59,6 @@ IMethodDto<Menu>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<Menu> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
-		/// <summary>
-		/// 角色ID列表
-		/// </summary>
-		public Guid[] RoleIds { get; set; }
+		public virtual Guid? TenantId { get; set; }
 	}
 }

@@ -13,13 +13,15 @@ namespace Jh.Abp.Application.Contracts
         Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto);
         Task<TEntity> GetAsync(TKey id);
         Task CreateAsync(TCreateInputDto input);
-        Task CreateAsync(TCreateInputDto[] input);
         Task<TPagedRetrieveOutputDto> UpdateAsync(TKey id, TUpdateInputDto input);
         Task UpdatePortionAsync(TKey id, TUpdateInputDto inputDto);
         Task DeleteAsync(TKey id);
-        Task DeleteAsync(TDeleteInputDto deleteInputDto);
         Task DeleteAsync(TKey[] keys);
-        Task UpdateDeletedAsync(TKey id, bool isDeleted);
-        Task<ListResultDto<TPagedRetrieveOutputDto>> GetOptionsAsync(TRetrieveInputDto inputDto);
+
+        //如果需要可在RemoteService中添加
+        //Task UpdateDeletedAsync(TKey id, bool isDeleted);
+        //Task CreateAsync(TCreateInputDto[] input);
+        //Task DeleteAsync(TDeleteInputDto deleteInputDto);
+        //Task<ListResultDto<TPagedRetrieveOutputDto>> GetOptionsAsync(TRetrieveInputDto inputDto);
     }
 }

@@ -42,6 +42,7 @@ using Volo.Abp.Threading;
 using Volo.Abp.Data;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 
 namespace Jh.Abp.JhMenu;
 
@@ -52,7 +53,8 @@ namespace Jh.Abp.JhMenu;
     typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCoreMySQLModule),
+    //typeof(AbpEntityFrameworkCoreSqlServerModule),
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
@@ -71,9 +73,10 @@ public class JhMenuHttpApiHostModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer(opt => {
-                opt.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
-            });
+            //options.UseSqlServer(opt => {
+            //    opt.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
+            //});
+            options.UseMySQL();
         });
 
         Configure<AbpMultiTenancyOptions>(options =>
@@ -245,13 +248,12 @@ public class JhMenuHttpApiHostModule : AbpModule
             {
                 var data = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
                 var dataSeedContext = new DataSeedContext();
-                //dataSeedContext.TenantId=
                 var roleService = scope.ServiceProvider.GetRequiredService<IIdentityRoleRepository>();
                 var roles = await roleService.GetListAsync();
                 if (roles.Count > 0)
                 {
-                    dataSeedContext["RoleId"] = roles.FirstOrDefault()?.Id;//IdentityServerHost创建的角色ID
-                    dataSeedContext["MenuRegisterType"] = MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp;
+                    dataSeedContext.WithProperty("RoleId", roles.FirstOrDefault()?.Id);//IdentityServerHost创建的角色ID
+                    dataSeedContext.WithProperty("MenuRegisterType", MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp);
                 }
                 await data.SeedAsync(dataSeedContext);
             }

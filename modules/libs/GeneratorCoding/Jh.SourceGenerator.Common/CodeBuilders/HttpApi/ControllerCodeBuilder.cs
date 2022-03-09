@@ -45,6 +45,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\t{table.Name}AppService = _{table.Name}AppService;");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
                     builder.AppendLine("\t\t[HttpGet]");
@@ -57,6 +58,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t\t}");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
+
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
                     builder.AppendLine("\t\t[Route(\"all\")]");
@@ -67,6 +70,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
+
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Detail)]");
                     builder.AppendLine("\t\t[HttpGet(\"{id}\")]");
@@ -76,6 +81,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntityAsync(id);");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
+
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Create)]");
                     builder.AppendLine("\t\t[HttpPost]");
@@ -85,18 +92,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
 
-                    
-                    //不需要暴漏的外部，需要时手动添加
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchCreate)]");
-                    builder.AppendLine("\t\t[Route(\"items\")]");
-                    builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto[] input)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
-                        builder.AppendLine("\t\t}");
-                    }
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
                     builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
@@ -106,6 +103,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.UpdateAsync(id, input);");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
+
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.PortionUpdate)]");
                     builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
@@ -116,6 +115,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
+
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
                     builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
@@ -125,17 +126,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
 
-
-                    //不需要暴漏的外部，需要时手动添加
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
-                    builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
-                        builder.AppendLine("\t\t}");
-                    }
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
                     builder.AppendLine("\t\t[Route(\"keys\")]");
@@ -146,56 +138,76 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(keys);");
                         builder.AppendLine("\t\t}");
                     }
+                    builder.AppendLine();
 
-                    if (table.IsDelete)
+
+                    builder.AppendLine("/*");
                     {
-                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Recover)]");
-                        builder.AppendLine("\t\t[HttpPatch]");
-                        builder.AppendLine("\t\t[HttpPut]");
-                        builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
-                        builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
+                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
+                        builder.AppendLine("\t\t[HttpDelete]");
+                        builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
                         {
                             builder.AppendLine("\t\t{");
-                            builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
-                            builder.AppendLine("\t\t\t{");
-                            builder.AppendLine($"\t\t\t\tawait {table.Name}AppService.UpdatePortionAsync(id, new {table.Name}UpdateInputDto()");
-                            builder.AppendLine("\t\t\t\t{");
-                            builder.AppendLine($"\t\t\t\t\tMethodInput = new MethodDto<{table.Name}>()");
-                            builder.AppendLine("\t\t\t\t\t{");
-                            builder.AppendLine("\t\t\t\t\t\t CreateOrUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted");
-                            builder.AppendLine("\t\t\t\t\t}");
-                            builder.AppendLine("\t\t\t\t});");
-                            builder.AppendLine("\t\t\t}");
+                            builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
                             builder.AppendLine("\t\t}");
                         }
-                    }
-                    else
-                    {
-                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Recover)]");
-                        builder.AppendLine("\t\t[HttpPatch]");
-                        builder.AppendLine("\t\t[HttpPut]");
-                        builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
-                        builder.AppendLine($"\t\tpublic virtual  Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
+                        builder.AppendLine();
+
+
+                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchCreate)]");
+                        builder.AppendLine("\t\t[Route(\"items\")]");
+                        builder.AppendLine("\t\t[HttpPost]");
+                        builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto[] input)");
                         {
                             builder.AppendLine("\t\t{");
-                            builder.AppendLine("\t\t\t throw new NotImplementedException();");
+                            builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
                             builder.AppendLine("\t\t}");
                         }
-                    }
+                        builder.AppendLine();
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
-                    builder.AppendLine("\t\t[Route(\"options\")]");
-                    builder.AppendLine("\t\t[HttpGet]");
-                    builder.AppendLine($"\t\tpublic virtual Task<ListResultDto<{table.Name}Dto>> GetOptionsAsync([FromBody]{table.Name}RetrieveInputDto inputDto)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t //inputDto.MethodInput = new MethodDto<{table.Name}>()");
-                        builder.AppendLine("\t\t\t  //{");
-                        builder.AppendLine("\t\t\t\t//SelectAction = (query) => query.Select(a => new {table.Name}(a.Id){Name = a.Name})");
-                        builder.AppendLine("\t\t\t  //{");
-                        builder.AppendLine($"\t\t\t throw new NotImplementedException();");
-                        builder.AppendLine("\t\t}");
+
+                        if (table.IsDelete)
+                        {
+                            builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Recover)]");
+                            builder.AppendLine("\t\t[HttpPatch]");
+                            builder.AppendLine("\t\t[HttpPut]");
+                            builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
+                            builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
+                            {
+                                builder.AppendLine("\t\t{");
+                                builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
+                                builder.AppendLine("\t\t\t{");
+                                builder.AppendLine($"\t\t\t\tawait {table.Name}AppService.UpdatePortionAsync(id, new {table.Name}UpdateInputDto()");
+                                builder.AppendLine("\t\t\t\t{");
+                                builder.AppendLine($"\t\t\t\t\tMethodInput = new MethodDto<{table.Name}>()");
+                                builder.AppendLine("\t\t\t\t\t{");
+                                builder.AppendLine("\t\t\t\t\t\t CreateOrUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted");
+                                builder.AppendLine("\t\t\t\t\t}");
+                                builder.AppendLine("\t\t\t\t});");
+                                builder.AppendLine("\t\t\t}");
+                                builder.AppendLine("\t\t}");
+                            }
+                            builder.AppendLine();
+
+                        }
+
+                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
+                        builder.AppendLine("\t\t[Route(\"options\")]");
+                        builder.AppendLine("\t\t[HttpGet]");
+                        builder.AppendLine($"\t\tpublic virtual Task<ListResultDto<{table.Name}Dto>> GetOptionsAsync([FromBody]{table.Name}RetrieveInputDto inputDto)");
+                        {
+                            builder.AppendLine("\t\t{");
+                            builder.AppendLine($"\t\t\t //inputDto.MethodInput = new MethodDto<{table.Name}>()");
+                            builder.AppendLine("\t\t\t  //{");
+                            builder.AppendLine("\t\t\t\t//SelectAction = (query) => query.Select(a => new {table.Name}(a.Id){Name = a.Name})");
+                            builder.AppendLine("\t\t\t  //{");
+                            builder.AppendLine($"\t\t\t throw new NotImplementedException();");
+                            builder.AppendLine("\t\t}");
+                        }
+                        builder.AppendLine();
+
                     }
+                    builder.AppendLine("*/");
                 }
                 builder.AppendLine("\t}");
             }

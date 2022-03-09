@@ -17,6 +17,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             var builder = new StringBuilder();
             builder.AppendLine(@"using Jh.Abp.Extensions;
 using System;
+using System.Threading.Tasks;
 using Jh.Abp.Application.Contracts;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");

@@ -26,6 +26,7 @@ using Volo.Abp.Application.Dtos;");
             {
                 builder.AppendLine($"\tpublic interface {FileName}");
                 builder.AppendLine("\t{");
+                builder.AppendLine("\t\t //用于添加与RemoteService公共的方法");
                 builder.AppendLine("\t}");
             }
             builder.AppendLine("}");

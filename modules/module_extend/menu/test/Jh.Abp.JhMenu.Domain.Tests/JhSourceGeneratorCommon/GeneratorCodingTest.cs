@@ -8,6 +8,7 @@ using Xunit;
 using RazorEngine;
 using RazorEngine.Templating; // For extension methods.
 using Jh.SourceGenerator.Common.GeneratorDtos;
+using Volo.Abp.Domain.Entities;
 
 namespace Jh.Abp.JhMenu
 {
@@ -38,10 +39,12 @@ namespace Jh.Abp.JhMenu
                 CreateHtmlPath = @$"{basePathTemp}\host\{itemName}.HttpApi.Host\wwwroot\main\view",
                 CreateHtmlTemplatePath = @"G:\github\mygithub\jh-abp-module-extension\modules\libs\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
-            //var service = new GeneratorService(domainAssembly, options);
-            //Assert.True(service.GeneratorCode(service.GetTableClassByGeneratorClass()));
-            var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
-            Assert.True(service.GeneratorCode(new Type[] { typeof(Menu) }));
+            var service = new GeneratorService(domainAssembly, options);
+            var mapTables = service.GetTableClassByGeneratorClass(typeof(IAggregateRoot));
+            Assert.True(service.GeneratorCode(mapTables));
+            //var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
+            //var mapTables = service.GetLoadableTypes().Where(cla => cla.IsClass && typeof(IAggregateRoot).IsAssignableFrom(cla)).ToArray();
+            //Assert.True(service.GeneratorCode(new Type[] { typeof(Menu) }));
         }
     }
 }

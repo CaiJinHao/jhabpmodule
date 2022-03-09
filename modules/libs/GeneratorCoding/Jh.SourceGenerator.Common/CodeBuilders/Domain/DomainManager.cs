@@ -24,7 +24,7 @@ using Volo.Abp.Domain.Services;");
             {
                 builder.AppendLine($"\tpublic class {FileName}: DomainService");
                 builder.AppendLine("\t{");
-                builder.AppendLine($"\t\t protected readonly I{table.Name}Repository {table.Name}Repository => LazyServiceProvider.LazyGetRequiredService<I{table.Name}Repository>();");
+                builder.AppendLine($"\t\t protected I{table.Name}Repository {table.Name}Repository => LazyServiceProvider.LazyGetRequiredService<I{table.Name}Repository>();");
                 builder.AppendLine("\t\t ");
                 builder.AppendLine("\t}");
             }

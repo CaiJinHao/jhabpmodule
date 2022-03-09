@@ -16,7 +16,7 @@ namespace Jh.SourceGenerator.Common
     public class GeneratorService
     {
         private GeneratorOptions generatorOptions { get; }
-        private  Assembly LoadAssembly { get; }
+        private Assembly LoadAssembly { get; }
         private GneratorType generatorType { get; }
         public GeneratorService(Assembly assembly, GeneratorOptions options, GneratorType _gneratorType = GneratorType.AttributeField)
         {
@@ -29,7 +29,7 @@ namespace Jh.SourceGenerator.Common
         }
 
         public virtual IEnumerable<Type> GetLoadableTypes()
-        { 
+        {
             return LoadAssembly.DefinedTypes.Select((TypeInfo t) => t.AsType());
         }
 
@@ -39,9 +39,14 @@ namespace Jh.SourceGenerator.Common
         /// <returns></returns>
         public virtual IEnumerable<Type> GetTableClassByGeneratorClass()
         {
-            var classCollection = GetLoadableTypes().Where(cla=>cla.IsClass);
-            var tableClass = classCollection.Where(tab=>tab.CustomAttributes.Any(a=>a.AttributeType.Equals(typeof(GeneratorClassAttribute))));
+            var classCollection = GetLoadableTypes().Where(cla => cla.IsClass);
+            var tableClass = classCollection.Where(tab => tab.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(GeneratorClassAttribute))));
             return tableClass;
+        }
+
+        public virtual IEnumerable<Type> GetTableClassByGeneratorClass(Type AssignableTo)
+        {
+            return GetLoadableTypes().Where(cla => cla.IsClass && AssignableTo.IsAssignableFrom(cla)).ToArray();
         }
 
         public virtual IEnumerable<TableDto> GetTablesDto(IEnumerable<Type> classTypes)
@@ -89,7 +94,7 @@ namespace Jh.SourceGenerator.Common
 
         public virtual string GetTableInheritClass(Type classType)
         {
-            return classType.BaseType.Name.Replace("`1","");
+            return classType.BaseType.Name.Replace("`1", "");
         }
 
         public virtual string GetTableDescription(Type classType)
@@ -204,23 +209,33 @@ namespace Jh.SourceGenerator.Common
             CreateFile(new PermissionsDefinitionProviderCodeBuilder(tables, generatorOptions.CreateContractsPermissionsPath));
             foreach (var tableDto in tables)
             {
-                {//contracts
-                    var CreateInputDto = CreateFile(new CreateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateIDapperRepository = CreateFile(new IDapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateDeleteInputDto = CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateUpdateInputDto = CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateIBaseAppService = CreateFile(new IBaseAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                    var CreateIRemoteService = CreateFile(new IRemoteServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                }
-                var CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
-                var CreateDapperRepository = CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
-                var CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
-                var CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
-                var CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
-                var CreateController = CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath));
+                //contracts
+                CreateFile(new CreateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new IDapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new IBaseAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                CreateFile(new IRemoteServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+
+                //Domain
+                CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
+                CreateFile(new DomainManager(tableDto, generatorOptions.CreateDomainPath));
+
+                //EfCore
+                CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
+                CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
+
+                //Application
+                CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
+                CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
+
+                //HttpApi
+                CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath));
+
+                //Html
                 //获取去模板列表
                 if (!string.IsNullOrEmpty(generatorOptions.CreateHtmlTemplatePath))
                 {
