@@ -30,15 +30,18 @@ namespace Jh.Abp.IdentityServer
                     var result = await ctx.AuthenticateAsync(schema);
                     if (result.Succeeded && result.Principal != null)
                     {
-                        var identity = result.Principal.Identities.First();
-                        var userid = result.Principal.FindUserId();
-                        var identityUserManager = ctx.RequestServices.GetRequiredService<IdentityUserManager>();
-                        var user = await identityUserManager.GetByIdAsync((Guid)userid);
-                        if (user.Roles != null)
                         {
-                            foreach (var item in user.Roles)
+                            //todo: new add
+                            var identity = result.Principal.Identities.First();
+                            var userid = result.Principal.FindUserId();
+                            var identityUserManager = ctx.RequestServices.GetRequiredService<IdentityUserManager>();
+                            var user = await identityUserManager.GetByIdAsync((Guid)userid);
+                            if (user.Roles != null)
                             {
-                                identity.AddOrReplace(new Claim(JhJwtClaimTypes.RoleId, item.RoleId.ToString()));
+                                foreach (var item in user.Roles)
+                                {
+                                    identity.AddOrReplace(new Claim(JhJwtClaimTypes.RoleId, item.RoleId.ToString()));
+                                }
                             }
                         }
                         ctx.User = result.Principal;
