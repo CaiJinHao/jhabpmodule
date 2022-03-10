@@ -38,7 +38,7 @@ public class SampleController : JhIdentityController, ISampleAppService
     {
         var u = CurrentUser;
         var t = CurrentTenant;
-        var data= CurrentUser.GetAllClaims().ToList();
+        var data = CurrentUser.GetAllClaims().Select(a => new { a.Value, a.ValueType, a.Type }).ToList();
         return data;
     }
 }
