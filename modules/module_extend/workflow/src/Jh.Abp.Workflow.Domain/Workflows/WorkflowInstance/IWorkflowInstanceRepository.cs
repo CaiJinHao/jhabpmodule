@@ -1,4 +1,4 @@
-using Jh.Abp.Domain.Extensions;
+using Jh.Abp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -7,7 +7,7 @@ using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowInstanceRepository: ICrudRepository<WorkflowInstance, System.Guid>
+    public interface IWorkflowInstanceRepository: ICrudRepository<WorkflowInstance, System.Guid>
 	{
 		Task<IEnumerable<WorkflowCore.Models.WorkflowInstance>> GetWorkflowInstances(WorkflowStatus? status, string type, DateTime? createdFrom, DateTime? createdTo, int skip, int take);
 		Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstance(string Id, CancellationToken cancellationToken = default);

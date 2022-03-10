@@ -1,17 +1,15 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
-using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-	/// <summary>
-	/// 工作流定义
-	/// </summary>
-	public class WorkflowDefinitionUpdateInputDto: 
+    /// <summary>
+    /// 工作流定义
+    /// </summary>
+    public class WorkflowDefinitionUpdateInputDto: 
 ExtensibleObject,
 IHasConcurrencyStamp,
 IMethodDto<WorkflowDefinition>

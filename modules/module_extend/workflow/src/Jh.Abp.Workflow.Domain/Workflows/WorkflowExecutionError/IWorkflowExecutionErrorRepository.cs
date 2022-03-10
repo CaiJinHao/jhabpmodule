@@ -1,8 +1,7 @@
-using Jh.Abp.Domain.Extensions;
-using System;
+using Jh.Abp.Domain;
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowExecutionErrorRepository: ICrudRepository<WorkflowExecutionError, System.Guid>
+    public interface IWorkflowExecutionErrorRepository: ICrudRepository<WorkflowExecutionError, System.Guid>
 	{
 	}
 }

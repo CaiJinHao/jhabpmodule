@@ -1,14 +1,14 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.MultiTenancy;
+
 namespace Jh.Abp.Workflow
 {
-	/// <summary>
-	/// 事件
-	/// </summary>
-	public class WorkflowEventRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<WorkflowEvent>
+    /// <summary>
+    /// 事件
+    /// </summary>
+    public class WorkflowEventRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<WorkflowEvent>
 ,IMultiTenant
 	{
 		/// <summary>

@@ -1,8 +1,8 @@
-using Jh.Abp.Domain.Extensions;
-using System;
+using Jh.Abp.Domain;
+
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowBacklogRepository: ICrudRepository<WorkflowBacklog, System.Guid>
+    public interface IWorkflowBacklogRepository: ICrudRepository<WorkflowBacklog, System.Guid>
 	{
 	}
 }

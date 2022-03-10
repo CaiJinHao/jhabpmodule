@@ -1,8 +1,8 @@
-using Jh.Abp.Domain.Extensions;
-using System;
+using Jh.Abp.Domain;
+
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowExecutionPointerRepository: ICrudRepository<WorkflowExecutionPointer, System.Guid>
+    public interface IWorkflowExecutionPointerRepository: ICrudRepository<WorkflowExecutionPointer, System.Guid>
 	{
 	}
 }

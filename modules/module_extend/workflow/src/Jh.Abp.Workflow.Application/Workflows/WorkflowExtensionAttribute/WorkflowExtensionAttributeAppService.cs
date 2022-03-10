@@ -1,8 +1,7 @@
-using Jh.Abp.Extensions;
-using System;
+using Jh.Abp.Application;
 namespace Jh.Abp.Workflow
 {
-	public class WorkflowExtensionAttributeAppService
+    public class WorkflowExtensionAttributeAppService
 		: CrudApplicationService<WorkflowExtensionAttribute, WorkflowExtensionAttributeDto, WorkflowExtensionAttributeDto, System.Guid, WorkflowExtensionAttributeRetrieveInputDto, WorkflowExtensionAttributeCreateInputDto, WorkflowExtensionAttributeUpdateInputDto, WorkflowExtensionAttributeDeleteInputDto>,
 		IWorkflowExtensionAttributeAppService
 	{

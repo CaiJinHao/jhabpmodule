@@ -1,8 +1,7 @@
-using Jh.Abp.Extensions;
-using System;
+using Jh.Abp.Application.Contracts;
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowEventSubscriptionAppService
+    public interface IWorkflowEventSubscriptionAppService
 		: ICrudApplicationService<WorkflowEventSubscription, WorkflowEventSubscriptionDto, WorkflowEventSubscriptionDto, System.Guid, WorkflowEventSubscriptionRetrieveInputDto, WorkflowEventSubscriptionCreateInputDto, WorkflowEventSubscriptionUpdateInputDto, WorkflowEventSubscriptionDeleteInputDto>
 ,IWorkflowEventSubscriptionBaseAppService
 	{

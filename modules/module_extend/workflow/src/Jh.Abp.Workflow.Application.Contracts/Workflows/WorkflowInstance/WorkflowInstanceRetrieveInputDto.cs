@@ -1,16 +1,15 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.MultiTenancy;
 using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-	/// <summary>
-	/// 工作流实例
-	/// </summary>
-	public class WorkflowInstanceRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<WorkflowInstance>
+    /// <summary>
+    /// 工作流实例
+    /// </summary>
+    public class WorkflowInstanceRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<WorkflowInstance>
 ,IMultiTenant
 	{
 		/// <summary>

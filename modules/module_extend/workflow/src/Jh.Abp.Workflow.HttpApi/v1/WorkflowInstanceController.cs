@@ -1,22 +1,15 @@
-using Jh.Abp.Application.Contracts.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Volo.Abp;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using Jh.Abp.Application.Contracts;
-using Newtonsoft.Json.Linq;
 
 namespace Jh.Abp.Workflow.v1
 {
-	/// <summary>
-	/// 工作流实例
-	/// </summary>
-	[RemoteService]
+    /// <summary>
+    /// 工作流实例
+    /// </summary>
+    [RemoteService]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class WorkflowInstanceController : WorkflowController, IWorkflowInstanceRemoteService
 	{

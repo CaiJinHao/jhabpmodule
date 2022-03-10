@@ -1,16 +1,13 @@
+using Jh.Abp.Application.Contracts;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
-using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.Workflow
 {
-	/// <summary>
-	/// 订阅事件
-	/// </summary>
-	public class WorkflowEventSubscriptionCreateInputDto: 
+    /// <summary>
+    /// 订阅事件
+    /// </summary>
+    public class WorkflowEventSubscriptionCreateInputDto: 
 IMethodDto<WorkflowEventSubscription>
 ,IMultiTenant
 	{

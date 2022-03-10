@@ -1,8 +1,8 @@
-using Jh.Abp.Extensions;
-using System;
+using Jh.Abp.Application.Contracts;
+
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowBacklogAppService
+    public interface IWorkflowBacklogAppService
 		: ICrudApplicationService<WorkflowBacklog, WorkflowBacklogDto, WorkflowBacklogDto, System.Guid, WorkflowBacklogRetrieveInputDto, WorkflowBacklogCreateInputDto, WorkflowBacklogUpdateInputDto, WorkflowBacklogDeleteInputDto>
 ,IWorkflowBacklogBaseAppService
 	{

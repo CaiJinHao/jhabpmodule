@@ -1,8 +1,7 @@
-using Jh.Abp.Domain.Extensions;
-using System;
+using Jh.Abp.Domain;
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowExtensionAttributeRepository: ICrudRepository<WorkflowExtensionAttribute, System.Guid>
+    public interface IWorkflowExtensionAttributeRepository: ICrudRepository<WorkflowExtensionAttribute, System.Guid>
 	{
 	}
 }

@@ -1,18 +1,15 @@
+using Jh.Abp.Application.Contracts;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
-using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.ObjectExtending;
 using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-	/// <summary>
-	/// 工作流实例
-	/// </summary>
-	public class WorkflowInstanceCreateInputDto: 
+    /// <summary>
+    /// 工作流实例
+    /// </summary>
+    public class WorkflowInstanceCreateInputDto: 
 IMethodDto<WorkflowInstance>
 ,IMultiTenant
 	{

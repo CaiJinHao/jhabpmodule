@@ -1,13 +1,14 @@
-using Jh.Abp.Extensions;
+using Jh.Abp.Application;
+using Jh.Abp.Application.Contracts;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using System.Linq;
 
 namespace Jh.Abp.Workflow
 {
-	public class WorkflowBacklogAppService
+    public class WorkflowBacklogAppService
 		: CrudApplicationService<WorkflowBacklog, WorkflowBacklogDto, WorkflowBacklogDto, System.Guid, WorkflowBacklogRetrieveInputDto, WorkflowBacklogCreateInputDto, WorkflowBacklogUpdateInputDto, WorkflowBacklogDeleteInputDto>,
 		IWorkflowBacklogAppService
 	{
@@ -38,7 +39,7 @@ namespace Jh.Abp.Workflow
             if (input.BusinessType.HasValue)
             {
                 //筛选业务类型
-                input.MethodInput = new Application.Contracts.Extensions.MethodDto<WorkflowBacklog>()
+                input.MethodInput = new MethodDto<WorkflowBacklog>()
                 {
                     QueryAction = (query) => {
                         var joinTable = BacklogRepository.GetQueryableAsync<WorkflowInstance>().Result;

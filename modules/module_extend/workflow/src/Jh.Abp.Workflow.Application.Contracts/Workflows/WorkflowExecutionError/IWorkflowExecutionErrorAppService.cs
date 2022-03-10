@@ -1,8 +1,7 @@
-using Jh.Abp.Extensions;
-using System;
+using Jh.Abp.Application.Contracts;
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowExecutionErrorAppService
+    public interface IWorkflowExecutionErrorAppService
 		: ICrudApplicationService<WorkflowExecutionError, WorkflowExecutionErrorDto, WorkflowExecutionErrorDto, System.Guid, WorkflowExecutionErrorRetrieveInputDto, WorkflowExecutionErrorCreateInputDto, WorkflowExecutionErrorUpdateInputDto, WorkflowExecutionErrorDeleteInputDto>
 ,IWorkflowExecutionErrorBaseAppService
 	{

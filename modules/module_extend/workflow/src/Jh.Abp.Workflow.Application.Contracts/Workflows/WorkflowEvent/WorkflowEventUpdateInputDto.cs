@@ -1,15 +1,13 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.ObjectExtending;
+
 namespace Jh.Abp.Workflow
 {
-	/// <summary>
-	/// 事件
-	/// </summary>
-	public class WorkflowEventUpdateInputDto: 
+    /// <summary>
+    /// 事件
+    /// </summary>
+    public class WorkflowEventUpdateInputDto: 
 IMethodDto<WorkflowEvent>
 ,IMultiTenant
 	{

@@ -1,15 +1,13 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.ObjectExtending;
+
 namespace Jh.Abp.Workflow
 {
-	/// <summary>
-	/// 待办事项
-	/// </summary>
-	public class WorkflowBacklogUpdateInputDto: 
+    /// <summary>
+    /// 待办事项
+    /// </summary>
+    public class WorkflowBacklogUpdateInputDto: 
 IMethodDto<WorkflowBacklog>
 ,IMultiTenant
 	{

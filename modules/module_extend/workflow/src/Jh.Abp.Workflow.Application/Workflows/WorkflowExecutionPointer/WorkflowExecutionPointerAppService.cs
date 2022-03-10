@@ -1,8 +1,7 @@
-using Jh.Abp.Extensions;
-using System;
+using Jh.Abp.Application;
 namespace Jh.Abp.Workflow
 {
-	public class WorkflowExecutionPointerAppService
+    public class WorkflowExecutionPointerAppService
 		: CrudApplicationService<WorkflowExecutionPointer, WorkflowExecutionPointerDto, WorkflowExecutionPointerDto, System.Guid, WorkflowExecutionPointerRetrieveInputDto, WorkflowExecutionPointerCreateInputDto, WorkflowExecutionPointerUpdateInputDto, WorkflowExecutionPointerDeleteInputDto>,
 		IWorkflowExecutionPointerAppService
 	{

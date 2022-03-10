@@ -1,4 +1,4 @@
-using Jh.Abp.EntityFrameworkCore.Extensions;
+using Jh.Abp.EntityFrameworkCore;
 using Jh.Abp.Workflow.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,12 +7,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.ObjectMapping;
 using WorkflowCore.Models;
 
 namespace Jh.Abp.Workflow
 {
-	public class WorkflowInstanceRepository : CrudRepository<WorkflowDbContext, WorkflowInstance, System.Guid>, IWorkflowInstanceRepository
+    public class WorkflowInstanceRepository : CrudRepository<WorkflowDbContext, WorkflowInstance, System.Guid>, IWorkflowInstanceRepository
 	{
 
         public WorkflowInstanceRepository(IDbContextProvider<WorkflowDbContext> dbContextProvider) : base(dbContextProvider)

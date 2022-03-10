@@ -1,10 +1,9 @@
-using Jh.Abp.Domain.Extensions;
-using System;
+using Jh.Abp.Domain;
 using System.Threading.Tasks;
 
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowDefinitionRepository: ICrudRepository<WorkflowDefinition, System.Guid>
+    public interface IWorkflowDefinitionRepository: ICrudRepository<WorkflowDefinition, System.Guid>
 	{
 		Task LoadWorkflowDefinitionAsync();
 		Task<WorkflowCore.Models.WorkflowDefinition> LoadWorkflowDefinitionAsync(string virtualFilePath);

@@ -1,10 +1,9 @@
-using Jh.Abp.Extensions;
-using System;
+using Jh.Abp.Application.Contracts;
 using System.Threading.Tasks;
 
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowInstanceAppService
+    public interface IWorkflowInstanceAppService
 		: ICrudApplicationService<WorkflowInstance, WorkflowInstanceDto, WorkflowInstanceDto, System.Guid, WorkflowInstanceRetrieveInputDto, WorkflowInstanceCreateInputDto, WorkflowInstanceUpdateInputDto, WorkflowInstanceDeleteInputDto>
 ,IWorkflowInstanceBaseAppService
 	{

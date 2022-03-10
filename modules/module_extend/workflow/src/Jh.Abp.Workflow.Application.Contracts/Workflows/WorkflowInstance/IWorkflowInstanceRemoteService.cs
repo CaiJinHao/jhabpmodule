@@ -1,11 +1,8 @@
-using Jh.Abp.Extensions;
-using System;
-using Jh.Abp.Application.Contracts;
 using System.Threading.Tasks;
 
 namespace Jh.Abp.Workflow
 {
-	public interface IWorkflowInstanceRemoteService
+    public interface IWorkflowInstanceRemoteService
 		: IWorkflowInstanceBaseAppService
 	{
 		Task<string> StartWorkflowAsync(WorkflowStartDto workflowStartDto);

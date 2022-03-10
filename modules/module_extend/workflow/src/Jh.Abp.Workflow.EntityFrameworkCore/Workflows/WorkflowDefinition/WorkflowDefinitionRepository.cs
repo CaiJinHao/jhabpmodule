@@ -1,8 +1,7 @@
-using Jh.Abp.EntityFrameworkCore.Extensions;
+using Jh.Abp.EntityFrameworkCore;
 using Jh.Abp.Workflow.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
