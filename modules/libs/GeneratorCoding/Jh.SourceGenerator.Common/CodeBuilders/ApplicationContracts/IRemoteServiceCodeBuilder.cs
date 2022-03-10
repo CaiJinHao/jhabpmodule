@@ -15,10 +15,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendLine(@"using Jh.Abp.Extensions;
-using System;
-using System.Threading.Tasks;
-using Jh.Abp.Application.Contracts;");
+            builder.AppendLine(@"using Jh.Abp.Application.Contracts;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {

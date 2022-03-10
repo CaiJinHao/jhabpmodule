@@ -15,9 +15,8 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendLine(@"using Jh.Abp.Application.Contracts.Extensions;
+            builder.AppendLine(@"using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;

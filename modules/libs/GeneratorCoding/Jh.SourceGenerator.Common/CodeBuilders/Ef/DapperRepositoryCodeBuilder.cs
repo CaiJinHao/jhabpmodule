@@ -15,7 +15,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendLine($@"using Jh.Abp.EntityFrameworkCore.Extensions;
+            builder.AppendLine($@"
 using {table.Namespace}.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;

@@ -15,11 +15,10 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendLine(@"using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+            builder.AppendLine(@"using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");

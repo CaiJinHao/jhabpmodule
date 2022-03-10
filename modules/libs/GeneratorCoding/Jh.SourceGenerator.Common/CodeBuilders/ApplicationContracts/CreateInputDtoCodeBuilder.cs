@@ -17,8 +17,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             var builder = new StringBuilder();
             builder.AppendLine(@"using System;
 using System.ComponentModel.DataAnnotations;
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;");

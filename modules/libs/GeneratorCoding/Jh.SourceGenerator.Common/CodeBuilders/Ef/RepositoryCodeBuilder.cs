@@ -15,9 +15,13 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendLine($@"using Jh.Abp.EntityFrameworkCore.Extensions;
+            builder.AppendLine($@"
 using {table.Namespace}.EntityFrameworkCore;
+using Jh.Abp.EntityFrameworkCore;
 using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
