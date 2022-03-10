@@ -11,6 +11,7 @@ namespace Jh.Abp.JhMenu
         public async Task<Menu> CreateAsync(Menu menu)
         {
             menu.MenuDescription = menu.MenuName;
+            menu.TenantId = CurrentTenant?.Id;
             return await MenuRepository.CreateAsync(menu,true);
         }
     }

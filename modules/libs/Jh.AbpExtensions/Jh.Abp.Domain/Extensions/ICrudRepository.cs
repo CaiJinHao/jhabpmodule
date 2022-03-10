@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
-namespace Jh.Abp.Domain.Extensions
+namespace Jh.Abp.Domain
 {
     public interface ICrudRepository<TEntity, TKey> : IRepository<TEntity, TKey>
          where TEntity : class, IEntity<TKey>

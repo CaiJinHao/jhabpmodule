@@ -1,8 +1,8 @@
-using Jh.Abp.Domain.Extensions;
-using System;
+using Jh.Abp.Domain;
+
 namespace Jh.Abp.JhMenu
 {
-	public interface IMenuRoleMapRepository: ICrudRepository<MenuRoleMap, System.Guid>
+    public interface IMenuRoleMapRepository: ICrudRepository<MenuRoleMap, System.Guid>
 	{
 	}
 }

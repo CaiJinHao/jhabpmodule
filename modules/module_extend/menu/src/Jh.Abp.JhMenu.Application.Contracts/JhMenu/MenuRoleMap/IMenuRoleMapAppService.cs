@@ -1,8 +1,5 @@
-using Jh.Abp.Common;
-using Jh.Abp.Extensions;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+using Jh.Abp.Application.Contracts;
+
 namespace Jh.Abp.JhMenu
 {
     public interface IMenuRoleMapAppService

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -21,5 +22,11 @@ public class JhMenuDbContext : AbpDbContext<JhMenuDbContext>, IJhMenuDbContext
         base.OnModelCreating(builder);
 
         builder.ConfigureJhMenu();
+    }
+
+    protected override void ApplyAbpConceptsForAddedEntity(EntityEntry entry)
+    {
+        base.ApplyAbpConceptsForAddedEntity(entry);
+
     }
 }

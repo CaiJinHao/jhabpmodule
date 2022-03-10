@@ -1,18 +1,14 @@
-using Jh.Abp.Application.Contracts.Extensions;
-using Microsoft.AspNetCore.Mvc;
+using Jh.Abp.Common;
 using Microsoft.AspNetCore.Authorization;
-using System;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Data;
-using System.Threading;
-using System.Collections.Generic;
-using Jh.Abp.Common;
 
 namespace Jh.Abp.JhMenu.v1
 {
-	[Area(JhMenuRemoteServiceConsts.ModuleName)]
+    [Area(JhMenuRemoteServiceConsts.ModuleName)]
 	[RemoteService(Name = JhMenuRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class MenuRoleMapController : JhMenuController, IMenuRoleMapRemoteService

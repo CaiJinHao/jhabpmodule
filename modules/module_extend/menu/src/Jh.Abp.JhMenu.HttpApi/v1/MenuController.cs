@@ -1,16 +1,14 @@
-using Jh.Abp.Application.Contracts.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
-using System.Linq;
 
 namespace Jh.Abp.JhMenu.v1
 {
-	[Area(JhMenuRemoteServiceConsts.ModuleName)]
+    [Area(JhMenuRemoteServiceConsts.ModuleName)]
 	[RemoteService(Name = JhMenuRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class MenuController : JhMenuController, IMenuRemoteService

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Jh.Abp.Application.Contracts.Extensions
+namespace Jh.Abp.Application.Contracts
 {
     /// <summary>
     /// 方法输入参数Dto

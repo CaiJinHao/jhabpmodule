@@ -1,14 +1,13 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.MultiTenancy;
 namespace Jh.Abp.JhMenu
 {
-	/// <summary>
-	/// 角色菜单
-	/// </summary>
-	public class MenuRoleMapRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<MenuRoleMap>
+    /// <summary>
+    /// 角色菜单
+    /// </summary>
+    public class MenuRoleMapRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<MenuRoleMap>
 ,IMultiTenant
 	{
 		/// <summary>

@@ -1,9 +1,4 @@
-﻿using Jh.Abp.Application.Contracts.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Jh.Abp.Application.Contracts.Dtos
+﻿namespace Jh.Abp.Application.Contracts
 {
     public interface IMethodDto<TEntity>
     {

@@ -1,15 +1,9 @@
-﻿using Jh.Abp.Application.Contracts.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace Jh.Abp.Extensions
+namespace Jh.Abp.Application.Contracts
 {
     /// <summary>
     /// 应用程序服务继承

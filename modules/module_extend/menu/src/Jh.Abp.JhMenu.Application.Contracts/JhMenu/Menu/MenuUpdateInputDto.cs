@@ -1,15 +1,14 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.JhMenu
 {
-	/// <summary>
-	/// 菜单
-	/// </summary>
-	public class MenuUpdateInputDto: 
+    /// <summary>
+    /// 菜单
+    /// </summary>
+    public class MenuUpdateInputDto: 
 ExtensibleObject,
 IHasConcurrencyStamp,
 IMethodDto<Menu>

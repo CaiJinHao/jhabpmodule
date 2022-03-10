@@ -1,16 +1,15 @@
+using Jh.Abp.Application.Contracts;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.JhMenu
 {
-	/// <summary>
-	/// 菜单
-	/// </summary>
-	public class MenuCreateInputDto: 
+    /// <summary>
+    /// 菜单
+    /// </summary>
+    public class MenuCreateInputDto: 
 ExtensibleObject,
 IHasConcurrencyStamp,
 IMethodDto<Menu>
@@ -61,7 +60,7 @@ IMethodDto<Menu>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<Menu> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
+		public virtual Guid? TenantId { get; set; }
 
 		/// <summary>
 		/// 角色ID列表

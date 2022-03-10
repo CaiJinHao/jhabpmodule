@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.Abp.Application.Contracts.Extensions
+namespace Jh.Abp.Application.Contracts
 {
     public class ObjectMethodConsts
     {

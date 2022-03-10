@@ -1,23 +1,20 @@
-﻿using Jh.Abp.Domain.Extensions;
+﻿using Jh.Abp.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Jh.Abp.Common.Linq;
-using System.Linq.Dynamic.Core;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Volo.Abp;
-using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
 
-namespace Jh.Abp.EntityFrameworkCore.Extensions
+namespace Jh.Abp.EntityFrameworkCore
 {
     public abstract class CrudRepository<TDbContext, TEntity, TKey> : EfCoreRepository<TDbContext, TEntity, TKey>, ICrudRepository<TEntity, TKey>
         where TDbContext : IEfCoreDbContext

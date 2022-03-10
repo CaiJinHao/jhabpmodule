@@ -1,15 +1,12 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.JhMenu
 {
-	/// <summary>
-	/// 角色菜单
-	/// </summary>
-	public class MenuRoleMapUpdateInputDto: 
+    /// <summary>
+    /// 角色菜单
+    /// </summary>
+    public class MenuRoleMapUpdateInputDto: 
 IMethodDto<MenuRoleMap>
 ,IMultiTenant
 	{

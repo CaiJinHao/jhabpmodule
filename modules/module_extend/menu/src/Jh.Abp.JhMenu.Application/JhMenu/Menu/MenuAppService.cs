@@ -1,9 +1,5 @@
-using Jh.Abp.Application.Contracts.Extensions;
-using Jh.Abp.Common;
-using Jh.Abp.Domain.Extensions;
-using Jh.Abp.Extensions;
-using System;
-using System.Collections.Generic;
+using Jh.Abp.Application;
+using Jh.Abp.Application.Contracts;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +8,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace Jh.Abp.JhMenu
 {
-	public class MenuAppService
+    public class MenuAppService
 		: CrudApplicationService<Menu, MenuDto, MenuDto, System.Guid, MenuRetrieveInputDto, MenuCreateInputDto, MenuUpdateInputDto, MenuDeleteInputDto>,
 		IMenuAppService
 	{
