@@ -33,6 +33,8 @@ namespace Jh.Abp.IdentityServer
                         var identity = result.Principal.Identities.First();
                         var userid = result.Principal.FindUserId();
                         var identityUserManager = ctx.RequestServices.GetRequiredService<IdentityUserManager>();
+                        var identityUserRepository = ctx.RequestServices.GetRequiredService<IIdentityUserRepository>();
+                        var usert= await identityUserRepository.FindAsync((Guid)userid);
                         var user = await identityUserManager.GetByIdAsync((Guid)userid);
                         if (user.Roles != null)
                         {
