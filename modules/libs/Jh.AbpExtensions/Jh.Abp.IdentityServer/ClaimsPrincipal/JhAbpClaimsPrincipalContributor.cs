@@ -10,7 +10,7 @@ using Volo.Abp.Security.Claims;
 namespace Jh.Abp.IdentityServer
 {
     /// <summary>
-    /// 解决token中不携带roleid得信息问题
+    /// 解决token中不携带roleid得信息问题 登录时调用
     /// </summary>
     public class JhAbpClaimsPrincipalContributor : IAbpClaimsPrincipalContributor
     {

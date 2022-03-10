@@ -95,6 +95,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
+    typeof(JhAbpIdentityServerModule),
     typeof(JhIdentityHttpApiModule),
     typeof(JhMenuHttpApiModule),
     typeof(WorkflowHttpApiModule),
@@ -258,7 +259,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();
-        app.UseJhJwtTokenMiddleware();
+        app.UseJwtTokenMiddleware();
 
         if (MultiTenancyConsts.IsEnabled)
         {

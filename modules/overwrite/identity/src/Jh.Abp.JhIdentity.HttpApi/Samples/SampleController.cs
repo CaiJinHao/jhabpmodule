@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp;
+using System.Linq;
 
 namespace Jh.Abp.JhIdentity.Samples;
 
@@ -28,8 +29,16 @@ public class SampleController : JhIdentityController, ISampleAppService
     [Authorize]
     public async Task<SampleDto> GetAuthorizedAsync()
     {
+        return await _sampleAppService.GetAsync();
+    }
+
+    [HttpGet("Claims")]
+    [Authorize]
+    public dynamic GetAllClaims()
+    {
         var u = CurrentUser;
         var t = CurrentTenant;
-        return await _sampleAppService.GetAsync();
+        var data= CurrentUser.GetAllClaims().ToList();
+        return data;
     }
 }
