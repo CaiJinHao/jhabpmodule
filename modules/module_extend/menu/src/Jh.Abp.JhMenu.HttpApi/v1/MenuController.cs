@@ -61,9 +61,8 @@ namespace Jh.Abp.JhMenu.v1
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Update)]
-		[HttpPut]
-		[HttpPatch]
-		[Route("{id}")]
+		[HttpPut("Patch/{id}")]//兼容手机端，手机端不支持Patch
+		[HttpPatch("{id}")]
 		public virtual async Task UpdatePortionAsync(System.Guid id, MenuUpdateInputDto inputDto)
 		{
 			 await MenuAppService.UpdatePortionAsync(id, inputDto);
