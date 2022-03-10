@@ -26,9 +26,9 @@ namespace Jh.Abp.JhMenu
             BatchDeletePolicyName = JhMenuPermissions.Menus.BatchDelete;
         }
 
-        public override Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
-            CheckPolicyAsync(GetListPolicyName);
+            await CheckGetListPolicyAsync();
             if (!string.IsNullOrEmpty(input.OrMenuCode))
             {
                 input.MethodInput = new MethodDto<Menu>()
@@ -36,12 +36,12 @@ namespace Jh.Abp.JhMenu
                     QueryAction = entity => entity.Where(a => a.MenuParentCode == input.OrMenuCode || a.MenuCode == input.OrMenuCode)
                 };
             }
-            return base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
+            return await base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
         }
 
         public virtual async Task RecoverAsync(System.Guid id)
         {
-            await CheckPolicyAsync(JhMenuPermissions.Menus.Recover).ConfigureAwait(false);
+            await CheckPolicyAsync(JhMenuPermissions.Menus.Recover);
             using (DataFilter.Disable<ISoftDelete>())
             {
                 var entity = await crudRepository.FindAsync(id, false);

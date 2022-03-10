@@ -74,12 +74,12 @@ namespace Jh.Abp.JhAuditLogging
 
         public virtual async Task<AuditLog[]> DeleteAsync(Guid[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await auditLogsRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken).ConfigureAwait(false);
+            return await auditLogsRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken);
         }
 
         public virtual async Task<AuditLog> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return (await auditLogsRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
+            return (await auditLogsRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken)).FirstOrDefault();
         }
 
         public virtual async Task<ListResultDto<AuditLog>> GetEntitysAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)

@@ -32,13 +32,13 @@ namespace Jh.Abp.JhMenu
 
         public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            await CheckCreatePolicyAsync().ConfigureAwait(false);
+            await CheckCreatePolicyAsync();
             await menuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds);
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()
         {
-            await CheckGetListPolicyAsync().ConfigureAwait(false);
+            await CheckGetListPolicyAsync();
             var roles = GetRolesAsync();
             var auth_menus_id = (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
@@ -57,7 +57,7 @@ namespace Jh.Abp.JhMenu
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuRoleMapRetrieveInputDto input)
         {
-            await CheckGetListPolicyAsync().ConfigureAwait(false);
+            await CheckGetListPolicyAsync();
             var auth_menus_id =await (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToListAsync();
 
             var resutlMenus = await (await menuRepository.GetQueryableAsync()).AsNoTracking().Select(a =>

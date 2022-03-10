@@ -26,7 +26,7 @@ namespace Jh.Abp.JhAuditLogging
             (await GetDbSetAsync()).RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
             }
             return entitys;
         }
@@ -38,7 +38,7 @@ namespace Jh.Abp.JhAuditLogging
             _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
             }
             return entitys;
         }

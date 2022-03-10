@@ -28,20 +28,20 @@ namespace Jh.Abp.EntityFrameworkCore
         public virtual async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             //使用SqlBulk
-            await (await GetDbSetAsync()).AddRangeAsync(entitys).ConfigureAwait(false);
+            await (await GetDbSetAsync()).AddRangeAsync(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
             }
             return entitys;
         }
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await (await GetDbSetAsync()).AddAsync(entity).ConfigureAwait(false);
+            await (await GetDbSetAsync()).AddAsync(entity);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
             }
             return entity;
         }
@@ -89,7 +89,7 @@ namespace Jh.Abp.EntityFrameworkCore
             _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
             }
             return entitys;
         }
@@ -127,13 +127,13 @@ namespace Jh.Abp.EntityFrameworkCore
 
         public async Task<int> ContextSaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            return await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
         }
 
         public async Task AddAsync<T>(T entity, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             var dbSet = (await GetDbContextAsync().ConfigureAwait(continueOnCapturedContext: false)).Set<T>();
-            await dbSet.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+            await dbSet.AddAsync(entity, cancellationToken);
         }
     }
 }

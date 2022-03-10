@@ -61,7 +61,7 @@ namespace Jh.Abp.QuickComponents
         }
 
         /// <summary>
-        /// 为所有Action添加权限验证，使用之后页面都会进行验证
+        /// 为所有请求添加权限验证，使用之后页面都会进行验证，需要配合appsettings.json AllowAnonymousRegex使用，过滤不需要权限得请求
         /// </summary>
         public static IServiceCollection AddAuthorizeFilter(this IServiceCollection services, IConfiguration configuration)
         {

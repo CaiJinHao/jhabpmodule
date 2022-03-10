@@ -43,7 +43,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
                         builder.AppendLine($"\t\t public virtual async Task RecoverAsync({table.KeyType} id)");
                         {
                             builder.AppendLine("\t\t{");
-                            builder.AppendLine($"\t\t\t await CheckPolicyAsync({PermissionsNamePrefix}.Recover).ConfigureAwait(false);");
+                            builder.AppendLine($"\t\t\t await CheckPolicyAsync({PermissionsNamePrefix}.Recover);");
                             builder.AppendLine("\t\t\t using (DataFilter.Disable<ISoftDelete>())");
                             builder.AppendLine("\t\t\t {");
                             builder.AppendLine("\t\t\t\t var entity = await crudRepository.FindAsync(id, false);");
