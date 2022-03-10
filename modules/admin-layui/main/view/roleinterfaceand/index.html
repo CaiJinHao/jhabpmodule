@@ -12,7 +12,7 @@
 
 <body>
     <div id="page-vm" class="iframe-top layui-fluid">
-        <form class="layui-form">
+        <form class="layui-form" lay-filter="form_roleinterface" id="form_roleinterface">
             <div class="layui-row">
                 <div class="layui-inline">
                     <label class="layui-form-label">角色名称：</label>
@@ -124,8 +124,9 @@
                         }
                     });
                 },
-                loadRoleList: function (form_data) {
+                loadRoleList: function () {
                     var _the = this;
+                    var form_data = form.val("form_roleinterface");
                     ajaxmod.requestAuthorize({
                         url: '/IdentityRole/tree',
                         type: 'Get',
@@ -252,7 +253,7 @@
             });
 
             form.on('submit(btn_sysmenurolemiddle_query)', function (data) {
-                sysmenurolemiddleObj.loadRoleList(data.field);
+                sysmenurolemiddleObj.loadRoleList();
                 return false;
             });
 
