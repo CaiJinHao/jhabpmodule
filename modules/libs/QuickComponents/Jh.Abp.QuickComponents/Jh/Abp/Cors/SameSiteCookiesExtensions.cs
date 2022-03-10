@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jh.Abp.QuickComponents.Cors
+namespace Jh.Abp.QuickComponents
 {
     public static class SameSiteCookiesExtensions
     {

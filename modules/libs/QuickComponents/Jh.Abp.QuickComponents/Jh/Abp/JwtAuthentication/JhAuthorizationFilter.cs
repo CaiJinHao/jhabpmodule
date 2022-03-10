@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Jh.Abp.QuickComponents.JwtAuthentication
+namespace Jh.Abp.QuickComponents
 {
     public class JhAuthorizationFilter : AuthorizeFilter
     {

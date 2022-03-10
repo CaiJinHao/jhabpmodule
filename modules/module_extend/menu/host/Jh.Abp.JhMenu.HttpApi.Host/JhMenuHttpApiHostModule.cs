@@ -186,7 +186,7 @@ public class JhMenuHttpApiHostModule : AbpModule
         });
 
         context.Services.AddApiVersion();
-        //context.Services.AddAuthorizeFilter(configuration);
+        context.Services.AddAuthorizeFilter(configuration);
         context.Services.AddAlwaysAllowAuthorization();//禁用授权系统方式一
         //禁用授权系统方式二
         //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());

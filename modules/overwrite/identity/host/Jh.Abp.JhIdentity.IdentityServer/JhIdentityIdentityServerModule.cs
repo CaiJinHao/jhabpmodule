@@ -217,7 +217,10 @@ public class JhIdentityIdentityServerModule : AbpModule
 
         context.Services.AddApiVersion();
         //context.Services.AddSameSiteCookiePolicy();//去除https
-        //context.Services.AddAuthorizeFilter(configuration);
+        context.Services.AddAuthorizeFilter(configuration);
+        context.Services.AddAlwaysAllowAuthorization();//禁用授权系统方式一,目前权限系统存在上下文问题，所以先禁用
+        //禁用授权系统方式二
+        //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());
 
         context.Services.Configure<AbpExceptionHandlingOptions>(options =>
         {

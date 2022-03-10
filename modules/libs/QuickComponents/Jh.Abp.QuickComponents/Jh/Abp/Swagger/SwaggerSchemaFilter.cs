@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.Abp.QuickComponents.Swagger
+namespace Jh.Abp.QuickComponents
 {
     public class SwaggerSchemaFilter : ISchemaFilter
     {

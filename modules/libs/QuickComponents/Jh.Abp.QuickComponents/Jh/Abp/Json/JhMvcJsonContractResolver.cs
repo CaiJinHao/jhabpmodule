@@ -12,7 +12,7 @@ using Volo.Abp.Json.Newtonsoft;
 using Volo.Abp.Reflection;
 using Volo.Abp.Timing;
 
-namespace Jh.Abp.QuickComponents.Json
+namespace Jh.Abp.QuickComponents
 {
     public class JhMvcJsonContractResolver : DefaultContractResolver, ITransientDependency
     {

@@ -1,5 +1,4 @@
-﻿using Jh.Abp.QuickComponents.Json;
-using Jh.Abp.QuickComponents.Localization;
+﻿using Jh.Abp.QuickComponents.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

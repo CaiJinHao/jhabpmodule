@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.Abp.QuickComponents.JwtAuthentication
+namespace Jh.Abp.QuickComponents
 {
     public static class JwtAuthenticationExtensions
     {
