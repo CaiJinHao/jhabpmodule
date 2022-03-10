@@ -247,10 +247,10 @@ public class JhIdentityIdentityServerModule : AbpModule
             app.UseHsts();
         }
 
-        app.ApplicationServices.InitWorkflowDefinition(workflowHost =>
-        {
-            //workflowHost.RegisterWorkflow<LeaveApplicationWorkflow, LeaveApplicationWorkflowDto>();
-        });
+        //app.ApplicationServices.InitWorkflowDefinition(workflowHost =>
+        //{
+        //    //workflowHost.RegisterWorkflow<LeaveApplicationWorkflow, LeaveApplicationWorkflowDto>();
+        //});
 
         app.UseHttpsRedirection();
         app.UseCorrelationId();
@@ -258,7 +258,6 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();
-        app.UseJhJwtTokenMiddleware();//todo:modify
 
         if (MultiTenancyConsts.IsEnabled)
         {

@@ -28,6 +28,8 @@ public class SampleController : JhIdentityController, ISampleAppService
     [Authorize]
     public async Task<SampleDto> GetAuthorizedAsync()
     {
+        var u = CurrentUser;
+        var t = CurrentTenant;
         return await _sampleAppService.GetAsync();
     }
 }
