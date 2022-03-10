@@ -1,4 +1,4 @@
-using Jh.Abp.Domain.Extensions;
+using Jh.Abp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -7,7 +7,7 @@ using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity
 {
-	public interface IIdentityUserRepository: ICrudRepository<IdentityUser, System.Guid>
+    public interface IIdentityUserRepository: ICrudRepository<IdentityUser, System.Guid>
 	{
 		Task<List<Volo.Abp.Identity.IdentityRole>> GetRolesAsync(
 			Guid id,

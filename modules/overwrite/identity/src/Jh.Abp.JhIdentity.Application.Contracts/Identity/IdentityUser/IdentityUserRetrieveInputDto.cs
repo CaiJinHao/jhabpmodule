@@ -1,15 +1,14 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
-using Volo.Abp.Identity;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Identity;
+using Volo.Abp.MultiTenancy;
 namespace Jh.Abp.JhIdentity
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class IdentityUserRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<IdentityUser>
+    /// <summary>
+    /// 
+    /// </summary>
+    public class IdentityUserRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<IdentityUser>
 , IRetrieveDelete
 ,IMultiTenant
 	{

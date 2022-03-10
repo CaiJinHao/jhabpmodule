@@ -1,19 +1,18 @@
-using Jh.Abp.Application.Contracts.Extensions;
-using Microsoft.AspNetCore.Mvc;
+using Jh.Abp.Application.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Account;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Data;
 using Volo.Abp.Identity;
-using System.Linq;
-using System.Collections.Generic;
-using Volo.Abp.Authorization.Permissions;
-using Microsoft.AspNetCore.Identity;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
-using Jh.Abp.JhIdentity.Localization;
-using Volo.Abp.Account;
 
 namespace Jh.Abp.JhIdentity.v1
 {
@@ -225,7 +224,7 @@ namespace Jh.Abp.JhIdentity.v1
         {
             inputDto.MethodInput = new MethodDto<IdentityUser>()
             {
-                SelectAction = (query) => query.Where(a => a.UserName != "admin").Select(a => new IdentityUser(a.Id, a.UserName, a.Email, null) { Name = a.Name })
+                SelectAction = (query) => query.Where(a => a.UserName != JhIdentitySettings.SuperadminUserName).Select(a => new IdentityUser(a.Id, a.UserName, a.Email, null) { Name = a.Name })
             };
             return await IdentityUserAppService.GetEntitysAsync(inputDto);
         }

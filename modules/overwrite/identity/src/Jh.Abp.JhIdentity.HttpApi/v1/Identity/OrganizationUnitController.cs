@@ -1,20 +1,18 @@
-using Jh.Abp.Application.Contracts.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
-using Volo.Abp.Identity;
-using System.Linq;
 
 namespace Jh.Abp.JhIdentity.v1
 {
-	/// <summary>
-	/// 组织管理
-	/// </summary>
-	[RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
+    /// <summary>
+    /// 组织管理
+    /// </summary>
+    [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
 	[Area(JhIdentityRemoteServiceConsts.ModuleName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class OrganizationUnitController : JhIdentityController

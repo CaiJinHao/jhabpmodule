@@ -1,4 +1,4 @@
-using Jh.Abp.EntityFrameworkCore.Extensions;
+using Jh.Abp.EntityFrameworkCore;
 using Jh.Abp.JhIdentity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

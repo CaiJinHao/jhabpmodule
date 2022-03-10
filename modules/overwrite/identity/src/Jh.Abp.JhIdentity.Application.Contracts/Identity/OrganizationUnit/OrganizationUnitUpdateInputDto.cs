@@ -1,18 +1,16 @@
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Application.Contracts;
 using System;
-using Volo.Abp.MultiTenancy;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.ObjectExtending;
-using Volo.Abp.Identity;
 using Volo.Abp.Data;
+using Volo.Abp.Domain.Entities;
+using Volo.Abp.Identity;
+using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.JhIdentity
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class OrganizationUnitUpdateInputDto: 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class OrganizationUnitUpdateInputDto: 
 ExtensibleObject, IHasConcurrencyStamp,
 IMethodDto<OrganizationUnit>
 	{

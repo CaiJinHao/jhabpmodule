@@ -1,17 +1,16 @@
-using Jh.Abp.Application.Contracts.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
-using System.Linq;
 using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity.v1
 {
-	[RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
+    [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
 	[Area(JhIdentityRemoteServiceConsts.ModuleName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class IdentityRoleController : JhIdentityController

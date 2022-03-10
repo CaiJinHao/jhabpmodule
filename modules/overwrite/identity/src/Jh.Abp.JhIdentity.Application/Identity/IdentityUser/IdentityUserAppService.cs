@@ -1,22 +1,21 @@
-using Jh.Abp.Extensions;
-using Volo.Abp.Identity;
-using System;
-using System.Threading.Tasks;
-using System.Threading;
+using Jh.Abp.Application;
+using Jh.Abp.Application.Contracts;
+using Jh.Abp.Common.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Volo.Abp.ObjectExtending;
-using Jh.Abp.Application.Contracts.Dtos;
-using Volo.Abp.Domain.Repositories;
-using System.Linq;
-using Volo.Abp.Application.Dtos;
+using System;
 using System.Collections.Generic;
-using Jh.Abp.Common.Extensions;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Identity;
+using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.JhIdentity
 {
-	public class IdentityUserAppService
+    public class IdentityUserAppService
 		: CrudApplicationService<IdentityUser, IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>,
 		IIdentityUserAppService
 	{
@@ -169,7 +168,7 @@ namespace Jh.Abp.JhIdentity
             if (input.OrganizationUnitId.HasValue)
             {
                 var parentOrg = await organizationUnits.GetAsync(input.OrganizationUnitId.Value, includeDetails: false);
-                input.MethodInput = new Application.Contracts.Extensions.MethodDto<IdentityUser>()
+                input.MethodInput = new MethodDto<IdentityUser>()
                 {
                     QueryAction = (entity) =>
                     {

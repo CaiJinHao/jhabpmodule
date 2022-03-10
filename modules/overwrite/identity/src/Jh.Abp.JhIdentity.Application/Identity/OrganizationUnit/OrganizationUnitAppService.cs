@@ -1,23 +1,23 @@
-using Jh.Abp.Extensions;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Volo.Abp.Identity;
-using System.Linq;
-using System.Collections.Generic;
+using Jh.Abp.Application;
+using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common;
 using Microsoft.EntityFrameworkCore;
-using Volo.Abp.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
+using Volo.Abp.Data;
+using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity
 {
-	/*
+    /*
 	 顶级和顶级不能修改，可以有多个顶级，顶级一旦创建不能更改
 	 */
 
-	public class OrganizationUnitAppService
+    public class OrganizationUnitAppService
 		: CrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>,
 		IOrganizationUnitAppService
 	{

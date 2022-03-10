@@ -1,6 +1,5 @@
-using Jh.Abp.EntityFrameworkCore.Extensions;
+using Jh.Abp.EntityFrameworkCore;
 using Jh.Abp.JhIdentity.EntityFrameworkCore;
-using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity

@@ -1,10 +1,9 @@
-using Jh.Abp.Extensions;
-using System;
+using Jh.Abp.Application;
 using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity
 {
-	public class JhIdentityRoleAppService
+    public class JhIdentityRoleAppService
 		: CrudApplicationService<IdentityRole, IdentityRoleDto, IdentityRoleDto, System.Guid, IdentityRoleRetrieveInputDto, IdentityRoleCreateInputDto, IdentityRoleUpdateInputDto, IdentityRoleDeleteInputDto>,
 		IJhIdentityRoleAppService
 	{

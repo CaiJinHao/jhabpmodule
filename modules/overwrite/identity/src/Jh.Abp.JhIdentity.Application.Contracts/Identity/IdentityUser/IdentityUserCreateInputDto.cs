@@ -1,21 +1,18 @@
+using Jh.Abp.Application.Contracts;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp.MultiTenancy;
-using Volo.Abp.Identity;
-using Volo.Abp.ObjectExtending;
-using Volo.Abp.Validation;
 using Volo.Abp.Auditing;
-using JetBrains.Annotations;
+using Volo.Abp.Domain.Entities;
+using Volo.Abp.Identity;
+using Volo.Abp.MultiTenancy;
+using Volo.Abp.Validation;
 
 namespace Jh.Abp.JhIdentity
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class IdentityUserCreateInputDto:
+    /// <summary>
+    /// 
+    /// </summary>
+    public class IdentityUserCreateInputDto:
 IdentityUserCreateOrUpdateDto,
 IHasConcurrencyStamp,
 IMethodDto<IdentityUser>

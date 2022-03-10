@@ -1,7 +1,5 @@
+using Jh.Abp.Application.Contracts;
 using System;
-using System.ComponentModel.DataAnnotations;
-using Jh.Abp.Application.Contracts.Dtos;
-using Jh.Abp.Application.Contracts.Extensions;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Identity;
@@ -9,10 +7,10 @@ using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.JhIdentity
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class OrganizationUnitCreateInputDto:
+    /// <summary>
+    /// 
+    /// </summary>
+    public class OrganizationUnitCreateInputDto:
 ExtensibleObject, IHasConcurrencyStamp,
 IMethodDto<OrganizationUnit>
 ,IMultiTenant

@@ -1,12 +1,8 @@
-﻿using Jh.Abp.Application.Contracts.Extensions;
+﻿using Jh.Abp.Application.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging;
 
 namespace Jh.Abp.JhAuditLogging
