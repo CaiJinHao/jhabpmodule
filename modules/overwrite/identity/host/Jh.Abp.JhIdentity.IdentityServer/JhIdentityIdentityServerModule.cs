@@ -258,6 +258,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();
+        app.UseJhJwtTokenMiddleware();
 
         if (MultiTenancyConsts.IsEnabled)
         {
