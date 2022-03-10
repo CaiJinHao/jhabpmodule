@@ -58,7 +58,7 @@
                                         <a href="javascript:;" class="layui-btn" lay-submit
                                             lay-filter="btn_organizationunit_from"
                                             id="btn_organizationunit_from_query">查询</a>
-                                        <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)"
+                                        <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)"
                                             class="layui-btn" lay-submit
                                             lay-filter="btn_organizationunit_from_export">导出</a> -->
                                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_organizationunit_from_reset" >重置</a>
@@ -122,12 +122,10 @@
                 currPage: 1,
                 deletedlist: [],
                 permissionDefineds: {
-                    Export: 'JhIdentity.OrganizationUnits.Export',
+                    Default: 'JhIdentity.OrganizationUnits',
                     Detail: 'JhIdentity.OrganizationUnits.Detail',
                     Create: 'JhIdentity.OrganizationUnits.Create',
-                    BatchCreate: 'JhIdentity.OrganizationUnits.BatchCreate',
                     Update: 'JhIdentity.OrganizationUnits.Update',
-                    PortionUpdate: 'JhIdentity.OrganizationUnits.PortionUpdate',
                     Delete: 'JhIdentity.OrganizationUnits.Delete',
                     BatchDelete: 'JhIdentity.OrganizationUnits.BatchDelete',
                     Recover: 'JhIdentity.OrganizationUnits.Recover',
@@ -334,12 +332,10 @@
                 loadPermissions:function(_fn){
                     var _the=this;
                     let _permissions = [
-                        vm.permissionDefineds.Export,
+                        vm.permissionDefineds.Default,
                         vm.permissionDefineds.Detail,
                         vm.permissionDefineds.Create,
-                        vm.permissionDefineds.BatchCreate,
                         vm.permissionDefineds.Update,
-                        vm.permissionDefineds.PortionUpdate,
                         vm.permissionDefineds.Delete,
                         vm.permissionDefineds.BatchDelete,
                         vm.permissionDefineds.Recover,

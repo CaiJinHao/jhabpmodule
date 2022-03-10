@@ -27,7 +27,7 @@
                                 </div>
                         <div class="layui-inline btngroup">
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commodityuserlevelinfo_from" id="btn_commodityuserlevelinfo_from_query">查询</a>
-                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_commodityuserlevelinfo_from_export">导出</a> -->
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)" class="layui-btn" lay-submit lay-filter="btn_commodityuserlevelinfo_from_export">导出</a> -->
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commodityuserlevelinfo_from_reset">重置</a>
                         </div>
                             </div>
@@ -83,12 +83,10 @@
                     currPage: 1,
                     deletedlist: [],
                     permissionDefineds: {
-                        Export: 'JhAbpJhCommodity.CommodityUserLevelInfos.Export',
+                        Default: 'JhAbpJhCommodity.CommodityUserLevelInfos.Default',
                         Detail: 'JhAbpJhCommodity.CommodityUserLevelInfos.Detail',
                         Create: 'JhAbpJhCommodity.CommodityUserLevelInfos.Create',
-                        BatchCreate: 'JhAbpJhCommodity.CommodityUserLevelInfos.BatchCreate',
                         Update: 'JhAbpJhCommodity.CommodityUserLevelInfos.Update',
-                        PortionUpdate: 'JhAbpJhCommodity.CommodityUserLevelInfos.PortionUpdate',
                         Delete: 'JhAbpJhCommodity.CommodityUserLevelInfos.Delete',
                         BatchDelete: 'JhAbpJhCommodity.CommodityUserLevelInfos.BatchDelete',
                         Recover: 'JhAbpJhCommodity.CommodityUserLevelInfos.Recover',
@@ -272,12 +270,10 @@
                     loadPermissions:function(_fn){
                         var _the=this;
                         let _permissions = [
-                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Default,
                             vm.permissionDefineds.Detail,
                             vm.permissionDefineds.Create,
-                            vm.permissionDefineds.BatchCreate,
                             vm.permissionDefineds.Update,
-                            vm.permissionDefineds.PortionUpdate,
                             vm.permissionDefineds.Delete,
                             vm.permissionDefineds.BatchDelete,
                             vm.permissionDefineds.Recover,

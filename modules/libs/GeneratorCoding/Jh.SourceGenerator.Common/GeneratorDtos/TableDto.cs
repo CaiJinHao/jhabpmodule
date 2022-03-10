@@ -7,6 +7,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
 {
     public class TableDto
     {
+        public string PermissionsNamePrefix { get; set; }
         public string DbContext { get; }
         public string Namespace { get; }
         public string ControllerBase { get; }

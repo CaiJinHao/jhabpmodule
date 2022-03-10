@@ -33,7 +33,7 @@
                                 </div>
                         <div class="layui-inline btngroup">
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commoditylabel_from" id="btn_commoditylabel_from_query">查询</a>
-                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_commoditylabel_from_export">导出</a> -->
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)" class="layui-btn" lay-submit lay-filter="btn_commoditylabel_from_export">导出</a> -->
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commoditylabel_from_reset">重置</a>
                         </div>
                             </div>
@@ -89,12 +89,10 @@
                     currPage: 1,
                     deletedlist: [],
                     permissionDefineds: {
-                        Export: 'JhAbpJhCommodity.CommodityLabels.Export',
+                        Default: 'JhAbpJhCommodity.CommodityLabels.Default',
                         Detail: 'JhAbpJhCommodity.CommodityLabels.Detail',
                         Create: 'JhAbpJhCommodity.CommodityLabels.Create',
-                        BatchCreate: 'JhAbpJhCommodity.CommodityLabels.BatchCreate',
                         Update: 'JhAbpJhCommodity.CommodityLabels.Update',
-                        PortionUpdate: 'JhAbpJhCommodity.CommodityLabels.PortionUpdate',
                         Delete: 'JhAbpJhCommodity.CommodityLabels.Delete',
                         BatchDelete: 'JhAbpJhCommodity.CommodityLabels.BatchDelete',
                         Recover: 'JhAbpJhCommodity.CommodityLabels.Recover',
@@ -269,12 +267,10 @@
                     loadPermissions:function(_fn){
                         var _the=this;
                         let _permissions = [
-                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Default,
                             vm.permissionDefineds.Detail,
                             vm.permissionDefineds.Create,
-                            vm.permissionDefineds.BatchCreate,
                             vm.permissionDefineds.Update,
-                            vm.permissionDefineds.PortionUpdate,
                             vm.permissionDefineds.Delete,
                             vm.permissionDefineds.BatchDelete,
                             vm.permissionDefineds.Recover,

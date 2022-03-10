@@ -22,6 +22,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 
         public override string ToString()
         {
+            table.PermissionsNamePrefix = $"{Domain}.{table.Name}s";
             string razorTemplateContent = TemplateFilePath.ReadFile();
             return Engine.Razor.RunCompile(razorTemplateContent, FileName, null, table);
         }

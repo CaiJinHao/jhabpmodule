@@ -38,7 +38,7 @@
                                 </div>
                         <div class="layui-inline btngroup">
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_filecategory_from" id="btn_filecategory_from_query">查询</a>
-                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_filecategory_from_export">导出</a> -->
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)" class="layui-btn" lay-submit lay-filter="btn_filecategory_from_export">导出</a> -->
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_filecategory_from_reset">重置</a>
                         </div>
                             </div>
@@ -94,12 +94,10 @@
                     currPage: 1,
                     deletedlist: [],
                     permissionDefineds: {
-                        Export: 'JhAbpJhFile.FileCategorys.Export',
+                        Default: 'JhAbpJhFile.FileCategorys.Default',
                         Detail: 'JhAbpJhFile.FileCategorys.Detail',
                         Create: 'JhAbpJhFile.FileCategorys.Create',
-                        BatchCreate: 'JhAbpJhFile.FileCategorys.BatchCreate',
                         Update: 'JhAbpJhFile.FileCategorys.Update',
-                        PortionUpdate: 'JhAbpJhFile.FileCategorys.PortionUpdate',
                         Delete: 'JhAbpJhFile.FileCategorys.Delete',
                         BatchDelete: 'JhAbpJhFile.FileCategorys.BatchDelete',
                         Recover: 'JhAbpJhFile.FileCategorys.Recover',
@@ -274,12 +272,10 @@
                     loadPermissions:function(_fn){
                         var _the=this;
                         let _permissions = [
-                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Default,
                             vm.permissionDefineds.Detail,
                             vm.permissionDefineds.Create,
-                            vm.permissionDefineds.BatchCreate,
                             vm.permissionDefineds.Update,
-                            vm.permissionDefineds.PortionUpdate,
                             vm.permissionDefineds.Delete,
                             vm.permissionDefineds.BatchDelete,
                             vm.permissionDefineds.Recover,

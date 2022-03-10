@@ -1,7 +1,6 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +9,7 @@
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="page-vm" class="layui-fluid iframe-top">
         <div class="table_menu_mg">
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </fieldset>
-                </div>  
+                </div>
                 <div class="layui-col-md9" style="margin-top:13px;">
                     <fieldset class="layui-elem-field">
                         <div class="layui-field-box">
@@ -55,14 +55,17 @@
                                         <div class="layui-input-inline">
                                             <select lay-search name="deleted" :value="2">
                                                 <option value="0">全部</option>
-                                                <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                                <option v-for="option in deletedlist" v-bind:value="option.value">{{
+                                                    option.text }}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="layui-inline btngroup">
-                                        <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from" id="btn_menu_from_query">查询</a>
-                                        <!-- <a href="javascript:;" class="layui-btn" v-if="RenderPermission(permissionDefineds.Export)" lay-submit lay-filter="btn_menu_from_export">导出</a> -->
-                                        <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from_reset" >重置</a>
+                                        <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from"
+                                            id="btn_menu_from_query">查询</a>
+                                        <!-- <a href="javascript:;" class="layui-btn" v-if="RenderPermission(permissionDefineds.Default)" lay-submit lay-filter="btn_menu_from_export">导出</a> -->
+                                        <a href="javascript:;" class="layui-btn" lay-submit
+                                            lay-filter="btn_menu_from_reset">重置</a>
                                     </div>
                                 </div>
                             </form>
@@ -110,18 +113,16 @@
             data: {
                 currPage: 1,
                 deletedlist: [],
-                permissionDefineds:{
-                    Export: 'JhAbpJhMenu.Menus.Export',
-                    Detail: 'JhAbpJhMenu.Menus.Detail',
-                    Create: 'JhAbpJhMenu.Menus.Create',
-                    BatchCreate: 'JhAbpJhMenu.Menus.BatchCreate',
-                    Update: 'JhAbpJhMenu.Menus.Update',
-                    PortionUpdate: 'JhAbpJhMenu.Menus.PortionUpdate',
-                    Delete: 'JhAbpJhMenu.Menus.Delete',
-                    BatchDelete: 'JhAbpJhMenu.Menus.BatchDelete',
-                    Recover: 'JhAbpJhMenu.Menus.Recover',
+                permissionDefineds: {
+                    Default: 'JhMenu.Menus',
+                    Detail: 'JhMenu.Menus.Detail',
+                    Create: 'JhMenu.Menus.Create',
+                    Update: 'JhMenu.Menus.Update',
+                    Delete: 'JhMenu.Menus.Delete',
+                    BatchDelete: 'JhMenu.Menus.BatchDelete',
+                    Recover: 'JhMenu.Menus.Recover',
                 },
-                permissions:[]
+                permissions: []
             },
             methods: {
                 RenderDom: function (form, callback) {
@@ -136,7 +137,7 @@
                     });
                 },
                 RenderPermission: function (permission) {
-                    var _the=this;
+                    var _the = this;
                     var _pers = this.permissions.filter(function (_el) {
                         return _el.name == permission;
                     });
@@ -146,7 +147,7 @@
                 }
             }
         });
-        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable','excel','tree'], function () {
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable', 'excel', 'tree'], function () {
             var table = layui.table,
                 $ = layui.jquery,
                 layer = layui.layer,
@@ -154,18 +155,18 @@
                 tree = layui.tree,
                 laypage = layui.laypage,
                 ajaxmod = layui.ajaxmod,
-                excel=layui.excel,
+                excel = layui.excel,
                 datatable = layui.datatable;
             var _context = $('.table_menu_mg'),
                 _table_style = { align: 'center' };//公共样式
             var menuObj = {
                 seletedRoleBg: function (node) {
-                    let _the=this;
+                    let _the = this;
                     $('#modulepoint_tree .layui-tree-entry').each(function (k, elem) {
                         let name = $('.layui-tree-txt', $(elem)).html();
                         if (name === node.title) {
                             $('.role_selected').removeClass('role_selected');
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 $(elem).addClass('role_selected');
                             }, 100);
                             return;
@@ -183,7 +184,7 @@
                             $('#modulepoint_tree').html('');
                             tree.render({
                                 elem: '#modulepoint_tree',
-                                onlyIconControl:true,
+                                onlyIconControl: true,
                                 data: response,
                                 click: function (node) {
                                     $('#orMenuCode').val(node.data.obj.menuCode);
@@ -196,14 +197,14 @@
                 },
                 renderTable: function (isloadtree) {
                     var _the = this;
-                    if(isloadtree){
+                    if (isloadtree) {
                         _the.loadTree();
                     }
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
-                        Sorting:'menuCode',
-                        deleted:2
+                        Sorting: 'menuCode',
+                        deleted: 2
                     };
                     var formfield = form.val("form_menu");
                     $.extend(optDefault, formfield);
@@ -215,8 +216,8 @@
                         $.extend({ field: 'menuIcon', title: '菜单图标', minWidth: 100 }, _table_style),
                         $.extend({ field: 'menuUrl', title: '菜单URL', minWidth: 400 }),
                         $.extend({ field: 'menuSort', title: '菜单排序', minWidth: 100 }, _table_style),
-                        $.extend({ field: 'isDeleted', title: '状态', templet: '#tpl_isDeleted', minWidth: 150 }, 
-                        _table_style),
+                        $.extend({ field: 'isDeleted', title: '状态', templet: '#tpl_isDeleted', minWidth: 150 },
+                            _table_style),
                         $.extend({ field: 'menuDescription', title: '菜单描述', minWidth: 150 }, _table_style),
                     ];
                     if (vm.RenderPermission(vm.permissionDefineds.Update)) {
@@ -249,7 +250,7 @@
                     datatable.del({
                         url: '/menu/' + _data.id,
                         type: 'Delete',
-                        confimMsg:'确定禁用吗？',
+                        confimMsg: '确定禁用吗？',
                         success: function (response) {
                             _the.renderTable();
                         }
@@ -260,23 +261,23 @@
                     var checkStatus = table.checkStatus('table_menu'),
                         data = checkStatus.data;
                     var delIdList = [];
-                    $.each(data,function(index,item){
+                    $.each(data, function (index, item) {
                         delIdList.push(item.id);
                     });
                     datatable.delbatch({
                         url: '/menu/keys',
                         type: 'Delete',
                         data: delIdList,
-                        confimMsg:'确定禁用选中项吗？',
+                        confimMsg: '确定禁用选中项吗？',
                         success: function (response) {
                             _the.renderTable();
                         }
                     });
                 },
-                patchObj: function (data,url) {
+                patchObj: function (data, url) {
                     let _the = this;
                     ajaxmod.requestAuthorize({
-                        url:url,
+                        url: url,
                         type: 'Patch',
                         data: data,
                         success: function (response) {
@@ -324,18 +325,16 @@
                             }
                         }
                     ], function () {
-                            vm.RenderDom(form, function () { vm.RenderDom(form, _fn)});
+                        vm.RenderDom(form, function () { vm.RenderDom(form, _fn) });
                     });
                 },
-                loadPermissions:function(_fn){
-                    var _the=this;
+                loadPermissions: function (_fn) {
+                    var _the = this;
                     let _permissions = [
-                        vm.permissionDefineds.Export,
+                        vm.permissionDefineds.Default,
                         vm.permissionDefineds.Detail,
                         vm.permissionDefineds.Create,
-                        vm.permissionDefineds.BatchCreate,
                         vm.permissionDefineds.Update,
-                        vm.permissionDefineds.PortionUpdate,
                         vm.permissionDefineds.Delete,
                         vm.permissionDefineds.BatchDelete,
                         vm.permissionDefineds.Recover,
@@ -350,9 +349,9 @@
                         }
                     });
                 },
-                
+
             };
-            menuObj.loadPermissions(function () { menuObj.loadList(function(){menuObj.renderTable(true);}); });
+            menuObj.loadPermissions(function () { menuObj.loadList(function () { menuObj.renderTable(true); }); });
 
             //绑定编辑也保存事件
             top.tool.subscribe("edit_menu_form_refresh", function () {
@@ -402,9 +401,10 @@
                 } else {
                     _value = true;//删除
                 }
-                menuObj.patchObj(_value,'/menu/'+_id+'/Recover');
+                menuObj.patchObj(_value, '/menu/' + _id + '/Recover');
             });
         });
     </script>
 </body>
+
 </html>

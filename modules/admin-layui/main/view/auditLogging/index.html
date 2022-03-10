@@ -70,7 +70,7 @@
                             <div class="layui-inline btngroup">
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_auditLogging_from"
                                     id="btn_auditLogging_from_query">查询</a>
-                                <a v-if="RenderPermission(permissionDefineds.Export)" href="javascript:;" class="layui-btn" lay-submit
+                                <a v-if="RenderPermission(permissionDefineds.Default)" href="javascript:;" class="layui-btn" lay-submit
                                     lay-filter="btn_auditLogging_from_export">导出</a>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                 currPage: 1,
                 userList: [],
                 permissionDefineds: {
-                    Export: 'JhAuditLogging.AuditLoggings.Export',
+                    Default: 'JhAuditLogging.AuditLoggings.Default',
                     Detail: 'JhAuditLogging.AuditLoggings.Detail',
                     Delete: 'JhAuditLogging.AuditLoggings.Delete',
                     BatchDelete: 'JhAuditLogging.AuditLoggings.BatchDelete',
@@ -313,7 +313,7 @@
                 loadPermissions: function (_fn) {
                     var _the = this;
                     let _permissions = [
-                        vm.permissionDefineds.Export,
+                        vm.permissionDefineds.Default,
                         vm.permissionDefineds.Detail,
                         vm.permissionDefineds.Delete,
                         vm.permissionDefineds.BatchDelete,

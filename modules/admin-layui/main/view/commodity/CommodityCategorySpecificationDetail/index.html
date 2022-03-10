@@ -48,7 +48,7 @@
                                 </div>
                         <div class="layui-inline btngroup">
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commoditycategoryspecificationdetail_from" id="btn_commoditycategoryspecificationdetail_from_query">查询</a>
-                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_commoditycategoryspecificationdetail_from_export">导出</a> -->
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)" class="layui-btn" lay-submit lay-filter="btn_commoditycategoryspecificationdetail_from_export">导出</a> -->
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commoditycategoryspecificationdetail_from_reset">重置</a>
                         </div>
                             </div>
@@ -105,12 +105,10 @@
                     deletedlist: [],
                 commoditycategoryspecificationOptions:[],
                     permissionDefineds: {
-                        Export: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.Export',
+                        Default: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.Default',
                         Detail: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.Detail',
                         Create: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.Create',
-                        BatchCreate: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.BatchCreate',
                         Update: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.Update',
-                        PortionUpdate: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.PortionUpdate',
                         Delete: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.Delete',
                         BatchDelete: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.BatchDelete',
                         Recover: 'JhAbpJhCommodity.CommodityCategorySpecificationDetails.Recover',
@@ -300,12 +298,10 @@
                     loadPermissions:function(_fn){
                         var _the=this;
                         let _permissions = [
-                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Default,
                             vm.permissionDefineds.Detail,
                             vm.permissionDefineds.Create,
-                            vm.permissionDefineds.BatchCreate,
                             vm.permissionDefineds.Update,
-                            vm.permissionDefineds.PortionUpdate,
                             vm.permissionDefineds.Delete,
                             vm.permissionDefineds.BatchDelete,
                             vm.permissionDefineds.Recover,
