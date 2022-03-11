@@ -16,6 +16,7 @@ namespace Jh.Abp.JhMenu
         : CrudApplicationService<MenuRoleMap, MenuRoleMapDto, MenuRoleMapDto, System.Guid, MenuRoleMapRetrieveInputDto, MenuRoleMapCreateInputDto, MenuRoleMapUpdateInputDto, MenuRoleMapDeleteInputDto>,
         IMenuRoleMapAppService
     {
+        protected MenuRoleMapManager MenuRoleMapManager => LazyServiceProvider.LazyGetRequiredService<MenuRoleMapManager>();
         protected IDistributedEventBus distributedEventBus =>LazyServiceProvider.LazyGetRequiredService<IDistributedEventBus>();
         protected Jh.Abp.JhIdentity.IIdentityUserRepository identityUserRepository => LazyServiceProvider.LazyGetRequiredService<Jh.Abp.JhIdentity.IIdentityUserRepository>();
         protected IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
@@ -36,9 +37,7 @@ namespace Jh.Abp.JhMenu
         public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             await CheckCreatePolicyAsync();
-            await distributedEventBus.PublishAsync(new RoleMenuInitEto() {
-                RoleIds = inputDto.RoleIds
-            });
+            await MenuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds);
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()

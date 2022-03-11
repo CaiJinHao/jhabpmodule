@@ -23,12 +23,12 @@ namespace Jh.Abp.JhMenu
             distributedEventBus=DistributedEventBus;
         }
 
-        public virtual async Task SeedAsync(Guid roleid, MenuRegisterType menuRegisterType, Guid? TenantId = null)
+        public virtual async Task SeedAsync(Guid roleId, MenuRegisterType menuRegisterType, Guid? TenantId = null)
         {
             await CreateMenus(menuRegisterType, TenantId);
             await distributedEventBus.PublishAsync(new RoleMenuInitEto()
             {
-                RoleIds = new Guid[] { roleid }
+                 RoleId = roleId,
             });
         }
 

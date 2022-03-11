@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Services;
+using Volo.Abp.Uow;
+
 namespace Jh.Abp.JhMenu
 {
     public class MenuRoleMapManager : DomainService
@@ -16,33 +18,42 @@ namespace Jh.Abp.JhMenu
             MenuRepository = menuRepository;
         }
 
-        protected virtual IEnumerable<MenuRoleMap> CreateList(Guid[] RoleIds, Guid[] MenuIds)
+        protected virtual IEnumerable<MenuRoleMap> CreateList(Guid roleid, Guid[] MenuIds)
         {
-            Volo.Abp.Check.NotNull(RoleIds,nameof(RoleIds));
-            MenuRoleMapRepository.DeleteListAsync(a => RoleIds.Contains(a.RoleId)).Wait();
-            foreach (var roleid in RoleIds)
+            Volo.Abp.Check.NotNull(roleid, nameof(roleid));
+            foreach (var menuid in MenuIds)
             {
-                foreach (var menuid in MenuIds)
-                {
-                    yield return new MenuRoleMap(menuid, roleid);
-                }
+                yield return new MenuRoleMap(menuid, roleid);
+            }
+        }
+
+        protected virtual async Task CreateAsync(Guid roleId, Guid[] MenuIds)
+        {
+            await MenuRoleMapRepository.DeleteListAsync(a => roleId == a.RoleId);
+            var entitys = CreateList(roleId, MenuIds);
+            if (entitys.Any())
+            {
+                await MenuRoleMapRepository.CreateAsync(entitys.ToArray());
             }
         }
 
         public virtual async Task CreateAsync(Guid[] RoleIds, Guid[] MenuIds)
         {
-            var entitys = CreateList(RoleIds,MenuIds);
-            await MenuRoleMapRepository.CreateAsync(entitys.ToArray());
+            foreach (var item in RoleIds)
+            {
+                await CreateAsync(item,MenuIds);
+            }
         }
 
-        public virtual async Task InitMenuByRole(Guid[] roleids)
+        [UnitOfWork]
+        public virtual async Task InitMenuByRole(Guid roleId)
         {
             var menuIds = (await MenuRepository.GetQueryableAsync()).Select(x => x.Id).ToArray();
             if (menuIds.Length > 0)
             {
-                if (!(await MenuRoleMapRepository.GetQueryableAsync()).Any())
+                if (!(await MenuRoleMapRepository.GetQueryableAsync()).Any(a => a.RoleId == roleId))
                 {
-                    await CreateAsync(roleids, menuIds);
+                    await CreateAsync(roleId, menuIds);
                 }
             }
         }

@@ -8,6 +8,6 @@ namespace Jh.Abp.JhMenu
     [EventName("Menu.RoleMenuInitEto")]
     public class RoleMenuInitEto
     {
-        public Guid[] RoleIds { get; set; }
+        public Guid RoleId { get; set; }
     }
 }

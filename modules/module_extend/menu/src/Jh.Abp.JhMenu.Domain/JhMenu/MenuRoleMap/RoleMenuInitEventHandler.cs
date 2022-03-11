@@ -14,10 +14,9 @@ namespace Jh.Abp.JhMenu
             MenuRoleMapManager = menuRoleMapManager;
         }
 
-        [UnitOfWork]
         public virtual async Task HandleEventAsync(RoleMenuInitEto eventData)
         {
-            await MenuRoleMapManager.InitMenuByRole(eventData.RoleIds);
+            await MenuRoleMapManager.InitMenuByRole(eventData.RoleId);
         }
     }
 }
