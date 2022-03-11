@@ -30,7 +30,6 @@ namespace Jh.Abp.JhMenu
             {
                 RoleIds = new Guid[] { roleid }
             });
-            //await menuRoleMapManager.InitMenuByRole(new Guid[] { roleid });
         }
 
         protected virtual async Task CreateMenus(MenuRegisterType menuRegisterType, Guid? TenantId = null)

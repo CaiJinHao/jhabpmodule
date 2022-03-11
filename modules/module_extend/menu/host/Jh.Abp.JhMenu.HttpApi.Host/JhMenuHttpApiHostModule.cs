@@ -43,6 +43,7 @@ using Volo.Abp.Data;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
+using Volo.Abp.Domain.Entities.Events.Distributed;
 
 namespace Jh.Abp.JhMenu;
 
@@ -149,6 +150,11 @@ public class JhMenuHttpApiHostModule : AbpModule
         Configure<AbpDistributedCacheOptions>(options =>
         {
             options.KeyPrefix = "JhMenu:";
+        });
+
+        Configure<AbpDistributedEntityEventOptions>(options =>
+        {
+
         });
 
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("JhMenu");
