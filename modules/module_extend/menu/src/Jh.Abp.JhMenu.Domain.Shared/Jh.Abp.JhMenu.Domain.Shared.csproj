@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Domain.Shared\Jh.Abp.Domain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="JhMenu\Menu\" />
+  </ItemGroup>
+
 </Project>
