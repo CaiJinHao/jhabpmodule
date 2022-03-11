@@ -1,12 +1,15 @@
-﻿using System.Linq;
+﻿using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Uow;
 
 namespace Jh.Abp.JhMenu
 {
     public class MenuDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
+        public ILogger<MenuDataSeedContributor> Logger { get; set; }
         protected IMenuRepository menuRepository { get; }
         protected MenuManager menuManager { get; }
         public MenuDataSeedContributor(MenuManager MenuManager, IMenuRepository MenuRepository, MenuRoleMapManager MenuRoleMapManager, IMenuRoleMapRepository MenuRoleMapRepository)
@@ -15,14 +18,16 @@ namespace Jh.Abp.JhMenu
             menuRepository = MenuRepository;
         }
 
+        [UnitOfWork]
         public async Task SeedAsync(DataSeedContext context)
         {
             var menuRegisterType = JhMenuConsts.MenuRegisterType;
-            if (!(await menuRepository.GetQueryableAsync()).Any())
+            var exist = (await menuRepository.GetQueryableAsync()).Any();
+            if (!exist)
             {
                 await menuManager.CreateAsync(new Menu()
                 {
-
+                    TenantId = context.TenantId,
                     MenuCode = "A01",
                     MenuName = "云数据中心",
                     MenuIcon = "fa fa-bars",
@@ -30,7 +35,7 @@ namespace Jh.Abp.JhMenu
                 });
                 await menuManager.CreateAsync(new Menu()
                 {
-
+                    TenantId = context.TenantId,
                     MenuCode = "A0101",
                     MenuName = "你的菜单",
                     MenuIcon = "fa fa-bars",
@@ -40,11 +45,10 @@ namespace Jh.Abp.JhMenu
                 });
                 if ((MenuRegisterType.SystemSetting & menuRegisterType) == MenuRegisterType.SystemSetting)
                 {
-
                     //系统设置
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A02",
                         MenuName = "系统设置",
                         MenuIcon = "fa fa-bars",
@@ -52,7 +56,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0201",
                         MenuName = "菜单管理",
                         MenuIcon = "fa fa-bars",
@@ -62,7 +66,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0202",
                         MenuName = "菜单权限管理",
                         MenuIcon = "fa fa-bars",
@@ -72,7 +76,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0203",
                         MenuName = "接口权限管理",
                         MenuIcon = "fa fa-bars",
@@ -82,7 +86,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0204",
                         MenuName = "用户管理",
                         MenuIcon = "fa fa-bars",
@@ -92,7 +96,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0205",
                         MenuName = "组织管理",
                         MenuIcon = "fa fa-bars",
@@ -102,7 +106,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0206",
                         MenuName = "系统审计日志",
                         MenuIcon = "fa fa-bars",
@@ -113,7 +117,7 @@ namespace Jh.Abp.JhMenu
 
                     //await menuManager.CreateAsync(new Menu()
                     //{
-                    //    TenantId= TenantId,
+                    //    TenantId = context.TenantId,
                     //    MenuCode = "A0207",
                     //    MenuName = "系统配置",
                     //    MenuIcon = "fa fa-bars",
@@ -129,7 +133,7 @@ namespace Jh.Abp.JhMenu
                     //商品系统
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A03",
                         MenuName = "商品系统",
                         MenuIcon = "fa fa-bars",
@@ -137,7 +141,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0301",
                         MenuName = "商品管理",
                         MenuIcon = "fa fa-bars",
@@ -147,7 +151,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0302",
                         MenuName = "商品类别",
                         MenuIcon = "fa fa-bars",
@@ -157,7 +161,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0303",
                         MenuName = "商品品牌",
                         MenuIcon = "fa fa-bars",
@@ -167,7 +171,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0304",
                         MenuName = "商品标签",
                         MenuIcon = "fa fa-bars",
@@ -177,7 +181,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0305",
                         MenuName = "商品排行榜",
                         MenuIcon = "fa fa-bars",
@@ -187,7 +191,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0306",
                         MenuName = "商品规格模板",
                         MenuIcon = "fa fa-bars",
@@ -197,7 +201,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0307",
                         MenuName = "商品规格模板详情",
                         MenuIcon = "fa fa-bars",
@@ -212,7 +216,7 @@ namespace Jh.Abp.JhMenu
                     //文件系统
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A04",
                         MenuName = "文件系统",
                         MenuIcon = "fa fa-bars",
@@ -220,7 +224,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0401",
                         MenuName = "文件管理",
                         MenuIcon = "fa fa-bars",
@@ -230,7 +234,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0402",
                         MenuName = "文件类别",
                         MenuIcon = "fa fa-bars",
@@ -244,7 +248,7 @@ namespace Jh.Abp.JhMenu
                     //文章系统
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A05",
                         MenuName = "文章系统",
                         MenuIcon = "fa fa-bars",
@@ -252,7 +256,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0501",
                         MenuName = "文章管理",
                         MenuIcon = "fa fa-bars",
@@ -262,7 +266,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0502",
                         MenuName = "文章类别",
                         MenuIcon = "fa fa-bars",
@@ -272,7 +276,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0503",
                         MenuName = "文章标签",
                         MenuIcon = "fa fa-bars",
@@ -282,7 +286,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0504",
                         MenuName = "资源加锁",
                         MenuIcon = "fa fa-bars",
@@ -292,7 +296,7 @@ namespace Jh.Abp.JhMenu
                     });
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0505",
                         MenuName = "文章附件管理",
                         MenuIcon = "fa fa-bars",
@@ -305,7 +309,7 @@ namespace Jh.Abp.JhMenu
                 {
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A06",
                         MenuName = "Web配置",
                         MenuIcon = "fa fa-bars",
@@ -314,7 +318,7 @@ namespace Jh.Abp.JhMenu
 
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0601",
                         MenuName = "Web字典配置",
                         MenuIcon = "fa fa-bars",
@@ -325,7 +329,7 @@ namespace Jh.Abp.JhMenu
 
                     await menuManager.CreateAsync(new Menu()
                     {
-
+                        TenantId = context.TenantId,
                         MenuCode = "A0602",
                         MenuName = "Web字典类别配置",
                         MenuIcon = "fa fa-bars",

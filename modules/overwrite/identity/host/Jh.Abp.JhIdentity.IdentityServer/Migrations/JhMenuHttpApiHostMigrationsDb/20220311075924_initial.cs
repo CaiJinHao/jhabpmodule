@@ -76,9 +76,9 @@ namespace Jh.Abp.JhIdentity.Migrations.JhMenuHttpApiHostMigrationsDb
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Menu_Menu_MenuCode",
+                name: "IX_Menu_Menu_MenuCode_TenantId",
                 table: "Menu_Menu",
-                column: "MenuCode",
+                columns: new[] { "MenuCode", "TenantId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(

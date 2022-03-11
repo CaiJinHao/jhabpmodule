@@ -13,7 +13,7 @@ namespace Jh.Abp.JhMenu
         {
             menu.MenuDescription = menu.MenuName;
             menu.TenantId = CurrentTenant?.Id;
-            return await menuRepository.CreateAsync(menu,true);
+            return await menuRepository.CreateAsync(menu);
         }
     }
 }

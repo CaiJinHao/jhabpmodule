@@ -49,7 +49,7 @@ namespace Jh.Abp.JhMenu
         public virtual async Task InitMenuByRole(Guid roleId)
         {
             var menuIds = (await MenuRepository.GetQueryableAsync()).Select(x => x.Id).ToArray();
-            if (menuIds.Length > 0)
+            if (menuIds.Any())
             {
                 if (!(await MenuRoleMapRepository.GetQueryableAsync()).Any(a => a.RoleId == roleId))
                 {

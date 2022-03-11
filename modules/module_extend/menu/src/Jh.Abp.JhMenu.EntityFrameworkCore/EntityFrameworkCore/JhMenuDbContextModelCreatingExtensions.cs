@@ -47,7 +47,7 @@ public static class JhMenuDbContextModelCreatingExtensions
             b.Property(p => p.MenuDescription).HasMaxLength(500).HasComment("菜单描述");
             b.Property(p => p.MenuPlatform).HasComment("菜单所属平台");
 
-            b.HasIndex(c => c.MenuCode).IsUnique();
+            b.HasIndex(c => new { c.MenuCode, c.TenantId }).IsUnique();
             b.HasIndex(c => c.MenuParentCode);
         });
 

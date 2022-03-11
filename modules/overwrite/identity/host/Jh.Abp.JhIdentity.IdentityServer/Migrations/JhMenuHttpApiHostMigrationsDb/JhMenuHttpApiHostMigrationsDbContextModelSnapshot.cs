@@ -114,10 +114,10 @@ namespace Jh.Abp.JhIdentity.Migrations.JhMenuHttpApiHostMigrationsDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuCode")
-                        .IsUnique();
-
                     b.HasIndex("MenuParentCode");
+
+                    b.HasIndex("MenuCode", "TenantId")
+                        .IsUnique();
 
                     b.ToTable("Menu_Menu", (string)null);
 

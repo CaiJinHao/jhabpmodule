@@ -12,7 +12,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Jh.Abp.JhIdentity.Migrations.JhMenuHttpApiHostMigrationsDb
 {
     [DbContext(typeof(JhMenuHttpApiHostMigrationsDbContext))]
-    [Migration("20220307014807_initial")]
+    [Migration("20220311075924_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -116,10 +116,10 @@ namespace Jh.Abp.JhIdentity.Migrations.JhMenuHttpApiHostMigrationsDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuCode")
-                        .IsUnique();
-
                     b.HasIndex("MenuParentCode");
+
+                    b.HasIndex("MenuCode", "TenantId")
+                        .IsUnique();
 
                     b.ToTable("Menu_Menu", (string)null);
 
