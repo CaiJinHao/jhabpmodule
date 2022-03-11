@@ -17,18 +17,22 @@ namespace Jh.Abp.JhMenu
     public class RoleCreateEventHandler :IDistributedEventHandler<EntityCreatedEto<IdentityRoleEto>>,ITransientDependency
     {
         public ILogger<RoleCreateEventHandler> Logger { get; set; }
+        protected MenuManager MenuManager;
         protected MenuRoleMapManager MenuRoleMapManager;
-        public RoleCreateEventHandler(MenuRoleMapManager menuRoleMapManager)
+        public RoleCreateEventHandler(MenuManager menuManager, MenuRoleMapManager menuRoleMapManager)
         {
             MenuRoleMapManager = menuRoleMapManager;
+            MenuManager = menuManager;
         }
 
+        [UnitOfWork]
         public async Task HandleEventAsync(EntityCreatedEto<IdentityRoleEto> eventData)
         {
             Logger.LogInformation($"RoleCreateEventHandler:{eventData.Entity.Name},{eventData.Entity.Name.Equals("admin")}");
             if (eventData.Entity.Name.Equals("admin"))
             {
-                await MenuRoleMapManager.InitMenuByRole(eventData.Entity.Id);
+                await MenuManager.InitMenuAsync(eventData.Entity.TenantId);
+                await MenuRoleMapManager.InitMenuByRole(eventData.Entity.Id,eventData.Entity.TenantId);
             }
         }
     }

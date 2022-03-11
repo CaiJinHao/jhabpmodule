@@ -37,10 +37,11 @@ namespace Jh.Abp.JhMenu
         {
         }
 
-        public MenuRoleMap(Guid menuid, Guid roleid)
+        public MenuRoleMap(Guid menuid, Guid roleid, Guid? tenantId)
         {
             this.MenuId = menuid;
             this.RoleId = roleid;
+            this.TenantId = tenantId;
         }
 
         private Menu menu;

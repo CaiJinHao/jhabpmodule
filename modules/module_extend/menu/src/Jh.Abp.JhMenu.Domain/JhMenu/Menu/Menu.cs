@@ -65,18 +65,6 @@ namespace Jh.Abp.JhMenu
         [CreateOrUpdateInputDto]
         public int MenuPlatform { get; set; }
 
-        public virtual void AddOrUpdateMenuRoleMap(Guid[] roleids)
-        {
-            if (MenuRoleMap.Count > 0)
-            {
-                MenuRoleMap.Clear();//去除现在有的角色
-            }
-            foreach (var roleid in roleids.ToNullList())
-            {
-                MenuRoleMap.Add(new MenuRoleMap(Id, roleid));
-            }
-        }
-
         private System.Collections.Generic.List<MenuRoleMap> menuRoleMap;
 
         /// <summary>

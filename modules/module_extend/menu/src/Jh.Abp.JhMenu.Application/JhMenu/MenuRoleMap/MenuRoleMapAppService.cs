@@ -37,7 +37,7 @@ namespace Jh.Abp.JhMenu
         public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             await CheckCreatePolicyAsync();
-            await MenuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds);
+            await MenuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds, CurrentTenant.Id);
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()
