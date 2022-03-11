@@ -23,7 +23,7 @@ namespace Jh.Abp.JhIdentity
 		}
 
 		public virtual async Task<List<Volo.Abp.Identity.IdentityRole>> GetRolesAsync(
-			Guid id,
+			Guid userid,
 			bool includeDetails = false,
 			CancellationToken cancellationToken = default)
 		{
@@ -31,7 +31,7 @@ namespace Jh.Abp.JhIdentity
 
 			var query = from userRole in dbContext.Set<IdentityUserRole>()
 						join role in dbContext.Roles.IncludeDetails(includeDetails) on userRole.RoleId equals role.Id
-						where userRole.UserId == id
+						where userRole.UserId == userid
 						select role;
 
 			return await query.ToListAsync(GetCancellationToken(cancellationToken));

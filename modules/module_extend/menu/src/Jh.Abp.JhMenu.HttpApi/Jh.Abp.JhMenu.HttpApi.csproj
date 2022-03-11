@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Jh.Abp.JhMenu.Application\Jh.Abp.JhMenu.Application.csproj" />
     <ProjectReference Include="..\Jh.Abp.JhMenu.EntityFrameworkCore\Jh.Abp.JhMenu.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\..\overwrite\identity\src\Jh.Abp.JhIdentity.EntityFrameworkCore\Jh.Abp.JhIdentity.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

@@ -14,6 +14,7 @@ namespace Jh.Abp.JhMenu
         : CrudApplicationService<MenuRoleMap, MenuRoleMapDto, MenuRoleMapDto, System.Guid, MenuRoleMapRetrieveInputDto, MenuRoleMapCreateInputDto, MenuRoleMapUpdateInputDto, MenuRoleMapDeleteInputDto>,
         IMenuRoleMapAppService
     {
+        protected Jh.Abp.JhIdentity.IIdentityUserRepository identityUserRepository => LazyServiceProvider.LazyGetRequiredService<Jh.Abp.JhIdentity.IIdentityUserRepository>();
         protected MenuRoleMapManager menuRoleMapManager =>LazyServiceProvider.LazyGetRequiredService<MenuRoleMapManager>();
         protected IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
         protected readonly IMenuRoleMapRepository MenuRoleMapRepository;
@@ -39,7 +40,7 @@ namespace Jh.Abp.JhMenu
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()
         {
             await CheckGetListPolicyAsync();
-            var roles = GetRolesAsync();
+            var roles = await GetRolesAsync();
             var auth_menus_id = (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
             //按照前端要求字段返回
@@ -50,9 +51,14 @@ namespace Jh.Abp.JhMenu
             return await UtilTree.GetMenusTreeAsync(auth_menus);
         }
 
-        protected virtual IEnumerable<Guid> GetRolesAsync()
+        protected virtual async Task<IEnumerable<Guid>> GetRolesAsync()
         {
-            return CurrentUser.FindClaims(Common.Extensions.JhJwtClaimTypes.RoleId).Select(a => new Guid(a.Value)).ToList();
+            if (CurrentUser.Id == null)
+            {
+                return default;
+            }
+            var roles = await identityUserRepository.GetRolesAsync((Guid)CurrentUser.Id);
+            return roles.Select(a => a.Id);
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuRoleMapRetrieveInputDto input)
