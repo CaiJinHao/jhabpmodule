@@ -7,27 +7,26 @@ using Volo.Abp.DependencyInjection;
 using System.Linq;
 using Volo.Abp.Application.Dtos;
 using System.Threading;
+using Volo.Abp.EventBus.Distributed;
 
 namespace Jh.Abp.JhMenu
 {
     public class MenuDataSeeder : ITransientDependency, IMenuDataSeeder
     {
-        private readonly IMenuRoleMapRepository menuRoleMapRepository;
-        private readonly IMenuRepository menuRepository ;
+        private readonly IMenuRepository menuRepository;
         private readonly MenuRoleMapManager menuRoleMapManager;
         private readonly MenuManager menuManager;
-        public MenuDataSeeder(MenuManager MenuManager, IMenuRepository MenuRepository, MenuRoleMapManager  MenuRoleMapManager, IMenuRoleMapRepository MenuRoleMapRepository)
+        public MenuDataSeeder(IDistributedEventBus DistributedEventBus,MenuManager MenuManager, IMenuRepository MenuRepository, MenuRoleMapManager MenuRoleMapManager, IMenuRoleMapRepository MenuRoleMapRepository)
         {
             menuManager = MenuManager;
-            menuRepository= MenuRepository;
+            menuRepository = MenuRepository;
             menuRoleMapManager = MenuRoleMapManager;
-            menuRoleMapRepository = MenuRoleMapRepository;
         }
 
         public virtual async Task SeedAsync(Guid roleid, MenuRegisterType menuRegisterType, Guid? TenantId = null)
         {
             await CreateMenus(menuRegisterType, TenantId);
-            await CreateByRoleAsync(roleid);
+            await menuRoleMapManager.InitMenuByRole(roleid);
         }
 
         protected virtual async Task CreateMenus(MenuRegisterType menuRegisterType, Guid? TenantId = null)
@@ -347,18 +346,6 @@ namespace Jh.Abp.JhMenu
                         MenuParentCode = "A06",
                         MenuUrl = "/main/view/webapp/WebDictionaryConfigurationCategory/index.html",
                     });
-                }
-            }
-        }
-
-        protected virtual async Task CreateByRoleAsync(Guid roleid)
-        {
-            var menuIds = (await menuRepository.GetQueryableAsync()).Select(x => x.Id).ToArray();
-            if (menuIds.Length > 0)
-            {
-                if (!(await menuRoleMapRepository.GetQueryableAsync()).Any())
-                {
-                    await menuRoleMapManager.CreateAsync(new Guid[] { roleid }, menuIds);
                 }
             }
         }
