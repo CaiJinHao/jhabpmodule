@@ -292,18 +292,9 @@ public class JhIdentityIdentityServerModule : AbpModule
         {
             var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
-            var dataSeedContext = new DataSeedContext();
-            dataSeedContext["AdminEmail"] = "531003539@qq.com";
-            dataSeedContext["AdminPassword"] = "KimHo@123";
-            var roleService = scope.ServiceProvider.GetRequiredService<IIdentityRoleRepository>();
-            var roles = await roleService.GetListAsync();
-            if (roles.Count > 0)
-            {
-                dataSeedContext["RoleId"] = roles.FirstOrDefault()?.Id;//IdentityServerHost创建的角色ID
-
-                //菜单依赖
-                //dataSeedContext["MenuRegisterType"] = MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp;
-            }
+            var dataSeedContext = new DataSeedContext()
+                .WithProperty("AdminEmail", "531003539@qq.com")
+                .WithProperty("AdminPassword", "KimHo@123");
             await data.SeedAsync(dataSeedContext);
         }
     }
