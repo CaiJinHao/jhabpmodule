@@ -13,20 +13,24 @@ namespace Jh.Abp.JhMenu
 {
     public class MenuDataSeeder : ITransientDependency, IMenuDataSeeder
     {
-        private readonly IMenuRepository menuRepository;
-        private readonly MenuRoleMapManager menuRoleMapManager;
-        private readonly MenuManager menuManager;
+        protected IDistributedEventBus distributedEventBus { get; }
+        protected IMenuRepository menuRepository { get; }
+        protected MenuManager menuManager { get; }
         public MenuDataSeeder(IDistributedEventBus DistributedEventBus,MenuManager MenuManager, IMenuRepository MenuRepository, MenuRoleMapManager MenuRoleMapManager, IMenuRoleMapRepository MenuRoleMapRepository)
         {
             menuManager = MenuManager;
             menuRepository = MenuRepository;
-            menuRoleMapManager = MenuRoleMapManager;
+            distributedEventBus=DistributedEventBus;
         }
 
         public virtual async Task SeedAsync(Guid roleid, MenuRegisterType menuRegisterType, Guid? TenantId = null)
         {
             await CreateMenus(menuRegisterType, TenantId);
-            await menuRoleMapManager.InitMenuByRole(roleid);
+            await distributedEventBus.PublishAsync(new RoleMenuInitEto()
+            {
+                RoleIds = new Guid[] { roleid }
+            });
+            //await menuRoleMapManager.InitMenuByRole(new Guid[] { roleid });
         }
 
         protected virtual async Task CreateMenus(MenuRegisterType menuRegisterType, Guid? TenantId = null)

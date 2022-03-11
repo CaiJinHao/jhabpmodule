@@ -8,8 +8,13 @@ namespace Jh.Abp.JhMenu
 {
     public class MenuRoleMapManager : DomainService
     {
-        protected IMenuRoleMapRepository MenuRoleMapRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRoleMapRepository>();
-        protected IMenuRepository menuRepository=>LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
+        protected IMenuRoleMapRepository MenuRoleMapRepository { get; }
+        protected IMenuRepository MenuRepository { get; }
+        public MenuRoleMapManager(IMenuRoleMapRepository menuRoleMapRepository, IMenuRepository menuRepository)
+        {
+            MenuRoleMapRepository = menuRoleMapRepository;
+            MenuRepository = menuRepository;
+        }
 
         protected virtual IEnumerable<MenuRoleMap> CreateList(Guid[] RoleIds, Guid[] MenuIds)
         {
@@ -30,14 +35,14 @@ namespace Jh.Abp.JhMenu
             await MenuRoleMapRepository.CreateAsync(entitys.ToArray());
         }
 
-        public virtual async Task InitMenuByRole(Guid roleid)
+        public virtual async Task InitMenuByRole(Guid[] roleids)
         {
-            var menuIds = (await menuRepository.GetQueryableAsync()).Select(x => x.Id).ToArray();
+            var menuIds = (await MenuRepository.GetQueryableAsync()).Select(x => x.Id).ToArray();
             if (menuIds.Length > 0)
             {
                 if (!(await MenuRoleMapRepository.GetQueryableAsync()).Any())
                 {
-                    await CreateAsync(new Guid[] { roleid }, menuIds);
+                    await CreateAsync(roleids, menuIds);
                 }
             }
         }

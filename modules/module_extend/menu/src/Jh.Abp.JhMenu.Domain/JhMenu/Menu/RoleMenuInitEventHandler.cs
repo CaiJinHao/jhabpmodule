@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus.Distributed;
+using Volo.Abp.Uow;
 
 namespace Jh.Abp.JhMenu
 {
@@ -15,9 +13,10 @@ namespace Jh.Abp.JhMenu
             MenuRoleMapManager = menuRoleMapManager;
         }
 
+        [UnitOfWork]
         public virtual async Task HandleEventAsync(RoleMenuInitEto eventData)
         {
-            await MenuRoleMapManager.InitMenuByRole(eventData.RoleId);
+            await MenuRoleMapManager.InitMenuByRole(eventData.RoleIds);
         }
     }
 }

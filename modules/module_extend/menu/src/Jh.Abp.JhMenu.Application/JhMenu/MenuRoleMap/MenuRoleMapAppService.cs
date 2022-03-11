@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.EventBus.Distributed;
+using Volo.Abp.EventBus.Local;
 
 namespace Jh.Abp.JhMenu
 {
@@ -14,8 +16,8 @@ namespace Jh.Abp.JhMenu
         : CrudApplicationService<MenuRoleMap, MenuRoleMapDto, MenuRoleMapDto, System.Guid, MenuRoleMapRetrieveInputDto, MenuRoleMapCreateInputDto, MenuRoleMapUpdateInputDto, MenuRoleMapDeleteInputDto>,
         IMenuRoleMapAppService
     {
+        protected IDistributedEventBus distributedEventBus =>LazyServiceProvider.LazyGetRequiredService<IDistributedEventBus>();
         protected Jh.Abp.JhIdentity.IIdentityUserRepository identityUserRepository => LazyServiceProvider.LazyGetRequiredService<Jh.Abp.JhIdentity.IIdentityUserRepository>();
-        protected MenuRoleMapManager menuRoleMapManager =>LazyServiceProvider.LazyGetRequiredService<MenuRoleMapManager>();
         protected IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
         protected readonly IMenuRoleMapRepository MenuRoleMapRepository;
         protected readonly IMenuRoleMapDapperRepository MenuRoleMapDapperRepository;
@@ -34,7 +36,9 @@ namespace Jh.Abp.JhMenu
         public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             await CheckCreatePolicyAsync();
-            await menuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds);
+            await distributedEventBus.PublishAsync(new RoleMenuInitEto() {
+                RoleIds = inputDto.RoleIds
+            });
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()
