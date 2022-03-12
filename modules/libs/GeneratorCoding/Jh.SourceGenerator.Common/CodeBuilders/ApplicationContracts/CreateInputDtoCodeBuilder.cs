@@ -37,7 +37,6 @@ using Volo.Abp.ObjectExtending;");
                     builder.AppendLine($"IHasConcurrencyStamp,");
                 }
                 builder.AppendLine($"IMethodDto<{table.Name}>");
-                //builder.AppendLine($",IMultiTenant");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)
@@ -67,7 +66,6 @@ using Volo.Abp.ObjectExtending;");
                     builder.AppendLine("\t\t/// </summary>");
                     builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
 
-                    //builder.AppendLine($"\t\t public virtual Guid? TenantId " + "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
             }

@@ -13,7 +13,6 @@ namespace Jh.Abp.JhMenu
 ExtensibleObject,
 IHasConcurrencyStamp,
 IMethodDto<Menu>
-, IMultiTenant
 	{
 		/// <summary>
 		/// 菜单编号
@@ -60,7 +59,6 @@ IMethodDto<Menu>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<Menu> MethodInput { get; set; }
-		public virtual Guid? TenantId { get; set; }
 
 		/// <summary>
 		/// 角色ID列表

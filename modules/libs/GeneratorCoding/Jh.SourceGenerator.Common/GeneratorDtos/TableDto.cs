@@ -195,8 +195,8 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     }
                     break;
             }
-            ignoreObjectPropertiesDefault += ".Ignore(a => a.Id)";
-            ignoreObjectPropertiesCreateInputDto += ".Ignore(a => a.Id)";
+            ignoreObjectPropertiesDefault += ".Ignore(a => a.Id).Ignore(a => a.TenantId)";
+            ignoreObjectPropertiesCreateInputDto += ".Ignore(a => a.Id).Ignore(a => a.TenantId)";
 
 
             IgnoreObjectProperties = ignoreObjectPropertiesDefault;

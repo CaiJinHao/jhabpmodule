@@ -1,7 +1,6 @@
 using Jh.Abp.Application.Contracts;
 using System;
 using Volo.Abp.Domain.Entities;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.JhMenu
 {
@@ -12,7 +11,6 @@ namespace Jh.Abp.JhMenu
 ExtensibleObject,
 IHasConcurrencyStamp,
 IMethodDto<Menu>
-, IMultiTenant
 	{
 		/// <summary>
 		/// 菜单编号
@@ -58,6 +56,5 @@ IMethodDto<Menu>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<Menu> MethodInput { get; set; }
-		public virtual Guid? TenantId { get; set; }
 	}
 }

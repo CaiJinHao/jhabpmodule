@@ -16,9 +16,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         {
             var builder = new StringBuilder();
             builder.AppendLine(@"using Jh.Abp.Application.Contracts;
-using System;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.MultiTenancy;");
+using Volo.Abp.Application.Dtos;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
@@ -30,7 +28,6 @@ using Volo.Abp.MultiTenancy;");
                 {
                     builder.AppendLine(", IRetrieveDelete");
                 }
-                builder.AppendLine($",IMultiTenant");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsRetrieve)
@@ -56,7 +53,6 @@ using Volo.Abp.MultiTenancy;");
                     builder.AppendLine("\t\t[Newtonsoft.Json.JsonIgnore]");
                     builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
 
-                    builder.AppendLine($"\t\t public virtual Guid? TenantId "+ "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
             }

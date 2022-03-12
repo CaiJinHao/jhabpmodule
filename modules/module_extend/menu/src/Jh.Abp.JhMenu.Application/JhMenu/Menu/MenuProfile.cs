@@ -6,11 +6,13 @@ namespace Jh.Abp.JhMenu
 	{
 		public MenuProfile()
 		{
-		CreateMap<Menu,MenuDto>();
+		CreateMap<Menu,MenuDto>().MapExtraProperties();
 		CreateMap<MenuCreateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id)
+				.Ignore(a=>a.TenantId)
 				.Ignore(a=>a.MenuRoleMap)
 ;
 		CreateMap<MenuUpdateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id)
+				.Ignore(a => a.TenantId)
 				.Ignore(a=>a.MenuRoleMap)
 ;
 		}

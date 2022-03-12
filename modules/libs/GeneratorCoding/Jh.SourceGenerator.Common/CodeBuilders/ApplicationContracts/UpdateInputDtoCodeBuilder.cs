@@ -18,7 +18,6 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             builder.AppendLine(@"using Jh.Abp.Application.Contracts;
 using System;
 using Volo.Abp.Domain.Entities;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
@@ -36,7 +35,6 @@ using Volo.Abp.ObjectExtending;");
                     builder.AppendLine($"IHasConcurrencyStamp,");
                 }
                 builder.AppendLine($"IMethodDto<{table.Name}>");
-                builder.AppendLine($",IMultiTenant");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)
@@ -69,7 +67,6 @@ using Volo.Abp.ObjectExtending;");
                     builder.AppendLine("\t\t/// </summary>");
                     builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
 
-                    builder.AppendLine($"\t\t public virtual Guid? TenantId " + "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
             }

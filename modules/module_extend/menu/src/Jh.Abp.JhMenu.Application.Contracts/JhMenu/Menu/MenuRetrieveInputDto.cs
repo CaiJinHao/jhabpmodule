@@ -1,7 +1,5 @@
 using Jh.Abp.Application.Contracts;
-using System;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.MultiTenancy;
 namespace Jh.Abp.JhMenu
 {
     /// <summary>
@@ -9,7 +7,6 @@ namespace Jh.Abp.JhMenu
     /// </summary>
     public class MenuRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<Menu>
 , IRetrieveDelete
-,IMultiTenant
 	{
 		/// <summary>
 		/// 是否删除
@@ -20,7 +17,6 @@ namespace Jh.Abp.JhMenu
 		/// </summary>
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<Menu> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 
 		/// <summary>
 		/// 菜单编号

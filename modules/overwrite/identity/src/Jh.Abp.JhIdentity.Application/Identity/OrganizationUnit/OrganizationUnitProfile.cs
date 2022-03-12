@@ -9,7 +9,7 @@ namespace Jh.Abp.JhIdentity
 	{
 		public OrganizationUnitProfile()
 		{
-		CreateMap<OrganizationUnit,OrganizationUnitDto>();
+		CreateMap<OrganizationUnit,OrganizationUnitDto>().MapExtraProperties();
 		CreateMap<OrganizationUnitCreateInputDto, OrganizationUnit>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id)
 				.Ignore(a=>a.Code)
 				.Ignore(a=>a.Roles)
