@@ -8,7 +8,6 @@ namespace Jh.Abp.JhAuditLogging.Permissions
         public static class AuditLoggings
         {
             public const string Default = GroupName + ".AuditLoggings";
-            public const string Export = Default + ".Export";
             public const string Detail = Default + ".Detail";
             public const string Delete = Default + ".Delete";
             public const string BatchDelete = Default + ".BatchDelete";

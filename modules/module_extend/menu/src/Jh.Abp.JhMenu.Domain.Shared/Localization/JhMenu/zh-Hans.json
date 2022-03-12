@@ -2,7 +2,7 @@
   "culture": "zh-Hans",
   "texts": {
     "Permission:JhAbpJhMenu":"菜单模块",
-    "Permission:MenuRoleMap": "角色菜单管理",
-    "Permission:Menu": "菜单管理"
+    "Permission:MenuRoleMaps": "菜单权限管理",
+    "Permission:Menus": "菜单管理"
   }
 }

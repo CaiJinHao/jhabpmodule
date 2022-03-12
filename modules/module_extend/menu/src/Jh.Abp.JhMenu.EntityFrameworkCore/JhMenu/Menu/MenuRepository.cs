@@ -24,7 +24,11 @@ namespace Jh.Abp.JhMenu
 		{
 			return (await GetDbSetAsync())
 				.Where(mn => mn.MenuCode.StartsWith(code) && mn.MenuCode != code);
-
         }
+
+		public async Task<string> GetMaxMenuCodeAsync(string parentCode)
+		{
+			return (await GetDbSetAsync()).Where(a => a.MenuParentCode == parentCode).Max(a=>a.MenuCode);
+		}
 	}
 }

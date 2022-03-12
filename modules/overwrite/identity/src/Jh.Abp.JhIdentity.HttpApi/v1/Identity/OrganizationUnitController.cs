@@ -54,7 +54,7 @@ namespace Jh.Abp.JhIdentity.v1
 			return await OrganizationUnitAppService.UpdateAsync(id, input);
 		}
 
-		[Authorize(JhIdentityPermissions.OrganizationUnits.PortionUpdate)]
+		[Authorize(JhIdentityPermissions.OrganizationUnits.Update)]
 		[HttpPatch("{id}")]
 		[HttpPut("Patch/{id}")]
 		public virtual async Task UpdatePortionAsync(System.Guid id, OrganizationUnitUpdateInputDto inputDto)

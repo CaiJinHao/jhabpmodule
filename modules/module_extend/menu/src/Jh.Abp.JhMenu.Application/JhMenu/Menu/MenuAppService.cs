@@ -50,5 +50,10 @@ namespace Jh.Abp.JhMenu
                 entity.DeletionTime = Clock.Now;
             }
         }
+
+        public virtual async Task<string> GetMaxMenuCodeAsync(string parentCode)
+        {
+            return await MenuRepository.GetMaxMenuCodeAsync(parentCode);
+        }
     }
 }

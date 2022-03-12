@@ -91,7 +91,7 @@ using Volo.Abp.Data;");
                     builder.AppendLine();
 
 
-                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.PortionUpdate)]");
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Update)]");
                     builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
                     builder.AppendLine("\t\t[HttpPatch(\"Patch/{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
@@ -147,10 +147,10 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Detail)]");
                     builder.AppendLine("\t\t[HttpGet(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}> GetAsync({table.KeyType} id)");
+                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> GetAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntityAsync(id);");
+                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetAsync(id);");
                         builder.AppendLine("\t\t}");
                     }
                     builder.AppendLine();

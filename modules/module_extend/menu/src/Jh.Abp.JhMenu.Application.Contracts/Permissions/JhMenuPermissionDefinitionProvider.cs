@@ -11,12 +11,7 @@ namespace Jh.Abp.JhMenu
 	{
 		var JhMenuGroup = context.AddGroup(JhMenuPermissions.GroupName, L("Permission:JhMenu"));
 		  var MenuRoleMapsPermission = JhMenuGroup.AddPermission(JhMenuPermissions.MenuRoleMaps.Default, L("Permission:MenuRoleMaps"));
-		 MenuRoleMapsPermission.AddChild(JhMenuPermissions.MenuRoleMaps.Detail, L("Permission:Detail"));
 		 MenuRoleMapsPermission.AddChild(JhMenuPermissions.MenuRoleMaps.Create, L("Permission:Create"));
-		 MenuRoleMapsPermission.AddChild(JhMenuPermissions.MenuRoleMaps.Update, L("Permission:Edit"));
-		 MenuRoleMapsPermission.AddChild(JhMenuPermissions.MenuRoleMaps.Delete, L("Permission:Delete"));
-		 MenuRoleMapsPermission.AddChild(JhMenuPermissions.MenuRoleMaps.BatchDelete, L("Permission:BatchDelete"));
-		 MenuRoleMapsPermission.AddChild(JhMenuPermissions.MenuRoleMaps.Recover, L("Permission:Recover"));
 		 MenuRoleMapsPermission.AddChild(JhMenuPermissions.MenuRoleMaps.ManagePermissions, L("Permission:ManagePermissions"));
 		  var MenusPermission = JhMenuGroup.AddPermission(JhMenuPermissions.Menus.Default, L("Permission:Menus"));
 		 MenusPermission.AddChild(JhMenuPermissions.Menus.Detail, L("Permission:Detail"));

@@ -91,5 +91,12 @@ namespace Jh.Abp.JhMenu.v1
 		{
 			return await MenuAppService.GetAsync(id);
 		}
+
+		[Authorize(JhMenuPermissions.Menus.Create)]
+		[HttpGet("MaxCode/{parentCode}")]
+		public async Task<string> GetMaxMenuCodeAsync(string parentCode)
+        {
+			return await MenuAppService.GetMaxMenuCodeAsync(parentCode);
+        }
     }
 }

@@ -237,13 +237,26 @@
                             });
                         }
                     });
-                }
+                },
+                getMaxCode:function(parentCode){
+                    ajaxmod.requestAuthorize({
+                            url: '/menu/MaxCode/' + parentCode,
+                            type: 'Get',
+                            success: function (response) {
+                                var startLen = response.length - 2;
+                                var newCodeNum = parseInt(response.substring(startLen, 2)) + 1;
+                                newCodeNum = newCodeNum > 9 ? newCodeNum : '0' + newCodeNum;
+                                vm.menu.menuCode = response.substring(0, startLen) + newCodeNum;
+                            }
+                        });
+                },
             };
             menuObj.initPage();
 
             form.on('select(menuParentfilter)', function (data) {
-                vm.menu.menuParentCode = data.value;
-                vm.menu.menuCode = data.value+'01';
+                menuObj.getMaxCode(data.value);
+                // vm.menu.menuParentCode = data.value;
+                // vm.menu.menuCode = data.value+'01';
             });
 
             $('#cancel', $(_context)).on('click', function () {

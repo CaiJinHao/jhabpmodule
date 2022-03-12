@@ -10,5 +10,6 @@ namespace Jh.Abp.JhMenu
 	{
 		//用于添加与RemoteService公共的方法
 		Task RecoverAsync(System.Guid id);
+		Task<string> GetMaxMenuCodeAsync(string parentCode);
 	}
 }

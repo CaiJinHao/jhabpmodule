@@ -40,8 +40,9 @@ namespace Jh.Abp.JhIdentity
             BatchDeletePolicyName = JhIdentityPermissions.OrganizationUnits.BatchDelete;
         }
 
-        public override Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input, string methodStringType = "Contains", bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input, string methodStringType = "Contains", bool includeDetails = false, CancellationToken cancellationToken = default)
         {
+            await CheckGetListPolicyAsync();
             IsTracking = true;
             if (!string.IsNullOrEmpty(input.Code))
             {
@@ -50,11 +51,12 @@ namespace Jh.Abp.JhIdentity
                     QueryAction = entity => entity.Where(a => a.Code.StartsWith(input.Code))
                 };
             }
-            return base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
+            return await base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
         }
 
         public override async Task CreateAsync(OrganizationUnitCreateInputDto input, bool autoSave = false, CancellationToken cancellationToken = default)
 		{
+            await CheckCreatePolicyAsync();
 			var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId);
 			organizationUnit.ConcurrencyStamp = input.ConcurrencyStamp;
             input.RoleIds = await GetAllRoleIdAsync();//添加所有的角色到该组织
@@ -77,11 +79,13 @@ namespace Jh.Abp.JhIdentity
 
         public override async Task DeleteAsync(Guid id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
+            await CheckDeletePolicyAsync();
             await organizationUnitManager.DeleteAsync(id);//自动禁用下级
         }
 
         public override async Task DeleteAsync(Guid[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
+            await CheckDeletePolicyAsync();
             foreach (var item in keys)
             {
 				await organizationUnitManager.DeleteAsync(item);//自动禁用下级
@@ -90,7 +94,8 @@ namespace Jh.Abp.JhIdentity
 
         public override async Task DeleteAsync(OrganizationUnitDeleteInputDto deleteInputDto, string methodStringType = "Equals", bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
-			var query = await CreateFilteredQueryAsync(deleteInputDto, methodStringType);
+            await CheckDeletePolicyAsync();
+            var query = await CreateFilteredQueryAsync(deleteInputDto, methodStringType);
             foreach (var item in query.ToArray())
             {
 				await organizationUnitManager.DeleteAsync(item.Id);//自动禁用下级
@@ -99,6 +104,7 @@ namespace Jh.Abp.JhIdentity
 
         public override async Task<OrganizationUnitDto> UpdateAsync(Guid id, OrganizationUnitUpdateInputDto input)
         {
+            await CheckUpdatePolicyAsync();
             var entity = await crudRepository.FindAsync(id);
 			entity.DisplayName = input.DisplayName;
             if (input.RoleIds != null)
@@ -166,6 +172,7 @@ namespace Jh.Abp.JhIdentity
 
 		public virtual async Task<List<TreeDto>> GetOrganizationTreeAsync()
 		{
+            await CheckGetListPolicyAsync();
             var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
                new TreeDto()
                {
@@ -182,6 +189,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<List<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId)
         {
+            await CheckGetListPolicyAsync();
             var org = await GetEntityByIdAsync(organizationUnitId);
             var entities = await organizationUnitsRepository.GetRolesAsync(org);
 
@@ -196,6 +204,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<List<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId)
         {
+            await CheckGetListPolicyAsync();
             var org = await GetEntityByIdAsync(organizationUnitId);
             var entities = await organizationUnitsRepository.GetMembersAsync(org);
             var dtos = new List<IdentityUserDto>();
@@ -213,6 +222,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task CreateByRoleAsync(Guid roleId)
         {
+            await CheckCreatePolicyAsync();
             var datas = await OrganizationUnitRepository.GetListAsync(true);
             foreach (var item in datas)
             {
