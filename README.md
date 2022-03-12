@@ -42,7 +42,7 @@ layui-admin 修改
 
 ## 设计
 
-借鉴[AbpVnext](https://docs.abp.io/)的设计及开发方式进行。
+基于[AbpVnext](https://docs.abp.io/)的设计及开发方式进行。
 
 ## Quick Start
 
