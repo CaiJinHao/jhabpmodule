@@ -48,15 +48,9 @@ namespace Jh.Abp.JhMenu
             }
         }
 
-        [UnitOfWork]
-        public virtual async Task InitMenuByRole(Guid roleId,Guid? TenantId)
+        public virtual async Task InitMenuByRoleAsync(Guid roleId, Guid[] menuIds, Guid? TenantId)
         {
-            var menuQueryable = await MenuRepository.GetQueryableAsync();
-            if (TenantId.HasValue)
-            {
-                menuQueryable = menuQueryable.Where(a => a.TenantId == TenantId);
-            }
-            var menuIds = menuQueryable.Select(x => x.Id).ToArray();
+            Volo.Abp.Check.NotNull(roleId, nameof(roleId));
             Logger.LogInformation($"菜单列表数量:{menuIds.Length}");
             if (menuIds.Any())
             {

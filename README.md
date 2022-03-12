@@ -48,10 +48,7 @@ layui-admin 修改
 
 请参照Demo
 
-## Support the ABP Framework
+## 支持
 
 如果你觉得这个仓库还不错，请给一个星 :star:
 
-## 规范
-
-将所有自定义ApplicationService层 的方法添加权限  

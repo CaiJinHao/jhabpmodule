@@ -8,6 +8,7 @@ using Volo.Abp.Domain.Entities.Events.Distributed;
 using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.Identity;
 using Volo.Abp.Uow;
+using System.Linq;
 
 namespace Jh.Abp.JhMenu
 {
@@ -16,6 +17,7 @@ namespace Jh.Abp.JhMenu
     /// </summary>
     public class RoleCreateEventHandler :IDistributedEventHandler<EntityCreatedEto<IdentityRoleEto>>,ITransientDependency
     {
+        public IUnitOfWorkManager UnitOfWorkManager { get; set; }
         public ILogger<RoleCreateEventHandler> Logger { get; set; }
         protected MenuManager MenuManager;
         protected MenuRoleMapManager MenuRoleMapManager;
@@ -26,13 +28,13 @@ namespace Jh.Abp.JhMenu
         }
 
         [UnitOfWork]
-        public async Task HandleEventAsync(EntityCreatedEto<IdentityRoleEto> eventData)
+        public virtual async Task HandleEventAsync(EntityCreatedEto<IdentityRoleEto> eventData)
         {
-            Logger.LogInformation($"RoleCreateEventHandler:{eventData.Entity.Name},{eventData.Entity.Name.Equals("admin")}");
+            Logger.LogInformation($"RoleCreateEventHandler:{eventData.Entity.Name},{eventData.Entity.Name.Equals("admin")},{eventData.Entity.TenantId}");
             if (eventData.Entity.Name.Equals("admin"))
             {
-                await MenuManager.InitMenuAsync(eventData.Entity.TenantId);
-                await MenuRoleMapManager.InitMenuByRole(eventData.Entity.Id,eventData.Entity.TenantId);
+                var menus = await MenuManager.InitMenuAsync(eventData.Entity.TenantId);
+                await MenuRoleMapManager.InitMenuByRoleAsync(eventData.Entity.Id, menus.Select(a => a.Id).ToArray(), eventData.Entity.TenantId);
             }
         }
     }

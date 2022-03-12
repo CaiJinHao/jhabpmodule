@@ -98,7 +98,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(JhAbpIdentityServerModule),
     typeof(JhIdentityHttpApiModule),
     typeof(JhMenuHttpApiModule),
-    typeof(WorkflowHttpApiModule),
+    //typeof(WorkflowHttpApiModule),
     typeof(AbpQuickComponentsModule)
     )]
 public class JhIdentityIdentityServerModule : AbpModule

@@ -20,6 +20,11 @@ namespace Jh.Abp.JhMenu
     [Description("菜单")]
     public class Menu : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {
+        public Menu() { }
+        public Menu(Guid? tenantId)
+        { 
+            TenantId= tenantId; 
+        }
         public virtual Guid? TenantId { get; set; }
 
         [Required]
