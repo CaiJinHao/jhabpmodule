@@ -14,8 +14,6 @@ namespace Jh.Abp.JhPermission
     {
         Task UpdateAsync(string providerName, string providerKey, string[] PermissionNames);
 
-        Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync();
-
         Task<dynamic> GetMenuSelectPermissionGrantsAsync();
 
         Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedRetrieveInputDto input);

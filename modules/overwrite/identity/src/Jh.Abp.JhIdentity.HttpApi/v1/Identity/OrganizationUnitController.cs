@@ -16,7 +16,7 @@ namespace Jh.Abp.JhIdentity.v1
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
 	[Area(JhIdentityRemoteServiceConsts.ModuleName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class OrganizationUnitController : JhIdentityController
+	public class OrganizationUnitController : JhIdentityController, IOrganizationUnitRemoteService
 	{
 		private readonly IOrganizationUnitAppService OrganizationUnitAppService;
 		public IDataFilter<ISoftDelete> dataFilter { get; set; }

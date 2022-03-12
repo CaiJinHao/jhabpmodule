@@ -23,6 +23,7 @@ namespace Jh.Abp.JhPermission.JhPermission
 
         public virtual async Task<IEnumerable<TreeDto>> GetPermissionTreesAsync(string providerName, string providerKey)
         {
+            await CheckProviderPolicy(providerName);
             var datas = await GetPermissionGrantsAsync();
             var results = new List<TreeDto>();
             foreach (var permission in datas)
@@ -76,7 +77,7 @@ namespace Jh.Abp.JhPermission.JhPermission
             return results;
         }
 
-        public virtual Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync()
+        protected virtual Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync()
         {
             var multiTenancySide = CurrentTenant.GetMultiTenancySide();
             var datas = PermissionDefinitionManager.GetGroups()
@@ -89,20 +90,20 @@ namespace Jh.Abp.JhPermission.JhPermission
 
         public virtual async Task UpdateAsync(string providerName, string providerKey, string[] permissionNames)
         {
+            await CheckProviderPolicy(providerName);
+
             var multiTenancySide = CurrentTenant.GetMultiTenancySide();
             var permissions = PermissionDefinitionManager.GetPermissions()
                 .Where(a => (a.Providers.Contains(RolePermissionValueProvider.ProviderName) || a.Providers.Count == 0)
                 && a.IsEnabled
                 && a.MultiTenancySide.HasFlag(multiTenancySide));
-            var updatePermissionDtos = permissions.Select(p => new UpdatePermissionDto
+
+            foreach (var item in permissions)
             {
-                Name = p.Name,
-                IsGranted = permissionNames.ToNullList().Contains(p.Name)
-            }).ToArray();
-            //await permissionAppService.UpdateAsync(providerName, providerKey, new UpdatePermissionsDto() { Permissions = updatePermissionDtos });
-            foreach (var permissionDto in updatePermissionDtos)
-            {
-                await PermissionManager.SetAsync(permissionDto.Name, providerName, providerKey, permissionDto.IsGranted);
+                if (await SimpleStateCheckerManager.IsEnabledAsync(item))
+                {
+                    await PermissionManager.SetAsync(item.Name, providerName, providerKey, permissionNames.ToNullList().Contains(item.Name));
+                }
             }
         }
 
@@ -120,6 +121,7 @@ namespace Jh.Abp.JhPermission.JhPermission
 
         public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedRetrieveInputDto input)
         {
+            await CheckProviderPolicy(input.ProviderName);
             var result = new List<PermissionGrantedDto>();
             foreach (var permissionName in input.PermissionNames)
             {
