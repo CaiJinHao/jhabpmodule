@@ -45,6 +45,80 @@ using Volo.Abp.Data;");
                     }
                     builder.AppendLine();
 
+
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Create)]");
+                    builder.AppendLine("\t\t[HttpPost]");
+                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto input)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
+                        builder.AppendLine("\t\t}");
+                    }
+                    builder.AppendLine();
+
+
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Delete)]");
+                    builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
+                        builder.AppendLine("\t\t}");
+                    }
+                    builder.AppendLine();
+
+
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.BatchDelete)]");
+                    builder.AppendLine("\t\t[Route(\"keys\")]");
+                    builder.AppendLine("\t\t[HttpDelete]");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(keys);");
+                        builder.AppendLine("\t\t}");
+                    }
+                    builder.AppendLine();
+
+
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Update)]");
+                    builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
+                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.UpdateAsync(id, input);");
+                        builder.AppendLine("\t\t}");
+                    }
+                    builder.AppendLine();
+
+
+                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.PortionUpdate)]");
+                    builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
+                    builder.AppendLine("\t\t[HttpPatch(\"Patch/{id}\")]");
+                    builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
+                        builder.AppendLine("\t\t}");
+                    }
+                    builder.AppendLine();
+
+
+                    if (table.IsDelete)
+                    {
+                        builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Recover)]");
+                        builder.AppendLine("\t\t[HttpPatch]");
+                        builder.AppendLine("\t\t[HttpPut]");
+                        builder.AppendLine("\t\t[Route(\"{id}/Recover\")]");
+                        builder.AppendLine($"\t\t public async Task RecoverAsync({table.KeyType} id)");
+                        {
+                            builder.AppendLine("\t\t{");
+                            builder.AppendLine($"\t\t\t await {table.Name}AppService.RecoverAsync(id);");
+                            builder.AppendLine("\t\t}");
+                        }
+                        builder.AppendLine();
+                    }
+
+
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Default)]");
                     builder.AppendLine("\t\t[HttpGet]");
                     builder.AppendLine($"\t\tpublic virtual async Task<PagedResultDto<{table.Name}Dto>> GetListAsync([FromQuery] {table.Name}RetrieveInputDto input)");
@@ -80,78 +154,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
                     builder.AppendLine();
-
-
-                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Create)]");
-                    builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto input)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
-                        builder.AppendLine("\t\t}");
-                    }
-                    builder.AppendLine();
-
-
-                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Update)]");
-                    builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.UpdateAsync(id, input);");
-                        builder.AppendLine("\t\t}");
-                    }
-                    builder.AppendLine();
-
-
-                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.PortionUpdate)]");
-                    builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
-                    builder.AppendLine("\t\t[HttpPatch(\"Patch/{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
-                        builder.AppendLine("\t\t}");
-                    }
-                    builder.AppendLine();
-
-
-                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Delete)]");
-                    builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
-                        builder.AppendLine("\t\t}");
-                    }
-                    builder.AppendLine();
-
-
-                    builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.BatchDelete)]");
-                    builder.AppendLine("\t\t[Route(\"keys\")]");
-                    builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(keys);");
-                        builder.AppendLine("\t\t}");
-                    }
-                    builder.AppendLine();
-
-                    if (table.IsDelete)
-                    {
-                        builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Recover)]");
-                        builder.AppendLine("\t\t[HttpPatch]");
-                        builder.AppendLine("\t\t[HttpPut]");
-                        builder.AppendLine("\t\t[Route(\"{id}/Recover\")]");
-                        builder.AppendLine($"\t\t public async Task RecoverAsync({table.KeyType} id)");
-                        {
-                            builder.AppendLine("\t\t{");
-                            builder.AppendLine($"\t\t\t await {table.Name}AppService.RecoverAsync(id);");
-                            builder.AppendLine("\t\t}");
-                        }
-                        builder.AppendLine();
-                    }
+                    
 
                     builder.AppendLine("/*");
                     {

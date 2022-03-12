@@ -13,7 +13,6 @@ namespace Jh.Abp.JhIdentity
     public class OrganizationUnitCreateInputDto:
 ExtensibleObject, IHasConcurrencyStamp,
 IMethodDto<OrganizationUnit>
-,IMultiTenant
 	{
 		public new ExtraPropertyDictionary ExtraProperties { get; set; }
 
@@ -29,7 +28,6 @@ IMethodDto<OrganizationUnit>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<OrganizationUnit> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 		/// <summary>
 		/// 并发检测字段 必须和数据库中的值一样才会允许更新
 		/// </summary>

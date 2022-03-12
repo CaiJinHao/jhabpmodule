@@ -15,7 +15,6 @@ namespace Jh.Abp.JhIdentity
 IdentityUserCreateOrUpdateDto,
 IHasConcurrencyStamp,
 IMethodDto<IdentityUser>
-,IMultiTenant
 	{
 		[DisableAuditing]
 		[DynamicStringLength(typeof(IdentityUserConsts), nameof(IdentityUserConsts.MaxPasswordLength))]
@@ -32,7 +31,6 @@ IMethodDto<IdentityUser>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<IdentityUser> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 	}
 
 

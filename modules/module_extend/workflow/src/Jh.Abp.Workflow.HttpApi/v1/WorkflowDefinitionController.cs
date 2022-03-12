@@ -40,9 +40,9 @@ namespace Jh.Abp.Workflow.v1
 		}
 		[Authorize(JhAbpWorkflowPermissions.WorkflowDefinitions.Detail)]
 		[HttpGet("{id}")]
-		public virtual async Task<WorkflowDefinition> GetAsync(System.Guid id)
+		public virtual async Task<WorkflowDefinitionDto> GetAsync(System.Guid id)
 		{
-			return await WorkflowDefinitionAppService.GetEntityAsync(id);
+			return await WorkflowDefinitionAppService.GetAsync(id);
 		}
 		[Authorize(JhAbpWorkflowPermissions.WorkflowDefinitions.Create)]
 		[HttpPost]

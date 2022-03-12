@@ -40,9 +40,9 @@ namespace Jh.Abp.Workflow.v1
 		}
 		[Authorize(JhAbpWorkflowPermissions.Backlogs.Detail)]
 		[HttpGet("{id}")]
-		public virtual async Task<WorkflowBacklog> GetAsync(System.Guid id)
+		public virtual async Task<WorkflowBacklogDto> GetAsync(System.Guid id)
 		{
-			return await BacklogAppService.GetEntityAsync(id);
+			return await BacklogAppService.GetAsync(id);
 		}
 		[Authorize(JhAbpWorkflowPermissions.Backlogs.Create)]
 		[HttpPost]

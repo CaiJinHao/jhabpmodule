@@ -10,7 +10,6 @@ namespace Jh.Abp.JhIdentity
     /// </summary>
     public class IdentityUserRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<IdentityUser>
 , IRetrieveDelete
-,IMultiTenant
 	{
 		/// <summary>
 		/// 
@@ -85,7 +84,6 @@ namespace Jh.Abp.JhIdentity
 		/// </summary>
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<IdentityUser> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 		public Guid? OrganizationUnitId { get; set; }
 	}
 }

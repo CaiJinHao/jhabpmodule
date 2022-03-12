@@ -10,7 +10,6 @@ namespace Jh.Abp.JhIdentity
     /// </summary>
     public class OrganizationUnitRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<OrganizationUnit>
 , IRetrieveDelete
-,IMultiTenant
 	{
 		/// <summary>
 		/// 
@@ -33,7 +32,6 @@ namespace Jh.Abp.JhIdentity
 		/// </summary>
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<OrganizationUnit> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 
 		/// <summary>
 		/// 组织树查询 上级及下级

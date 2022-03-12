@@ -9,7 +9,6 @@ namespace Jh.Abp.JhIdentity
     /// 
     /// </summary>
     public class IdentityRoleRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<IdentityRole>
-,IMultiTenant
 	{
 		/// <summary>
 		/// 
@@ -36,6 +35,5 @@ namespace Jh.Abp.JhIdentity
 		/// </summary>
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<IdentityRole> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 	}
 }

@@ -95,7 +95,7 @@ namespace Jh.Abp.Workflow
         /// <summary>
         /// 创建待办事项
         /// </summary>
-        protected async Task<ExecutionResult> CreateBacklogAsync(Volo.Abp.Identity.IdentityUser backlogUser)
+        protected async Task<ExecutionResult> CreateBacklogAsync(JhIdentity.IdentityUserDto backlogUser)
         {
             //发送通知INotificationPublisher
             //添加待办事项

@@ -34,7 +34,7 @@ namespace Jh.Abp.JhIdentity
             IdentityOptions = identityOptions;
         }
 
-        public override async Task<IdentityUser> CreateAsync(IdentityUserCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task CreateAsync(IdentityUserCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             await IdentityOptions.SetAsync();
 
@@ -75,7 +75,6 @@ namespace Jh.Abp.JhIdentity
             {
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
-            return user;
         }
 
         protected virtual async Task UpdateUserByInput(IdentityUser user, IdentityUserCreateOrUpdateDto input, CancellationToken cancellationToken = default)
@@ -195,9 +194,10 @@ namespace Jh.Abp.JhIdentity
         /// <summary>
         /// 获取部门领导
         /// </summary>
-        public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId)
+        public virtual async Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId)
         {
-            return await IdentityUserRepository.GetSuperiorUserAsync(userId); 
+            var user= await IdentityUserRepository.GetSuperiorUserAsync(userId); 
+            return await MapToGetOutputDtoAsync(user);
         }
     }
 }

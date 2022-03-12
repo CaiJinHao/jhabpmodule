@@ -16,7 +16,6 @@ namespace Jh.Abp.JhIdentity
 IdentityUserCreateOrUpdateDto,
 IHasConcurrencyStamp,
 IMethodDto<IdentityUser>
-,IMultiTenant
 	{
 		[DisableAuditing]
 		[Required]
@@ -30,7 +29,6 @@ IMethodDto<IdentityUser>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<IdentityUser> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 
 		public Guid[] RoleIds { get; set; }
 	}

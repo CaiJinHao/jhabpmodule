@@ -11,6 +11,6 @@ namespace Jh.Abp.JhIdentity
 	{
 		Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id);
 		Task<IdentityUserDto> GetCurrentAsync();
-		Task<IdentityUser> GetSuperiorUserAsync(Guid userId);
+		Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId);
 	}
 }

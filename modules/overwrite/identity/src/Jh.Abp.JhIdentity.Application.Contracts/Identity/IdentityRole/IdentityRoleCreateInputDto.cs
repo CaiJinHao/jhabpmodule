@@ -13,7 +13,6 @@ namespace Jh.Abp.JhIdentity
 ExtensibleObject,
 IHasConcurrencyStamp,
 IMethodDto<IdentityRole>
-,IMultiTenant
 	{
 		/// <summary>
 		/// 
@@ -43,6 +42,5 @@ IMethodDto<IdentityRole>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<IdentityRole> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 	}
 }

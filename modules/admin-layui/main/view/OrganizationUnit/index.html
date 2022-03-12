@@ -197,7 +197,6 @@
                                 click: function (node) {
                                     $('#code').val(node.data.obj.code);
                                     _the.seletedRoleBg(node.data);
-                                    _the.renderTable();
                                 },
                             });
                         }
@@ -257,7 +256,7 @@
                         type: 'Delete',
                         confimMsg:'将自动禁用所有子级及子级下的所有角色和用户，确认禁用吗？',
                         success: function (response) {
-                            _the.renderTable();
+                            _the.renderTable(true);
                         }
                     });
                 },
@@ -274,7 +273,7 @@
                         type: 'Delete',
                         data: delIdList,
                         success: function (response) {
-                            _the.renderTable();
+                            _the.renderTable(true);
                         }
                     });
                 },
@@ -289,7 +288,7 @@
                         type: 'Patch',
                         data: data,
                         success: function (response) {
-                            _the.renderTable();
+                            _the.renderTable(true);
                         }
                     });
                 },
@@ -355,7 +354,7 @@
              organizationunitObj.loadPermissions(function () { organizationunitObj.loadList(function () { organizationunitObj.renderTable(true);}); });
 
          top.tool.subscribe("edit_organizationunit_form_refresh", function () {
-                organizationunitObj.renderTable();
+                organizationunitObj.renderTable(true);
          });
 
             table.on('tool(table_organizationunit_list)', function (obj) {

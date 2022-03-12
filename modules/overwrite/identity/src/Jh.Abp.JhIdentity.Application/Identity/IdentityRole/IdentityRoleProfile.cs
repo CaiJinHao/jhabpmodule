@@ -10,9 +10,11 @@ namespace Jh.Abp.JhIdentity
 		{
 		CreateMap<IdentityRole,IdentityRoleDto>();
 		CreateMap<IdentityRoleCreateInputDto, IdentityRole>().Ignore(a => a.Id)
+				.Ignore(a=>a.TenantId)
 				.Ignore(a=>a.Claims)
 ;
 		CreateMap<IdentityRoleUpdateInputDto, IdentityRole>().Ignore(a => a.Id)
+				.Ignore(a=>a.TenantId)
 				.Ignore(a=>a.Claims)
 ;
 		}

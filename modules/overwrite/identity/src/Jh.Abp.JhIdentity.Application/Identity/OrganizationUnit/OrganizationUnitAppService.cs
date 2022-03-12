@@ -45,9 +45,9 @@ namespace Jh.Abp.JhIdentity
             return base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
         }
 
-        public override async Task<OrganizationUnit> CreateAsync(OrganizationUnitCreateInputDto input, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task CreateAsync(OrganizationUnitCreateInputDto input, bool autoSave = false, CancellationToken cancellationToken = default)
 		{
-			var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, input.TenantId);
+			var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId);
 			organizationUnit.ConcurrencyStamp = input.ConcurrencyStamp;
             input.RoleIds = await GetAllRoleIdAsync();//添加所有的角色到该组织
             if (input.RoleIds != null)
@@ -59,40 +59,34 @@ namespace Jh.Abp.JhIdentity
             }
             if (input.ExtraProperties.Count > 0)
             {
-                //organizationUnit.ExtraProperties.Clear();
                 foreach (var item in input.ExtraProperties)
                 {
                     organizationUnit.SetProperty(item.Key, item.Value);
-                    //organizationUnit.ExtraProperties.Add(item.Key, item.Value);
                 }
             }
             await organizationUnitManager.CreateAsync(organizationUnit);
-			return organizationUnit;
 		}
 
-        public override async Task<OrganizationUnit> DeleteAsync(Guid id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
+        public override async Task DeleteAsync(Guid id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             await organizationUnitManager.DeleteAsync(id);//自动禁用下级
-			return default;
         }
 
-        public override async Task<OrganizationUnit[]> DeleteAsync(Guid[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
+        public override async Task DeleteAsync(Guid[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             foreach (var item in keys)
             {
 				await organizationUnitManager.DeleteAsync(item);//自动禁用下级
 			}
-			return default;
 		}
 
-        public override async Task<OrganizationUnit[]> DeleteAsync(OrganizationUnitDeleteInputDto deleteInputDto, string methodStringType = "Equals", bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
+        public override async Task DeleteAsync(OrganizationUnitDeleteInputDto deleteInputDto, string methodStringType = "Equals", bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
 			var query = await CreateFilteredQueryAsync(deleteInputDto, methodStringType);
             foreach (var item in query.ToArray())
             {
 				await organizationUnitManager.DeleteAsync(item.Id);//自动禁用下级
 			}
-			return default;
 		}
 
         public override async Task<OrganizationUnitDto> UpdateAsync(Guid id, OrganizationUnitUpdateInputDto input)
@@ -109,10 +103,9 @@ namespace Jh.Abp.JhIdentity
             }
             if (input.ExtraProperties.Count > 0)
             {
-                entity.ExtraProperties.Clear();
                 foreach (var item in input.ExtraProperties)
                 {
-                    entity.ExtraProperties.Add(item.Key, item.Value);
+                    entity.SetProperty(item.Key, item.Value);
                 }
             }
             await CurrentUnitOfWork.SaveChangesAsync();

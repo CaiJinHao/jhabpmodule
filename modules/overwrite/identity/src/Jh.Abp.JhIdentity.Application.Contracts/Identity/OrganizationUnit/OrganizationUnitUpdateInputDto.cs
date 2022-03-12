@@ -14,8 +14,6 @@ namespace Jh.Abp.JhIdentity
 ExtensibleObject, IHasConcurrencyStamp,
 IMethodDto<OrganizationUnit>
 	{
-		public new ExtraPropertyDictionary ExtraProperties { get; set; }
-
 		/// <summary>
 		/// 
 		/// </summary>

@@ -34,8 +34,8 @@ namespace Jh.Abp.Workflow
             {
                 throw new InvalidOperationException("流程未定义审批人");
             }
-            var approvalUser = await identityUserAppService.GetEntityAsync(_approvalUserId);
-            var createUser=await identityUserAppService.GetEntityAsync((Guid)currentWorkflowInstance.CreatorId);
+            var approvalUser = await identityUserAppService.GetAsync(_approvalUserId);
+            var createUser=await identityUserAppService.GetAsync((Guid)currentWorkflowInstance.CreatorId);
             var _parentApprovalUserId = ParentApprovalUserId == null ? Guid.Empty : new Guid(ParentApprovalUserId);
             if (_approvalUserId.Equals(currentWorkflowInstance.CreatorId)//判断审批人和创建人是否为同一人
                 || _approvalUserId.Equals(_parentApprovalUserId)//当前审批人是否和上一步骤审批人相同

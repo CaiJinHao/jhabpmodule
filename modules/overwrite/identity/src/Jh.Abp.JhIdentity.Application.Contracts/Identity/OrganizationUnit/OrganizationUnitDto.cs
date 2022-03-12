@@ -12,7 +12,6 @@ namespace Jh.Abp.JhIdentity
 	public class OrganizationUnitDto: ExtensibleFullAuditedEntityDto<System.Guid>,IMultiTenant
 		, IHasConcurrencyStamp
 	{
-        public new ExtraPropertyDictionary ExtraProperties { get; set; }
         /// <summary>
         /// 
         /// </summary>

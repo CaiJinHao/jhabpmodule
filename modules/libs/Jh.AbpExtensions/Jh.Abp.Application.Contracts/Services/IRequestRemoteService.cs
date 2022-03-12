@@ -9,14 +9,16 @@ namespace Jh.Abp.Application.Contracts
 {
     public interface IRequestRemoteService<TEntity, TEntityDto, TPagedRetrieveOutputDto, in TKey, in TRetrieveInputDto, in TCreateInputDto, in TUpdateInputDto, in TDeleteInputDto> : IApplicationService
     {
-        Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input);
-        Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto);
-        Task<TEntity> GetAsync(TKey id);
         Task CreateAsync(TCreateInputDto input);
-        Task<TPagedRetrieveOutputDto> UpdateAsync(TKey id, TUpdateInputDto input);
-        Task UpdatePortionAsync(TKey id, TUpdateInputDto inputDto);
         Task DeleteAsync(TKey id);
         Task DeleteAsync(TKey[] keys);
+        Task UpdatePortionAsync(TKey id, TUpdateInputDto inputDto);
+        Task<TPagedRetrieveOutputDto> UpdateAsync(TKey id, TUpdateInputDto input);
+        Task<TEntityDto> GetAsync(TKey id);
+        Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input);
+        Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto);
+
+
 
         //如果需要可在RemoteService中添加
         //Task UpdateDeletedAsync(TKey id, bool isDeleted);

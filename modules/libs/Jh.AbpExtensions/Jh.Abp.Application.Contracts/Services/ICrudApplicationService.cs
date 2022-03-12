@@ -30,7 +30,7 @@ namespace Jh.Abp.Application.Contracts
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 创建多个实体[Route("list")][HttpPost]
@@ -39,32 +39,32 @@ namespace Jh.Abp.Application.Contracts
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity[]> CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据条件删除多条[HttpDelete]
         /// </summary>
-        Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除多条[Route("keys")][HttpDelete]
         /// </summary>
-        Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除
         /// </summary>
-        Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键更新部分[HttpPatch]
         /// </summary>
-        Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task UpdatePortionAsync(TKey key, TUpdateInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<bool> AnyAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// 根据条件查询(不分页)[Route("list")][HttpGet]
+        /// 根据条件查询(不分页)
         /// </summary>
         Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
 
@@ -81,14 +81,5 @@ namespace Jh.Abp.Application.Contracts
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 获取entityDto
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="includeDetails"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<TEntity> GetEntityAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
