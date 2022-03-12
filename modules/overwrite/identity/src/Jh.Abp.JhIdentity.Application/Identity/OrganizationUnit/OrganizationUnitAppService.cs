@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
 using Volo.Abp.Identity;
@@ -30,6 +31,13 @@ namespace Jh.Abp.JhIdentity
         {
             OrganizationUnitRepository = repository;
             OrganizationUnitDapperRepository = organizationunitDapperRepository;
+
+            CreatePolicyName = JhIdentityPermissions.OrganizationUnits.Create;
+            UpdatePolicyName = JhIdentityPermissions.OrganizationUnits.Update;
+            DeletePolicyName = JhIdentityPermissions.OrganizationUnits.Delete;
+            GetPolicyName = JhIdentityPermissions.OrganizationUnits.Detail;
+            GetListPolicyName = JhIdentityPermissions.OrganizationUnits.Default;
+            BatchDeletePolicyName = JhIdentityPermissions.OrganizationUnits.BatchDelete;
         }
 
         public override Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input, string methodStringType = "Contains", bool includeDetails = false, CancellationToken cancellationToken = default)
@@ -119,12 +127,18 @@ namespace Jh.Abp.JhIdentity
 		/// <param name="id"></param>
 		/// <param name="isDeleted"></param>
 		/// <returns></returns>
-		public virtual async Task RecoverAsync(Guid id, bool isDeleted = false)
+		public virtual async Task RecoverAsync(Guid id)
 		{
-			foreach (var item in await GetParentsAsync(id,!isDeleted))
-			{
-				item.IsDeleted = isDeleted;
-			}
+            await CheckPolicyAsync(JhIdentityPermissions.OrganizationUnits.Recover);
+            using (DataFilter.Disable<ISoftDelete>())
+            {
+                foreach (var item in await GetParentsAsync(id, true))
+                {
+                    item.IsDeleted = false;
+                    item.DeleterId = CurrentUser.Id;
+                    item.DeletionTime = Clock.Now;
+                }
+            }
 		}
 
         protected virtual async Task<List<OrganizationUnit>> GetParentsAsync(Guid? id, bool isDeleted = true)
@@ -166,16 +180,30 @@ namespace Jh.Abp.JhIdentity
             return await UtilTree.GetMenusTreeAsync(resutlMenus);
         }
 
-        public virtual async Task<List<IdentityRole>> GetRolesAsync(Guid organizationUnitId)
+        public virtual async Task<List<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId)
         {
             var org = await GetEntityByIdAsync(organizationUnitId);
-            return await organizationUnitsRepository.GetRolesAsync(org);
+            var entities = await organizationUnitsRepository.GetRolesAsync(org);
+
+            var dtos = new List<IdentityRoleDto>();
+            foreach (var entity in entities)
+            {
+                dtos.Add(ObjectMapper.Map<IdentityRole, IdentityRoleDto>(entity));
+            }
+            return dtos;
+
         }
 
-        public virtual async Task<List<IdentityUser>> GetMembersAsync(Guid organizationUnitId)
+        public virtual async Task<List<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId)
         {
             var org = await GetEntityByIdAsync(organizationUnitId);
-            return await organizationUnitsRepository.GetMembersAsync(org);
+            var entities = await organizationUnitsRepository.GetMembersAsync(org);
+            var dtos = new List<IdentityUserDto>();
+            foreach (var entity in entities)
+            {
+                dtos.Add(ObjectMapper.Map<IdentityUser, IdentityUserDto>(entity));
+            }
+            return dtos;
         }
 
         private async Task<Guid[]> GetAllRoleIdAsync()

@@ -8,6 +8,7 @@ namespace Jh.Abp.JhIdentity
 {
     public interface IIdentityUserAppService
 		: ICrudApplicationService<IdentityUser, IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>
+		, IIdentityUserBaseAppService
 	{
 		Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id);
 		Task<IdentityUserDto> GetCurrentAsync();

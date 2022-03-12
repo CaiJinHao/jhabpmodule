@@ -19,7 +19,7 @@ namespace Jh.Abp.JhIdentity.v1
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class IdentityUserController : JhIdentityController
+	public class IdentityUserController : JhIdentityController, IIdentityUserRemoteService
     {
         public IdentityUserManager UserManager { get; set; }
         public IOrganizationUnitAppService organizationUnitAppService { get; set; }
@@ -91,6 +91,15 @@ namespace Jh.Abp.JhIdentity.v1
                 (await UserManager.SetLockoutEnabledAsync(user, lockoutEnabled)).CheckErrors();
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
+        }
+
+        [Authorize(IdentityPermissions.Users.Update)]
+        [HttpPatch]
+        [HttpPut]
+        [Route("{id}/Recover")]
+        public async Task RecoverAsync(Guid id, [FromBody] bool isDelete)
+        {
+            await IdentityUserAppService.RecoverAsync(id, isDelete);
         }
 
         [Authorize(IdentityPermissions.Users.Update)]

@@ -9,13 +9,13 @@ namespace Jh.Abp.JhIdentity
 {
     public interface IOrganizationUnitAppService
 		: ICrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>
+		, IOrganizationUnitBaseAppService
 	{
-		Task RecoverAsync(Guid id, bool isDeleted = false);
 		Task<List<TreeDto>> GetOrganizationTreeAsync();
 
-		Task<List<IdentityRole>> GetRolesAsync(Guid organizationUnitId);
+		Task<List<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId);
 
-		Task<List<IdentityUser>> GetMembersAsync(Guid organizationUnitId);
+		Task<List<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId);
 
 		Task CreateByRoleAsync(Guid roleId);
 	}

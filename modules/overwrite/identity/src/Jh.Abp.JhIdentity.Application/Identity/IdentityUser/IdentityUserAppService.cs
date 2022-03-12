@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
@@ -32,6 +33,13 @@ namespace Jh.Abp.JhIdentity
             IdentityUserRepository = repository;
             IdentityUserDapperRepository = identityuserDapperRepository;
             IdentityOptions = identityOptions;
+
+            CreatePolicyName = IdentityPermissions.Users.Create;
+            UpdatePolicyName = IdentityPermissions.Users.Update;
+            DeletePolicyName = IdentityPermissions.Users.Delete;
+            GetPolicyName = IdentityPermissions.Users.Default;
+            GetListPolicyName = IdentityPermissions.Users.Default;
+            BatchDeletePolicyName = IdentityPermissions.Users.Default;
         }
 
         public override async Task CreateAsync(IdentityUserCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
@@ -101,15 +109,6 @@ namespace Jh.Abp.JhIdentity
             }
         }
 
-        public override async Task<IdentityUserDto> GetAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
-        {
-            var entity = await crudRepository.FindAsync(id, includeDetails, cancellationToken);
-            var data = await MapToGetOutputDtoAsync(entity);
-            await crudRepository.EnsureCollectionLoadedAsync(entity, u => u.OrganizationUnits, cancellationToken);
-            data.OrganizationUnitIds = entity.OrganizationUnits.Select(a => a.OrganizationUnitId).ToArray();
-            return data;
-        }
-
         public override async Task<IdentityUserDto> UpdateAsync(Guid id, IdentityUserUpdateInputDto input)
         {
             await IdentityOptions.SetAsync();
@@ -121,7 +120,7 @@ namespace Jh.Abp.JhIdentity
 
             await UpdateUserByInput(user, input);
             input.MapExtraPropertiesTo(user);
-            if (input.OrganizationUnitIds!=null)
+            if (input.OrganizationUnitIds != null)
             {
                 user.OrganizationUnits.Clear();
                 foreach (var item in input.OrganizationUnitIds)
@@ -152,6 +151,27 @@ namespace Jh.Abp.JhIdentity
             await CurrentUnitOfWork.SaveChangesAsync();
 
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
+        }
+
+        public virtual async Task RecoverAsync(System.Guid id,bool isDelete)
+        {
+            await CheckUpdatePolicyAsync();
+            using (DataFilter.Disable<ISoftDelete>())
+            {
+                var entity = await crudRepository.FindAsync(id, false);
+                entity.IsDeleted = isDelete;
+                entity.DeleterId = CurrentUser.Id;
+                entity.DeletionTime = Clock.Now;
+            }
+        }
+
+        public override async Task<IdentityUserDto> GetAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
+        {
+            var entity = await crudRepository.FindAsync(id, includeDetails, cancellationToken);
+            var data = await MapToGetOutputDtoAsync(entity);
+            await crudRepository.EnsureCollectionLoadedAsync(entity, u => u.OrganizationUnits, cancellationToken);
+            data.OrganizationUnitIds = entity.OrganizationUnits.Select(a => a.OrganizationUnitId).ToArray();
+            return data;
         }
 
         public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)

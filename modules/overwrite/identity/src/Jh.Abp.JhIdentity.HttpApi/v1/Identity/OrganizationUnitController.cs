@@ -65,13 +65,10 @@ namespace Jh.Abp.JhIdentity.v1
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Recover)]
 		[HttpPatch]
 		[HttpPut]
-		[Route("{id}/Deleted")]
-		public virtual async Task UpdateDeletedAsync(System.Guid id)
+		[Route("{id}/Recover")]
+		public async Task RecoverAsync(Guid id)
 		{
-			using (dataFilter.Disable())
-			{
-				await OrganizationUnitAppService.RecoverAsync(id);
-			}
+			await OrganizationUnitAppService.RecoverAsync(id);
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
