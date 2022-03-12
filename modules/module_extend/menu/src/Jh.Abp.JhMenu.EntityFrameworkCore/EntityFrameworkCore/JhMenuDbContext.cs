@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Jh.Abp.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Jh.Abp.JhMenu.EntityFrameworkCore;
 
 [ConnectionStringName(JhMenuDbProperties.ConnectionStringName)]
-public class JhMenuDbContext : AbpDbContext<JhMenuDbContext>, IJhMenuDbContext
+public class JhMenuDbContext : JhAbpDbContext<JhMenuDbContext>, IJhMenuDbContext
 {
     public DbSet<Menu> Menus { get; set; }
     public DbSet<MenuRoleMap> MenuRoleMaps { get; set; }
@@ -22,11 +23,5 @@ public class JhMenuDbContext : AbpDbContext<JhMenuDbContext>, IJhMenuDbContext
         base.OnModelCreating(builder);
 
         builder.ConfigureJhMenu();
-    }
-
-    protected override void ApplyAbpConceptsForAddedEntity(EntityEntry entry)
-    {
-        base.ApplyAbpConceptsForAddedEntity(entry);
-
     }
 }

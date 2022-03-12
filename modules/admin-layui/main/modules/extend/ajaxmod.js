@@ -18,7 +18,6 @@ layui.define(['layer'], function (exports) {
         getUserInfo: function (callback) {
             oidcManager.getUser(function(user){
                 if (user) {
-                    console.log(user);
                     callback(user);
                 }
             });

@@ -6,9 +6,9 @@ using Jh.Abp.Domain.Shared;
 namespace Jh.Abp.Application.Contracts
 {
     [DependsOn(
-       typeof(JhAbpExtensionsDomainSharedModule),
-       typeof(AbpDddApplicationContractsModule),
-       typeof(AbpAuthorizationModule)
+        typeof(JhAbpExtensionsDomainSharedModule),
+        typeof(AbpDddApplicationContractsModule),
+        typeof(AbpAuthorizationModule)
        )]
     public class JhAbpContractsModule : AbpModule
     {

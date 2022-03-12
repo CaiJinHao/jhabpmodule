@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Jh.Abp.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
 namespace Jh.Abp.JhMenu.EntityFrameworkCore;
 
 [DependsOn(
+    typeof(JhAbpEntityFrameworkCoreModule),
     typeof(JhMenuDomainModule),
     typeof(AbpEntityFrameworkCoreModule)
 )]
