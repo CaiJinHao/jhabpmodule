@@ -1,6 +1,5 @@
-if (location.search.indexOf('_p') != -1) {
-    localStorage.setItem('urlsearch', location.search);//记录跳转前search
-}
+var urlsearchStorageName = 'urlsearch';
+localStorage.setItem(urlsearchStorageName, location.search); //记录跳转前search
 
 var host = window.location.origin;
 var authorityHost='https://localhost:6201';
@@ -39,82 +38,40 @@ manager.events.addSilentRenewError(function () {
 });
 
 manager.events.addUserSignedOut(function () {
-    alert("已经退出！");
     console.log('UserSignedOut：', arguments);
     manager.removeUser();
 });
 
 
 var oidcManager = {
-    // getUserInfo:function(callback){
-    //     manager.getUser().then(callback);
-    // },
-    // getUser:function(callback){
-    //     var _the=this;
-    //     console.log('dd');
-    //     manager.getUser().then(function(user){
-    //         console.log(user);
-    //         if (user) {
-    //             alert("已经登录！");
-    //             callback(user);
-    //         } else {
-    //             _the.loginRedirect();
-    //         }
-    //     });
-    // },
-    // login:function(){
-    //     var _the=this;
-    //     _the.getUserInfo(function(user){
-    //         if (user) {
-    //             alert("已经登录！");
-    //             return user;
-    //         } else {
-    //             _the.loginRedirect();
-    //         }
-    //     });
-    // },
-    // logout:function(){
-    //     var _the=this;
-    //     _the.getUserInfo(function (user) {
-    //         if (!user) {
-    //             alert("已经注销！");
-    //         } else {
-    //             _the.logoutRedirect();
-    //         }
-    //     });
-    // },
-    // loginRedirect:function(){
-    //     manager.signinRedirect()
-    //             .catch(function (error) {
-    //                 console.error('error while logging', error);
-    //             });
-    // },
-    // logoutRedirect:function(){
-    //     manager.signoutRedirect()
-    //             .catch(function (error) {
-    //                 console.error('error while signing out user', error);
-    //             });
-    // }
-
-
-    getUser: function (_fn) {
-        let _the=this;
-        var signinResponseJson = sessionStorage.getItem("signinResponse");
-        if (signinResponseJson) {
-            var signinResponse = JSON.parse(signinResponseJson);
-            _fn(signinResponse);
-        } else {
-            console.log(signinResponseJson);
-            _the.login();
-        }
+    getUser:function(callback){
+        var _the=this;
+        manager.getUser().then(function(user){
+            if (user) {
+                callback(user);
+            } else {
+                _the.loginRedirect();
+            }
+        });
     },
-    login: function () {
-        manager.signinRedirect({ state: { bar: 15 } });
+    login:function(){
+        var _the=this;
+        _the.logoutRedirect();
     },
-    logout: function () {
-        var signinResponseJson= sessionStorage.getItem("signinResponse");
-        var signinResponse=JSON.parse(signinResponseJson);
-        sessionStorage.removeItem("signinResponse");
-        manager.signoutRedirect({ id_token_hint: signinResponse && signinResponse.id_token, state: { foo: 5 } });
+    logout:function(){
+        var _the=this;
+        _the.logoutRedirect();
+    },
+    loginRedirect:function(){
+        manager.signinRedirect()
+                .catch(function (error) {
+                    console.error('error while logging', error);
+                });
+    },
+    logoutRedirect:function(){
+        manager.signoutRedirect()
+                .catch(function (error) {
+                    console.error('error while signing out user', error);
+                });
     }
 };

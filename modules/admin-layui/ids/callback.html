@@ -12,26 +12,14 @@
     <script src="/main/plugins/oidc/oidc-client.min.js"></script>
     <script src="/main/plugins/oidc/oidc-client-sample.js"></script>
     <script>
-        // new Oidc.UserManager().signinRedirectCallback().then(function(){
-        //     var urlsearch = localStorage.getItem("urlsearch");
-        //     var redirect = '/main/index.html';
-        //     if (urlsearch) {
-        //         redirect += urlsearch;
-        //     }
-        //     window.location = redirect;
-        // });
-    new Oidc.OidcClient().processSigninResponse().then(function (response) {
-        sessionStorage.setItem('signinResponse', JSON.stringify(response));
-        var urlsearch = localStorage.getItem("urlsearch");
-        var redirect = '/main/index.html';
-        if (urlsearch) {
-            redirect += urlsearch;
-        }
-        window.location = redirect;
-    }).catch(function (err) {
-        console.log(err);
-        // oidcManager.login();
-    });
+        new Oidc.UserManager().signinRedirectCallback().then(function(){
+            var urlsearch = localStorage.getItem(urlsearchStorageName);
+            var redirect = '/main/index.html';
+            if (urlsearch) {
+                redirect += urlsearch;
+            }
+            window.location = redirect;
+        });
     </script>
 </body>
 </html>

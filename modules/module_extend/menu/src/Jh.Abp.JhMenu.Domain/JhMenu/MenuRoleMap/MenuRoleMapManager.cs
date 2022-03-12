@@ -51,18 +51,11 @@ namespace Jh.Abp.JhMenu
         public virtual async Task InitMenuByRoleAsync(Guid roleId, Guid[] menuIds, Guid? TenantId)
         {
             Volo.Abp.Check.NotNull(roleId, nameof(roleId));
-            Logger.LogInformation($"菜单列表数量:{menuIds.Length}");
             if (menuIds.Any())
             {
-                Logger.LogInformation($"开始创建:{menuIds.Length}");
                 if (!(await MenuRoleMapRepository.GetQueryableAsync()).Any(a => a.RoleId == roleId))
                 {
-                    Logger.LogInformation($"开始为角色创建菜单:{roleId}，租户：{TenantId}");
                     await CreateAsync(roleId, menuIds, TenantId);
-                }
-                else
-                {
-                    Logger.LogInformation($"当前角色已存在菜单:{roleId}");
                 }
             }
         }
