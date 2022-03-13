@@ -13,7 +13,7 @@ namespace Jh.Abp.Workflow
 		IWorkflowBacklogAppService
 	{
         protected IWorkflowInstanceAppService workflowInstanceAppService=>LazyServiceProvider.LazyGetRequiredService<IWorkflowInstanceAppService>();
-        protected IWorkflowExecutionPointerAppService workflowExecutionPointerAppService => LazyServiceProvider.LazyGetRequiredService<IWorkflowExecutionPointerAppService>();
+        protected IWorkflowExecutionPointerRepository WorkflowExecutionPointerRepository => LazyServiceProvider.LazyGetRequiredService<IWorkflowExecutionPointerRepository>();
         private readonly IWorkflowBacklogRepository BacklogRepository;
 		private readonly IWorkflowBacklogDapperRepository BacklogDapperRepository;
 		public WorkflowBacklogAppService(IWorkflowBacklogRepository repository, IWorkflowBacklogDapperRepository backlogDapperRepository) : base(repository)
@@ -32,7 +32,7 @@ namespace Jh.Abp.Workflow
         {
             await CheckGetPolicyAsync();
             var item = await base.GetAsync(id, includeDetails, cancellationToken);
-            var _pointEntity = await workflowExecutionPointerAppService.GetAsync(item.Id);
+            var _pointEntity = await WorkflowExecutionPointerRepository.GetAsync(item.Id);
             item.EventKey = _pointEntity.EventKey;
             item.EventName = _pointEntity.EventName;
             return item;
@@ -59,7 +59,7 @@ namespace Jh.Abp.Workflow
             var pageData = await base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
             foreach (var item in pageData.Items)
             {
-                var _pointEntity = await workflowExecutionPointerAppService.GetAsync(item.Id);
+                var _pointEntity = await WorkflowExecutionPointerRepository.GetAsync(item.Id);
                 var _instance = await workflowInstanceAppService.GetAsync((Guid)item.WorkflowInstanceId);
                 item.EventKey = _pointEntity.EventKey;
                 item.EventName= _pointEntity.EventName;
