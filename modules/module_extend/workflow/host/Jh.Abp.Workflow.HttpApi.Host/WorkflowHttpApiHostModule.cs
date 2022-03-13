@@ -252,7 +252,6 @@ public class WorkflowHttpApiHostModule : AbpModule
             {
                 var data = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
                 var dataSeedContext = new DataSeedContext();
-                //dataSeedContext.TenantId=
                 await data.SeedAsync(dataSeedContext);
             }
         });

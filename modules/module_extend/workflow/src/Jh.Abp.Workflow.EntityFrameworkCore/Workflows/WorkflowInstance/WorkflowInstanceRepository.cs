@@ -50,15 +50,16 @@ namespace Jh.Abp.Workflow
             return result;
         }
 
-         public async Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstance(string Id, CancellationToken cancellationToken = default)
+        public async Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstance(string Id, CancellationToken cancellationToken = default)
         {
+            var t = CurrentTenant;
             var uid = new Guid(Id);
             var entity = await (await GetDbSetAsync())
-                  .AsNoTracking()
+                .AsNoTracking()
                 .Include(wf => wf.ExecutionPointers)
                 .ThenInclude(ep => ep.ExtensionAttributes)
                 .Include(wf => wf.ExecutionPointers)
-                .FirstAsync(x => x.Id == uid, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == uid, cancellationToken);
 
             if (entity == null)
                 return null;
@@ -93,7 +94,7 @@ namespace Jh.Abp.Workflow
                 .ThenInclude(ep => ep.ExtensionAttributes)
                 .Include(wf => wf.ExecutionPointers)
                 .AsTracking()
-                .FirstAsync(cancellationToken);
+                .FirstOrDefaultAsync(cancellationToken);
 
             workflow.ToPersistable(existingEntity);
             await SaveChangesAsync(cancellationToken);
