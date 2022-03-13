@@ -689,11 +689,6 @@
             方法参数回调
             </summary>
         </member>
-        <member name="P:Jh.Abp.Workflow.WorkflowPublishEventDto.BacklogId">
-            <summary>
-            待办事项主键
-            </summary>
-        </member>
         <member name="T:Jh.Abp.Workflow.WorkflowExecutionErrorCreateInputDto">
             <summary>
             执行错误
@@ -1378,6 +1373,11 @@
         <member name="P:Jh.Abp.Workflow.WorkflowInstanceUpdateInputDto.MethodInput">
             <summary>
             方法参数回调
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.Workflow.WorkflowPublishEventDto.BacklogId">
+            <summary>
+            待办事项主键
             </summary>
         </member>
         <member name="T:Jh.Abp.Workflow.WorkflowScheduledCommandCreateInputDto">
