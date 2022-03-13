@@ -12,7 +12,7 @@ namespace Jh.Abp.Workflow
 		: CrudApplicationService<WorkflowBacklog, WorkflowBacklogDto, WorkflowBacklogDto, System.Guid, WorkflowBacklogRetrieveInputDto, WorkflowBacklogCreateInputDto, WorkflowBacklogUpdateInputDto, WorkflowBacklogDeleteInputDto>,
 		IWorkflowBacklogAppService
 	{
-        protected IWorkflowInstanceAppService workflowInstanceAppService=>LazyServiceProvider.LazyGetRequiredService<IWorkflowInstanceAppService>();
+        protected IWorkflowInstanceRepository WorkflowInstanceRepository =>LazyServiceProvider.LazyGetRequiredService<IWorkflowInstanceRepository>();
         protected IWorkflowExecutionPointerRepository WorkflowExecutionPointerRepository => LazyServiceProvider.LazyGetRequiredService<IWorkflowExecutionPointerRepository>();
         private readonly IWorkflowBacklogRepository BacklogRepository;
 		private readonly IWorkflowBacklogDapperRepository BacklogDapperRepository;
@@ -60,7 +60,7 @@ namespace Jh.Abp.Workflow
             foreach (var item in pageData.Items)
             {
                 var _pointEntity = await WorkflowExecutionPointerRepository.GetAsync(item.Id);
-                var _instance = await workflowInstanceAppService.GetAsync((Guid)item.WorkflowInstanceId);
+                var _instance = await WorkflowInstanceRepository.GetAsync((Guid)item.WorkflowInstanceId);
                 item.EventKey = _pointEntity.EventKey;
                 item.EventName= _pointEntity.EventName;
                 item.BusinessDataId=_instance.BusinessDataId;

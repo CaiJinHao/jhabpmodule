@@ -20,8 +20,8 @@ namespace Jh.Abp.Workflow
     public class WorkflowDefinition : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {
         public WorkflowDefinition() { }
-        public WorkflowDefinition(Guid id) {
-            Id= id;
+        public WorkflowDefinition(Guid? tenantId) {
+            TenantId = tenantId;
         }
         public virtual Guid? TenantId { get; set; }
 

@@ -12,10 +12,10 @@ namespace Jh.Abp.Workflow
 				.Ignore(a => a.BusinessDataId)
 				.Ignore(a => a.BusinessType)
 				;
-		CreateMap<WorkflowBacklogCreateInputDto, WorkflowBacklog>().IgnoreCreationAuditedObjectProperties().Ignore(a => a.Id)
-;
-		CreateMap<WorkflowBacklogUpdateInputDto, WorkflowBacklog>().IgnoreCreationAuditedObjectProperties().Ignore(a => a.Id)
-;
+			CreateMap<WorkflowBacklogCreateInputDto, WorkflowBacklog>().IgnoreCreationAuditedObjectProperties().Ignore(a => a.Id).Ignore(a => a.TenantId)
+	;
+			CreateMap<WorkflowBacklogUpdateInputDto, WorkflowBacklog>().IgnoreCreationAuditedObjectProperties().Ignore(a => a.Id).Ignore(a => a.TenantId)
+	;
 		}
 	}
 }

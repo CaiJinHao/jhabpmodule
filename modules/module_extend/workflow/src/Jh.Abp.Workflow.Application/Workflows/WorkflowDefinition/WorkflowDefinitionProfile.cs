@@ -7,10 +7,10 @@ namespace Jh.Abp.Workflow
 		public WorkflowDefinitionProfile()
 		{
 		CreateMap<WorkflowDefinition,WorkflowDefinitionDto>();
-		CreateMap<WorkflowDefinitionCreateInputDto, WorkflowDefinition>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id)
-;
-		CreateMap<WorkflowDefinitionUpdateInputDto, WorkflowDefinition>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id)
-;
+			CreateMap<WorkflowDefinitionCreateInputDto, WorkflowDefinition>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id).Ignore(a => a.TenantId)
+	;
+			CreateMap<WorkflowDefinitionUpdateInputDto, WorkflowDefinition>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id).Ignore(a => a.TenantId)
+	;
 		}
 	}
 }

@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Jh.Abp.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace Jh.Abp.Workflow.EntityFrameworkCore;
 
 [ConnectionStringName(WorkflowDbProperties.ConnectionStringName)]
-public class WorkflowDbContext : AbpDbContext<WorkflowDbContext>, IWorkflowDbContext
+public class WorkflowDbContext : JhAbpDbContext<WorkflowDbContext>, IWorkflowDbContext
 {
     public DbSet<WorkflowInstance> WorkflowInstances { get; set; }
     public DbSet<WorkflowExtensionAttribute> WorkflowExtensionAttributes { get; set; }
