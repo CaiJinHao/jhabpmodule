@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
@@ -26,6 +27,16 @@ public class SampleController : WorkflowController, ISampleAppService
     public async Task<SampleDto> GetAsync()
     {
         return await _sampleAppService.GetAsync();
+    }
+
+    [HttpGet("Claims")]
+    [Authorize]
+    public dynamic GetAllClaims()
+    {
+        var u = CurrentUser;
+        var t = CurrentTenant;
+        var data = CurrentUser.GetAllClaims().Select(a => new { a.Value, a.ValueType, a.Type }).ToList();
+        return data;
     }
 
     [HttpGet]

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Jh.Abp.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ using WorkflowCore.Services;
 namespace Jh.Abp.Workflow.EntityFrameworkCore;
 
 [DependsOn(
+    typeof(JhAbpEntityFrameworkCoreModule),
     typeof(WorkflowDomainModule),
     typeof(AbpEntityFrameworkCoreModule)
 )]

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
+using WorkflowCore.Interface;
 
 namespace Jh.Abp.Workflow
 {
@@ -11,10 +12,11 @@ namespace Jh.Abp.Workflow
         : CrudApplicationService<WorkflowInstance, WorkflowInstanceDto, WorkflowInstanceDto, System.Guid, WorkflowInstanceRetrieveInputDto, WorkflowInstanceCreateInputDto, WorkflowInstanceUpdateInputDto, WorkflowInstanceDeleteInputDto>,
         IWorkflowInstanceAppService
     {
+        protected IWorkflowDefinitionRepository WorkflowDefinitionRepository=>LazyServiceProvider.LazyGetRequiredService<IWorkflowDefinitionRepository>();
         protected IIdentityUserAppService identityUserAppService => LazyServiceProvider.LazyGetRequiredService<IIdentityUserAppService>();
-
         protected IWorkflowBacklogAppService backlogAppService => LazyServiceProvider.LazyGetRequiredService<IWorkflowBacklogAppService>();
         protected IJhWorkflowHost workflowHost => LazyServiceProvider.LazyGetRequiredService<IJhWorkflowHost>();
+        protected IWorkflowRegistry WorkflowRegistry => LazyServiceProvider.LazyGetRequiredService<IWorkflowRegistry>();
         protected IWorkflowDefinitionAppService workflowDefinitionAppService => LazyServiceProvider.LazyGetRequiredService<IWorkflowDefinitionAppService>();
         protected IJhWorkflowHost jhWorkflowHost => LazyServiceProvider.LazyGetRequiredService<IJhWorkflowHost>();
         private readonly IWorkflowInstanceRepository WorkflowInstanceRepository;
@@ -45,7 +47,7 @@ namespace Jh.Abp.Workflow
                 }
             }
 
-            var def = await workflowDefinitionAppService.GetAsync(new Guid(workflowStartDto.Id));
+            var def = await WorkflowDefinitionRepository.GetAsync(new Guid(workflowStartDto.Id));
             if (def != null)
             {
                 if (!string.IsNullOrEmpty(def.InputData))
@@ -57,9 +59,12 @@ namespace Jh.Abp.Workflow
                     }
                 }
                 workflowStartDto.Version = def.Version;
-            }
-            //throw new DataMisalignedException("没有定义Workflow"); 可能使用的是Json注册的
 
+                if (!WorkflowRegistry.IsRegistered(def.Id.ToString(), def.Version))
+                {
+                    await WorkflowDefinitionRepository.LoadWorkflowDefinitionAsync(def);
+                }
+            }
             //没有部门领导会跳过，自动执行下一步骤
             return await workflowHost.StartWorkflow(workflowStartDto.Id.ToString(), workflowStartDto.Version, workflowData);
         }

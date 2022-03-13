@@ -98,7 +98,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(JhAbpIdentityServerModule),
     typeof(JhIdentityHttpApiModule),
     typeof(JhMenuHttpApiModule),
-    //typeof(WorkflowHttpApiModule),
+    typeof(WorkflowHttpApiModule),
     typeof(AbpQuickComponentsModule)
     )]
 public class JhIdentityIdentityServerModule : AbpModule
@@ -248,10 +248,10 @@ public class JhIdentityIdentityServerModule : AbpModule
             app.UseHsts();
         }
 
-        //app.ApplicationServices.InitWorkflowDefinition(workflowHost =>
-        //{
-        //    //workflowHost.RegisterWorkflow<LeaveApplicationWorkflow, LeaveApplicationWorkflowDto>();
-        //});
+        app.ApplicationServices.InitWorkflowDefinition(workflowHost =>
+        {
+            //workflowHost.RegisterWorkflow<LeaveApplicationWorkflow, LeaveApplicationWorkflowDto>();
+        });
 
         app.UseHttpsRedirection();
         app.UseCorrelationId();
