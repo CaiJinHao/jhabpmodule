@@ -7,102 +7,96 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
 namespace Jh.Abp.Workflow.v1
 {
-    /// <summary>
-    /// 待办事项
-    /// </summary>
-    [RemoteService]
+	/// <summary>
+	/// 待办事项
+	/// </summary>
+	[Area(WorkflowRemoteServiceConsts.ModuleName)]
+	[RemoteService(Name = WorkflowRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class WorkflowBacklogController : WorkflowController, IWorkflowBacklogBaseAppService
 	{
-		private readonly IWorkflowBacklogAppService BacklogAppService;
-		public IDataFilter<ISoftDelete> dataFilter { get; set; }
-		public WorkflowBacklogController(IWorkflowBacklogAppService _BacklogAppService)
+		protected readonly IWorkflowBacklogAppService WorkflowBacklogAppService;
+		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
+		public WorkflowBacklogController(IWorkflowBacklogAppService _WorkflowBacklogAppService)
 		{
-			BacklogAppService = _BacklogAppService;
+			WorkflowBacklogAppService = _WorkflowBacklogAppService;
 		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Default)]
-		[HttpGet]
-		public virtual async Task<PagedResultDto<WorkflowBacklogDto>> GetListAsync([FromQuery] WorkflowBacklogRetrieveInputDto input)
-		{
-			using (dataFilter.Disable())
-			{
-				input.BacklogUserId = CurrentUser.Id;
-				return await BacklogAppService.GetListAsync(input);
-			}
-		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Default)]
-		[Route("all")]
-		[HttpGet]
-		public virtual async Task<ListResultDto<WorkflowBacklogDto>> GetEntitysAsync([FromQuery] WorkflowBacklogRetrieveInputDto inputDto)
-		{
-			inputDto.BacklogUserId = CurrentUser.Id;
-			return await BacklogAppService.GetEntitysAsync(inputDto);
-		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Detail)]
-		[HttpGet("{id}")]
-		public virtual async Task<WorkflowBacklogDto> GetAsync(System.Guid id)
-		{
-			return await BacklogAppService.GetAsync(id);
-		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Create)]
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.Create)]
 		[HttpPost]
 		public virtual async Task CreateAsync(WorkflowBacklogCreateInputDto input)
 		{
-			 await BacklogAppService.CreateAsync(input,true);
+			await WorkflowBacklogAppService.CreateAsync(input, true);
 		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.BatchCreate)]
-		[Route("items")]
-		[HttpPost]
-		public virtual async Task CreateAsync(WorkflowBacklogCreateInputDto[] input)
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.Delete)]
+		[HttpDelete("{id}")]
+		public virtual async Task DeleteAsync(System.Guid id)
 		{
-			 await BacklogAppService.CreateAsync(input);
+			await WorkflowBacklogAppService.DeleteAsync(id);
 		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Update)]
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.BatchDelete)]
+		[Route("keys")]
+		[HttpDelete]
+		public virtual async Task DeleteAsync([FromBody] System.Guid[] keys)
+		{
+			await WorkflowBacklogAppService.DeleteAsync(keys);
+		}
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.Update)]
 		[HttpPut("{id}")]
 		public virtual async Task<WorkflowBacklogDto> UpdateAsync(System.Guid id, WorkflowBacklogUpdateInputDto input)
 		{
-			return await BacklogAppService.UpdateAsync(id, input);
+			return await WorkflowBacklogAppService.UpdateAsync(id, input);
 		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.PortionUpdate)]
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.Update)]
 		[HttpPatch("{id}")]
 		[HttpPatch("Patch/{id}")]
 		public virtual async Task UpdatePortionAsync(System.Guid id, WorkflowBacklogUpdateInputDto inputDto)
 		{
-			 await BacklogAppService.UpdatePortionAsync(id, inputDto);
+			await WorkflowBacklogAppService.UpdatePortionAsync(id, inputDto);
 		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Delete)]
-		[HttpDelete("{id}")]
-		public virtual async Task DeleteAsync(System.Guid id)
-		{
-			 await BacklogAppService.DeleteAsync(id);
-		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.BatchDelete)]
-		[HttpDelete]
-		public virtual async Task DeleteAsync(WorkflowBacklogDeleteInputDto deleteInputDto)
-		{
-			 await BacklogAppService.DeleteAsync(deleteInputDto);
-		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.BatchDelete)]
-		[Route("keys")]
-		[HttpDelete]
-		public virtual async Task DeleteAsync([FromBody]System.Guid[] keys)
-		{
-			 await BacklogAppService.DeleteAsync(keys);
-		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Recover)]
-		[HttpPatch]
-		[HttpPut]
-		[Route("{id}/Deleted")]
-		public virtual Task UpdateDeletedAsync(System.Guid id, [FromBody] bool isDeleted)
-		{
-			throw new NotImplementedException();
-		}
-		[Authorize(JhAbpWorkflowPermissions.Backlogs.Default)]
-		[Route("options")]
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.Default)]
 		[HttpGet]
-		public virtual Task<ListResultDto<WorkflowBacklogDto>> GetOptionsAsync([FromBody]WorkflowBacklogRetrieveInputDto inputDto)
+		public virtual async Task<PagedResultDto<WorkflowBacklogDto>> GetListAsync([FromQuery] WorkflowBacklogRetrieveInputDto input)
 		{
-			 throw new NotImplementedException();
+			using (DataFilter.Disable<ISoftDelete>())
+			{
+				return await WorkflowBacklogAppService.GetListAsync(input);
+			}
 		}
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.Default)]
+		[Route("all")]
+		[HttpGet]
+		public virtual async Task<ListResultDto<WorkflowBacklogDto>> GetEntitysAsync([FromQuery] WorkflowBacklogRetrieveInputDto inputDto)
+		{
+			return await WorkflowBacklogAppService.GetEntitysAsync(inputDto);
+		}
+
+		[Authorize(WorkflowPermissions.WorkflowBacklogs.Detail)]
+		[HttpGet("{id}")]
+		public virtual async Task<WorkflowBacklogDto> GetAsync(System.Guid id)
+		{
+			return await WorkflowBacklogAppService.GetAsync(id);
+		}
+
+		/*
+				[Authorize(WorkflowPermissions.WorkflowBacklogs.Default)]
+				[Route("options")]
+				[HttpGet]
+				public virtual Task<ListResultDto<WorkflowBacklogDto>> GetOptionsAsync([FromBody]WorkflowBacklogRetrieveInputDto inputDto)
+				{
+					 //inputDto.MethodInput = new MethodDto<WorkflowBacklog>()
+					  //{
+						//SelectAction = (query) => query.Select(a => new {table.Name}(a.Id){Name = a.Name})
+					  //{
+					 throw new NotImplementedException();
+				}
+
+		*/
 	}
 }

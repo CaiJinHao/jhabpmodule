@@ -14,13 +14,12 @@ namespace Jh.Abp.Workflow.v1
 	public class WorkflowInstanceController : WorkflowController, IWorkflowInstanceRemoteService
 	{
 		private readonly IWorkflowInstanceAppService WorkflowInstanceAppService;
-		public IDataFilter<ISoftDelete> dataFilter { get; set; }
 		public WorkflowInstanceController(IWorkflowInstanceAppService _WorkflowInstanceAppService)
 		{
 			WorkflowInstanceAppService = _WorkflowInstanceAppService;
 		}
 
-		[Authorize(JhAbpWorkflowPermissions.WorkflowInstances.Create)]
+		[Authorize(WorkflowPermissions.WorkflowInstances.Create)]
 		[HttpPost]
 		[Route("StartWorkflow")]
 		public async Task<string> StartWorkflowAsync([FromBody] WorkflowStartDto workflowStartDto)
@@ -33,7 +32,7 @@ namespace Jh.Abp.Workflow.v1
 		/// </summary>
 		/// <param name="workflowId"></param>
 		/// <returns></returns>
-		[Authorize(JhAbpWorkflowPermissions.WorkflowInstances.Default)]
+		[Authorize(WorkflowPermissions.WorkflowInstances.Default)]
 		[HttpGet]
 		[Route("Detail/{workflowId}")]
 		public async Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstanceAsync(string workflowId)
@@ -44,7 +43,7 @@ namespace Jh.Abp.Workflow.v1
 		/// <summary>
 		/// 激活事件
 		/// </summary>
-		[Authorize(JhAbpWorkflowPermissions.WorkflowInstances.Create)]
+		[Authorize(WorkflowPermissions.WorkflowInstances.Create)]
 		[HttpPost]
 		[Route("PublishEvent")]
 		public async Task WorkflowPublishEventAsync([FromBody] WorkflowPublishEventDto workflowPublishEventDto)

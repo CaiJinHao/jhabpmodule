@@ -13,7 +13,6 @@ namespace Jh.Abp.Workflow
 ExtensibleObject,
 IHasConcurrencyStamp,
 IMethodDto<WorkflowDefinition>
-,IMultiTenant
 	{
 		/// <summary>
 		/// 版本
@@ -54,6 +53,5 @@ IMethodDto<WorkflowDefinition>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<WorkflowDefinition> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 	}
 }

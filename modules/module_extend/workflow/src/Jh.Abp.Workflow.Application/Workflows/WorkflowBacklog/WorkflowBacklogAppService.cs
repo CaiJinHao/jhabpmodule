@@ -18,24 +18,29 @@ namespace Jh.Abp.Workflow
 		private readonly IWorkflowBacklogDapperRepository BacklogDapperRepository;
 		public WorkflowBacklogAppService(IWorkflowBacklogRepository repository, IWorkflowBacklogDapperRepository backlogDapperRepository) : base(repository)
 		{
-		BacklogRepository = repository;
-		BacklogDapperRepository = backlogDapperRepository;
-		}
+		    BacklogRepository = repository;
+		    BacklogDapperRepository = backlogDapperRepository;
+            CreatePolicyName = WorkflowPermissions.WorkflowBacklogs.Create;
+            UpdatePolicyName = WorkflowPermissions.WorkflowBacklogs.Update;
+            DeletePolicyName = WorkflowPermissions.WorkflowBacklogs.Delete;
+            GetPolicyName = WorkflowPermissions.WorkflowBacklogs.Detail;
+            GetListPolicyName = WorkflowPermissions.WorkflowBacklogs.Default;
+            BatchDeletePolicyName = WorkflowPermissions.WorkflowBacklogs.BatchDelete;
+        }
 
         public override async Task<WorkflowBacklogDto> GetAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
+            await CheckGetPolicyAsync();
             var item = await base.GetAsync(id, includeDetails, cancellationToken);
             var _pointEntity = await workflowExecutionPointerAppService.GetAsync(item.Id);
-            //var _instance = await workflowInstanceAppService.GetAsync((Guid)item.WorkflowInstanceId);
             item.EventKey = _pointEntity.EventKey;
             item.EventName = _pointEntity.EventName;
-            //item.BusinessDataId = _instance.BusinessDataId;
-            //item.BusinessType = _instance.BusinessType;
             return item;
         }
 
         public override async Task<PagedResultDto<WorkflowBacklogDto>> GetListAsync(WorkflowBacklogRetrieveInputDto input, string methodStringType = "Contains", bool includeDetails = false, CancellationToken cancellationToken = default)
         {
+            await CheckGetListPolicyAsync();
             if (input.BusinessType.HasValue)
             {
                 //筛选业务类型

@@ -15,12 +15,18 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
+
+            builder.AppendLine(@"using System;
+using System.Threading.Tasks;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
                 builder.AppendLine($"\tpublic interface {FileName}");
                 builder.AppendLine("\t{");
-                builder.AppendLine("\t\t //用于添加与RemoteService公共的方法");
+                if (table.IsDelete)
+                {
+                    builder.AppendLine("\t\t Task RecoverAsync({table.KeyType} id)");
+                }
                 builder.AppendLine("\t}");
             }
             builder.AppendLine("}");

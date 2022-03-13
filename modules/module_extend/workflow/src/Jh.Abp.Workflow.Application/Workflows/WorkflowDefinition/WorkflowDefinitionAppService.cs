@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Caching;
 using WorkflowCore.Models;
 
@@ -17,22 +18,41 @@ namespace Jh.Abp.Workflow
         IWorkflowDefinitionAppService
     {
         private readonly WorkflowOptions _workflowOptions;
-        public const string WorkflowStepsCacheKey = "ApplicationWorkflowSteps";
+        protected const string WorkflowStepsCacheKey = "ApplicationWorkflowSteps";
         public IDistributedCache<List<WorkflowStepDto>> distributedCache { get; set; }
         private readonly IWorkflowDefinitionRepository WorkflowDefinitionRepository;
         public WorkflowDefinitionAppService(IWorkflowDefinitionRepository repository, IOptions<WorkflowOptions> workflowOptions) : base(repository)
         {
             WorkflowDefinitionRepository = repository;
             _workflowOptions = workflowOptions.Value;
+            CreatePolicyName = WorkflowPermissions.WorkflowDefinitions.Create;
+            UpdatePolicyName = WorkflowPermissions.WorkflowDefinitions.Update;
+            DeletePolicyName = WorkflowPermissions.WorkflowDefinitions.Delete;
+            GetPolicyName = WorkflowPermissions.WorkflowDefinitions.Detail;
+            GetListPolicyName = WorkflowPermissions.WorkflowDefinitions.Default;
+            BatchDeletePolicyName = WorkflowPermissions.WorkflowDefinitions.BatchDelete;
+        }
+
+        public virtual async Task RecoverAsync(System.Guid id)
+        {
+            await CheckPolicyAsync(WorkflowPermissions.WorkflowDefinitions.Recover);
+            using (DataFilter.Disable<ISoftDelete>())
+            {
+                var entity = await crudRepository.FindAsync(id, false);
+                entity.IsDeleted = false;
+                entity.DeleterId = CurrentUser.Id;
+                entity.DeletionTime = Clock.Now;
+            }
         }
 
         public virtual async Task<List<WorkflowStepDto>> GetApplicationStepsAsync()
         {
+            await CheckGetListPolicyAsync();
             distributedCache.Remove(WorkflowStepsCacheKey);
             return await distributedCache.GetOrAddAsync(WorkflowStepsCacheKey, () => Task.FromResult(GetApplicationSteps()));
         }
 
-        public virtual List<WorkflowStepDto> GetApplicationSteps()
+        protected virtual List<WorkflowStepDto> GetApplicationSteps()
         {
             var dataTypes = new List<Type>();
             foreach (var item in _workflowOptions.Assemblies)
@@ -47,7 +67,7 @@ namespace Jh.Abp.Workflow
             return stepDtos;
         }
 
-        public virtual WorkflowStepDto ConvertToWorkflowStepDto(Type type)
+        protected virtual WorkflowStepDto ConvertToWorkflowStepDto(Type type)
         {
             var propertys = type.GetProperties().Where(a => a.CanWrite);
             var inputObject = new JObject();
@@ -75,7 +95,7 @@ namespace Jh.Abp.Workflow
             };
         }
 
-        public virtual IEnumerable<Type> GetApplicationStepsByAssembly(Assembly assembly)
+        protected virtual IEnumerable<Type> GetApplicationStepsByAssembly(Assembly assembly)
         {
             return assembly.GetTypes().Where(a => a.IsClass && a.IsAssignableTo(typeof(StepBody)) && a.GetCustomAttribute<NotShowStepAttribute>() == null);
         }

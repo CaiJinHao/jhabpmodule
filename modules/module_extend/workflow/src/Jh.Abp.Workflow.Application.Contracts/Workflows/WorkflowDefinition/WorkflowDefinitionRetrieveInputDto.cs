@@ -10,7 +10,6 @@ namespace Jh.Abp.Workflow
     /// </summary>
     public class WorkflowDefinitionRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<WorkflowDefinition>
 , IRetrieveDelete
-,IMultiTenant
 	{
 		/// <summary>
 		/// 是否删除
@@ -21,6 +20,5 @@ namespace Jh.Abp.Workflow
 		/// </summary>
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<WorkflowDefinition> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 	}
 }

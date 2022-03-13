@@ -9,7 +9,6 @@ namespace Jh.Abp.Workflow
     /// </summary>
     public class WorkflowBacklogCreateInputDto: 
 IMethodDto<WorkflowBacklog>
-,IMultiTenant
 	{
 		/// <summary>
 		/// WorkflowInstanceId
@@ -42,6 +41,5 @@ IMethodDto<WorkflowBacklog>
 		/// 方法参数回调
 		/// </summary>
 		public MethodDto<WorkflowBacklog> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 	}
 }

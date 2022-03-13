@@ -21,6 +21,12 @@ namespace Jh.Abp.Workflow
         public WorkflowInstanceAppService(IWorkflowInstanceRepository repository) : base(repository)
         {
             WorkflowInstanceRepository = repository;
+            CreatePolicyName = WorkflowPermissions.WorkflowInstances.Create;
+            UpdatePolicyName = WorkflowPermissions.WorkflowInstances.Update;
+            DeletePolicyName = WorkflowPermissions.WorkflowInstances.Delete;
+            GetPolicyName = WorkflowPermissions.WorkflowInstances.Detail;
+            GetListPolicyName = WorkflowPermissions.WorkflowInstances.Default;
+            BatchDeletePolicyName = WorkflowPermissions.WorkflowInstances.BatchDelete;
         }
 
         /// <summary>

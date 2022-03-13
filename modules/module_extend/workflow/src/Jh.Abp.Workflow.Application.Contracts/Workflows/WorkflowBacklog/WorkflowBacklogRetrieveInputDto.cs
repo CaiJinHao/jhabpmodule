@@ -10,7 +10,6 @@ namespace Jh.Abp.Workflow
     /// </summary>
     public class WorkflowBacklogRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<WorkflowBacklog>
 , IRetrieveDelete
-,IMultiTenant
 	{
 		/// <summary>
 		/// 待办人
@@ -31,6 +30,5 @@ namespace Jh.Abp.Workflow
 		/// </summary>
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<WorkflowBacklog> MethodInput { get; set; }
-		 public virtual Guid? TenantId { get; set; }
 	}
 }
