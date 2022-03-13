@@ -31,7 +31,7 @@ using Volo.Abp.Data;");
                 builder.AppendLine($"\t[Area({Domain}RemoteServiceConsts.ModuleName)]");
                 builder.AppendLine($"\t[RemoteService(Name = {Domain}RemoteServiceConsts.RemoteServiceName)]");
                 builder.AppendLine("\t[Route(\"api/v{apiVersion:apiVersion}/[controller]\")]");
-                builder.AppendLine($"\tpublic class {FileName} : {table.ControllerBase},I{table.Name}BaseAppService");
+                builder.AppendLine($"\tpublic class {FileName} : {table.ControllerBase},I{table.Name}RemoteService");
                 builder.AppendLine("\t{");
                 {
 

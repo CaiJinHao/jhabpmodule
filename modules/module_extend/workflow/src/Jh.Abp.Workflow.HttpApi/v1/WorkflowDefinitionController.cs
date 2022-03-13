@@ -13,7 +13,7 @@ namespace Jh.Abp.Workflow.v1
 	[Area(WorkflowRemoteServiceConsts.ModuleName)]
 	[RemoteService(Name = WorkflowRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class WorkflowDefinitionController : WorkflowController, IWorkflowDefinitionBaseAppService
+	public class WorkflowDefinitionController : WorkflowController, IWorkflowDefinitionRemoteService
 	{
 		protected readonly IWorkflowDefinitionAppService WorkflowDefinitionAppService;
 		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
