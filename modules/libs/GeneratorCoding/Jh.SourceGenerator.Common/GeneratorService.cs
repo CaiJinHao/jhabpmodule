@@ -223,6 +223,7 @@ namespace Jh.SourceGenerator.Common
                 //Domain
                 CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
                 CreateFile(new DomainManager(tableDto, generatorOptions.CreateDomainPath));
+                CreateFile(new DataSeedContributor(tableDto, generatorOptions.CreateDomainPath));
 
                 //EfCore
                 CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));

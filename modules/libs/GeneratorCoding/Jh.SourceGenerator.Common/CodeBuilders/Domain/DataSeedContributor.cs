@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.SourceGenerator.Common.CodeBuilders.Domain
+namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class DataSeedContributor : CodeBuilderAbs
     {
