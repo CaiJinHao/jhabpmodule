@@ -52,7 +52,6 @@ namespace Jh.Abp.Workflow
 
         public async Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstance(string Id, CancellationToken cancellationToken = default)
         {
-            var t = CurrentTenant;
             var uid = new Guid(Id);
             var entity = await (await GetDbSetAsync())
                 .AsNoTracking()
