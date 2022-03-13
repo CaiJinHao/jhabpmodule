@@ -18,7 +18,8 @@ namespace Jh.Abp.Workflow
             registerWorkflowAction?.Invoke(workflowHost);
             workflowHost.Start();
 
-            //var workflowDefinitionRepository = serviceProvider.GetRequiredService<IWorkflowDefinitionRepository>();
+            var workflowDefinitionRepository = serviceProvider.GetRequiredService<IWorkflowDefinitionRepository>();
+            workflowDefinitionRepository.LoadWorkflowDefinitionAllAsync().Wait();
             //workflowDefinitionRepository.LoadWorkflowDefinitionByFileAsync("/Localization/WorkflowDefinitions/LeaveApprovalWorkflow.json").Wait();
 
             var appLifetime = serviceProvider.GetService<IHostApplicationLifetime>();
