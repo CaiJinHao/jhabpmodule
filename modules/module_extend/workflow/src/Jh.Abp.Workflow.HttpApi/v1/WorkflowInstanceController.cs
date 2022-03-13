@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
 
 namespace Jh.Abp.Workflow.v1
@@ -13,10 +14,29 @@ namespace Jh.Abp.Workflow.v1
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class WorkflowInstanceController : WorkflowController, IWorkflowInstanceRemoteService
 	{
+		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
 		private readonly IWorkflowInstanceAppService WorkflowInstanceAppService;
 		public WorkflowInstanceController(IWorkflowInstanceAppService _WorkflowInstanceAppService)
 		{
 			WorkflowInstanceAppService = _WorkflowInstanceAppService;
+		}
+
+		[Authorize(WorkflowPermissions.WorkflowInstances.Default)]
+		[HttpGet]
+		public virtual async Task<PagedResultDto<WorkflowInstanceDto>> GetListAsync([FromQuery] WorkflowInstanceRetrieveInputDto input)
+		{
+			using (DataFilter.Disable<ISoftDelete>())
+			{
+				return await WorkflowInstanceAppService.GetListAsync(input);
+			}
+		}
+
+		[Authorize(WorkflowPermissions.WorkflowInstances.Default)]
+		[Route("all")]
+		[HttpGet]
+		public virtual async Task<ListResultDto<WorkflowInstanceDto>> GetEntitysAsync([FromQuery] WorkflowInstanceRetrieveInputDto inputDto)
+		{
+			return await WorkflowInstanceAppService.GetEntitysAsync(inputDto);
 		}
 
 		[Authorize(WorkflowPermissions.WorkflowInstances.Create)]
