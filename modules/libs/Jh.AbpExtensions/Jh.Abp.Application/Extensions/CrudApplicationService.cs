@@ -74,7 +74,7 @@ namespace Jh.Abp.Application
             }
         }
 
-        protected virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
+        protected virtual async Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), inputDto);
@@ -105,8 +105,8 @@ namespace Jh.Abp.Application
                     }
                 }
             }
-            return new ListResultDto<TEntityDto>(
-                 ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities)
+            return new ListResultDto<TPagedRetrieveOutputDto>(
+                 ObjectMapper.Map<List<TEntity>, List<TPagedRetrieveOutputDto>>(entities)
             );
         }
        
@@ -234,20 +234,20 @@ namespace Jh.Abp.Application
         public override async Task<TEntityDto> CreateAsync(TCreateInputDto input)
         {
             await CheckCreatePolicyAsync();
-            var data = await CreateAsync(input);
+            var data = await CreateAsync(input, autoSave: false);
             return MapToGetOutputDto(data);
         }
 
         public virtual async Task DeleteAsync(TKey[] keys)
         {
             await CheckPolicyAsync(BatchDeletePolicyName);
-            await DeleteAsync(keys);
+            await DeleteAsync(keys, autoSave: false);
         }
 
         public override async Task DeleteAsync(TKey id)
         {
             await CheckDeletePolicyAsync();
-            await DeleteAsync(id);
+            await DeleteAsync(id, autoSave: false);
         }
 
         public override async Task<TEntityDto> UpdateAsync(TKey id, TUpdateInputDto updateInput)
@@ -268,25 +268,25 @@ namespace Jh.Abp.Application
         public virtual async Task UpdatePortionAsync(TKey id, TUpdateInputDto inputDto)
         {
             await CheckUpdatePolicyAsync();
-            await UpdatePortionAsync(id, inputDto);
+            await UpdatePortionAsync(id, inputDto, includeDetails: false);
         }
 
         public virtual async Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto)
         {
             await CheckGetListPolicyAsync();
-            return await GetEntitysAsync(inputDto);
+            return await GetEntitysAsync(inputDto, includeDetails: false);
         }
 
         public override async Task<TEntityDto> GetAsync(TKey id)
         {
             await CheckGetPolicyAsync();
-            return await GetAsync(id);
+            return await GetAsync(id, includeDetails: false);
         }
 
         public override async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
-            return await GetListAsync(input);
+            return await GetListAsync(input, includeDetails: false);
         }
 
         #endregion
