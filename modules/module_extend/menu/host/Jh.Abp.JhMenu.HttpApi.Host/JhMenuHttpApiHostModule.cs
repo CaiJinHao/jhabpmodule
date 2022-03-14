@@ -44,6 +44,7 @@ using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.Domain.Entities.Events.Distributed;
+using Jh.Abp.JhIdentity;
 
 namespace Jh.Abp.JhMenu;
 
@@ -62,6 +63,7 @@ namespace Jh.Abp.JhMenu;
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),//身份
+    typeof(JhIdentityHttpApiClientModule),
     typeof(AbpSwashbuckleModule)
     )]
 public class JhMenuHttpApiHostModule : AbpModule

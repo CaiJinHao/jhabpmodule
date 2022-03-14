@@ -8,8 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.EventBus.Distributed;
-using Volo.Abp.EventBus.Local;
-using Volo.Abp.Http.Client.DynamicProxying;
 
 namespace Jh.Abp.JhMenu
 {
@@ -19,7 +17,7 @@ namespace Jh.Abp.JhMenu
     {
         protected MenuRoleMapManager MenuRoleMapManager => LazyServiceProvider.LazyGetRequiredService<MenuRoleMapManager>();
         protected IDistributedEventBus distributedEventBus =>LazyServiceProvider.LazyGetRequiredService<IDistributedEventBus>();
-        protected IHttpClientProxy<Jh.Abp.JhIdentity.IIdentityUserRemoteService> IdentityUserRemoteService => LazyServiceProvider.LazyGetRequiredService<IHttpClientProxy<Jh.Abp.JhIdentity.IIdentityUserRemoteService>>();
+        protected Jh.Abp.JhIdentity.IIdentityUserRemoteService IdentityUserRemoteService => LazyServiceProvider.LazyGetRequiredService<Jh.Abp.JhIdentity.IIdentityUserRemoteService>();
         protected IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
         protected readonly IMenuRoleMapRepository MenuRoleMapRepository;
         protected readonly IMenuRoleMapDapperRepository MenuRoleMapDapperRepository;
@@ -57,7 +55,7 @@ namespace Jh.Abp.JhMenu
             {
                 return default;
             }
-            var roles = await IdentityUserRemoteService.Service.GetRolesAsync((Guid)CurrentUser.Id);
+            var roles = await IdentityUserRemoteService.GetRolesAsync((Guid)CurrentUser.Id);
             return roles.Items.Select(a => a.Id);
         }
 
