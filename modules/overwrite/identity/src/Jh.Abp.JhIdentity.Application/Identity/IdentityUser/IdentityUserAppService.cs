@@ -18,12 +18,12 @@ namespace Jh.Abp.JhIdentity
 {
     public class IdentityUserAppService
 		: CrudApplicationService<IdentityUser, IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>,
-		IIdentityUserAppService, IIdentityUserBaseAppService
+		IIdentityUserAppService
     {
         public IdentityUserManager UserManager { get; set; }
         protected IOrganizationUnitAppService OrganizationUnitAppService =>LazyServiceProvider.LazyGetRequiredService<OrganizationUnitAppService>();    
-        protected IOrganizationUnitRepository organizationUnits => LazyServiceProvider.LazyGetRequiredService<IOrganizationUnitRepository>();
-        protected Volo.Abp.Identity.IOrganizationUnitRepository organizationUnitRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
+        protected IOrganizationUnitRepository OrganizationUnits => LazyServiceProvider.LazyGetRequiredService<IOrganizationUnitRepository>();
+        protected Volo.Abp.Identity.IOrganizationUnitRepository OrganizationUnitRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         protected IOptions<IdentityOptions> IdentityOptions { get; }
 
         private readonly IIdentityUserRepository IdentityUserRepository;
@@ -64,15 +64,11 @@ namespace Jh.Abp.JhIdentity
 
             inputDto.MapExtraPropertiesTo(user);
 
-            var methodDto = inputDto as IMethodDto<IdentityUser>;
-            if (methodDto != null)
+            if (inputDto is IMethodDto<IdentityUser> methodDto)
             {
                 if (methodDto.MethodInput != null)
                 {
-                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
-                    {
-                        methodDto.MethodInput.CreateOrUpdateEntityAction(user);
-                    }
+                    methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(user);
                 }
             }
 
@@ -127,15 +123,11 @@ namespace Jh.Abp.JhIdentity
                     user.AddOrganizationUnit(item);
                 }
             }
-            var methodDto = input as IMethodDto<IdentityUser>;
-            if (methodDto != null)
+            if (input is IMethodDto<IdentityUser> methodDto)
             {
                 if (methodDto.MethodInput != null)
                 {
-                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
-                    {
-                        methodDto.MethodInput.CreateOrUpdateEntityAction(user);
-                    }
+                    methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(user);
                 }
             }
 
@@ -185,13 +177,13 @@ namespace Jh.Abp.JhIdentity
         {
             if (input.OrganizationUnitId.HasValue)
             {
-                var parentOrg = await organizationUnits.GetAsync(input.OrganizationUnitId.Value, includeDetails: false);
+                var parentOrg = await OrganizationUnits.GetAsync(input.OrganizationUnitId.Value, includeDetails: false);
                 input.MethodInput = new MethodDto<IdentityUser>()
                 {
                     QueryAction = (entity) =>
                     {
-                        var orgAllChildrens = organizationUnitRepository.GetAllChildrenWithParentCodeAsync(parentOrg.Code, parentOrg.Id).Result.Select(a => a.Id);
-                        var userOrgs = organizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>().Result;
+                        var orgAllChildrens = OrganizationUnitRepository.GetAllChildrenWithParentCodeAsync(parentOrg.Code, parentOrg.Id).Result.Select(a => a.Id);
+                        var userOrgs = OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>().Result;
                         var query = from user in entity
                                     join userOrg in userOrgs on user.Id equals userOrg.UserId
                                     where userOrg.OrganizationUnitId == input.OrganizationUnitId || orgAllChildrens.Contains(userOrg.OrganizationUnitId)
@@ -221,8 +213,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<IdentityUserDto>> GetOrganizationsAsync(Guid id)
         {
-            var data = await OrganizationUnitAppService.GetMembersAsync(id);
-            return new ListResultDto<IdentityUserDto>(data);
+            return await OrganizationUnitAppService.GetMembersAsync(id);
         }
 
         public virtual async Task UpdateLockoutEnabledAsync(Guid id, bool lockoutEnabled)

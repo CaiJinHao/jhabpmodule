@@ -19,7 +19,7 @@ namespace Jh.Abp.JhIdentity.v1
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class IdentityUserController : JhIdentityController, IIdentityUserRemoteService
+	public class IdentityUserController : JhIdentityController, IIdentityUserAppService
     {
         public IProfileAppService ProfileAppService { get; set; }
 
@@ -30,13 +30,13 @@ namespace Jh.Abp.JhIdentity.v1
             IdentityUserAppService = identityUserAppService;
         }
 
-        public IDataFilter<ISoftDelete> dataFilter { get; set; }
+        public IDataFilter<ISoftDelete> DataFilterDelete { get; set; }
 
         [Authorize(IdentityPermissions.Users.Create)]
         [HttpPost]
-        public virtual async Task CreateAsync(IdentityUserCreateInputDto input)
+        public virtual async Task<IdentityUserDto> CreateAsync(IdentityUserCreateInputDto input)
         {
-            await IdentityUserAppService.CreateAsync(input);
+            return await IdentityUserAppService.CreateAsync(input);
         }
 
         [Authorize(IdentityPermissions.Users.Delete)]
@@ -104,7 +104,7 @@ namespace Jh.Abp.JhIdentity.v1
         [HttpGet]
         public virtual async Task<PagedResultDto<IdentityUserDto>> GetListAsync([FromQuery] IdentityUserRetrieveInputDto input)
         {
-            using (dataFilter.Disable())
+            using (DataFilterDelete.Disable())
             {
                 return await IdentityUserAppService.GetListAsync(input);
             }

@@ -20,7 +20,7 @@ namespace Jh.Abp.QuickComponents
     [DependsOn(typeof(AbpIdentityModelModule))]
     public class AbpQuickComponentsModule: AbpModule
     {
-        private IConfiguration configuration { get; set; }
+        private IConfiguration Configuration { get; set; }
 
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
@@ -34,7 +34,7 @@ namespace Jh.Abp.QuickComponents
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
-            configuration = context.Services.GetConfiguration();
+            Configuration = context.Services.GetConfiguration();
 
             Configure<AbpVirtualFileSystemOptions>(options =>
             {

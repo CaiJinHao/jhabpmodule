@@ -13,7 +13,7 @@ namespace Jh.Abp.JhIdentity
 {
     public class AccessTokenAppService :ApplicationService, IAccessTokenAppService, ITransientDependency
     {
-        protected IJhIdentityModelAuthenticationService jhIdentityModelAuthenticationService => LazyServiceProvider.LazyGetRequiredService<IJhIdentityModelAuthenticationService>();
+        protected IJhIdentityModelAuthenticationService JhIdentityModelAuthenticationService => LazyServiceProvider.LazyGetRequiredService<IJhIdentityModelAuthenticationService>();
         protected readonly IdentityClientOptions _identityClientOptions;
         public AccessTokenAppService(
             IOptions<IdentityClientOptions> identityClientOptions
@@ -30,7 +30,7 @@ namespace Jh.Abp.JhIdentity
             configuration.UserName = requestDto.UserNameOrEmailAddress;
             configuration.UserPassword = requestDto.Password;
 
-            var tokenResponse = await jhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration);
+            var tokenResponse = await JhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration);
             return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 
@@ -40,7 +40,7 @@ namespace Jh.Abp.JhIdentity
             var configuration = CreateIdentityClientConfiguration(organizationName);
             configuration.GrantType = OidcConstants.GrantTypes.RefreshToken;
 
-            var tokenResponse = await jhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration, refreshToken);
+            var tokenResponse = await JhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration, refreshToken);
             return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 

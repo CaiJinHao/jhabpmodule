@@ -1,3 +1,4 @@
+using Jh.Abp.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,10 +17,10 @@ namespace Jh.Abp.JhIdentity.v1
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
 	[Area(JhIdentityRemoteServiceConsts.ModuleName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class OrganizationUnitController : JhIdentityController, IOrganizationUnitRemoteService
+	public class OrganizationUnitController : JhIdentityController, IOrganizationUnitAppService
 	{
 		private readonly IOrganizationUnitAppService OrganizationUnitAppService;
-		public IDataFilter<ISoftDelete> dataFilter { get; set; }
+		public IDataFilter<ISoftDelete> DataFilterDelete { get; set; }
 		public OrganizationUnitController(IOrganizationUnitAppService _OrganizationUnitAppService)
 		{
 			OrganizationUnitAppService = _OrganizationUnitAppService;
@@ -27,9 +28,9 @@ namespace Jh.Abp.JhIdentity.v1
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Create)]
 		[HttpPost]
-		public virtual async Task CreateAsync(OrganizationUnitCreateInputDto input)
+		public virtual async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateInputDto input)
 		{
-			await OrganizationUnitAppService.CreateAsync(input);
+			return await OrganizationUnitAppService.CreateAsync(input);
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Delete)]
@@ -75,7 +76,7 @@ namespace Jh.Abp.JhIdentity.v1
 		[HttpGet]
 		public virtual async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync([FromQuery] OrganizationUnitRetrieveInputDto input)
 		{
-			using (dataFilter.Disable())
+			using (DataFilterDelete.Disable())
 			{
 				return await OrganizationUnitAppService.GetListAsync(input);
 			}
@@ -97,11 +98,18 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
-		[HttpGet("Trees")]
-		public virtual async Task<dynamic> GetOrganizationTreeAsync()
+		[HttpGet]
+		[Route("{id}/roles")]
+		public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
 		{
-			var items = await OrganizationUnitAppService.GetOrganizationTreeAsync();
-			return new { items };
+			return await OrganizationUnitAppService.GetRolesAsync(id);
+		}
+
+		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
+		[HttpGet("Trees")]
+		public virtual async Task<ListResultDto<TreeDto>> GetOrganizationTreeAsync()
+		{
+			return await OrganizationUnitAppService.GetOrganizationTreeAsync();
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
@@ -117,15 +125,15 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
-		[HttpGet]
-		[Route("{id}/roles")]
-		public virtual async Task<dynamic> GetRolesByOrgAsync(Guid id)
-		{
-			var datas = await OrganizationUnitAppService.GetRolesAsync(id);
-			return new
-			{
-				items = datas.Select(a => new { name = a.Name, value = a.Id })
-			};
-		}
-	}
+		[HttpGet("{id}/Members")]
+		public async Task<ListResultDto<IdentityUserDto>> GetMembersAsync(Guid id)
+        {
+			return await OrganizationUnitAppService.GetMembersAsync(id);
+        }
+
+        public Task CreateByRoleAsync(Guid roleId)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

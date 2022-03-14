@@ -22,11 +22,11 @@ namespace Jh.Abp.JhIdentity
 		: CrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>,
 		IOrganizationUnitAppService
 	{
-        protected IJhIdentityRoleRepository identityRoleRepository=>LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleRepository>();
-        protected Volo.Abp.Identity.IOrganizationUnitRepository organizationUnitsRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
+        protected IJhIdentityRoleRepository IdentityRoleRepository=>LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleRepository>();
+        protected Volo.Abp.Identity.IOrganizationUnitRepository OrganizationUnitsRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         private readonly IOrganizationUnitRepository OrganizationUnitRepository;
 		private readonly IOrganizationUnitDapperRepository OrganizationUnitDapperRepository;
-		private JhOrganizationUnitManager organizationUnitManager => LazyServiceProvider.LazyGetRequiredService<JhOrganizationUnitManager>();
+		private JhOrganizationUnitManager OrganizationUnitManager => LazyServiceProvider.LazyGetRequiredService<JhOrganizationUnitManager>();
         public OrganizationUnitAppService(IOrganizationUnitRepository repository, IOrganizationUnitDapperRepository organizationunitDapperRepository) : base(repository)
         {
             OrganizationUnitRepository = repository;
@@ -57,8 +57,10 @@ namespace Jh.Abp.JhIdentity
         public override async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateInputDto input)
 		{
             await CheckCreatePolicyAsync();
-			var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId);
-			organizationUnit.ConcurrencyStamp = input.ConcurrencyStamp;
+            var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId)
+            {
+                ConcurrencyStamp = input.ConcurrencyStamp
+            };
             input.RoleIds = await GetAllRoleIdAsync();//添加所有的角色到该组织
             if (input.RoleIds != null)
             {
@@ -74,14 +76,14 @@ namespace Jh.Abp.JhIdentity
                     organizationUnit.SetProperty(item.Key, item.Value);
                 }
             }
-            await organizationUnitManager.CreateAsync(organizationUnit);
+            await OrganizationUnitManager.CreateAsync(organizationUnit);
             return MapToGetOutputDto(organizationUnit);
 		}
 
         public override async Task DeleteAsync(Guid id)
         {
             await CheckDeletePolicyAsync();
-            await organizationUnitManager.DeleteAsync(id);//自动禁用下级
+            await OrganizationUnitManager.DeleteAsync(id);//自动禁用下级
         }
 
         public override async Task DeleteAsync(Guid[] keys)
@@ -89,7 +91,7 @@ namespace Jh.Abp.JhIdentity
             await CheckDeletePolicyAsync();
             foreach (var item in keys)
             {
-				await organizationUnitManager.DeleteAsync(item);//自动禁用下级
+				await OrganizationUnitManager.DeleteAsync(item);//自动禁用下级
 			}
 		}
 
@@ -99,7 +101,7 @@ namespace Jh.Abp.JhIdentity
             var query = await CreateFilteredQueryAsync(deleteInputDto);
             foreach (var item in query.ToArray())
             {
-				await organizationUnitManager.DeleteAsync(item.Id);//自动禁用下级
+				await OrganizationUnitManager.DeleteAsync(item.Id);//自动禁用下级
 			}
 		}
 
@@ -124,7 +126,7 @@ namespace Jh.Abp.JhIdentity
                 }
             }
             await CurrentUnitOfWork.SaveChangesAsync();
-            await organizationUnitManager.MoveAsync(id, input.ParentId);
+            await OrganizationUnitManager.MoveAsync(id, input.ParentId);
 			return await MapToGetOutputDtoAsync(entity);
         }
 
@@ -165,7 +167,7 @@ namespace Jh.Abp.JhIdentity
             return data;
         }
 
-		public virtual async Task<List<TreeDto>> GetOrganizationTreeAsync()
+		public virtual async Task<ListResultDto<TreeDto>> GetOrganizationTreeAsync()
 		{
             await CheckGetListPolicyAsync();
             var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
@@ -179,40 +181,40 @@ namespace Jh.Abp.JhIdentity
                    obj = a
                }
            ).ToListAsync();
-            return await UtilTree.GetMenusTreeAsync(resutlMenus);
+            var data= await UtilTree.GetMenusTreeAsync(resutlMenus);
+            return new ListResultDto<TreeDto>(data);
         }
 
-        public virtual async Task<List<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId)
+        public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId)
         {
             await CheckGetListPolicyAsync();
             var org = await GetEntityByIdAsync(organizationUnitId);
-            var entities = await organizationUnitsRepository.GetRolesAsync(org);
+            var entities = await OrganizationUnitsRepository.GetRolesAsync(org);
 
             var dtos = new List<IdentityRoleDto>();
             foreach (var entity in entities)
             {
                 dtos.Add(ObjectMapper.Map<IdentityRole, IdentityRoleDto>(entity));
             }
-            return dtos;
-
+            return new ListResultDto<IdentityRoleDto>(dtos);
         }
 
-        public virtual async Task<List<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId)
+        public virtual async Task<ListResultDto<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId)
         {
             await CheckGetListPolicyAsync();
             var org = await GetEntityByIdAsync(organizationUnitId);
-            var entities = await organizationUnitsRepository.GetMembersAsync(org);
+            var entities = await OrganizationUnitsRepository.GetMembersAsync(org);
             var dtos = new List<IdentityUserDto>();
             foreach (var entity in entities)
             {
                 dtos.Add(ObjectMapper.Map<IdentityUser, IdentityUserDto>(entity));
             }
-            return dtos;
+            return new ListResultDto<IdentityUserDto>(dtos);
         }
 
         private async Task<Guid[]> GetAllRoleIdAsync()
         {
-            return (await identityRoleRepository.GetQueryableAsync(false)).AsNoTracking().Select(a=>a.Id).ToArray();
+            return (await IdentityRoleRepository.GetQueryableAsync(false)).AsNoTracking().Select(a=>a.Id).ToArray();
         }
 
         public virtual async Task CreateByRoleAsync(Guid roleId)

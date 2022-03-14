@@ -280,16 +280,14 @@ public class JhIdentityIdentityServerModule : AbpModule
         await SeedData(context);
     }
 
-    private async Task SeedData(ApplicationInitializationContext context)
+    private static async Task SeedData(ApplicationInitializationContext context)
     {
-        using (var scope = context.ServiceProvider.CreateScope())
-        {
-            var data = scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>();
-            var dataSeedContext = new DataSeedContext()
-                .WithProperty("AdminEmail", "531003539@qq.com")
-                .WithProperty("AdminPassword", "KimHo@123");
-            await data.SeedAsync(dataSeedContext);
-        }
+        using var scope = context.ServiceProvider.CreateScope();
+        var data = scope.ServiceProvider
+                    .GetRequiredService<IDataSeeder>();
+        var dataSeedContext = new DataSeedContext()
+            .WithProperty("AdminEmail", "531003539@qq.com")
+            .WithProperty("AdminPassword", "KimHo@123");
+        await data.SeedAsync(dataSeedContext);
     }
 }

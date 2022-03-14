@@ -3,6 +3,7 @@ using Jh.Abp.Common;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity
@@ -11,11 +12,11 @@ namespace Jh.Abp.JhIdentity
 		: ICrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>
 	{
 		Task RecoverAsync(Guid id);
-		Task<List<TreeDto>> GetOrganizationTreeAsync();
+		Task<ListResultDto<TreeDto>> GetOrganizationTreeAsync();
 
-		Task<List<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId);
+		Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId);
 
-		Task<List<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId);
+		Task<ListResultDto<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId);
 
 		Task CreateByRoleAsync(Guid roleId);
 	}

@@ -38,51 +38,43 @@ namespace Jh.Abp.Application
             crudRepository = repository;
         }
 
-        protected virtual async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entity = ObjectMapper.Map<TCreateInputDto, TEntity>(inputDto);
-            var methodDto = inputDto as IMethodDto<TEntity>;
-            if (methodDto != null)
+            if (inputDto is IMethodDto<TEntity> methodDto)
             {
                 if (methodDto.MethodInput != null)
                 {
-                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
-                    {
-                        methodDto.MethodInput.CreateOrUpdateEntityAction(entity);
-                    }
+                    methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(entity);
                 }
             }
             return await crudRepository.CreateAsync(entity, autoSave, cancellationToken);
         }
 
-        protected virtual async Task DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, isHard, cancellationToken);
         }
 
-        protected virtual async Task DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, isHard, cancellationToken);
         }
 
-        protected virtual async Task UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var entity = await crudRepository.FindAsync(key, includeDetails, cancellationToken);
             EntityOperator.UpdatePortionToEntity(updateInput, entity);
-            var methodDto = updateInput as IMethodDto<TEntity>;
-            if (methodDto != null)
+            if (updateInput is IMethodDto<TEntity> methodDto)
             {
                 if (methodDto.MethodInput != null)
                 {
-                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
-                    {
-                        methodDto.MethodInput.CreateOrUpdateEntityAction(entity);
-                    }
+                    methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(entity);
                 }
             }
         }
 
-        protected virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), inputDto);
@@ -118,13 +110,13 @@ namespace Jh.Abp.Application
             );
         }
        
-        protected virtual async Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var entity = await crudRepository.FindAsync(id, includeDetails, cancellationToken);//不用Find会查不出来扩展字段
             return await MapToGetOutputDtoAsync(entity);
         }
 
-        protected virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), input);
 
@@ -197,8 +189,7 @@ namespace Jh.Abp.Application
             }
             if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
             {
-                var retrieveDelete = inputDto as IRetrieveDelete;
-                if (retrieveDelete != null)
+                if (inputDto is IRetrieveDelete retrieveDelete)
                 {
                     if (retrieveDelete.Deleted != null)
                     {
@@ -225,14 +216,14 @@ namespace Jh.Abp.Application
             return query;
         }
 
-        protected virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default)
         {
             await CheckGetListPolicyAsync();
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(), inputDto);
             return query.Any();
         }
 
-        protected virtual async Task DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             var query = await CreateFilteredQueryAsync(deleteInputDto);
             await crudRepository.DeleteEntitysAsync(query, autoSave, isHard, cancellationToken);
@@ -264,15 +255,11 @@ namespace Jh.Abp.Application
             await CheckUpdatePolicyAsync();
             var entity = await GetEntityByIdAsync(id);//调用的是Repository的GetAsync
             await MapToEntityAsync(updateInput, entity);
-            var methodDto = updateInput as IMethodDto<TEntity>;
-            if (methodDto != null)
+            if (updateInput is IMethodDto<TEntity> methodDto)
             {
                 if (methodDto.MethodInput != null)
                 {
-                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
-                    {
-                        methodDto.MethodInput.CreateOrUpdateEntityAction(entity);
-                    }
+                    methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(entity);
                 }
             }
             return await MapToGetOutputDtoAsync(entity);
