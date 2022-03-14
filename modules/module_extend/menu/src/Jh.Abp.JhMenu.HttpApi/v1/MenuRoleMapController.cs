@@ -43,7 +43,7 @@ namespace Jh.Abp.JhMenu.v1
         }
 
         [Obsolete]
-        [Authorize(JhMenuPermissions.MenuRoleMaps.BatchDelete)]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
         [Route("keys")]
         [HttpDelete]
         public Task DeleteAsync(Guid[] keys)
@@ -52,7 +52,7 @@ namespace Jh.Abp.JhMenu.v1
         }
 
         [Obsolete]
-        [Authorize(JhMenuPermissions.MenuRoleMaps.Delete)]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
         [HttpDelete("{id}")]
         public Task DeleteAsync(Guid id)
         {
@@ -60,7 +60,7 @@ namespace Jh.Abp.JhMenu.v1
         }
 
         [Obsolete]
-        [Authorize(JhMenuPermissions.MenuRoleMaps.Detail)]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
         [HttpGet("{id}")]
         public Task<MenuRoleMapDto> GetAsync(Guid id)
         {
@@ -85,7 +85,7 @@ namespace Jh.Abp.JhMenu.v1
         }
 
         [Obsolete]
-        [Authorize(JhMenuPermissions.MenuRoleMaps.Update)]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
         [HttpPut("{id}")]
         public Task<MenuRoleMapDto> UpdateAsync(Guid id, MenuRoleMapUpdateInputDto input)
         {
@@ -93,7 +93,7 @@ namespace Jh.Abp.JhMenu.v1
         }
 
         [Obsolete]
-        [Authorize(JhMenuPermissions.MenuRoleMaps.Update)]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
         [HttpPut("Patch/{id}")]
         [HttpPatch("{id}")]
         public Task UpdatePortionAsync(Guid id, MenuRoleMapUpdateInputDto inputDto)
