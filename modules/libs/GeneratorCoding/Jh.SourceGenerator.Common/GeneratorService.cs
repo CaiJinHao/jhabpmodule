@@ -217,8 +217,6 @@ namespace Jh.SourceGenerator.Common
                 CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new IBaseAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new IRemoteServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
 
                 //Domain
                 CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
