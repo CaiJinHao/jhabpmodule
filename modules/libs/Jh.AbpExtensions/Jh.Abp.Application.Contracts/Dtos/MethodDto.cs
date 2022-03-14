@@ -10,11 +10,12 @@ namespace Jh.Abp.Application.Contracts
     /// 方法输入参数Dto
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public  class MethodDto<TEntity>
+    public class MethodDto<TEntity>
     {
         public Action<TEntity> CreateOrUpdateEntityAction;
-
         public Func<IQueryable<TEntity>, IQueryable<TEntity>> QueryAction;
         public Func<IQueryable<TEntity>, IQueryable<TEntity>> SelectAction;
+
+        public string StringTypeQueryMethod { get; set; } = ObjectMethodConsts.ContainsMethod;
     }
 }

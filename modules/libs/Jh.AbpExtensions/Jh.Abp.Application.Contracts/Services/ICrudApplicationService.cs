@@ -19,67 +19,8 @@ namespace Jh.Abp.Application.Contracts
     public interface ICrudApplicationService<TEntity, TEntityDto, TPagedRetrieveOutputDto, in TKey, in TRetrieveInputDto, in TCreateInputDto, in TUpdateInputDto, in TDeleteInputDto>
     : ICrudAppService<TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto>
     {
-        /// <summary>
-        /// 为false时，获取不到扩展字段,默认为false
-        /// </summary>
-        bool IsTracking { get; set; }
-        /// <summary>
-        /// 创建一个实体[HttpPost]
-        /// </summary>
-        /// <param name="inputDto"></param>
-        /// <param name="autoSave"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 创建多个实体[Route("list")][HttpPost]
-        /// </summary>
-        /// <param name="inputDtos"></param>
-        /// <param name="autoSave"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 根据条件删除多条[HttpDelete]
-        /// </summary>
-        Task DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 根据主键删除多条[Route("keys")][HttpDelete]
-        /// </summary>
-        Task DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 根据主键删除
-        /// </summary>
-        Task DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 根据主键更新部分[HttpPatch]
-        /// </summary>
-        Task UpdatePortionAsync(TKey key, TUpdateInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        Task<bool> AnyAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 根据条件查询(不分页)
-        /// </summary>
-        Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 重写分页列表 methodStringType
-        /// </summary>
-        Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 获取entity
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="includeDetails"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task DeleteAsync(TKey[] keys);
+        Task UpdatePortionAsync(TKey id, TUpdateInputDto inputDto);
+        Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto);
     }
 }
