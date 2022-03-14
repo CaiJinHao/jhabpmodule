@@ -12,12 +12,11 @@ namespace Jh.Abp.JhMenu
 		: CrudApplicationService<Menu, MenuDto, MenuDto, System.Guid, MenuRetrieveInputDto, MenuCreateInputDto, MenuUpdateInputDto, MenuDeleteInputDto>,
 		IMenuAppService
 	{
-        private readonly IMenuRepository MenuRepository;
-        private readonly IMenuDapperRepository MenuDapperRepository;
-        public MenuAppService(IMenuRepository repository, IMenuDapperRepository menuDapperRepository) : base(repository)
+        protected readonly IMenuRepository MenuRepository;
+        protected IMenuDapperRepository MenuDapperRepository => LazyServiceProvider.LazyGetRequiredService<IMenuDapperRepository>();
+        public MenuAppService(IMenuRepository repository) : base(repository)
         {
             MenuRepository = repository;
-            MenuDapperRepository = menuDapperRepository;
             CreatePolicyName = JhMenuPermissions.Menus.Create;
             UpdatePolicyName = JhMenuPermissions.Menus.Update;
             DeletePolicyName = JhMenuPermissions.Menus.Delete;

@@ -13,7 +13,7 @@ namespace Jh.Abp.Workflow.v1
 	[Area(WorkflowRemoteServiceConsts.ModuleName)]
 	[RemoteService(Name = WorkflowRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class WorkflowDefinitionController : WorkflowController, IWorkflowDefinitionRemoteService
+	public class WorkflowDefinitionController : WorkflowController, IWorkflowDefinitionAppService
 	{
 		protected readonly IWorkflowDefinitionAppService WorkflowDefinitionAppService;
 		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
@@ -24,9 +24,9 @@ namespace Jh.Abp.Workflow.v1
 
 		[Authorize(WorkflowPermissions.WorkflowDefinitions.Create)]
 		[HttpPost]
-		public virtual async Task CreateAsync(WorkflowDefinitionCreateInputDto input)
+		public virtual async Task<WorkflowDefinitionDto> CreateAsync(WorkflowDefinitionCreateInputDto input)
 		{
-			await WorkflowDefinitionAppService.CreateAsync(input, true);
+			return await WorkflowDefinitionAppService.CreateAsync(input);
 		}
 
 		[Authorize(WorkflowPermissions.WorkflowDefinitions.Delete)]
@@ -111,10 +111,9 @@ namespace Jh.Abp.Workflow.v1
 		[Authorize(WorkflowPermissions.WorkflowDefinitions.Default)]
 		[HttpGet]
 		[Route("Steps")]
-		public virtual async Task<ListResultDto<WorkflowStepDto>> StepsAsync()
+		public virtual async Task<ListResultDto<WorkflowStepDto>> GetApplicationStepsAsync()
 		{
-			var datas= await WorkflowDefinitionAppService.GetApplicationStepsAsync();
-			return new ListResultDto<WorkflowStepDto>(datas);
+			return await WorkflowDefinitionAppService.GetApplicationStepsAsync();
 		}
 	}
 }

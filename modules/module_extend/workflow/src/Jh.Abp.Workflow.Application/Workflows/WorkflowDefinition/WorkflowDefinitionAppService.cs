@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Caching;
 using WorkflowCore.Models;
 
@@ -45,11 +46,12 @@ namespace Jh.Abp.Workflow
             }
         }
 
-        public virtual async Task<List<WorkflowStepDto>> GetApplicationStepsAsync()
+        public virtual async Task<ListResultDto<WorkflowStepDto>> GetApplicationStepsAsync()
         {
             await CheckGetListPolicyAsync();
             distributedCache.Remove(WorkflowStepsCacheKey);
-            return await distributedCache.GetOrAddAsync(WorkflowStepsCacheKey, () => Task.FromResult(GetApplicationSteps()));
+            var data= await distributedCache.GetOrAddAsync(WorkflowStepsCacheKey, () => Task.FromResult(GetApplicationSteps()));
+            return new ListResultDto<WorkflowStepDto>(data);
         }
 
         protected virtual List<WorkflowStepDto> GetApplicationSteps()

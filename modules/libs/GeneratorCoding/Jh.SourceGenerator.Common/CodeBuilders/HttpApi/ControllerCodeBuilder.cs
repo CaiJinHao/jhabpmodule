@@ -31,7 +31,7 @@ using Volo.Abp.Data;");
                 builder.AppendLine($"\t[Area({Domain}RemoteServiceConsts.ModuleName)]");
                 builder.AppendLine($"\t[RemoteService(Name = {Domain}RemoteServiceConsts.RemoteServiceName)]");
                 builder.AppendLine("\t[Route(\"api/v{apiVersion:apiVersion}/[controller]\")]");
-                builder.AppendLine($"\tpublic class {FileName} : {table.ControllerBase},I{table.Name}RemoteService");
+                builder.AppendLine($"\tpublic class {FileName} : {table.ControllerBase},I{table.Name}AppService");
                 builder.AppendLine("\t{");
                 {
 
@@ -48,10 +48,10 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Create)]");
                     builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto input)");
+                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> CreateAsync({table.Name}CreateInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
+                        builder.AppendLine($"\t\t\t return await {table.Name}AppService.CreateAsync(input);");
                         builder.AppendLine("\t\t}");
                     }
                     builder.AppendLine();

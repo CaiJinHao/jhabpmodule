@@ -11,7 +11,7 @@ namespace Jh.Abp.JhMenu.v1
     [Area(JhMenuRemoteServiceConsts.ModuleName)]
 	[RemoteService(Name = JhMenuRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class MenuController : JhMenuController, IMenuRemoteService
+	public class MenuController : JhMenuController, IMenuAppService
 	{
 		private readonly IMenuAppService MenuAppService;
 		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
@@ -23,9 +23,9 @@ namespace Jh.Abp.JhMenu.v1
 
 		[Authorize(JhMenuPermissions.Menus.Create)]
 		[HttpPost]
-		public virtual async Task CreateAsync(MenuCreateInputDto input)
+		public virtual async Task<MenuDto> CreateAsync(MenuCreateInputDto input)
 		{
-			await MenuAppService.CreateAsync(input);
+			return await MenuAppService.CreateAsync(input);
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Delete)]

@@ -21,8 +21,11 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             {
                 builder.AppendLine($"\tpublic interface {FileName}");
                 builder.AppendLine($"\t\t: ICrudApplicationService<{table.Name}, {table.Name}Dto, {table.Name}Dto, {table.KeyType}, {table.Name}RetrieveInputDto, {table.Name}CreateInputDto, {table.Name}UpdateInputDto, {table.Name}DeleteInputDto>");
-                builder.AppendLine($",I{table.Name}BaseAppService");
                 builder.AppendLine("\t{");
+                if (table.IsDelete)
+                {
+                    builder.AppendLine("\t\t Task RecoverAsync({table.KeyType} id)");
+                }
                 builder.AppendLine("\t}");
             }
             builder.AppendLine("}");

@@ -5,7 +5,6 @@ namespace Jh.Abp.Workflow
 {
     public interface IWorkflowInstanceAppService
 		: ICrudApplicationService<WorkflowInstance, WorkflowInstanceDto, WorkflowInstanceDto, System.Guid, WorkflowInstanceRetrieveInputDto, WorkflowInstanceCreateInputDto, WorkflowInstanceUpdateInputDto, WorkflowInstanceDeleteInputDto>
-,IWorkflowInstanceBaseAppService
 	{
 		/// <summary>
 		/// 启动工作流

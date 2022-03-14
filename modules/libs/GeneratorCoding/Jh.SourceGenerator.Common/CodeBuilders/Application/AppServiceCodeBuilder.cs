@@ -24,12 +24,11 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
                 builder.AppendLine($"\t\tI{table.Name}AppService");
                 builder.AppendLine("\t{");
                 {
+                    builder.AppendLine($"\t\t protected readonly I{table.Name}DapperRepository {table.Name}DapperRepository => LazyServiceProvider.LazyGetRequiredService<I{table.Name}DapperRepository>();");
                     builder.AppendLine($"\t\t protected readonly I{table.Name}Repository {table.Name}Repository;");
-                    builder.AppendLine($"\t\t protected readonly I{table.Name}DapperRepository {table.Name}DapperRepository;");
-                    builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}Repository repository, I{table.Name}DapperRepository {table.Name.ToLower()}DapperRepository) : base(repository)");
+                    builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}Repository repository) : base(repository)");
                     builder.AppendLine("\t\t{");
                     builder.AppendLine($"\t\t{table.Name}Repository = repository;");
-                    builder.AppendLine($"\t\t{table.Name}DapperRepository = {table.Name.ToLower()}DapperRepository;");
                     builder.AppendLine($"\t\t CreatePolicyName = {PermissionsNamePrefix}.Create;");
                     builder.AppendLine($"\t\t UpdatePolicyName = {PermissionsNamePrefix}.Update;");
                     builder.AppendLine($"\t\t DeletePolicyName = {PermissionsNamePrefix}.Delete;");

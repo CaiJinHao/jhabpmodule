@@ -28,17 +28,17 @@ namespace Jh.Abp.Workflow
             BatchDeletePolicyName = WorkflowPermissions.WorkflowBacklogs.BatchDelete;
         }
 
-        public override async Task<WorkflowBacklogDto> GetAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<WorkflowBacklogDto> GetAsync(Guid id)
         {
             await CheckGetPolicyAsync();
-            var item = await base.GetAsync(id, includeDetails, cancellationToken);
+            var item = await base.GetAsync(id);
             var _pointEntity = await WorkflowExecutionPointerRepository.GetAsync(item.Id);
             item.EventKey = _pointEntity.EventKey;
             item.EventName = _pointEntity.EventName;
             return item;
         }
 
-        public override async Task<PagedResultDto<WorkflowBacklogDto>> GetListAsync(WorkflowBacklogRetrieveInputDto input, string methodStringType = "Contains", bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<PagedResultDto<WorkflowBacklogDto>> GetListAsync(WorkflowBacklogRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
             if (input.BusinessType.HasValue)
@@ -56,7 +56,7 @@ namespace Jh.Abp.Workflow
                     }
                 };
             }
-            var pageData = await base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
+            var pageData = await base.GetListAsync(input);
             foreach (var item in pageData.Items)
             {
                 var _pointEntity = await WorkflowExecutionPointerRepository.GetAsync(item.Id);

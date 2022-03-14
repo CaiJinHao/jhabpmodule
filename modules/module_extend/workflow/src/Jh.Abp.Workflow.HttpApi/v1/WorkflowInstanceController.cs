@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -12,7 +13,7 @@ namespace Jh.Abp.Workflow.v1
     /// </summary>
     [RemoteService]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class WorkflowInstanceController : WorkflowController, IWorkflowInstanceRemoteService
+	public class WorkflowInstanceController : WorkflowController, IWorkflowInstanceAppService
 	{
 		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
 		private readonly IWorkflowInstanceAppService WorkflowInstanceAppService;
@@ -47,22 +48,14 @@ namespace Jh.Abp.Workflow.v1
 			return await WorkflowInstanceAppService.StartWorkflowAsync(workflowStartDto);
 		}
 
-		/// <summary>
-		/// 实例详情
-		/// </summary>
-		/// <param name="workflowId"></param>
-		/// <returns></returns>
 		[Authorize(WorkflowPermissions.WorkflowInstances.Default)]
 		[HttpGet]
 		[Route("Detail/{workflowId}")]
-		public async Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstanceAsync(string workflowId)
+		public async Task<WorkflowCore.Models.WorkflowInstance> GetWorkflowInstanceDeatilAsync(string workflowId)
 		{
 			return await WorkflowInstanceAppService.GetWorkflowInstanceDeatilAsync(workflowId);
 		}
 
-		/// <summary>
-		/// 激活事件
-		/// </summary>
 		[Authorize(WorkflowPermissions.WorkflowInstances.Create)]
 		[HttpPost]
 		[Route("PublishEvent")]
@@ -71,5 +64,35 @@ namespace Jh.Abp.Workflow.v1
 			//判断发布事件人和待办人是否一致
             await WorkflowInstanceAppService.WorkflowPublishEventAsync(workflowPublishEventDto);
 		}
-	}
+
+        public Task DeleteAsync(Guid[] keys)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdatePortionAsync(Guid id, WorkflowInstanceUpdateInputDto inputDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<WorkflowInstanceDto> GetAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<WorkflowInstanceDto> CreateAsync(WorkflowInstanceCreateInputDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<WorkflowInstanceDto> UpdateAsync(Guid id, WorkflowInstanceUpdateInputDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -6,6 +6,5 @@ namespace Jh.Abp.JhIdentity
 	public interface IOrganizationUnitBaseAppService
 	{
 		//用于添加与RemoteService公共的方法
-		Task RecoverAsync(Guid id);
 	}
 }

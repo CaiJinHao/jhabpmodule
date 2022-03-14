@@ -13,7 +13,7 @@ namespace Jh.Abp.Workflow.v1
 	[Area(WorkflowRemoteServiceConsts.ModuleName)]
 	[RemoteService(Name = WorkflowRemoteServiceConsts.RemoteServiceName)]
 	[Route("api/v{apiVersion:apiVersion}/[controller]")]
-	public class WorkflowBacklogController : WorkflowController, IWorkflowBacklogRemoteService
+	public class WorkflowBacklogController : WorkflowController, IWorkflowBacklogAppService
 	{
 		protected readonly IWorkflowBacklogAppService WorkflowBacklogAppService;
 		protected IDataFilter DataFilter => LazyServiceProvider.LazyGetRequiredService<IDataFilter>();
@@ -24,9 +24,9 @@ namespace Jh.Abp.Workflow.v1
 
 		[Authorize(WorkflowPermissions.WorkflowBacklogs.Create)]
 		[HttpPost]
-		public virtual async Task CreateAsync(WorkflowBacklogCreateInputDto input)
+		public virtual async Task<WorkflowBacklogDto> CreateAsync(WorkflowBacklogCreateInputDto input)
 		{
-			await WorkflowBacklogAppService.CreateAsync(input, true);
+			return await WorkflowBacklogAppService.CreateAsync(input);
 		}
 
 		[Authorize(WorkflowPermissions.WorkflowBacklogs.Delete)]

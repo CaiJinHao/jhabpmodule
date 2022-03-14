@@ -16,9 +16,8 @@ namespace Jh.Abp.JhMenu
         IMenuRoleMapAppService
     {
         protected MenuRoleMapManager MenuRoleMapManager => LazyServiceProvider.LazyGetRequiredService<MenuRoleMapManager>();
-        protected IDistributedEventBus distributedEventBus =>LazyServiceProvider.LazyGetRequiredService<IDistributedEventBus>();
         protected Jh.Abp.JhIdentity.IIdentityUserAppService IdentityUserRemoteService => LazyServiceProvider.LazyGetRequiredService<Jh.Abp.JhIdentity.IIdentityUserAppService>();
-        protected IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
+        protected IMenuRepository MenuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
         protected readonly IMenuRoleMapRepository MenuRoleMapRepository;
         protected readonly IMenuRoleMapDapperRepository MenuRoleMapDapperRepository;
         public MenuRoleMapAppService(IMenuRoleMapRepository repository, IMenuRoleMapDapperRepository menurolemapDapperRepository) : base(repository)
@@ -29,7 +28,7 @@ namespace Jh.Abp.JhMenu
             GetListPolicyName = JhMenuPermissions.MenuRoleMaps.Default;
         }
 
-        public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto)
         {
             await CheckCreatePolicyAsync();
             await MenuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds, CurrentTenant.Id);
@@ -42,7 +41,7 @@ namespace Jh.Abp.JhMenu
             var auth_menus_id = (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
             //按照前端要求字段返回
-            var auth_menus = await (await menuRepository.GetQueryableAsync()).AsNoTracking().Where(m => auth_menus_id.Contains(m.Id))
+            var auth_menus = await (await MenuRepository.GetQueryableAsync()).AsNoTracking().Where(m => auth_menus_id.Contains(m.Id))
                 .Select(a => new TreeDto() { value = a.MenuCode, id = a.MenuCode, icon = a.MenuIcon, parent_id = a.MenuParentCode, sort = a.MenuSort.ToString(), title = a.MenuName, url = a.MenuUrl, obj = a }).ToListAsync();
 
             //返回多个根节点
@@ -64,7 +63,7 @@ namespace Jh.Abp.JhMenu
             await CheckGetListPolicyAsync();
             var auth_menus_id =await (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToListAsync();
 
-            var resutlMenus = await (await menuRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
+            var resutlMenus = await (await MenuRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
                 new TreeDto()
                 {
                     id = a.MenuCode,
@@ -83,6 +82,5 @@ namespace Jh.Abp.JhMenu
             //返回多个根节点
             return await UtilTree.GetMenusTreeAsync(resutlMenus);
         }
-
     }
 }
