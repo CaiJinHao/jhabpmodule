@@ -26,7 +26,7 @@ namespace Jh.Abp.JhMenu
             BatchDeletePolicyName = JhMenuPermissions.Menus.BatchDelete;
         }
 
-        public override async Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
             if (!string.IsNullOrEmpty(input.OrMenuCode))
@@ -36,7 +36,7 @@ namespace Jh.Abp.JhMenu
                     QueryAction = entity => entity.Where(a => a.MenuParentCode == input.OrMenuCode || a.MenuCode == input.OrMenuCode)
                 };
             }
-            return await base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
+            return await base.GetListAsync(input);
         }
 
         public virtual async Task RecoverAsync(System.Guid id)

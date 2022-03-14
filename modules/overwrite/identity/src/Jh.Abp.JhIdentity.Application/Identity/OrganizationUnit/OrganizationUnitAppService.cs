@@ -40,7 +40,7 @@ namespace Jh.Abp.JhIdentity
             BatchDeletePolicyName = JhIdentityPermissions.OrganizationUnits.BatchDelete;
         }
 
-        public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input, string methodStringType = "Contains", bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
             IsTracking = true;
@@ -51,10 +51,10 @@ namespace Jh.Abp.JhIdentity
                     QueryAction = entity => entity.Where(a => a.Code.StartsWith(input.Code))
                 };
             }
-            return await base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
+            return await base.GetListAsync(input);
         }
 
-        public override async Task CreateAsync(OrganizationUnitCreateInputDto input, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateInputDto input)
 		{
             await CheckCreatePolicyAsync();
 			var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId);
@@ -75,15 +75,16 @@ namespace Jh.Abp.JhIdentity
                 }
             }
             await organizationUnitManager.CreateAsync(organizationUnit);
+            return MapToGetOutputDto(organizationUnit);
 		}
 
-        public override async Task DeleteAsync(Guid id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
+        public override async Task DeleteAsync(Guid id)
         {
             await CheckDeletePolicyAsync();
             await organizationUnitManager.DeleteAsync(id);//自动禁用下级
         }
 
-        public override async Task DeleteAsync(Guid[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
+        public override async Task DeleteAsync(Guid[] keys)
         {
             await CheckDeletePolicyAsync();
             foreach (var item in keys)
@@ -92,10 +93,10 @@ namespace Jh.Abp.JhIdentity
 			}
 		}
 
-        public override async Task DeleteAsync(OrganizationUnitDeleteInputDto deleteInputDto, string methodStringType = "Equals", bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
+        protected virtual async Task DeleteAsync(OrganizationUnitDeleteInputDto deleteInputDto)
         {
             await CheckDeletePolicyAsync();
-            var query = await CreateFilteredQueryAsync(deleteInputDto, methodStringType);
+            var query = await CreateFilteredQueryAsync(deleteInputDto);
             foreach (var item in query.ToArray())
             {
 				await organizationUnitManager.DeleteAsync(item.Id);//自动禁用下级

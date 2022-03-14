@@ -46,7 +46,7 @@ namespace Jh.Abp.JhIdentity.v1
 		[HttpPost]
 		public virtual async Task CreateAsync(IdentityRoleCreateInputDto input)
 		{
-			await IdentityRoleAppService.CreateAsync(input, true);
+			await IdentityRoleAppService.CreateAsync(input);
 		}
 		[Authorize(IdentityPermissions.Roles.Update)]
 		[HttpPut("{id}")]

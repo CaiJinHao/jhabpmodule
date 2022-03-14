@@ -40,7 +40,6 @@ namespace Jh.Abp.Application
 
         protected virtual async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckCreatePolicyAsync();
             var entity = ObjectMapper.Map<TCreateInputDto, TEntity>(inputDto);
             var methodDto = inputDto as IMethodDto<TEntity>;
             if (methodDto != null)
@@ -58,19 +57,16 @@ namespace Jh.Abp.Application
 
         protected virtual async Task DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckPolicyAsync(BatchDeletePolicyName);
             await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, isHard, cancellationToken);
         }
 
         protected virtual async Task DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckDeletePolicyAsync();
             await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, isHard, cancellationToken);
         }
 
         protected virtual async Task UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckUpdatePolicyAsync();
             var entity = await crudRepository.FindAsync(key, includeDetails, cancellationToken);
             EntityOperator.UpdatePortionToEntity(updateInput, entity);
             var methodDto = updateInput as IMethodDto<TEntity>;
@@ -88,7 +84,6 @@ namespace Jh.Abp.Application
 
         protected virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckGetListPolicyAsync();
             inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), inputDto);
             query = ApplySorting(query, inputDto);
@@ -125,15 +120,12 @@ namespace Jh.Abp.Application
        
         protected virtual async Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckGetPolicyAsync();
             var entity = await crudRepository.FindAsync(id, includeDetails, cancellationToken);//不用Find会查不出来扩展字段
             return await MapToGetOutputDtoAsync(entity);
         }
 
         protected virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckGetListPolicyAsync();
-
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), input);
 
             var totalCount = await query.LongCountAsync(cancellationToken);
@@ -242,7 +234,6 @@ namespace Jh.Abp.Application
 
         protected virtual async Task DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckPolicyAsync(BatchDeletePolicyName);
             var query = await CreateFilteredQueryAsync(deleteInputDto);
             await crudRepository.DeleteEntitysAsync(query, autoSave, isHard, cancellationToken);
         }
@@ -251,17 +242,20 @@ namespace Jh.Abp.Application
 
         public override async Task<TEntityDto> CreateAsync(TCreateInputDto input)
         {
+            await CheckCreatePolicyAsync();
             var data = await CreateAsync(input);
             return MapToGetOutputDto(data);
         }
 
         public virtual async Task DeleteAsync(TKey[] keys)
         {
+            await CheckPolicyAsync(BatchDeletePolicyName);
             await DeleteAsync(keys);
         }
 
         public override async Task DeleteAsync(TKey id)
         {
+            await CheckDeletePolicyAsync();
             await DeleteAsync(id);
         }
 
@@ -286,21 +280,25 @@ namespace Jh.Abp.Application
 
         public virtual async Task UpdatePortionAsync(TKey id, TUpdateInputDto inputDto)
         {
+            await CheckUpdatePolicyAsync();
             await UpdatePortionAsync(id, inputDto);
         }
 
         public virtual async Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto)
         {
+            await CheckGetListPolicyAsync();
             return await GetEntitysAsync(inputDto);
         }
 
         public override async Task<TEntityDto> GetAsync(TKey id)
         {
+            await CheckGetPolicyAsync();
             return await GetAsync(id);
         }
 
         public override async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input)
         {
+            await CheckGetListPolicyAsync();
             return await GetListAsync(input);
         }
 

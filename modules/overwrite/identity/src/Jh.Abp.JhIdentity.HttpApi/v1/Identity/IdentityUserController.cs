@@ -36,7 +36,7 @@ namespace Jh.Abp.JhIdentity.v1
         [HttpPost]
         public virtual async Task CreateAsync(IdentityUserCreateInputDto input)
         {
-            await IdentityUserAppService.CreateAsync(input, true);
+            await IdentityUserAppService.CreateAsync(input);
         }
 
         [Authorize(IdentityPermissions.Users.Delete)]

@@ -25,7 +25,7 @@ namespace Jh.Abp.JhMenu.v1
 		[HttpPost]
 		public virtual async Task CreateAsync(MenuCreateInputDto input)
 		{
-			await MenuAppService.CreateAsync(input, true);
+			await MenuAppService.CreateAsync(input);
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Delete)]
