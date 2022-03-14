@@ -2,7 +2,7 @@
   "culture": "zh-Hans",
   "texts": {
     "Permission:JhAbpWorkflow": "工作流模块",
-    "Permission:Backlogs": "待办事项管理",
+    "Permission:WorkflowBacklogs": "待办事项管理",
     "Permission:WorkflowDefinitions": "工作流定义管理",
     "Permission:WorkflowInstances": "工作流实例管理"
   }
