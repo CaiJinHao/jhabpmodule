@@ -394,13 +394,11 @@
 
             form.on('switch(table_tpl_isDeleted)', function (data) {
                 let _id = data.elem.attributes["data-code"].value;
-                let _value = false;
                 if (data.elem.checked) {
-                    _value = false;//启用
+                    menuObj.patchObj(true, '/menu/' + _id + '/Recover');
                 } else {
-                    _value = true;//删除
+                    menuObj.del({id:_id});
                 }
-                menuObj.patchObj(_value, '/menu/' + _id + '/Recover');
             });
         });
     </script>

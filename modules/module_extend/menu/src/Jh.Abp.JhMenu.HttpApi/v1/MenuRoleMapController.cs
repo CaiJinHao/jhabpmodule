@@ -23,10 +23,10 @@ namespace Jh.Abp.JhMenu.v1
 
         [Authorize(JhMenuPermissions.MenuRoleMaps.Create)]
 		[HttpPost]
-		public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto)
+        public async Task<MenuRoleMapDto> CreateAsync(MenuRoleMapCreateInputDto input)
         {
-			await MenuRoleMapAppService.CreateByRoleAsync(inputDto);
-		}
+			return await MenuRoleMapAppService.CreateAsync(input);
+        }
 
         [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
         [HttpGet("Trees")]
@@ -42,41 +42,60 @@ namespace Jh.Abp.JhMenu.v1
             return await MenuRoleMapAppService.GetMenusTreesAsync(input);
         }
 
-        public Task<MenuRoleMapDto> CreateAsync(MenuRoleMapCreateInputDto input)
-        {
-            throw new NotImplementedException();
-        }
-
+        [Obsolete]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.BatchDelete)]
+        [Route("keys")]
+        [HttpDelete]
         public Task DeleteAsync(Guid[] keys)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Delete)]
+        [HttpDelete("{id}")]
         public Task DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Detail)]
+        [HttpGet("{id}")]
         public Task<MenuRoleMapDto> GetAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
+        [Route("all")]
+        [HttpGet]
         public Task<ListResultDto<MenuRoleMapDto>> GetEntitysAsync(MenuRoleMapRetrieveInputDto inputDto)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
+        [HttpGet]
         public Task<PagedResultDto<MenuRoleMapDto>> GetListAsync(MenuRoleMapRetrieveInputDto input)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Update)]
+        [HttpPut("{id}")]
         public Task<MenuRoleMapDto> UpdateAsync(Guid id, MenuRoleMapUpdateInputDto input)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Update)]
+        [HttpPut("Patch/{id}")]
+        [HttpPatch("{id}")]
         public Task UpdatePortionAsync(Guid id, MenuRoleMapUpdateInputDto inputDto)
         {
             throw new NotImplementedException();

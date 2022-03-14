@@ -131,7 +131,9 @@ namespace Jh.Abp.JhIdentity.v1
 			return await OrganizationUnitAppService.GetMembersAsync(id);
         }
 
-        public Task CreateByRoleAsync(Guid roleId)
+		[Authorize(JhIdentityPermissions.OrganizationUnits.Create)]
+		[HttpGet("Role/{roleId}")]
+		public Task CreateByRoleAsync(Guid roleId)
         {
             throw new NotImplementedException();
         }

@@ -65,31 +65,52 @@ namespace Jh.Abp.Workflow.v1
             await WorkflowInstanceAppService.WorkflowPublishEventAsync(workflowPublishEventDto);
 		}
 
+		[Obsolete]
+		[Authorize(WorkflowPermissions.WorkflowInstances.BatchDelete)]
+        [Route("keys")]
+        [HttpDelete]
         public Task DeleteAsync(Guid[] keys)
         {
             throw new NotImplementedException();
         }
 
+		[Obsolete]
+		[Authorize(WorkflowPermissions.WorkflowInstances.Update)]
+        [HttpPut("Patch/{id}")]
+        [HttpPatch("{id}")]
         public Task UpdatePortionAsync(Guid id, WorkflowInstanceUpdateInputDto inputDto)
         {
             throw new NotImplementedException();
         }
 
+		[Obsolete]
+		[Authorize(WorkflowPermissions.WorkflowInstances.Detail)]
+        [HttpGet("{id}")]
         public Task<WorkflowInstanceDto> GetAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
+		[Obsolete]
+		[Authorize(WorkflowPermissions.WorkflowInstances.Create)]
+		[HttpPost]
         public Task<WorkflowInstanceDto> CreateAsync(WorkflowInstanceCreateInputDto input)
         {
             throw new NotImplementedException();
         }
 
+		[Obsolete]
+		[Authorize(WorkflowPermissions.WorkflowInstances.Update)]
+        [HttpPut("{id}")]
         public Task<WorkflowInstanceDto> UpdateAsync(Guid id, WorkflowInstanceUpdateInputDto input)
         {
             throw new NotImplementedException();
         }
 
+		[Obsolete]
+		[Authorize(WorkflowPermissions.WorkflowInstances.BatchDelete)]
+        [Route("keys")]
+        [HttpDelete]
         public Task DeleteAsync(Guid id)
         {
             throw new NotImplementedException();

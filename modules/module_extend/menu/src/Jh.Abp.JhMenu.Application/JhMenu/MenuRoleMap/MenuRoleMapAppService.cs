@@ -28,10 +28,11 @@ namespace Jh.Abp.JhMenu
             GetListPolicyName = JhMenuPermissions.MenuRoleMaps.Default;
         }
 
-        public virtual async Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto)
+        public async override Task<MenuRoleMapDto> CreateAsync(MenuRoleMapCreateInputDto input)
         {
             await CheckCreatePolicyAsync();
-            await MenuRoleMapManager.CreateAsync(inputDto.RoleIds, inputDto.MenuIds, CurrentTenant.Id);
+            await MenuRoleMapManager.CreateAsync(input.RoleIds, input.MenuIds, CurrentTenant.Id);
+            return default;
         }
 
         public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()

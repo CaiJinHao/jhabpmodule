@@ -8,8 +8,6 @@ namespace Jh.Abp.JhMenu
     public interface IMenuRoleMapAppService
 		: ICrudApplicationService<MenuRoleMap, MenuRoleMapDto, MenuRoleMapDto, System.Guid, MenuRoleMapRetrieveInputDto, MenuRoleMapCreateInputDto, MenuRoleMapUpdateInputDto, MenuRoleMapDeleteInputDto>
     {
-        Task CreateByRoleAsync(MenuRoleMapCreateInputDto inputDto);
-
         /// <summary>
         /// 获取当前登录角色有权限的菜单树
         /// </summary>

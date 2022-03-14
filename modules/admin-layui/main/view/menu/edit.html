@@ -244,7 +244,8 @@
                             type: 'Get',
                             success: function (response) {
                                 var startLen = response.length - 2;
-                                var newCodeNum = parseInt(response.substring(startLen, 2)) + 1;
+                                var newCodeNum = parseInt(response.substring(startLen)) + 1;
+                                vm.menu.menuSort = newCodeNum;
                                 newCodeNum = newCodeNum > 9 ? newCodeNum : '0' + newCodeNum;
                                 vm.menu.menuCode = response.substring(0, startLen) + newCodeNum;
                             }
@@ -255,8 +256,7 @@
 
             form.on('select(menuParentfilter)', function (data) {
                 menuObj.getMaxCode(data.value);
-                // vm.menu.menuParentCode = data.value;
-                // vm.menu.menuCode = data.value+'01';
+                vm.menu.menuParentCode = data.value;
             });
 
             $('#cancel', $(_context)).on('click', function () {
