@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
+using Volo.Abp.Http.Client;
+using Volo.Abp.IdentityModel;
 using Volo.Abp.Json;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
@@ -15,6 +17,7 @@ namespace Jh.Abp.QuickComponents
     /// <summary>
     /// 依赖当前模块 必须添加到最后
     /// </summary>
+    [DependsOn(typeof(AbpIdentityModelModule))]
     public class AbpQuickComponentsModule: AbpModule
     {
         private IConfiguration configuration { get; set; }

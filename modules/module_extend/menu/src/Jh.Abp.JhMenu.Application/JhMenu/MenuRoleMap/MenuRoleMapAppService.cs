@@ -17,7 +17,7 @@ namespace Jh.Abp.JhMenu
     {
         protected MenuRoleMapManager MenuRoleMapManager => LazyServiceProvider.LazyGetRequiredService<MenuRoleMapManager>();
         protected IDistributedEventBus distributedEventBus =>LazyServiceProvider.LazyGetRequiredService<IDistributedEventBus>();
-        protected Jh.Abp.JhIdentity.IIdentityUserRemoteService IdentityUserRemoteService => LazyServiceProvider.LazyGetRequiredService<Jh.Abp.JhIdentity.IIdentityUserRemoteService>();
+        protected Jh.Abp.JhIdentity.IIdentityUserAppService IdentityUserRemoteService => LazyServiceProvider.LazyGetRequiredService<Jh.Abp.JhIdentity.IIdentityUserAppService>();
         protected IMenuRepository menuRepository => LazyServiceProvider.LazyGetRequiredService<IMenuRepository>();
         protected readonly IMenuRoleMapRepository MenuRoleMapRepository;
         protected readonly IMenuRoleMapDapperRepository MenuRoleMapDapperRepository;

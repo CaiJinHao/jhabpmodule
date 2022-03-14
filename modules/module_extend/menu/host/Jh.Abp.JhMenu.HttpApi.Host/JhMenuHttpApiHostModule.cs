@@ -64,6 +64,7 @@ namespace Jh.Abp.JhMenu;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),//身份
     typeof(JhIdentityHttpApiClientModule),
+    typeof(AbpQuickComponentsModule),
     typeof(AbpSwashbuckleModule)
     )]
 public class JhMenuHttpApiHostModule : AbpModule

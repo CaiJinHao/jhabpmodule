@@ -18,8 +18,8 @@ namespace Jh.Abp.JhIdentity
 {
     public class IdentityUserAppService
 		: CrudApplicationService<IdentityUser, IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>,
-		IIdentityUserAppService
-	{
+		IIdentityUserAppService, IIdentityUserBaseAppService
+    {
         public IdentityUserManager UserManager { get; set; }
         protected IOrganizationUnitAppService OrganizationUnitAppService =>LazyServiceProvider.LazyGetRequiredService<OrganizationUnitAppService>();    
         protected IOrganizationUnitRepository organizationUnits => LazyServiceProvider.LazyGetRequiredService<IOrganizationUnitRepository>();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Jh.Abp.JhIdentity;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Application;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
@@ -9,6 +10,7 @@ namespace Jh.Abp.JhMenu;
     typeof(JhMenuDomainModule),
     typeof(JhMenuApplicationContractsModule),
     typeof(AbpDddApplicationModule),
+    typeof(JhIdentityApplicationContractsModule),
     typeof(AbpAutoMapperModule)
     )]
 public class JhMenuApplicationModule : AbpModule

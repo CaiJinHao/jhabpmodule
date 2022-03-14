@@ -127,12 +127,6 @@ namespace Jh.Abp.JhIdentity
 			return await MapToGetOutputDtoAsync(entity);
         }
 
-		/// <summary>
-		/// 自动恢复子级
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="isDeleted"></param>
-		/// <returns></returns>
 		public virtual async Task RecoverAsync(Guid id)
 		{
             await CheckPolicyAsync(JhIdentityPermissions.OrganizationUnits.Recover);
