@@ -43,7 +43,7 @@ namespace Jh.Abp.JhIdentity
             BatchDeletePolicyName = IdentityPermissions.Users.Default;
         }
 
-        public override async Task CreateAsync(IdentityUserCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<IdentityUserDto> CreateAsync(IdentityUserCreateInputDto inputDto)
         {
             await IdentityOptions.SetAsync();
 
@@ -80,10 +80,8 @@ namespace Jh.Abp.JhIdentity
             await UpdateUserByInput(user, inputDto);
             (await UserManager.UpdateAsync(user)).CheckErrors();
 
-            if (autoSave)
-            {
-                await CurrentUnitOfWork.SaveChangesAsync();
-            }
+            await CurrentUnitOfWork.SaveChangesAsync();
+            return MapToGetOutputDto(user);
         }
 
         protected virtual async Task UpdateUserByInput(IdentityUser user, IdentityUserCreateOrUpdateDto input, CancellationToken cancellationToken = default)
@@ -166,11 +164,11 @@ namespace Jh.Abp.JhIdentity
             }
         }
 
-        public override async Task<IdentityUserDto> GetAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<IdentityUserDto> GetAsync(Guid id)
         {
-            var entity = await crudRepository.FindAsync(id, includeDetails, cancellationToken);
+            var entity = await crudRepository.FindAsync(id);
             var data = await MapToGetOutputDtoAsync(entity);
-            await crudRepository.EnsureCollectionLoadedAsync(entity, u => u.OrganizationUnits, cancellationToken);
+            await crudRepository.EnsureCollectionLoadedAsync(entity, u => u.OrganizationUnits);
             data.OrganizationUnitIds = entity.OrganizationUnits.Select(a => a.OrganizationUnitId).ToArray();
             return data;
         }
@@ -183,7 +181,7 @@ namespace Jh.Abp.JhIdentity
             );
         }
 
-        public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(IdentityUserRetrieveInputDto input, string methodStringType = "Contains", bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(IdentityUserRetrieveInputDto input)
         {
             if (input.OrganizationUnitId.HasValue)
             {
@@ -202,7 +200,7 @@ namespace Jh.Abp.JhIdentity
                     }
                 };
             }
-            return await base.GetListAsync(input, methodStringType, includeDetails, cancellationToken);
+            return await base.GetListAsync(input);
         }
 
         public virtual async Task<IdentityUserDto> GetCurrentAsync()
