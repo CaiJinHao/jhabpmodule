@@ -21,10 +21,7 @@ namespace Jh.Abp.JhIdentity.v1
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class IdentityUserController : JhIdentityController, IIdentityUserRemoteService
     {
-        public IdentityUserManager UserManager { get; set; }
-        public IOrganizationUnitAppService organizationUnitAppService { get; set; }
         public IProfileAppService ProfileAppService { get; set; }
-        public IPermissionDefinitionManager PermissionDefinitionManager { get; set; }
 
         private readonly IIdentityUserAppService IdentityUserAppService;
 
@@ -71,26 +68,12 @@ namespace Jh.Abp.JhIdentity.v1
             await IdentityUserAppService.UpdatePortionAsync(id, inputDto);
         }
 
-        //由于每个人都需要改密码所以注销权限
-        //[Authorize(IdentityPermissions.Users.Update)]
-        [HttpPost]
-        [Route("change-password")]
-        public virtual Task ChangePasswordAsync(ChangePasswordInput input)
-        {
-            return ProfileAppService.ChangePasswordAsync(input);
-        }
-
         [Authorize(IdentityPermissions.Users.Update)]
         [HttpPatch]
         [Route("{id}/lockoutEnabled")]
         public virtual async Task UpdateLockoutEnabledAsync(Guid id, [FromBody] bool lockoutEnabled)
         {
-            using (dataFilter.Disable())
-            {
-                var user = await UserManager.GetByIdAsync(id);
-                (await UserManager.SetLockoutEnabledAsync(user, lockoutEnabled)).CheckErrors();
-                await CurrentUnitOfWork.SaveChangesAsync();
-            }
+            await IdentityUserAppService.UpdateLockoutEnabledAsync(id,lockoutEnabled);
         }
 
         [Authorize(IdentityPermissions.Users.Update)]
@@ -100,19 +83,6 @@ namespace Jh.Abp.JhIdentity.v1
         public async Task RecoverAsync(Guid id, [FromBody] bool isDelete)
         {
             await IdentityUserAppService.RecoverAsync(id, isDelete);
-        }
-
-        [Authorize(IdentityPermissions.Users.Update)]
-        [HttpPatch]
-        [Route("{id}/Deleted")]
-        public virtual async Task UpdateDeletedAsync(Guid id, [FromBody] bool isDeleted)
-        {
-            using (dataFilter.Disable())
-            {
-                var user = await UserManager.GetByIdAsync(id);
-                user.IsDeleted = isDeleted;
-                await CurrentUnitOfWork.SaveChangesAsync();
-            }
         }
 
         [Authorize(IdentityPermissions.Users.Default)]
@@ -125,13 +95,9 @@ namespace Jh.Abp.JhIdentity.v1
         [Authorize(IdentityPermissions.Users.Default)]
         [HttpGet]
         [Route("{id}/roles")]
-        public virtual async Task<dynamic> GetRolesAsync(Guid id)
+        public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
         {
-            var datas = await IdentityUserAppService.GetRolesAsync(id);
-            return new
-            {
-                items = datas.Items.Select(a => new { name = a.Name, value = a.Id })
-            };
+            return await IdentityUserAppService.GetRolesAsync(id);
         }
 
         [Authorize(IdentityPermissions.Users.Default)]
@@ -157,41 +123,18 @@ namespace Jh.Abp.JhIdentity.v1
         /// </summary>
         /// <returns></returns>
         [Authorize(IdentityPermissions.Users.Default)]
-        [HttpGet("infoProfile")]
-        public virtual Task<ProfileDto> GetLoginInfoV1Async()
-        {
-            return ProfileAppService.GetAsync();
-        }
-
-        /// <summary>
-        /// 当前登录用户信息
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(IdentityPermissions.Users.Default)]
         [HttpGet("info")]
-        public virtual async Task<IdentityUserDto> GetLoginInfoAsync()
+        public virtual async Task<IdentityUserDto> GetCurrentAsync()
         {
             return await IdentityUserAppService.GetCurrentAsync();
         }
 
         [Authorize(IdentityPermissions.Users.Default)]
-        [HttpGet("{id}/Permissions")]
-        public virtual IEnumerable<string> GePermissionsAsync()
-        {
-            var datas = PermissionDefinitionManager.GetPermissions();
-            return datas.Select(a => a.Name).ToList();
-        }
-
-        [Authorize(IdentityPermissions.Users.Default)]
         [HttpGet]
         [Route("{id}/organizationunits")]
-        public virtual async Task<dynamic> GetOrganizationsAsync(Guid id)
+        public virtual async Task<ListResultDto<IdentityUserDto>> GetOrganizationsAsync(Guid id)
         {
-            var datas = await organizationUnitAppService.GetMembersAsync(id);
-            return new
-            {
-                items = datas.Select(a => new { name = a.Name, value = a.Id })
-            };
+            return await IdentityUserAppService.GetOrganizationsAsync(id);
         }
 
         [Authorize(IdentityPermissions.Users.Default)]
@@ -204,6 +147,35 @@ namespace Jh.Abp.JhIdentity.v1
                 SelectAction = (query) => query.Where(a => a.UserName != JhIdentitySettings.SuperadminUserName).Select(a => new IdentityUser(a.Id, a.UserName, a.Email, null) { Name = a.Name })
             };
             return await IdentityUserAppService.GetEntitysAsync(inputDto);
+        }
+
+        [Authorize(IdentityPermissions.Users.Default)]
+        [HttpGet("/{userId}/SuperiorUser")]
+        public async Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId)
+        {
+            return await IdentityUserAppService.GetSuperiorUserAsync(userId);
+        }
+
+
+        /// <summary>
+        /// 当前登录用户信息
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(IdentityPermissions.Users.Default)]
+        [HttpGet("infoProfile")]
+        public virtual Task<ProfileDto> GetProfileAsync()
+        {
+            return ProfileAppService.GetAsync();
+        }
+
+        //由于每个人都需要改密码所以注销权限
+        //[Authorize(IdentityPermissions.Users.Update)]
+        [Authorize]
+        [HttpPost]
+        [Route("change-password")]
+        public virtual Task ChangePasswordAsync(ChangePasswordInput input)
+        {
+            return ProfileAppService.ChangePasswordAsync(input);
         }
     }
 }

@@ -235,7 +235,6 @@
                 loadRoleNames:function(_fn){
                     let _the=this;
                     ajaxmod.requestAuthorize({
-                        // url: '/OrganizationUnit/' + vm.user.organizationUnitId + '/roles',
                         url: '/identityrole/select',
                         type: 'Get',
                         success: function (response) {
@@ -251,7 +250,7 @@
                             if (vm.paramObj.id) {
                                 _the.setRoleNamesValue(function (roles) {
                                     roles.items.forEach(element => {
-                                        _rolesValue.push(element.value);
+                                        _rolesValue.push(element.Id);
                                     });
                                     _render();
                                 });

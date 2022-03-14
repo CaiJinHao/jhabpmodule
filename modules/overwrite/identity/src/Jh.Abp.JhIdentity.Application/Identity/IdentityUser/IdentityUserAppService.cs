@@ -21,6 +21,7 @@ namespace Jh.Abp.JhIdentity
 		IIdentityUserAppService
 	{
         public IdentityUserManager UserManager { get; set; }
+        protected IOrganizationUnitAppService OrganizationUnitAppService =>LazyServiceProvider.LazyGetRequiredService<OrganizationUnitAppService>();    
         protected IOrganizationUnitRepository organizationUnits => LazyServiceProvider.LazyGetRequiredService<IOrganizationUnitRepository>();
         protected Volo.Abp.Identity.IOrganizationUnitRepository organizationUnitRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         protected IOptions<IdentityOptions> IdentityOptions { get; }
@@ -218,6 +219,22 @@ namespace Jh.Abp.JhIdentity
         {
             var user= await IdentityUserRepository.GetSuperiorUserAsync(userId); 
             return await MapToGetOutputDtoAsync(user);
+        }
+
+        public virtual async Task<ListResultDto<IdentityUserDto>> GetOrganizationsAsync(Guid id)
+        {
+            var data = await OrganizationUnitAppService.GetMembersAsync(id);
+            return new ListResultDto<IdentityUserDto>(data);
+        }
+
+        public virtual async Task UpdateLockoutEnabledAsync(Guid id, bool lockoutEnabled)
+        {
+            using (DataFilter.Disable<ISoftDelete>())
+            {
+                var user = await UserManager.GetByIdAsync(id);
+                (await UserManager.SetLockoutEnabledAsync(user, lockoutEnabled)).CheckErrors();
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
         }
     }
 }
