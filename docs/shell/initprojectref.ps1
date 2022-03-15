@@ -25,7 +25,7 @@ dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCo
 # 项目引用
 
 dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj reference $execPath\src\$slnName.Domain\$slnName.Domain.csproj
-dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj reference $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj
+
 
 
 # 模块引用
