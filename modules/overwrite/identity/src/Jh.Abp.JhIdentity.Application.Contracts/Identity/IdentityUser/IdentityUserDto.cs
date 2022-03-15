@@ -4,9 +4,7 @@ using Volo.Abp.MultiTenancy;
 using Volo.Abp.Domain.Entities;
 namespace Jh.Abp.JhIdentity
 {
-	/// <summary>
-	/// 
-	/// </summary>
+	[Serializable]
 	public class IdentityUserDto: ExtensibleFullAuditedEntityDto<System.Guid>
 ,IHasConcurrencyStamp
 ,IMultiTenant

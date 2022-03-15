@@ -25,6 +25,7 @@ using Volo.Abp.ObjectExtending;");
                 builder.AppendLine($"\t/// <summary>");
                 builder.AppendLine($"\t/// {table.Comment}");
                 builder.AppendLine($"\t/// </summary>");
+                builder.AppendLine($"\t [Serializable]");
                 builder.AppendLine($"\tpublic class {FileName}: ");
                 if (table.IsExtensibleObject)
                 {

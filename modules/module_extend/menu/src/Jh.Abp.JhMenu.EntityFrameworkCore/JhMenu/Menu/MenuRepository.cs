@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Jh.Abp.JhMenu
@@ -22,13 +23,13 @@ namespace Jh.Abp.JhMenu
 			bool includeDetails = false,
 		CancellationToken cancellationToken = default)
 		{
-			return (await GetDbSetAsync())
+			return (await GetDbSetAsync()).AsNoTracking()
 				.Where(mn => mn.MenuCode.StartsWith(code) && mn.MenuCode != code);
         }
 
 		public async Task<string> GetMaxMenuCodeAsync(string parentCode)
 		{
-			return (await GetDbSetAsync()).Where(a => a.MenuParentCode == parentCode).Max(a=>a.MenuCode);
+			return (await GetDbSetAsync()).AsNoTracking().Where(a => a.MenuParentCode == parentCode).Max(a=>a.MenuCode);
 		}
 	}
 }

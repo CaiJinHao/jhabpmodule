@@ -1,21 +1,13 @@
 ﻿
+using Jh.SourceGenerator.Common.GeneratorAttributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using Volo.Abp.Domain.Entities.Auditing;
-using Jh.SourceGenerator.Common.GeneratorAttributes;
-using Volo.Abp;
-using JetBrains.Annotations;
-using System.Linq;
 using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.JhMenu
 {
-
-    
     [Description("角色菜单")]
     public class MenuRoleMap : CreationAuditedEntity<Guid>, IMultiTenant
     {
@@ -32,10 +24,7 @@ namespace Jh.Abp.JhMenu
         [Description("用户角色")]
         [CreateOrUpdateInputDto]
         public Guid RoleId { get; set; }
-
-        public MenuRoleMap()
-        {
-        }
+        protected MenuRoleMap() { }
 
         public MenuRoleMap(Guid menuid, Guid roleid, Guid? tenantId)
         {

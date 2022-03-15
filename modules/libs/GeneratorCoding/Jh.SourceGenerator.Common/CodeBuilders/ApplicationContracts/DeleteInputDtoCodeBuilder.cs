@@ -20,6 +20,7 @@ using System.Text;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
+                builder.AppendLine($"\t [Serializable]");
                 builder.AppendLine($"\tpublic class {FileName} : {table.Name}RetrieveInputDto");
                 builder.AppendLine("\t{");
                 builder.AppendLine("\t}");

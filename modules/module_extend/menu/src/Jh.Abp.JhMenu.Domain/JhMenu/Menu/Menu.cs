@@ -15,12 +15,10 @@ using Jh.Abp.Common;
 
 namespace Jh.Abp.JhMenu
 {
-
-    
     [Description("菜单")]
     public class Menu : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {
-        public Menu() { }
+        protected Menu() { }
         public Menu(Guid? tenantId)
         { 
             TenantId= tenantId; 

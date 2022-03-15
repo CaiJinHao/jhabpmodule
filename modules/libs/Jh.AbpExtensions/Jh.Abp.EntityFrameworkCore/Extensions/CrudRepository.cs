@@ -59,14 +59,24 @@ namespace Jh.Abp.EntityFrameworkCore
             return await DeleteAsync(autoSave, isHard, cancellationToken, entitys: entitys);
         }
 
+        /// <summary>
+        /// .AsNoTracking() 不跟踪加载不到扩展属性
+        /// </summary>
+        /// <param name="includeDetails"></param>
+        /// <returns></returns>
         public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool includeDetails = false)
         {
             return includeDetails ? await WithDetailsAsync() : await GetDbSetAsync();
         }
 
+        /// <summary>
+        /// .AsNoTracking() 不跟踪加载不到扩展属性
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
         {
-            return (await GetDbContextAsync().ConfigureAwait(continueOnCapturedContext: false)).Set<T>();
+            return (await GetDbContextAsync()).Set<T>();
         }
 
         public virtual async Task<TEntity[]> DeleteAsync(bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken), params TEntity[] entitys)

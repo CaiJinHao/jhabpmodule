@@ -28,6 +28,7 @@ using Volo.Abp.Domain.Entities;");
                 builder.AppendLine($"\t/// <summary>");
                 builder.AppendLine($"\t/// {table.Comment}");
                 builder.AppendLine($"\t/// </summary>");
+                builder.AppendLine($"\t [Serializable]");
                 builder.AppendLine($"\tpublic class {FileName}: {table.InheritClass}<{table.KeyType}>");
                 if (table.IsConcurrencyStamp)
                 {
