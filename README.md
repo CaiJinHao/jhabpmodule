@@ -32,6 +32,9 @@ xxx.Application.Contracts.xml生成，设置为嵌入的资源，用于Swagger�
 Host添加其他模块
 引用MenuHttpApi、Ef、Application 添加依赖、创建数据迁移即可
 
+远程服务
+引用HttpApi.Client,添加依赖
+
 
 layui-admin 修改
     common.js/oidc-client-sample.js  修改对应的端口、ApiName
