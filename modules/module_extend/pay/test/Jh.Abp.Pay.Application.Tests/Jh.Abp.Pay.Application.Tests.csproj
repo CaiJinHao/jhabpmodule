@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Jh.Abp.Pay</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jh.Abp.Pay.Application\Jh.Abp.Pay.Application.csproj" />
+    <ProjectReference Include="..\Jh.Abp.Pay.Domain.Tests\Jh.Abp.Pay.Domain.Tests.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="NETCore.Encrypt" Version="2.1.0" />
+  </ItemGroup>
+
+</Project>

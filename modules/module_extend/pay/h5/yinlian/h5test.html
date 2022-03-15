@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>银联商务h5test</title>
+</head>
+<body>
+    <div>
+        <div>
+            <a id="wechat" href="javascript:;">微信Test</a>
+        </div>
+        <div>
+            <a id="alipay" href="javascript:;">支付宝Test</a>
+        </div>
+    </div>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+
+            var payObj=function(opt){
+                return {
+                    wechatPay:function(){
+                        var payUrl='https://test-api-open.chinaums.com/v1/netpay/trade/h5-pay';
+                        location.href='https://test-api-open.chinaums.com/v1/netpay/wxpay/h5-pay?appId%3D10037e6f6a4e6da4016a670fd4530012%26timestamp%3D20220315174805%26nonce%3D2ded6ca3f0a4453ebe609c644a6f5f28%26content%3D%7B%22requestTimestamp%22%3A%222022-03-15+17%3A48%3A05%22%2C%22merOrderId%22%3A%22214d0f224be84483b404b991b75c4e5e%22%2C%22mid%22%3A%22898310148160568%2C898310060514001%22%2C%22tid%22%3A%2288880001%22%2C%22instMid%22%3A%22H5DEFAULT%22%2C%22subOrders%22%3A%5B%7B%22mid%22%3A%22988460101800202%22%2C%22totalAmount%22%3A10%7D%5D%2C%22totalAmount%22%3A10%7D%26signature%3DZo0ZSU12xjDQ25Qxt7n1COfonLxM3j5ssImW3urJ6S8%3D';
+                    },
+                    aliPay:function(){}
+                };
+            };
+
+            $('#wechat').on('click',function(){
+
+            });  
+            $('#alipay').on('click',function(){
+                
+            });            
+        })
+    </script>
+</body>
+</html>

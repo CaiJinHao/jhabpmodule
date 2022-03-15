@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "Jh.Abp.Pay": {
+      "path": "Jh.Abp.Pay.abpmdl.json"
+    }
+  }
+}

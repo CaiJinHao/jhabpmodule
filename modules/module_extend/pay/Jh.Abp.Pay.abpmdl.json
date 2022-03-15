@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "Jh.Abp.Pay.Domain.Shared": {
+      "path": "src/Jh.Abp.Pay.Domain.Shared/Jh.Abp.Pay.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.Domain": {
+      "path": "src/Jh.Abp.Pay.Domain/Jh.Abp.Pay.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.Application.Contracts": {
+      "path": "src/Jh.Abp.Pay.Application.Contracts/Jh.Abp.Pay.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.Application": {
+      "path": "src/Jh.Abp.Pay.Application/Jh.Abp.Pay.Application.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.EntityFrameworkCore": {
+      "path": "src/Jh.Abp.Pay.EntityFrameworkCore/Jh.Abp.Pay.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.MongoDB": {
+      "path": "src/Jh.Abp.Pay.MongoDB/Jh.Abp.Pay.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.HttpApi": {
+      "path": "src/Jh.Abp.Pay.HttpApi/Jh.Abp.Pay.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.HttpApi.Client": {
+      "path": "src/Jh.Abp.Pay.HttpApi.Client/Jh.Abp.Pay.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.TestBase": {
+      "path": "test/Jh.Abp.Pay.TestBase/Jh.Abp.Pay.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Pay.EntityFrameworkCore.Tests": {
+      "path": "test/Jh.Abp.Pay.EntityFrameworkCore.Tests/Jh.Abp.Pay.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Pay.MongoDB.Tests": {
+      "path": "test/Jh.Abp.Pay.MongoDB.Tests/Jh.Abp.Pay.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Pay.Domain.Tests": {
+      "path": "test/Jh.Abp.Pay.Domain.Tests/Jh.Abp.Pay.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Pay.Application.Tests": {
+      "path": "test/Jh.Abp.Pay.Application.Tests/Jh.Abp.Pay.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Pay.HttpApi.Host": {
+      "path": "host/Jh.Abp.Pay.HttpApi.Host/Jh.Abp.Pay.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Pay.Web": {
+      "path": "src/Jh.Abp.Pay.Web/Jh.Abp.Pay.Web.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Jh.Abp.Pay.HttpApi.Client.ConsoleTestApp/Jh.Abp.Pay.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "Jh.Abp.Pay.Web.Host": {
+      "path": "host/Jh.Abp.Pay.Web.Host/Jh.Abp.Pay.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Pay.IdentityServer": {
+      "path": "host/Jh.Abp.Pay.IdentityServer/Jh.Abp.Pay.IdentityServer.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Pay.Host.Shared": {
+      "path": "host/Jh.Abp.Pay.Host.Shared/Jh.Abp.Pay.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Pay.Web.Unified": {
+      "path": "host/Jh.Abp.Pay.Web.Unified/Jh.Abp.Pay.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Pay.Blazor": {
+      "path": "src/Jh.Abp.Pay.Blazor/Jh.Abp.Pay.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.Blazor.Host": {
+      "path": "host/Jh.Abp.Pay.Blazor.Host/Jh.Abp.Pay.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "Jh.Abp.Pay.Blazor.Server": {
+      "path": "src/Jh.Abp.Pay.Blazor.Server/Jh.Abp.Pay.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.Blazor.WebAssembly": {
+      "path": "src/Jh.Abp.Pay.Blazor.WebAssembly/Jh.Abp.Pay.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "Jh.Abp.Pay.Blazor.Server.Host": {
+      "path": "host/Jh.Abp.Pay.Blazor.Server.Host/Jh.Abp.Pay.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}

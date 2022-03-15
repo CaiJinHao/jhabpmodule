@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Jh.Abp.Pay</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Mongo2Go" Version="3.1.3" />
+    <ProjectReference Include="..\..\src\Jh.Abp.Pay.MongoDB\Jh.Abp.Pay.MongoDB.csproj" />
+    <ProjectReference Include="..\Jh.Abp.Pay.TestBase\Jh.Abp.Pay.TestBase.csproj" />
+  </ItemGroup>
+
+</Project>
