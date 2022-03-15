@@ -30,16 +30,16 @@ namespace Jh.Abp.Workflow
         /// <summary>
         /// 当前登录用户，由事件传递存储在EventData
         /// </summary>
-        protected Guid currentUserId { get; set; }
+        protected Guid CurrentUserId { get; set; }
 
-        protected WorkflowDefinition currentWorkflowDefinition { get; set; }
-        protected WorkflowInstance currentWorkflowInstance { get; set; }
+        protected WorkflowDefinition CurrentWorkflowDefinition { get; set; }
+        protected WorkflowInstance CurrentWorkflowInstance { get; set; }
 
         [UnitOfWork]
         public override ExecutionResult ExecutionRun(IStepExecutionContext context)
         {
-            currentWorkflowDefinition = workflowDefinitionRepository.FindAsync(workflowDefinitionId).Result;
-            currentWorkflowInstance = workflowInstanceRepository.FindAsync(workflowInstanceId).Result;
+            CurrentWorkflowDefinition = workflowDefinitionRepository.FindAsync(workflowDefinitionId).Result;
+            CurrentWorkflowInstance = workflowInstanceRepository.FindAsync(workflowInstanceId).Result;
 
             if (!context.ExecutionPointer.EventPublished)
             {
@@ -57,7 +57,7 @@ namespace Jh.Abp.Workflow
             var eventData = (JObject)context.ExecutionPointer.EventData;
             ApprovalResult = eventData["ApprovalResult"].Value<int>();
             Remark = eventData["Remark"].Value<string>();
-            currentUserId = new Guid(eventData["CurrentUserId"].Value<string>());
+            CurrentUserId = new Guid(eventData["CurrentUserId"].Value<string>());
             var backlog = UpdateBacklogAsync(workflowExecutionPointerId).Result;
             return EventPublishdHandler(context,backlog);
         }
@@ -77,7 +77,7 @@ namespace Jh.Abp.Workflow
         {
             var backlog = await backlogRepository.FindAsync(WorkflowExecutionPointerId);
             //比对审批人和待办人
-            if (Guid.Equals(currentUserId, backlog.BacklogUserId))
+            if (Guid.Equals(CurrentUserId, backlog.BacklogUserId))
             {
                 backlog.BacklogResult = (BacklogResultType)ApprovalResult;
                 backlog.BacklogRemark = Remark;
@@ -99,13 +99,13 @@ namespace Jh.Abp.Workflow
         {
             //发送通知INotificationPublisher
             //添加待办事项
-            await backlogRepository.CreateAsync(new WorkflowBacklog(workflowExecutionPointerId, currentWorkflowInstance.CreatorId)
+            await backlogRepository.CreateAsync(new WorkflowBacklog(workflowExecutionPointerId, CurrentWorkflowInstance.CreatorId)
             {
                 WorkflowInstanceId = workflowInstanceId,
                 BacklogResult = BacklogResultType.Untreated,
                 BacklogUserId = backlogUser.Id,
                 BacklogUserName = backlogUser.Name,
-                TenantId = currentWorkflowDefinition?.TenantId,
+                TenantId = CurrentWorkflowDefinition?.TenantId,
             });
             return ExecutionResult.WaitForEvent(Guid.NewGuid().ToString(), workflowInstanceId.ToString(), DateTime.MinValue);
         }

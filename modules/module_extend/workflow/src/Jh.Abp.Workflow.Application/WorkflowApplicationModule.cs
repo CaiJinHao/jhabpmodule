@@ -10,7 +10,6 @@ namespace Jh.Abp.Workflow;
     typeof(WorkflowDomainModule),
     typeof(WorkflowApplicationContractsModule),
     typeof(AbpDddApplicationModule),
-    typeof(JhIdentityApplicationModule),
     typeof(AbpAutoMapperModule)
     )]
 public class WorkflowApplicationModule : AbpModule

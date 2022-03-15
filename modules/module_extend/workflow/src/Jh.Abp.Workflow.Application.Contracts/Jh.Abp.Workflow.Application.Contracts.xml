@@ -44,11 +44,6 @@
             是否通过
             </summary>
         </member>
-        <member name="T:Jh.Abp.Workflow.WorkflowDynamicData">
-            <summary>
-            工作流数据传入对象 注意值类型空判断
-            </summary>
-        </member>
         <member name="T:Jh.Abp.Workflow.WorkflowBacklogCreateInputDto">
             <summary>
             待办事项

@@ -24,15 +24,14 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Localization\WorkflowDefinitions\*.json" />
+    <Compile Remove="Workflows\WorkflowDefinition\**" />
     <Content Remove="Localization\WorkflowDefinitions\*.json" />
+    <EmbeddedResource Remove="Workflows\WorkflowDefinition\**" />
+    <None Remove="Workflows\WorkflowDefinition\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Domain.Shared\Jh.Abp.Domain.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Workflows\WorkflowDefinition\" />
   </ItemGroup>
 
 </Project>

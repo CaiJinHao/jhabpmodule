@@ -11,8 +11,6 @@ abp new YourCompany.YourProjectName -t module -d ef -cs "server=192.168.12.99;da
 
 .\addrefrence.ps1 -execPath ..\..\modules\module_extend\menu\ -slnName Jh.Abp.JhMenu  
 
-HttpApiModel添加依赖typeof(xxxApplicationModule),typeof(xxxEntityFrameworkCoreModule),
-
 DomainSharedModule添加本地资源继承   
     .AddBaseTypes(typeof(Jh.Abp.Domain.Localization.JhAbpExtensionsResource))
     添加模块依赖：typeof(Jh.Abp.Domain.Shared.JhAbpExtensionsDomainSharedModule)
@@ -31,8 +29,8 @@ xxx.Application.Contracts.xml生成，设置为嵌入的资源，用于Swagger�
 
 启动程序
 
-添加其他模块
-引用MenuHttpApi、添加依赖、创建数据迁移即可
+Host添加其他模块
+引用MenuHttpApi、Ef、Application 添加依赖、创建数据迁移即可
 
 
 layui-admin 修改
@@ -51,4 +49,3 @@ layui-admin 修改
 ## 支持
 
 如果你觉得这个仓库还不错，请给一个星 :star:
-

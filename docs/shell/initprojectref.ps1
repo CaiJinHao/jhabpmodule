@@ -27,9 +27,6 @@ dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCo
 dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj reference $execPath\src\$slnName.Domain\$slnName.Domain.csproj
 dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj reference $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj
 
-# 不应该使用Application/EntityFrameworkCore
-# dotnet add $execPath\src\$slnName.HttpApi\$slnName.HttpApi.csproj reference $execPath\src\$slnName.Application\$slnName.Application.csproj
-# dotnet add $execPath\src\$slnName.HttpApi\$slnName.HttpApi.csproj reference $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj
 
 # 模块引用
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.HttpApi

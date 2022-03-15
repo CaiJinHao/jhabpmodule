@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Application\Jh.Abp.Application.csproj" />
-    <ProjectReference Include="..\..\..\..\overwrite\identity\src\Jh.Abp.JhIdentity.Application\Jh.Abp.JhIdentity.Application.csproj" />
   </ItemGroup>
 
 </Project>

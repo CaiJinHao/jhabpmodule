@@ -36,7 +36,7 @@
     <ProjectReference Include="..\..\src\Jh.Abp.Workflow.EntityFrameworkCore\Jh.Abp.Workflow.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Jh.Abp.Workflow.Host.Shared\Jh.Abp.Workflow.Host.Shared.csproj" />
     <ProjectReference Include="..\..\..\..\libs\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj" />
-    <ProjectReference Include="..\..\..\..\overwrite\identity\src\Jh.Abp.JhIdentity.EntityFrameworkCore\Jh.Abp.JhIdentity.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\..\overwrite\identity\src\Jh.Abp.JhIdentity.HttpApi.Client\Jh.Abp.JhIdentity.HttpApi.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

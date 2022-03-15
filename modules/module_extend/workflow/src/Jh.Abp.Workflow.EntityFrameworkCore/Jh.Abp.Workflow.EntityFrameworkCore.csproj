@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore\Jh.Abp.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Jh.Abp.Workflow.Application.Contracts\Jh.Abp.Workflow.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

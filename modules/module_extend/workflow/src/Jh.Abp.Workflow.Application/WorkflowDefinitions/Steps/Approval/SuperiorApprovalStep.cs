@@ -30,7 +30,7 @@ namespace Jh.Abp.Workflow
             var _userId = Guid.Empty;//获取此人的上级
             if (string.IsNullOrEmpty(ParentApprovalUserId))
             {
-                _userId = (Guid)currentWorkflowInstance.CreatorId;//没有上一步骤审批人时，使用创建工作流的人
+                _userId = (Guid)CurrentWorkflowInstance.CreatorId;//没有上一步骤审批人时，使用创建工作流的人
             }
             else
             {

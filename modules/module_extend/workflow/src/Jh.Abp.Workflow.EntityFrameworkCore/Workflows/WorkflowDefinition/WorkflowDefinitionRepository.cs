@@ -18,14 +18,14 @@ namespace Jh.Abp.Workflow
         /// <summary>
         /// 工作流通用数据传输类型
         /// </summary>
-        private string workflowDataType { get; set; }
-        protected IDefinitionLoader definitionLoader => LazyServiceProvider.LazyGetRequiredService<IDefinitionLoader>();
-        protected IVirtualFileProvider virtualFileProvider => LazyServiceProvider.LazyGetRequiredService<IVirtualFileProvider>();
+        private string WorkflowDataType { get; set; }
+        protected IDefinitionLoader DefinitionLoader => LazyServiceProvider.LazyGetRequiredService<IDefinitionLoader>();
+        protected IVirtualFileProvider VirtualFileProvider => LazyServiceProvider.LazyGetRequiredService<IVirtualFileProvider>();
         public WorkflowDefinitionRepository(IDbContextProvider<WorkflowDbContext> dbContextProvider) : base(dbContextProvider)
         {
             var _workflowDataType = typeof(WorkflowDynamicData);
             var _assemblyName = _workflowDataType.Assembly.GetName().Name;
-            workflowDataType = $"{_workflowDataType.FullName},{_assemblyName}";
+            WorkflowDataType = $"{_workflowDataType.FullName},{_assemblyName}";
         }
 
         public override async Task<WorkflowDefinition> CreateAsync(WorkflowDefinition entity, bool autoSave = false, CancellationToken cancellationToken = default)
@@ -52,9 +52,9 @@ namespace Jh.Abp.Workflow
 
         public virtual async Task<WorkflowCore.Models.WorkflowDefinition> LoadWorkflowDefinitionByFileAsync(string virtualFilePath)
         {
-            var file= virtualFileProvider.GetFileInfo(virtualFilePath);
+            var file= VirtualFileProvider.GetFileInfo(virtualFilePath);
             var workflowDefinitionJson = await file.ReadAsStringAsync();
-            return definitionLoader.LoadDefinition(workflowDefinitionJson, Deserializers.Json);
+            return DefinitionLoader.LoadDefinition(workflowDefinitionJson, Deserializers.Json);
         }
 
         public virtual Task<WorkflowCore.Models.WorkflowDefinition> LoadWorkflowDefinitionAsync(WorkflowDefinition data)
@@ -62,14 +62,14 @@ namespace Jh.Abp.Workflow
             var steps = JsonConvert.DeserializeObject<dynamic>(data.JsonDefinition);
             var workflowDefinition = new
             {
-                Id = data.Id,
-                Version = data.Version,
-                Description = data.Description,
+                data.Id,
+                data.Version,
+                data.Description,
                 Steps = steps,
-                DataType = workflowDataType,
+                DataType = WorkflowDataType,
                 DefaultErrorBehavior = WorkflowErrorHandling.Compensate
             };
-            var def= definitionLoader.LoadDefinition(JsonConvert.SerializeObject(workflowDefinition), Deserializers.Json);
+            var def= DefinitionLoader.LoadDefinition(JsonConvert.SerializeObject(workflowDefinition), Deserializers.Json);
             return Task.FromResult(def);
         }
     }
