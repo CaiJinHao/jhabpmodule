@@ -14,9 +14,8 @@ namespace Jh.Abp.Workflow.Samples;
 public class SampleController : WorkflowController, ISampleAppService
 {
     private readonly ISampleAppService _sampleAppService;
-    protected Volo.Abp.Identity.IdentityUserManager identityUserManager => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IdentityUserManager>();
-    protected IWorkflowDefinitionRepository workflowDefinitionRepository=>LazyServiceProvider.LazyGetRequiredService<IWorkflowDefinitionRepository>();
-    protected IVirtualFileProvider virtualFileProvider => LazyServiceProvider.LazyGetRequiredService<IVirtualFileProvider>();
+    protected IWorkflowDefinitionRepository  WorkflowDefinitionRepository=>LazyServiceProvider.LazyGetRequiredService<IWorkflowDefinitionRepository>();
+    protected IVirtualFileProvider VirtualFileProvider => LazyServiceProvider.LazyGetRequiredService<IVirtualFileProvider>();
 
     public SampleController(ISampleAppService sampleAppService)
     {
@@ -44,12 +43,10 @@ public class SampleController : WorkflowController, ISampleAppService
     [Authorize]
     public async Task<SampleDto> GetAuthorizedAsync()
     {
-        //var data= await identityUserManager.GetByIdAsync(new System.Guid("3a02751d-396f-d768-9f76-ab89edf150d4"));
-        //await workflowDefinitionRepository.LoadWorkflowDefinitionAsync("/Jh/Abp/Workflow/Domain/Shared/Localization/WorkflowDefinitions/LeaveApprovalWorkflow.json");
         var virtualFilePath = "/Localization/WorkflowDefinitions/LeaveApprovalWorkflow.json";
         //var virtualFilePath = "/Jh/Abp/Workflow/Domain/Shared/Localization/Workflow/zh-Hans.json";
-        var d = virtualFileProvider.GetDirectoryContents("/Localization/WorkflowDefinitions");
-        var file = virtualFileProvider.GetFileInfo(virtualFilePath);
+        var d = VirtualFileProvider.GetDirectoryContents("/Localization/WorkflowDefinitions");
+        var file = VirtualFileProvider.GetFileInfo(virtualFilePath);
         var workflowDefinition = await file.ReadAsStringAsync();
         return await _sampleAppService.GetAsync();
     }

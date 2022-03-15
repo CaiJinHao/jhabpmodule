@@ -12,9 +12,4 @@
     <ProjectReference Include="..\Jh.Abp.Workflow.Application.Contracts\Jh.Abp.Workflow.Application.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Jh.Abp.Workflow.Application\Jh.Abp.Workflow.Application.csproj" />
-    <ProjectReference Include="..\Jh.Abp.Workflow.EntityFrameworkCore\Jh.Abp.Workflow.EntityFrameworkCore.csproj" />
-  </ItemGroup>
-
 </Project>

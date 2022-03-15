@@ -1,6 +1,8 @@
 using Jh.Abp.IdentityServer;
+using Jh.Abp.JhIdentity.EntityFrameworkCore;
 using Jh.Abp.JhIdentity.MultiTenancy;
 using Jh.Abp.JhMenu;
+using Jh.Abp.JhMenu.EntityFrameworkCore;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Swagger;
 using Jh.Abp.Workflow;
@@ -90,7 +92,11 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
     typeof(JhAbpIdentityServerModule),
+    typeof(JhIdentityApplicationModule),
+    typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(JhIdentityHttpApiModule),
+    typeof(JhMenuApplicationModule),
+    typeof(JhMenuEntityFrameworkCoreModule),
     typeof(JhMenuHttpApiModule),
     typeof(WorkflowHttpApiModule),
     typeof(AbpQuickComponentsModule)

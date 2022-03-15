@@ -30,30 +30,8 @@ namespace Jh.Abp.QuickComponents
                 var accessToken = await GetAccessTokenFromHttpContextOrNullAsync();
                 if (accessToken != null)
                 {
-                    //httpapi自动获取
                     context.Request.SetBearerToken(accessToken);
                     return;
-                }
-                else
-                {
-                    //必须添加json配置文件
-                    /*
-"IdentityClients": {
-    "Default": {
-      "ClientId": "WebAppYourName_App",
-      "ClientSecret": "KimHo@666",
-      //"GrantType": "password",
-      //"UserName": "admin",
-      //"UserPassword": "KimHo@123",
-      "Authority": "https://localhost:6201/",
-      "Scope": "WebAppYourName"
-    }
-  },
-                     */
-                    await IdentityModelAuthenticationService.TryAuthenticateAsync(
-                        context.Client,
-                        context.RemoteService.GetIdentityClient() ?? context.RemoteServiceName
-                    );
                 }
             }
         }

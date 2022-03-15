@@ -244,16 +244,14 @@ public class WorkflowHttpApiHostModule : AbpModule
         SeedData(context);
     }
 
-    private void SeedData(ApplicationInitializationContext context)
+    private static void SeedData(ApplicationInitializationContext context)
     {
         AsyncHelper.RunSync(async () =>
         {
-            using (var scope = context.ServiceProvider.CreateScope())
-            {
-                var data = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
-                var dataSeedContext = new DataSeedContext();
-                await data.SeedAsync(dataSeedContext);
-            }
+            using var scope = context.ServiceProvider.CreateScope();
+            var data = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+            var dataSeedContext = new DataSeedContext();
+            await data.SeedAsync(dataSeedContext);
         });
     }
 }

@@ -1,17 +1,14 @@
-﻿using Localization.Resources.AbpUi;
-using Jh.Abp.Workflow.Localization;
+﻿using Jh.Abp.Workflow.Localization;
+using Localization.Resources.AbpUi;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
-using Microsoft.Extensions.DependencyInjection;
-using Jh.Abp.Workflow.EntityFrameworkCore;
 
 namespace Jh.Abp.Workflow;
 
 [DependsOn(
-    typeof(WorkflowApplicationModule),
     typeof(WorkflowApplicationContractsModule),
-    typeof(WorkflowEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreMvcModule))]
 public class WorkflowHttpApiModule : AbpModule
 {

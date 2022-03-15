@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Account;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
@@ -20,6 +21,7 @@ namespace Jh.Abp.JhIdentity
 		: CrudApplicationService<IdentityUser, IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>,
 		IIdentityUserAppService
     {
+        public IProfileAppService ProfileAppService { get; set; }
         public IdentityUserManager UserManager { get; set; }
         protected IOrganizationUnitAppService OrganizationUnitAppService =>LazyServiceProvider.LazyGetRequiredService<OrganizationUnitAppService>();    
         protected IOrganizationUnitRepository OrganizationUnits => LazyServiceProvider.LazyGetRequiredService<IOrganizationUnitRepository>();
@@ -102,6 +104,11 @@ namespace Jh.Abp.JhIdentity
             {
                 (await UserManager.SetRolesAsync(user, input.RoleNames)).CheckErrors();
             }
+        }
+
+        public virtual async Task ChangePasswordAsync(ChangePasswordInputDto input)
+        {
+            await ProfileAppService.ChangePasswordAsync(new ChangePasswordInput() { CurrentPassword = input.CurrentPassword, NewPassword = input.NewPassword });
         }
 
         public override async Task<IdentityUserDto> UpdateAsync(Guid id, IdentityUserUpdateInputDto input)

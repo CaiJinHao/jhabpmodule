@@ -1,15 +1,11 @@
 using Jh.Abp.Application.Contracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
-using Volo.Abp.Account;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Data;
 using Volo.Abp.Identity;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
@@ -21,8 +17,6 @@ namespace Jh.Abp.JhIdentity.v1
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
 	public class IdentityUserController : JhIdentityController, IIdentityUserAppService
     {
-        public IProfileAppService ProfileAppService { get; set; }
-
         private readonly IIdentityUserAppService IdentityUserAppService;
 
         public IdentityUserController(IIdentityUserAppService identityUserAppService) 
@@ -156,26 +150,14 @@ namespace Jh.Abp.JhIdentity.v1
             return await IdentityUserAppService.GetSuperiorUserAsync(userId);
         }
 
-
-        /// <summary>
-        /// 当前登录用户信息
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(IdentityPermissions.Users.Default)]
-        [HttpGet("infoProfile")]
-        public virtual Task<ProfileDto> GetProfileAsync()
-        {
-            return ProfileAppService.GetAsync();
-        }
-
         //由于每个人都需要改密码所以注销权限
         //[Authorize(IdentityPermissions.Users.Update)]
         [Authorize]
         [HttpPost]
         [Route("change-password")]
-        public virtual Task ChangePasswordAsync(ChangePasswordInput input)
+        public virtual async Task ChangePasswordAsync(ChangePasswordInputDto input)
         {
-            return ProfileAppService.ChangePasswordAsync(input);
+            await IdentityUserAppService.ChangePasswordAsync(input);
         }
     }
 }
