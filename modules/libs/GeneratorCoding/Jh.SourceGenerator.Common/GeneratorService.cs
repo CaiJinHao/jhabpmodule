@@ -212,13 +212,13 @@ namespace Jh.SourceGenerator.Common
                 //contracts
                 CreateFile(new CreateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new IDapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
 
                 //Domain
+                CreateFile(new IDapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
                 CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
                 CreateFile(new DomainManager(tableDto, generatorOptions.CreateDomainPath));
                 CreateFile(new DataSeedContributor(tableDto, generatorOptions.CreateDomainPath));
