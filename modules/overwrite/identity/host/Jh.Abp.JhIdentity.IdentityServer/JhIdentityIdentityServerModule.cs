@@ -269,7 +269,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseAbpRequestLocalization(options =>
         {
             //默认中文
-            options.RequestCultureProviders.RemoveAll(provider => provider is Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider);
+            //options.RequestCultureProviders.RemoveAll(provider => provider is Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider);
         });
         app.UseIdentityServer();
         app.UseAuthorization();

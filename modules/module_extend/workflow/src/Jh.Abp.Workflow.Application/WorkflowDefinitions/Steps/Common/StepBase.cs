@@ -11,6 +11,7 @@ using Volo.Abp.Users;
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
 using System.Linq;
+using Volo.Abp.Timing;
 
 namespace Jh.Abp.Workflow
 {
@@ -21,6 +22,7 @@ namespace Jh.Abp.Workflow
         protected Guid workflowDefinitionId { get; set; }
 
         public IAbpLazyServiceProvider LazyServiceProvider { get; set; }
+        protected IClock Clock => LazyServiceProvider.LazyGetRequiredService<IClock>();
         protected IWorkflowDefinitionRepository workflowDefinitionRepository => LazyServiceProvider.LazyGetRequiredService<IWorkflowDefinitionRepository>();
         protected IWorkflowInstanceRepository workflowInstanceRepository => LazyServiceProvider.LazyGetRequiredService<IWorkflowInstanceRepository>();
         protected IWorkflowBacklogRepository backlogRepository => LazyServiceProvider.LazyGetRequiredService<IWorkflowBacklogRepository>();

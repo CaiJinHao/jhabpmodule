@@ -198,11 +198,6 @@
             方法参数回调
             </summary>
         </member>
-        <member name="T:Jh.Abp.JhIdentity.IdentityUserDto">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.UserName">
             <summary>
             

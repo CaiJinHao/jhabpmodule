@@ -14,6 +14,7 @@ using Volo.Abp.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Guids;
 using Microsoft.Extensions.Logging;
+using Volo.Abp.Timing;
 
 namespace Jh.Abp.Workflow
 {
@@ -24,6 +25,7 @@ namespace Jh.Abp.Workflow
         public IAbpLazyServiceProvider LazyServiceProvider { get; set; }
         public bool SupportsScheduledCommands => true;
         public IGuidGenerator GuidGenerator => LazyServiceProvider.LazyGetService<IGuidGenerator>(SimpleGuidGenerator.Instance);
+        protected IClock Clock => LazyServiceProvider.LazyGetRequiredService<IClock>();
 
         private IUnitOfWorkManager unitOfWorkManager => LazyServiceProvider.LazyGetRequiredService<IUnitOfWorkManager>();
         private IWorkflowScheduledCommandRepository workflowScheduledCommandRepository => LazyServiceProvider.LazyGetRequiredService<IWorkflowScheduledCommandRepository>();
@@ -129,7 +131,7 @@ namespace Jh.Abp.Workflow
 
         public async Task<IEnumerable<string>> GetRunnableEvents(DateTime asAt, CancellationToken cancellationToken = default)
         {
-            var now = DateTime.Now;
+            var now = Clock.Now;
             var raw = await (await workflowEventRepository.GetQueryableAsync())
                 .AsNoTracking()
                 .Where(x => !x.IsProcessed)

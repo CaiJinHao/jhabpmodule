@@ -81,7 +81,7 @@ namespace Jh.Abp.Workflow
             {
                 backlog.BacklogResult = (BacklogResultType)ApprovalResult;
                 backlog.BacklogRemark = Remark;
-                backlog.BacklogHandleTime = DateTime.Now;
+                backlog.BacklogHandleTime = Clock.Now;
                 return backlog;
             }
             else
