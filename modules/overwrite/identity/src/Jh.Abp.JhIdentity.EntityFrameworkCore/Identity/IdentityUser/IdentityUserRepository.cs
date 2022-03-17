@@ -66,17 +66,19 @@ namespace Jh.Abp.JhIdentity
                                     where user.Id == userId orderby userOu.CreationTime descending
                                     select ou).FirstOrDefaultAsync(cancellationToken);
             //获取这个组织的负责人
-            var superiorUserId = userOrg.GetProperty<Guid>(nameof(JhOrganizationUnit.LeaderId));
+            var superiorUserId = userOrg.GetProperty<Guid?>(nameof(JhOrganizationUnit.LeaderId));
             if (superiorUserId.Equals(userId))//创建实例人与负责人不相等时处理，否则返回null跳过该步骤
             {
                 //当前用户是组织负责人时，获取上级组织负责人
-                var parentOrg = await jhIdentityDbContext.OrganizationUnits.FirstOrDefaultAsync(a => a.Id == userOrg.ParentId, cancellationToken);
-                superiorUserId = parentOrg.GetProperty<Guid>(nameof(JhOrganizationUnit.LeaderId));
-                //superiorUserId = parentOrg.LeaderId;
-				if (superiorUserId.Equals(Guid.Empty))
+                if (userOrg.ParentId.HasValue)
                 {
-                    return default;//找不到上级，跳过该步骤，todo:没有上级领导的时候该工作流不成立
-                }
+					var parentOrg = await jhIdentityDbContext.OrganizationUnits.FirstOrDefaultAsync(a => a.Id == userOrg.ParentId, cancellationToken);
+					superiorUserId = parentOrg.LeaderId;
+					if (superiorUserId.Equals(Guid.Empty))
+					{
+						return default;//找不到上级，跳过该步骤，todo:没有上级领导的时候该工作流不成立
+					}
+				}
             }
             var data = await dbContext.Users.FirstOrDefaultAsync(a => a.Id == superiorUserId, cancellationToken);
             if (data != null)
