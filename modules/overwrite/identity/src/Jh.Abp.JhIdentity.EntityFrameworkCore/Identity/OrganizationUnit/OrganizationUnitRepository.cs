@@ -5,13 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Identity;
+using Volo.Abp.Identity.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity
 {
-    public class OrganizationUnitRepository : CrudRepository<JhIdentityDbContext, OrganizationUnit, System.Guid>, IOrganizationUnitRepository
+    public class OrganizationUnitRepository : CrudRepository<IIdentityDbContext, OrganizationUnit, System.Guid>, IOrganizationUnitRepository
 	{
         protected readonly IOrganizationUnitDapperRepository OrganizationUnitDapperRepository;
-        public OrganizationUnitRepository(IDbContextProvider<JhIdentityDbContext> dbContextProvider, IOrganizationUnitDapperRepository organizationunitDapperRepository) : base(dbContextProvider)
+        public OrganizationUnitRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider, IOrganizationUnitDapperRepository organizationunitDapperRepository) : base(dbContextProvider)
         {
             OrganizationUnitDapperRepository = organizationunitDapperRepository;
         }

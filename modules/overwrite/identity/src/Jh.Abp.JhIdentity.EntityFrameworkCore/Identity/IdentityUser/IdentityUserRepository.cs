@@ -8,16 +8,19 @@ using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Data;
+using Volo.Abp.Domain.Repositories;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity
 {
-    public class IdentityUserRepository : CrudRepository<JhIdentityDbContext, Volo.Abp.Identity.IdentityUser, System.Guid>, IIdentityUserRepository
+    public class IdentityUserRepository : CrudRepository<IIdentityDbContext, Volo.Abp.Identity.IdentityUser, System.Guid>, IIdentityUserRepository
 	{
-		 protected readonly IIdentityUserDapperRepository IdentityUserDapperRepository;
-		 public IdentityUserRepository(IDbContextProvider<JhIdentityDbContext> dbContextProvider, IIdentityUserDapperRepository identityuserDapperRepository) : base(dbContextProvider)
+		public IJhIdentityDbContext jhIdentityDbContext { get; set; }
+		public IRepository<JhOrganizationUnit, Guid> _appRoleRepository { get; set; }
+		protected readonly IIdentityUserDapperRepository IdentityUserDapperRepository;
+		 public IdentityUserRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider, IIdentityUserDapperRepository identityuserDapperRepository) : base(dbContextProvider)
 		{
 			IdentityUserDapperRepository=identityuserDapperRepository;
 		}
@@ -37,7 +40,7 @@ namespace Jh.Abp.JhIdentity
 			return await query.ToListAsync(GetCancellationToken(cancellationToken));
 		}
 
-		public virtual async Task<List<Volo.Abp.Identity.OrganizationUnit>> GetOrganizationUnitsAsync(
+		public virtual async Task<List<OrganizationUnit>> GetOrganizationUnitsAsync(
 			Guid id,
 			CancellationToken cancellationToken = default)
 		{
@@ -61,20 +64,21 @@ namespace Jh.Abp.JhIdentity
                                     join userOu in dbContext.Set<IdentityUserOrganizationUnit>() on user.Id equals userOu.UserId
 									join ou in dbContext.OrganizationUnits on userOu.OrganizationUnitId equals ou.Id
                                     where user.Id == userId orderby userOu.CreationTime descending
-                                    select ou).FirstOrDefaultAsync();
+                                    select ou).FirstOrDefaultAsync(cancellationToken);
             //获取这个组织的负责人
-            var superiorUserId = userOrg.GetProperty<Guid>(nameof(ObjectExtensionConst.OrganizationUnit.LeaderId));
+            var superiorUserId = userOrg.GetProperty<Guid>(nameof(JhOrganizationUnit.LeaderId));
             if (superiorUserId.Equals(userId))//创建实例人与负责人不相等时处理，否则返回null跳过该步骤
             {
                 //当前用户是组织负责人时，获取上级组织负责人
-                var parentOrg = await dbContext.OrganizationUnits.FirstOrDefaultAsync(a => a.Id == userOrg.ParentId);
-                superiorUserId = parentOrg.GetProperty<Guid>(nameof(ObjectExtensionConst.OrganizationUnit.LeaderId));
-                if (superiorUserId.Equals(Guid.Empty))
+                var parentOrg = await jhIdentityDbContext.OrganizationUnits.FirstOrDefaultAsync(a => a.Id == userOrg.ParentId, cancellationToken);
+                superiorUserId = parentOrg.GetProperty<Guid>(nameof(JhOrganizationUnit.LeaderId));
+                //superiorUserId = parentOrg.LeaderId;
+				if (superiorUserId.Equals(Guid.Empty))
                 {
                     return default;//找不到上级，跳过该步骤，todo:没有上级领导的时候该工作流不成立
                 }
             }
-            var data = await dbContext.Users.FirstOrDefaultAsync(a => a.Id == superiorUserId);
+            var data = await dbContext.Users.FirstOrDefaultAsync(a => a.Id == superiorUserId, cancellationToken);
             if (data != null)
             {
                 return data;

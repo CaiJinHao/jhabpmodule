@@ -19,34 +19,45 @@ namespace Jh.Abp.JhMenu
     public class Menu : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {
         protected Menu() { }
-        public Menu(Guid? tenantId)
-        { 
-            TenantId= tenantId; 
+
+        public Menu(
+            string menuCode,
+            string menuName,
+            string menuIcon,
+            int menuSort,
+            Guid? tenantId = null)
+        {
+            MenuCode = menuCode;
+            MenuName = menuName;
+            MenuIcon = menuIcon;
+            MenuSort = menuSort;
+            TenantId = tenantId;
         }
+
         public virtual Guid? TenantId { get; set; }
 
         [Required]
         [MaxLength(200)]
         [Description("菜单编号")]
         [CreateOrUpdateInputDto]
-        public string MenuCode { get; set; }
+        public string MenuCode { get; protected set; }
 
         [Required]
         [MaxLength(200)]
         [Description("菜单名称")]
         [CreateOrUpdateInputDto]
-        public string MenuName { get; set; }
+        public string MenuName { get; protected set; }
 
         [Required]
         [MaxLength(200)]
         [Description("菜单图标")]
         [CreateOrUpdateInputDto]
-        public string MenuIcon { get; set; }
+        public string MenuIcon { get; protected set; }
 
         [Required]
         [Description("菜单排序")]
         [CreateOrUpdateInputDto]
-        public int MenuSort { get; set; }
+        public int MenuSort { get; protected set; }
 
         [MaxLength(200)]
         [Description("菜单上级菜单编号")]

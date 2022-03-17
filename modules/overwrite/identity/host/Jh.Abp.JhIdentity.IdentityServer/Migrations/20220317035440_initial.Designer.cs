@@ -12,7 +12,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Jh.Abp.JhIdentity.Migrations
 {
     [DbContext(typeof(IdentityServerHostMigrationsDbContext))]
-    [Migration("20220307014540_initial")]
+    [Migration("20220317035440_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -885,12 +885,12 @@ namespace Jh.Abp.JhIdentity.Migrations
 
                     b.Property<Guid?>("LeaderId")
                         .HasColumnType("char(36)")
-                        .HasComment("领导ID");
+                        .HasComment("直系领导ID");
 
                     b.Property<string>("LeaderName")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasComment("领导名称");
+                        .HasComment("直系领导名称");
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("char(36)");

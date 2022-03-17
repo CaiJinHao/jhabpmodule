@@ -1,10 +1,12 @@
-﻿namespace Jh.Abp.JhIdentity;
+﻿using Volo.Abp.Data;
+
+namespace Jh.Abp.JhIdentity;
 
 public static class JhIdentityDbProperties
 {
-    public static string DbTablePrefix { get; set; } = "JhIdentity";
+    public static string DbTablePrefix { get; set; } = AbpCommonDbProperties.DbTablePrefix;
 
-    public static string DbSchema { get; set; } = null;
+    public static string DbSchema { get; set; } = AbpCommonDbProperties.DbSchema;
 
-    public const string ConnectionStringName = "JhIdentity";
+    public const string ConnectionStringName = "AbpIdentity";
 }

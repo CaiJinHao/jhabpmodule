@@ -7,7 +7,7 @@ namespace Jh.Abp.JhIdentity
 {
     public static class JhIdentityModuleExtensionConfigurator
     {
-        private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
+        private static readonly OneTimeRunner OneTimeRunner = new();
 
         public static void Configure()
         {

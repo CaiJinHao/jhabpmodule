@@ -144,14 +144,13 @@ namespace Jh.Abp.JhIdentity.v1
         }
 
         [Authorize(IdentityPermissions.Users.Default)]
-        [HttpGet("/{userId}/SuperiorUser")]
+        [HttpGet("{userId}/SuperiorUser")]
         public async Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId)
         {
             return await IdentityUserAppService.GetSuperiorUserAsync(userId);
         }
 
-        //由于每个人都需要改密码所以注销权限
-        //[Authorize(IdentityPermissions.Users.Update)]
+        //由于每个人都需要改密码所以注销权限策略
         [Authorize]
         [HttpPost]
         [Route("change-password")]

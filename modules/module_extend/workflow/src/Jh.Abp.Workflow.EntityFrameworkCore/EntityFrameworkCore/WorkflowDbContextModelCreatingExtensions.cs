@@ -25,6 +25,7 @@ public static class WorkflowDbContextModelCreatingExtensions
             b.Property(p => p.BusinessType).HasComment("业务类型");
 
             b.HasIndex(x => x.Version);
+            b.ApplyObjectExtensionMappings();
         });
 
         builder.Entity<WorkflowInstance>(b =>

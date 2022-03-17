@@ -49,6 +49,8 @@ public static class JhMenuDbContextModelCreatingExtensions
 
             b.HasIndex(c => new { c.MenuCode, c.TenantId }).IsUnique();
             b.HasIndex(c => c.MenuParentCode);
+
+            b.ApplyObjectExtensionMappings();
         });
 
         builder.Entity<MenuRoleMap>(b => {

@@ -137,8 +137,8 @@ namespace Jh.Abp.JhIdentity.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DisplayName = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LeaderId = table.Column<Guid>(type: "char(36)", nullable: true, comment: "领导ID", collation: "ascii_general_ci"),
-                    LeaderName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true, comment: "领导名称")
+                    LeaderId = table.Column<Guid>(type: "char(36)", nullable: true, comment: "直系领导ID", collation: "ascii_general_ci"),
+                    LeaderName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true, comment: "直系领导名称")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ExtraProperties = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),

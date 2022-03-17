@@ -883,12 +883,12 @@ namespace Jh.Abp.JhIdentity.Migrations
 
                     b.Property<Guid?>("LeaderId")
                         .HasColumnType("char(36)")
-                        .HasComment("领导ID");
+                        .HasComment("直系领导ID");
 
                     b.Property<string>("LeaderName")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasComment("领导名称");
+                        .HasComment("直系领导名称");
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("char(36)");
