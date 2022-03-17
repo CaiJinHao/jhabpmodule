@@ -19,20 +19,33 @@ namespace Jh.Abp.Workflow
     [Description("工作流定义")]
     public class WorkflowDefinition : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {
-        public WorkflowDefinition() { }
-        public WorkflowDefinition(Guid? tenantId) {
+        protected WorkflowDefinition() { }
+        public WorkflowDefinition(int version,int businessType, string description,Guid? tenantId = null)
+        {
+            Version = version;
+            BusinessType = businessType;
+            Description = description;
             TenantId = tenantId;
         }
-        public virtual Guid? TenantId { get; set; }
+        public virtual Guid? TenantId { get; protected set; }
+
+        /// <summary>
+        /// 用于匹配业务
+        /// </summary>
+        [Required]
+        [Description("业务类型")]
+        [CreateOrUpdateInputDto]
+        public int BusinessType { get; protected set; }
 
         [Required]
         [Description("版本")]
         [CreateOrUpdateInputDto]
-        public int Version { get; set; }
+        public int Version { get; protected set; }
 
+        [Required]
         [Description("描述")]
         [CreateOrUpdateInputDto]
-        public string Description { get; set; }
+        public string Description { get; protected set; }
 
         /// <summary>
         /// 注意 Json里面的id要和实体Id保持大小写一致，建议使用小写
@@ -52,12 +65,5 @@ namespace Jh.Abp.Workflow
         [CreateOrUpdateInputDto]
         public string FormDefinition { get; set; }
 
-        /// <summary>
-        /// 用于匹配业务
-        /// </summary>
-        [Required]
-        [Description("业务类型")]
-        [CreateOrUpdateInputDto]
-        public int BusinessType { get; set; }
     }
 }
