@@ -169,6 +169,8 @@ namespace Jh.Abp.JhIdentity
             var data = await MapToGetOutputDtoAsync(entity);
             await crudRepository.EnsureCollectionLoadedAsync(entity, u => u.OrganizationUnits);
             data.OrganizationUnitIds = entity.OrganizationUnits.Select(a => a.OrganizationUnitId).ToArray();
+            await crudRepository.EnsureCollectionLoadedAsync(entity, u => u.Roles);
+            data.RoleIds = entity.Roles.Select(a => a.RoleId).ToArray();
             return data;
         }
 
