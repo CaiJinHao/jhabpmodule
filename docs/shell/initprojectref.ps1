@@ -1,4 +1,4 @@
-# 初始化新项目引用
+# 初始化新项目引用和更新项目版本
 [CmdletBinding()]
 param (
     [string]$execPath = '../../modules/demo/aspnet-core',
@@ -30,8 +30,16 @@ dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Con
 
 # 模块引用
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.HttpApi
+dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.Application
+dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.EntityFrameworkCore
+
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhMenu.HttpApi
-dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.HttpApi
+dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhMenu.Application
+dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhMenu.EntityFrameworkCore
+
+# dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.HttpApi
+# dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.Application
+# dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.EntityFrameworkCore
 
 # 模块引用
 # dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhAuditLogging.HttpApi

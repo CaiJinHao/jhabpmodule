@@ -214,7 +214,7 @@
                                 clickClose: true,
                                 // filterable: true,
                                 height: 'auto',
-                                data: response.items,
+                                data: response,
                                 tree: {
                                     //是否显示树状结构
                                     show: true,
@@ -231,22 +231,32 @@
                                 },
                                 on: function (selecteddData) {
                                     if (selecteddData.isAdd) {
-                                        console.log(selecteddData);
-                                        var arr = selecteddData.arr;
-                                        console.log(arr);
                                         return selecteddData.change.slice(0, 1)
                                     }
                                 }
                             });
                         }
                     });
-                }
+                },
+                getMaxCode:function(parentCode){
+                    ajaxmod.requestAuthorize({
+                            url: '/menu/MaxCode/' + parentCode,
+                            type: 'Get',
+                            success: function (response) {
+                                var startLen = response.length - 2;
+                                var newCodeNum = parseInt(response.substring(startLen)) + 1;
+                                vm.menu.menuSort = newCodeNum;
+                                newCodeNum = newCodeNum > 9 ? newCodeNum : '0' + newCodeNum;
+                                vm.menu.menuCode = response.substring(0, startLen) + newCodeNum;
+                            }
+                        });
+                },
             };
             menuObj.initPage();
 
             form.on('select(menuParentfilter)', function (data) {
+                menuObj.getMaxCode(data.value);
                 vm.menu.menuParentCode = data.value;
-                vm.menu.menuCode = data.value+'01';
             });
 
             $('#cancel', $(_context)).on('click', function () {

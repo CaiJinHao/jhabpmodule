@@ -1,21 +1,27 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using Jh.Abp.JhIdentity;
+using Jh.Abp.JhIdentity.EntityFrameworkCore;
+using Jh.Abp.JhMenu;
+using Jh.Abp.JhMenu.EntityFrameworkCore;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using YourCompany.YourProjectName.MultiTenancy;
 using StackExchange.Redis;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
@@ -29,7 +35,7 @@ using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
 using Volo.Abp.Emailing;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.SqlServer;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
@@ -47,21 +53,8 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
-using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
-using Jh.Abp.JhIdentity;
-using Jh.Abp.QuickComponents;
-using EntityFrameworkCore.UseRowNumberForPaging;
-using Jh.Abp.QuickComponents.Swagger;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-using Volo.Abp.AspNetCore.ExceptionHandling;
-using Jh.Abp.IdentityServer;
-using Jh.Abp.JhMenu;
-using Jh.Abp.JhMenu.EntityFrameworkCore;
-using Jh.Abp.Workflow;
-using Jh.Abp.JhPermission;
-using Volo.Abp.EntityFrameworkCore.MySQL;
+using YourCompany.YourProjectName.MultiTenancy;
 
 namespace YourCompany.YourProjectName;
 
@@ -97,9 +90,12 @@ namespace YourCompany.YourProjectName;
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
     typeof(YourProjectNameApplicationContractsModule),
     typeof(AbpAspNetCoreSerilogModule),
+    typeof(JhIdentityApplicationModule),
+    typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(JhIdentityHttpApiModule),
+    typeof(JhMenuApplicationModule),
+    typeof(JhMenuEntityFrameworkCoreModule),
     typeof(JhMenuHttpApiModule),
-    typeof(WorkflowHttpApiModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpQuickComponentsModule)
     )]
@@ -246,7 +242,7 @@ public class YourProjectNameIdentityServerModule : AbpModule
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();
-        app.UseJhJwtTokenMiddleware();
+        app.UseJwtTokenMiddleware();
 
         if (MultiTenancyConsts.IsEnabled)
         {
@@ -272,25 +268,14 @@ public class YourProjectNameIdentityServerModule : AbpModule
         await SeedData(context);
     }
 
-    private async Task SeedData(ApplicationInitializationContext context)
+    private static async Task SeedData(ApplicationInitializationContext context)
     {
-        using (var scope = context.ServiceProvider.CreateScope())
-        {
-            var data = scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>();
-            var dataSeedContext = new DataSeedContext();
-            dataSeedContext["AdminEmail"] = "531003539@qq.com";
-            dataSeedContext["AdminPassword"] = "KimHo@123";
-            var roleService = scope.ServiceProvider.GetRequiredService<IIdentityRoleRepository>();
-            var roles = await roleService.GetListAsync();
-            if (roles.Count > 0)
-            {
-                dataSeedContext["RoleId"] = roles.FirstOrDefault()?.Id;//IdentityServerHost创建的角色ID
-
-                //菜单依赖
-                dataSeedContext["MenuRegisterType"] = MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp;
-            }
-            await data.SeedAsync(dataSeedContext);
-        }
+        using var scope = context.ServiceProvider.CreateScope();
+        var data = scope.ServiceProvider
+                    .GetRequiredService<IDataSeeder>();
+        var dataSeedContext = new DataSeedContext()
+            .WithProperty("AdminEmail", "531003539@qq.com")
+            .WithProperty("AdminPassword", "KimHo@123");
+        await data.SeedAsync(dataSeedContext);
     }
 }

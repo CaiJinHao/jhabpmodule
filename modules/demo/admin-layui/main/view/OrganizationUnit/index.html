@@ -58,7 +58,7 @@
                                         <a href="javascript:;" class="layui-btn" lay-submit
                                             lay-filter="btn_organizationunit_from"
                                             id="btn_organizationunit_from_query">查询</a>
-                                        <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)"
+                                        <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)"
                                             class="layui-btn" lay-submit
                                             lay-filter="btn_organizationunit_from_export">导出</a> -->
                                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_organizationunit_from_reset" >重置</a>
@@ -122,12 +122,10 @@
                 currPage: 1,
                 deletedlist: [],
                 permissionDefineds: {
-                    Export: 'JhIdentity.OrganizationUnits.Export',
+                    Default: 'JhIdentity.OrganizationUnits',
                     Detail: 'JhIdentity.OrganizationUnits.Detail',
                     Create: 'JhIdentity.OrganizationUnits.Create',
-                    BatchCreate: 'JhIdentity.OrganizationUnits.BatchCreate',
                     Update: 'JhIdentity.OrganizationUnits.Update',
-                    PortionUpdate: 'JhIdentity.OrganizationUnits.PortionUpdate',
                     Delete: 'JhIdentity.OrganizationUnits.Delete',
                     BatchDelete: 'JhIdentity.OrganizationUnits.BatchDelete',
                     Recover: 'JhIdentity.OrganizationUnits.Recover',
@@ -199,7 +197,6 @@
                                 click: function (node) {
                                     $('#code').val(node.data.obj.code);
                                     _the.seletedRoleBg(node.data);
-                                    _the.renderTable();
                                 },
                             });
                         }
@@ -259,7 +256,7 @@
                         type: 'Delete',
                         confimMsg:'将自动禁用所有子级及子级下的所有角色和用户，确认禁用吗？',
                         success: function (response) {
-                            _the.renderTable();
+                            _the.renderTable(true);
                         }
                     });
                 },
@@ -276,13 +273,13 @@
                         type: 'Delete',
                         data: delIdList,
                         success: function (response) {
-                            _the.renderTable();
+                            _the.renderTable(true);
                         }
                     });
                 },
                 rollbackDel: function (data) {
                     let _the = this;
-                    _the.patchObj(false, '/organizationunit/' + data.id + '/Deleted');
+                    _the.patchObj(false, '/organizationunit/' + data.id + '/Recover');
                 },
 				patchObj: function (data,url) {
                     let _the = this;
@@ -291,7 +288,7 @@
                         type: 'Patch',
                         data: data,
                         success: function (response) {
-                            _the.renderTable();
+                            _the.renderTable(true);
                         }
                     });
                 },
@@ -334,12 +331,10 @@
                 loadPermissions:function(_fn){
                     var _the=this;
                     let _permissions = [
-                        vm.permissionDefineds.Export,
+                        vm.permissionDefineds.Default,
                         vm.permissionDefineds.Detail,
                         vm.permissionDefineds.Create,
-                        vm.permissionDefineds.BatchCreate,
                         vm.permissionDefineds.Update,
-                        vm.permissionDefineds.PortionUpdate,
                         vm.permissionDefineds.Delete,
                         vm.permissionDefineds.BatchDelete,
                         vm.permissionDefineds.Recover,
@@ -359,7 +354,7 @@
              organizationunitObj.loadPermissions(function () { organizationunitObj.loadList(function () { organizationunitObj.renderTable(true);}); });
 
          top.tool.subscribe("edit_organizationunit_form_refresh", function () {
-                organizationunitObj.renderTable();
+                organizationunitObj.renderTable(true);
          });
 
             table.on('tool(table_organizationunit_list)', function (obj) {
@@ -407,7 +402,7 @@
                 } else {
                     _value = true;//禁用
                 }
-                organizationunitObj.patchObj(_value,'/organizationunit/'+_id+'/Deleted');
+                organizationunitObj.patchObj(_value,'/organizationunit/'+_id+'/Recover');
             });
         });
     </script>

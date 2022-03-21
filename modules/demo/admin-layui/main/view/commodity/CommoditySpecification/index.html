@@ -38,7 +38,7 @@
                                 </div>
                         <div class="layui-inline btngroup">
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commodityspecification_from" id="btn_commodityspecification_from_query">查询</a>
-                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_commodityspecification_from_export">导出</a> -->
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)" class="layui-btn" lay-submit lay-filter="btn_commodityspecification_from_export">导出</a> -->
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_commodityspecification_from_reset">重置</a>
                         </div>
                             </div>
@@ -97,12 +97,10 @@
                     currPage: 1,
                     deletedlist: [],
                     permissionDefineds: {
-                        Export: 'JhAbpJhCommodity.CommoditySpecifications.Export',
+                        Default: 'JhAbpJhCommodity.CommoditySpecifications.Default',
                         Detail: 'JhAbpJhCommodity.CommoditySpecifications.Detail',
                         Create: 'JhAbpJhCommodity.CommoditySpecifications.Create',
-                        BatchCreate: 'JhAbpJhCommodity.CommoditySpecifications.BatchCreate',
                         Update: 'JhAbpJhCommodity.CommoditySpecifications.Update',
-                        PortionUpdate: 'JhAbpJhCommodity.CommoditySpecifications.PortionUpdate',
                         Delete: 'JhAbpJhCommodity.CommoditySpecifications.Delete',
                         BatchDelete: 'JhAbpJhCommodity.CommoditySpecifications.BatchDelete',
                         Recover: 'JhAbpJhCommodity.CommoditySpecifications.Recover',
@@ -238,7 +236,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/commodityspecification/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/commodityspecification/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -291,12 +289,10 @@
                     loadPermissions:function(_fn){
                         var _the=this;
                         let _permissions = [
-                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Default,
                             vm.permissionDefineds.Detail,
                             vm.permissionDefineds.Create,
-                            vm.permissionDefineds.BatchCreate,
                             vm.permissionDefineds.Update,
-                            vm.permissionDefineds.PortionUpdate,
                             vm.permissionDefineds.Delete,
                             vm.permissionDefineds.BatchDelete,
                             vm.permissionDefineds.Recover,
@@ -370,7 +366,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    commodityspecificationObj.patchObj(_value,'/commodityspecification/'+_id+'/Deleted');
+                    commodityspecificationObj.patchObj(_value,'/commodityspecification/'+_id+'/Recover');
                 });
             });
         </script>

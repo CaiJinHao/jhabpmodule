@@ -10,9 +10,12 @@ public class YourProjectNameHttpApiHostMigrationsDbContextFactory : IDesignTimeD
     public YourProjectNameHttpApiHostMigrationsDbContext CreateDbContext(string[] args)
     {
         var configuration = BuildConfiguration();
+        var connectionString = configuration.GetConnectionString("YourProjectName");
 
         var builder = new DbContextOptionsBuilder<YourProjectNameHttpApiHostMigrationsDbContext>()
-            .UseSqlServer(configuration.GetConnectionString("YourProjectName"));
+        //.UseSqlServer(configuration.GetConnectionString("YourProjectName"));
+        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
 
         return new YourProjectNameHttpApiHostMigrationsDbContext(builder.Options);
     }

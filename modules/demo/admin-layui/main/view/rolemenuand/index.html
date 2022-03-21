@@ -12,7 +12,7 @@
 
 <body>
     <div id="page-vm" class="iframe-top layui-fluid">
-        <form class="layui-form">
+        <form class="layui-form"  lay-filter="form_rolemenu" id="form_rolemenu">
             <div class="layui-row">
                 <div class="layui-inline">
                     <label class="layui-form-label">角色名称：</label>
@@ -23,7 +23,7 @@
                 <div class="layui-inline btngroup">
                     <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenurolemiddle_query">查询</a>
                     <a href="javascript:;" class="layui-btn" lay-submit
-                        lay-filter="btn_sysmenurolemiddle_from_add">新增</a>
+                        lay-filter="btn_sysmenurolemiddle_from_add">新增角色</a>
                     <a class="layui-btn layui-btn-normal" id="btn_sysmenurolemiddle_from" href="javascript:;">保存</a>
                 </div>
             </div>
@@ -124,8 +124,9 @@
                         }
                     });
                 },
-                loadRoleList: function (form_data) {
+                loadRoleList: function () {
                     var _the = this;
+                    var form_data = form.val("form_rolemenu");
                     ajaxmod.requestAuthorize({
                         url: '/IdentityRole/tree',
                         type: 'Get',
@@ -217,7 +218,7 @@
                             _the.modulepointTree = new layuiXtree({
                                 elem: 'modulepoint_tree'                  //必填三兄弟之老大
                                 , form: form                    //必填三兄弟之这才是真老大
-                                , data: response.items //必填三兄弟之这也算是老大
+                                , data: response //必填三兄弟之这也算是老大
                                 , isopen: true  //加载完毕后的展开状态，默认值：true
                                 , ckall: true    //启用全选功能，默认值：false
                                 , ckallback: function () { } //全选框状态改变后执行的回调函数
@@ -251,7 +252,7 @@
             });
 
             form.on('submit(btn_sysmenurolemiddle_query)', function (data) {
-                sysmenurolemiddleObj.loadRoleList(data.field);
+                sysmenurolemiddleObj.loadRoleList();
                 return false;
             });
 

@@ -153,7 +153,8 @@
                     roleNames:[],
                     organizationUnitIds:[]
                },
-               OrganizationUnitIdList:[]
+               OrganizationUnitIdList:[],
+               Roles:[]
             },
             watch:{
                 user:{
@@ -199,8 +200,7 @@
                 initPage: function () {
                     var _the = this;
                     vm.paramObj = geturlparam();
-                    _the.loadRoleNames();
-                    _the.loadOrganizationunits(function () {
+                    _the.loadList(function () {
                         _the.loadData();
                     });
                 },
@@ -215,65 +215,21 @@
                                 if (vm.user.organizationUnitIds.length > 0) {
                                     _the.renderOrganizationunitSelects();
                                 }
+                                if (vm.user.organizationUnitIds.length > 0) {
+                                    _the.renderRoleSelects();
+                                }
 							    vm.RenderDom(form);
                             }
                         });
 					}
                 },
-                setRoleNamesValue:function(_fn){
+                renderRoleSelects:function(){
                     let _the=this;
-                    ajaxmod.requestAuthorize({
-                        url: '/IdentityUser/'+vm.paramObj.id+'/roles',
-                        type: 'Get',
-                        success: function (response) {
-                            if (_fn) {
-                                _fn(response);
-                            }
-                        }
-                    });
-                },
-                loadRoleNames:function(_fn){
-                    let _the=this;
-                    ajaxmod.requestAuthorize({
-                        // url: '/OrganizationUnit/' + vm.user.organizationUnitId + '/roles',
-                        url: '/identityrole/select',
-                        type: 'Get',
-                        success: function (response) {
-                            let _rolesValue = [];
-                            function _render() {
-                                _the.roleNamesSelects = xmSelect.render({
-                                    el: '#roleNames',
-                                    language: 'zn',
-                                    initValue: _rolesValue,
-                                    data: response.items
-                                });
-                            }
-                            if (vm.paramObj.id) {
-                                _the.setRoleNamesValue(function (roles) {
-                                    roles.items.forEach(element => {
-                                        _rolesValue.push(element.value);
-                                    });
-                                    _render();
-                                });
-                            } else {
-                                _render();
-                            }
-                            if (_fn) {
-                                _fn();
-                            }
-                        }
-                    });
-                },
-                setOrganizationunitsValue:function(_fn){
-                    let _the=this;
-                    ajaxmod.requestAuthorize({
-                        url: '/organizationunit/'+vm.paramObj.id+'/organizationunits',
-                        type: 'Get',
-                        success: function (response) {
-                            if (_fn) {
-                                _fn(response);
-                            }
-                        }
+                    _the.roleNamesSelects = xmSelect.render({
+                        el: '#roleNames',
+                        language: 'zn',
+                        initValue: vm.user.roleIds,
+                        data: vm.Roles
                     });
                 },
                 renderOrganizationunitSelects:function(){
@@ -285,18 +241,27 @@
                         data: vm.OrganizationUnitIdList
                     });
                 },
-                loadOrganizationunits:function(_fn){
-                    let _the=this;
-                    ajaxmod.requestAuthorize({
-                        url: '/organizationunit/select',
-                        type: 'Get',
-                        success: function (response) {
-                            vm.OrganizationUnitIdList = response.items;
-                            _the.renderOrganizationunitSelects();
-                            if (_fn) {
-                                _fn();
+                loadList: function (_fn) {
+                    var _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/identityrole/select',
+                            type: 'Get',
+                            success: function (response) {
+                                vm.Roles = response.items;
+                                _the.renderRoleSelects();
+                            }
+                        },
+                        {
+                            url: '/organizationunit/select',
+                            type: 'Get',
+                            success: function (response) {
+                                vm.OrganizationUnitIdList = response.items;
+                                _the.renderOrganizationunitSelects();
                             }
                         }
+                    ], function () {
+                        vm.RenderDom(form, function () { vm.RenderDom(form, _fn) });
                     });
                 }
             };
@@ -311,7 +276,6 @@
             form.on('submit(btn_submit_user_form)', function (_from_data) {
                 var data = vm.user;
                 data.surname = data.name;
-                // data.email = data.userName + '@jh.com';
                 //获取rolenames
                 data.roleNames = userObj.roleNamesSelects.getValue('name');
                 data.organizationUnitIds = userObj.organizationunitSelects.getValue('value');

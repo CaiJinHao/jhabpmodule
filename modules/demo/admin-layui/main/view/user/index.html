@@ -113,15 +113,13 @@
                 currPage: 1,
                 deletedlist: [],
                 permissionDefineds: {
-                    Export: 'JhIdentity.IdentityUsers.Export',
-                    Detail: 'JhIdentity.IdentityUsers.Detail',
-                    Create: 'JhIdentity.IdentityUsers.Create',
-                    BatchCreate: 'JhIdentity.IdentityUsers.BatchCreate',
-                    Update: 'JhIdentity.IdentityUsers.Update',
-                    PortionUpdate: 'JhIdentity.IdentityUsers.PortionUpdate',
-                    Delete: 'JhIdentity.IdentityUsers.Delete',
-                    BatchDelete: 'JhIdentity.IdentityUsers.BatchDelete',
-                    Recover: 'JhIdentity.IdentityUsers.Recover',
+                    Default: 'AbpIdentity.Users',
+                    Detail: 'AbpIdentity.Users',
+                    Create: 'AbpIdentity.Users.Create',
+                    Update: 'AbpIdentity.Users.Update',
+                    Delete: 'AbpIdentity.Users.Delete',
+                    BatchDelete: 'AbpIdentity.Users.Delete',
+                    Recover: 'AbpIdentity.Users.Update',
                 },
                 permissions: []
             },
@@ -281,7 +279,7 @@
                 },
                 rollbackDel: function (data) {
                     let _the = this;
-                    _the.patchObj(false, '/IdentityUser/' + data.id + '/Deleted');
+                    _the.patchObj(false, '/IdentityUser/' + data.id + '/Recover');
                 },
                 patchObj: function (data, url) {
                     let _the = this;
@@ -334,12 +332,10 @@
                 loadPermissions:function(_fn){
                     var _the=this;
                     let _permissions = [
-                        vm.permissionDefineds.Export,
+                        vm.permissionDefineds.Default,
                         vm.permissionDefineds.Detail,
                         vm.permissionDefineds.Create,
-                        vm.permissionDefineds.BatchCreate,
                         vm.permissionDefineds.Update,
-                        vm.permissionDefineds.PortionUpdate,
                         vm.permissionDefineds.Delete,
                         vm.permissionDefineds.BatchDelete,
                         vm.permissionDefineds.Recover,
@@ -431,7 +427,7 @@
                 } else {
                     _value = true;//删除
                 }
-                userObj.patchObj(_value, '/IdentityUser/' + _id + '/Deleted');
+                userObj.patchObj(_value, '/IdentityUser/' + _id + '/Recover');
             });
         });
     </script>

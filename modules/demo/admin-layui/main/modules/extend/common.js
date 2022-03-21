@@ -1,13 +1,12 @@
 ﻿//加载公共样式 每个页面都有用
 layui.link("/main/plugins/font-awesome/css/font-awesome.min.css");
 layui.link("/main/modules/plugins/fake-select/fakeSelect.css");
-// document.writeln("<script src=\"/main/plugins/rsasign/jsrsasign-all-min.js\"></script>");
 document.writeln("<script src=\"/main/plugins/oidc/oidc-client.min.js\"></script>");
 document.writeln("<script src=\"/main/plugins/oidc/log.js\"></script>");
 document.writeln("<script src=\"/main/plugins/oidc/oidc-client-sample.js\"></script>");
 
 // api选现
-var apiOptions=['https://localhost:7001/api/v1','https://localhost:7001', 'https://localhost:7002/api/v1', 'https://localhost:7002'];
+var apiOptions=['https://localhost:7001/api/v1','https://localhost:7001', 'https://localhost:6202/api/v1', 'https://localhost:6202'];
 // 接口域
 var loginUrl = '/login.html';
 var PageSize = 10;

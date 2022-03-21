@@ -33,6 +33,10 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.EntityFrameworkCore.MySQL;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Swagger;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 
 namespace YourCompany.YourProjectName;
 
@@ -43,25 +47,28 @@ namespace YourCompany.YourProjectName;
     typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCoreMySQLModule),
+    //typeof(AbpEntityFrameworkCoreSqlServerModule),
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(AbpQuickComponentsModule)
     )]
 public class YourProjectNameHttpApiHostModule : AbpModule
 {
-
+    private IConfiguration configuration;
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
-        var configuration = context.Services.GetConfiguration();
+        configuration = context.Services.GetConfiguration();
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer();
+            //options.UseSqlServer();
+            options.UseMySQL();
         });
 
         Configure<AbpMultiTenancyOptions>(options =>
@@ -80,18 +87,24 @@ public class YourProjectNameHttpApiHostModule : AbpModule
             });
         }
 
-        context.Services.AddAbpSwaggerGenWithOAuth(
-            configuration["AuthServer:Authority"],
-            new Dictionary<string, string>
-            {
-                {"YourProjectName", "YourProjectName API"}
-            },
-            options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo {Title = "YourProjectName API", Version = "v1"});
-                options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FullName);
-            });
+        var Audience = configuration.GetValue<string>("AuthServer:ApiName");
+        context.Services.AddJhAbpSwagger(configuration,
+           new Dictionary<string, string>{
+               {Audience, $"{Audience} API"}
+           }, contractsType: typeof(YourProjectNameApplicationContractsModule));
+
+        //context.Services.AddAbpSwaggerGenWithOAuth(
+        //    configuration["AuthServer:Authority"],
+        //    new Dictionary<string, string>
+        //    {
+        //        {"YourProjectName", "YourProjectName API"}
+        //    },
+        //    options =>
+        //    {
+        //        options.SwaggerDoc("v1", new OpenApiInfo {Title = "YourProjectName API", Version = "v1"});
+        //        options.DocInclusionPredicate((docName, description) => true);
+        //        options.CustomSchemaIds(type => type.FullName);
+        //    });
 
         Configure<AbpLocalizationOptions>(options =>
         {
@@ -154,6 +167,16 @@ public class YourProjectNameHttpApiHostModule : AbpModule
                     .AllowCredentials();
             });
         });
+
+        context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+        {
+            //配置是否发送错误信息到客户端
+            var _b = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            options.SendExceptionsDetailsToClients = _b;
+            options.SendStackTraceToClients = _b;
+        });
+
+        context.Services.AddApiVersion();
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -180,17 +203,21 @@ public class YourProjectNameHttpApiHostModule : AbpModule
         {
             app.UseMultiTenancy();
         }
-        app.UseAbpRequestLocalization();
+        app.UseAbpRequestLocalization(options =>
+        {
+            options.RequestCultureProviders.RemoveAll(provider => provider is Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider);
+        });
         app.UseAuthorization();
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+            options.UseJhSwaggerUiConfig(configuration);
+            //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
 
-            var configuration = context.GetConfiguration();
-            options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-            options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-            options.OAuthScopes("YourProjectName");
+            //var configuration = context.GetConfiguration();
+            //options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+            //options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
+            //options.OAuthScopes("YourProjectName");
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();

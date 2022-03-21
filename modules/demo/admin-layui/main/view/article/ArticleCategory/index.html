@@ -68,7 +68,7 @@
                                 </div>
                         <div class="layui-inline btngroup">
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_articlecategory_from" id="btn_articlecategory_from_query">查询</a>
-                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Export)" class="layui-btn" lay-submit lay-filter="btn_articlecategory_from_export">导出</a> -->
+                            <!-- <a href="javascript:;" v-if="RenderPermission(permissionDefineds.Default)" class="layui-btn" lay-submit lay-filter="btn_articlecategory_from_export">导出</a> -->
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_articlecategory_from_reset">重置</a>
                         </div>
                             </div>
@@ -127,12 +127,10 @@
                     deletedlist: [],
                 articleCategoryOptions:[],
                     permissionDefineds: {
-                        Export: 'JhAbpJhArticle.ArticleCategorys.Export',
+                        Default: 'JhAbpJhArticle.ArticleCategorys.Default',
                         Detail: 'JhAbpJhArticle.ArticleCategorys.Detail',
                         Create: 'JhAbpJhArticle.ArticleCategorys.Create',
-                        BatchCreate: 'JhAbpJhArticle.ArticleCategorys.BatchCreate',
                         Update: 'JhAbpJhArticle.ArticleCategorys.Update',
-                        PortionUpdate: 'JhAbpJhArticle.ArticleCategorys.PortionUpdate',
                         Delete: 'JhAbpJhArticle.ArticleCategorys.Delete',
                         BatchDelete: 'JhAbpJhArticle.ArticleCategorys.BatchDelete',
                         Recover: 'JhAbpJhArticle.ArticleCategorys.Recover',
@@ -299,7 +297,7 @@
                     },
                     rollbackDel: function (data) {
                         let _the = this;
-                        _the.patchObj(false, '/articlecategory/' + data.id + '/Deleted');
+                        _the.patchObj(false, '/articlecategory/' + data.id + '/Recover');
                     },
                     patchObj: function (data,url) {
                         let _the = this;
@@ -359,12 +357,10 @@
                     loadPermissions:function(_fn){
                         var _the=this;
                         let _permissions = [
-                            vm.permissionDefineds.Export,
+                            vm.permissionDefineds.Default,
                             vm.permissionDefineds.Detail,
                             vm.permissionDefineds.Create,
-                            vm.permissionDefineds.BatchCreate,
                             vm.permissionDefineds.Update,
-                            vm.permissionDefineds.PortionUpdate,
                             vm.permissionDefineds.Delete,
                             vm.permissionDefineds.BatchDelete,
                             vm.permissionDefineds.Recover,
@@ -433,7 +429,7 @@
                     } else {
                         _value = true;//禁用
                     }
-                    articlecategoryObj.patchObj(_value,'/articlecategory/'+_id+'/Deleted');
+                    articlecategoryObj.patchObj(_value,'/articlecategory/'+_id+'/Recover');
                 });
             });
         </script>

@@ -101,8 +101,8 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
                 url: '/MenuRoleMap/Trees',
                 type: 'Get',
                 success: function (response) {
-                    vm.$set(vm, 'navList', response.items);
-                    if (response.items.length < 1) {
+                    vm.$set(vm, 'navList', response);
+                    if (response.length < 1) {
                         layer.msg('没有任何权限', {
                             icon: 5,
                             time: 5000
@@ -110,7 +110,7 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
                         return false;
                     }
                     navbar.set({
-                        data: response.items[0].children //初始化菜单 默认使用第一个
+                        data: response[0].children //初始化菜单 默认使用第一个
                     }).render(function (data) {
                         tab.tabAdd(data);
                     });
