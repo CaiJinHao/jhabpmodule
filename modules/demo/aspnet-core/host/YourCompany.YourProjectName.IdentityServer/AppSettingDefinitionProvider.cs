@@ -13,11 +13,11 @@ namespace Jh.Abp.QuickComponents
     {
         public override void Define(ISettingDefinitionContext context)
         {
-            // var timing = context.GetOrNull(TimingSettingNames.TimeZone);
-            // if (timing != null)
-            // {
-            //     timing.DefaultValue = "LOCAL";//Local不能用，/api/abp/application-configuration会报错
-            // }
+            //var timing = context.GetOrNull(TimingSettingNames.TimeZone);
+            //if (timing != null)
+            //{
+            //    timing.DefaultValue = "LOCAL";//Local不能用，/api/abp/application-configuration会报错
+            //}
         }
     }
 }
