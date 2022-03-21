@@ -6,7 +6,7 @@ document.writeln("<script src=\"/main/plugins/oidc/log.js\"></script>");
 document.writeln("<script src=\"/main/plugins/oidc/oidc-client-sample.js\"></script>");
 
 // api选现
-var apiOptions=['https://localhost:7001/api/v1','https://localhost:7001', 'https://localhost:6202/api/v1', 'https://localhost:6202'];
+var apiOptions=['https://localhost:7001/api/v1','https://localhost:7001', 'https://localhost:7002/api/v1', 'https://localhost:7002'];
 // 接口域
 var loginUrl = '/login.html';
 var PageSize = 10;

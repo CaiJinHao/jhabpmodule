@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -20,20 +21,21 @@ namespace Jh.Abp.QuickComponents.Swagger
 {
     public static partial class SwaggerExtensions
     {
-        public static IServiceCollection AddApiVersion(this IServiceCollection services)
+        public static IServiceCollection AddApiVersion(this IServiceCollection services, Action<ApiVersioningOptions> setupAction = null)
         {
             services.AddAbpApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
-                 //是否在没有填写版本号的情况下使用默认版本
-                 options.AssumeDefaultVersionWhenUnspecified = true;
+                //是否在没有填写版本号的情况下使用默认版本
+                options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
 
-                 //options.ApiVersionReader = new HeaderApiVersionReader("api-version"); //Supports header too
-                 //options.ApiVersionReader = new MediaTypeApiVersionReader(); //Supports accept header too
+                //options.ApiVersionReader = new HeaderApiVersionReader("api-version"); //Supports header too
+                //options.ApiVersionReader = new MediaTypeApiVersionReader(); //Supports accept header too
 
-                 var mvcOptions = services.ExecutePreConfiguredActions<AbpAspNetCoreMvcOptions>();
+                var mvcOptions = services.ExecutePreConfiguredActions<AbpAspNetCoreMvcOptions>();
                 options.ConfigureAbp(mvcOptions);
+                setupAction?.Invoke(options);
             });
             return services;
         }

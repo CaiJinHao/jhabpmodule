@@ -34,9 +34,9 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.EntityFrameworkCore.MySQL;
-using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Swagger;
 using Volo.Abp.AspNetCore.ExceptionHandling;
+using Jh.Abp.QuickComponents;
 
 namespace YourCompany.YourProjectName;
 
@@ -47,15 +47,15 @@ namespace YourCompany.YourProjectName;
     typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpEntityFrameworkCoreMySQLModule),
     //typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCoreMySQLModule),
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
     typeof(AbpSettingManagementEntityFrameworkCoreModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule),
-    typeof(AbpQuickComponentsModule)
+        typeof(AbpQuickComponentsModule),
+    typeof(AbpSwashbuckleModule)
     )]
 public class YourProjectNameHttpApiHostModule : AbpModule
 {
@@ -67,7 +67,6 @@ public class YourProjectNameHttpApiHostModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            //options.UseSqlServer();
             options.UseMySQL();
         });
 
@@ -87,11 +86,13 @@ public class YourProjectNameHttpApiHostModule : AbpModule
             });
         }
 
-        var Audience = configuration.GetValue<string>("AuthServer:ApiName");
+        var Audience = configuration.GetValue<string>("AuthServer:Audience");
         context.Services.AddJhAbpSwagger(configuration,
-           new Dictionary<string, string>{
-               {Audience, $"{Audience} API"}
+            new Dictionary<string, string>
+           {
+                    {Audience, $"{Audience} API"}
            }, contractsType: typeof(YourProjectNameApplicationContractsModule));
+
 
         //context.Services.AddAbpSwaggerGenWithOAuth(
         //    configuration["AuthServer:Authority"],
@@ -142,6 +143,7 @@ public class YourProjectNameHttpApiHostModule : AbpModule
             options.KeyPrefix = "YourProjectName:";
         });
 
+
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("YourProjectName");
         if (!hostingEnvironment.IsDevelopment())
         {
@@ -175,7 +177,6 @@ public class YourProjectNameHttpApiHostModule : AbpModule
             options.SendExceptionsDetailsToClients = _b;
             options.SendStackTraceToClients = _b;
         });
-
         context.Services.AddApiVersion();
     }
 

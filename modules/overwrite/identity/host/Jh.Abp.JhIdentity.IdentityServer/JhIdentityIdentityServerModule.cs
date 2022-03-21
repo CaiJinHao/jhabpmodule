@@ -91,6 +91,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
+    
     typeof(JhAbpIdentityServerModule),
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityEntityFrameworkCoreModule),

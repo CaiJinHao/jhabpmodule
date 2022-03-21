@@ -14,8 +14,4 @@
     <ProjectReference Include="..\YourCompany.YourProjectName.Domain\YourCompany.YourProjectName.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\YourCompany.YourProjectName.Application.Contracts\YourCompany.YourProjectName.Application.Contracts.csproj" />
-  </ItemGroup>
-
 </Project>

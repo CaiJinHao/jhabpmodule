@@ -1,27 +1,21 @@
-using Jh.Abp.JhIdentity;
-using Jh.Abp.JhIdentity.EntityFrameworkCore;
-using Jh.Abp.JhMenu;
-using Jh.Abp.JhMenu.EntityFrameworkCore;
-using Jh.Abp.QuickComponents;
-using Jh.Abp.QuickComponents.Swagger;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using YourCompany.YourProjectName.MultiTenancy;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
-using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
@@ -35,7 +29,7 @@ using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
 using Volo.Abp.Emailing;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.MySQL;
+using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
@@ -53,8 +47,19 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
-using YourCompany.YourProjectName.MultiTenancy;
+using Volo.Abp.EntityFrameworkCore.MySQL;
+using Jh.Abp.JhMenu;
+using Jh.Abp.JhMenu.EntityFrameworkCore;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Swagger;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Jh.Abp.JhIdentity;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Jh.Abp.JhIdentity.EntityFrameworkCore;
+using Jh.Abp.IdentityServer;
 
 namespace YourCompany.YourProjectName;
 
@@ -68,8 +73,8 @@ namespace YourCompany.YourProjectName;
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    //typeof(AbpEntityFrameworkCoreSqlServerModule),
     typeof(AbpEntityFrameworkCoreMySQLModule),
+    //typeof(AbpEntityFrameworkCoreSqlServerModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),
@@ -90,18 +95,24 @@ namespace YourCompany.YourProjectName;
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
     typeof(YourProjectNameApplicationContractsModule),
     typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpSwashbuckleModule),
+
+    typeof(JhAbpIdentityServerModule),
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(JhIdentityHttpApiModule),
     typeof(JhMenuApplicationModule),
     typeof(JhMenuEntityFrameworkCoreModule),
     typeof(JhMenuHttpApiModule),
-    typeof(AbpSwashbuckleModule),
     typeof(AbpQuickComponentsModule)
     )]
 public class YourProjectNameIdentityServerModule : AbpModule
 {
     private Microsoft.Extensions.Configuration.IConfiguration configuration;
+    public override void PreConfigureServices(ServiceConfigurationContext context)
+    {
+        JhIdentityDbContextModelCreatingExtensions.ConfigureExtensionDomain();
+    }
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
@@ -109,9 +120,6 @@ public class YourProjectNameIdentityServerModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            //options.UseSqlServer(options => {
-            //    options.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
-            //});
             options.UseMySQL();
         });
 
@@ -120,6 +128,13 @@ public class YourProjectNameIdentityServerModule : AbpModule
            new Dictionary<string, string>{
                {Audience, $"{Audience} API"}
            }, contractsType: typeof(JhIdentityApplicationContractsModule));
+        //context.Services.AddAbpSwaggerGen(
+        //    options =>
+        //    {
+        //        options.SwaggerDoc("v1", new OpenApiInfo { Title = "YourProjectName API", Version = "v1" });
+        //        options.DocInclusionPredicate((docName, description) => true);
+        //        options.CustomSchemaIds(type => type.FullName);
+        //    });
 
         Configure<AbpLocalizationOptions>(options =>
         {
@@ -146,8 +161,8 @@ public class YourProjectNameIdentityServerModule : AbpModule
 
         Configure<AbpAuditingOptions>(options =>
         {
-            options.ApplicationName = "AuthServer";
-            //options.IsEnabledForGetRequests = true;
+                //options.IsEnabledForGetRequests = true;
+                options.ApplicationName = "AuthServer";
         });
 
         Configure<AppUrlOptions>(options =>
@@ -202,11 +217,7 @@ public class YourProjectNameIdentityServerModule : AbpModule
 #if DEBUG
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
 #endif
-
         context.Services.AddApiVersion();
-        //context.Services.AddSameSiteCookiePolicy();//去除https
-        //context.Services.AddAuthorizeFilter(configuration);
-
         context.Services.Configure<AbpExceptionHandlingOptions>(options =>
         {
             //配置是否发送错误信息到客户端
@@ -230,11 +241,6 @@ public class YourProjectNameIdentityServerModule : AbpModule
             app.UseErrorPage();
             app.UseHsts();
         }
-
-        //app.ApplicationServices.InitWorkflowDefinition(workflowHost =>
-        //{
-        //    //workflowHost.RegisterWorkflow<LeaveApplicationWorkflow, LeaveApplicationWorkflowDto>();
-        //});
 
         app.UseHttpsRedirection();
         app.UseCorrelationId();
@@ -260,6 +266,7 @@ public class YourProjectNameIdentityServerModule : AbpModule
         app.UseAbpSwaggerUI(options =>
         {
             options.UseJhSwaggerUiConfig(configuration);
+            //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
