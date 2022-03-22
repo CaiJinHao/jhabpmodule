@@ -34,7 +34,8 @@
     "@angular/router": "~13.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "ng-zorro-antd": "^13.0.0"
   },
   "devDependencies": {
     "@abp/ng.schematics": "~5.1.3",

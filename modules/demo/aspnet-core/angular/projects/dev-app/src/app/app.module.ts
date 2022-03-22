@@ -14,6 +14,10 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { AppLayoutComponent } from './components/app-layout/app-layout.component';
+import { MenuSiderComponent } from './menu-sider/menu-sider.component';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 @NgModule({
   imports: [
@@ -33,9 +37,10 @@ import { APP_ROUTE_PROVIDER } from './route.provider';
     SettingManagementConfigModule.forRoot(),
     YourProjectNameConfigModule.forRoot(),
     ThemeBasicModule.forRoot(),
+    NzLayoutModule,NzMenuModule
   ],
   providers: [APP_ROUTE_PROVIDER],
-  declarations: [AppComponent],
+  declarations: [AppComponent, AppLayoutComponent, MenuSiderComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

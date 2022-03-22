@@ -104,7 +104,8 @@
                 "inject": true,
                 "bundleName": "bootstrap-ltr.min"
               },
-              "projects/dev-app/src/styles.scss"
+              "projects/dev-app/src/styles.scss",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
             ],
             "scripts": []
           },
