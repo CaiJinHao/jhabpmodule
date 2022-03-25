@@ -1,6 +1,7 @@
 
 import React from "react";
-import hoistNonReactStatic from 'hoist-non-react-statics';
+//@ts-ignore
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 //HOC高阶组件是参数为组件，返回值为新组件的函数.它是一种基于 React 的组合特性而形成的设计模式
 //@ts-ignore
@@ -25,7 +26,7 @@ export default function logProps(Component) {
     }
     
     //copy组件的所有静态方法
-    hoistNonReactStatic(LogProps,Component);
+    hoistNonReactStatics(LogProps,Component);
   
     // 注意 React.forwardRef 回调的第二个参数 “ref”。
     // 我们可以将其作为常规 prop 属性传递给 LogProps，例如 “forwardedRef”

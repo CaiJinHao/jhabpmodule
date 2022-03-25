@@ -15,7 +15,7 @@ class FormDemo extends React.Component {
   }
   render(): React.ReactNode {
     return (
-      <div style={{ backgroundColor: this.context.theme.background }}>
+      <div style={{ backgroundColor: this.context.theme.background,color:this.context.theme.foreground }}>
         <form onSubmit={this.handleSubmit}>
           <label>
             名字:
@@ -36,7 +36,7 @@ class FormDemo extends React.Component {
             {({ theme, toggleTheme }) => (
               <button
                 onClick={toggleTheme}
-                style={{ backgroundColor: theme.background }}
+                style={{ backgroundColor: theme.background,color:this.context.theme.foreground }}
               >
                 Toggle Theme
               </button>

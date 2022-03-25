@@ -1,4 +1,5 @@
 import React, { useState, Suspense } from "react";
+
 import { ThemeContext, themes } from "./theme-context";
 
 // import FormDemo from "./formdemo";
@@ -7,7 +8,23 @@ const ErrorBoundary = React.lazy(() => import("./ErrorBoundary"));
 
 const ref = React.createRef();
 
-export default class Clock extends React.Component {
+   //小组件
+   function ListItem(props: any) {
+    return <li>{props.value}</li>;
+  }
+
+  function List(props: any){
+    return (
+      <ul>
+        {props.numbers.map((v: any) => (
+      <ListItem key={v.toString()} value={v * 3} num={v} />
+    ))}
+      </ul>
+    )
+  }
+
+
+export default class Clock extends React.PureComponent  {
   constructor(props: any) {
     super(props);
     //构造函数是唯一可以给 this.state 赋值的地方
@@ -53,17 +70,6 @@ export default class Clock extends React.Component {
       return null; //不渲染组件
     }
 
-    //小组件
-    function ListItem(props: any) {
-      return <li>{props.value}</li>;
-    }
-
-    //@ts-ignore
-    const numbers = this.props.numbers;
-    let numberLi = numbers.map((v: any) => (
-      <ListItem key={v.toString()} value={v * 3} num={v} /> //key在兄弟节点必须唯一,key会传递信息给react
-    ));
-
     return (
       <div>
         <h1>Hello,word!</h1>
@@ -78,12 +84,13 @@ export default class Clock extends React.Component {
             <button onClick={this.handlerClickStopTimer}>stop2</button>
           )
         }
-        <ul>{numberLi}</ul>
-        <ul>
-          {numbers.map((v: any) => (
+        {/* @ts-ignore */}
+        <List numbers={this.props.numbers}></List>
+        {/* <ul>
+          {this.props.numbers.map((v: any) => (
             <ListItem key={v.toString()} value={v * 3} num={v} />
           ))}
-        </ul>
+        </ul> */}
         {/* @ts-ignore */}
         <ThemeContext.Provider value={this.state}>
           {/* 渲染Lazy组件 */}
@@ -119,4 +126,13 @@ export default class Clock extends React.Component {
     }));
   }
 }
+
 Clock.contextType = ThemeContext; //赋值数据上下文
+// // @ts-ignore
+// Clock.propTypes={
+//   stop:PropTypes.string
+// };
+//@ts-ignore
+Clock.defaultProps ={
+  stop:'2'
+};
