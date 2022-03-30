@@ -3,8 +3,8 @@
     <LangVersion>latest</LangVersion>
     <Version>5.2.9</Version>
     <NoWarn>$(NoWarn);CS1591;CS0436</NoWarn>
-    <!-- <PackageIconUrl>https://portrait.gitee.com/uploads/avatars/user/183/550760_CaiJinHao_1616486865.png</PackageIconUrl> -->
-    <PackageIcon>../../../docs/images/nugeticon.png</PackageIcon>
+    <PackageIconUrl>https://portrait.gitee.com/uploads/avatars/user/183/550760_CaiJinHao_1616486865.png</PackageIconUrl>
+    <!-- <PackageIcon>../../../../../docs/images/nugeticon.png</PackageIcon> -->
     <PackageProjectUrl>https://gitee.com/CaiJinHao/jhabpmodule</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
