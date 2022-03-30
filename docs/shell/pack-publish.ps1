@@ -43,6 +43,7 @@ $packagesDto =
 @{Name = "Jh.Abp.JhIdentity.Domain.Shared";  },
 @{Name = "Jh.Abp.JhIdentity.EntityFrameworkCore";  },
 @{Name = "Jh.Abp.JhIdentity.HttpApi";  },
+@{Name = "Jh.Abp.JhIdentity.HttpApi.Client";  },
 
 # È¨ÏÞÄ£¿é
 

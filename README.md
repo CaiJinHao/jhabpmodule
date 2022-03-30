@@ -17,26 +17,35 @@ DomainSharedModule添加本地资源继承
 
 修改appsettings.json参照Demo
 
-IdentityServerModule 修改参照Demo
-    注意添加依赖、typeof(JhIdentityHttpApiModule),typeof(AbpQuickComponentsModule)
+IdentityServerModule 修改参照Demo、根据需要更换数据库驱动
+    注意添加依赖：
+    typeof(JhAbpIdentityServerModule),
+    typeof(JhIdentityApplicationModule),
+    typeof(JhIdentityEntityFrameworkCoreModule),
+    typeof(JhIdentityHttpApiModule),
+    typeof(JhMenuApplicationModule),
+    typeof(JhMenuEntityFrameworkCoreModule),
+    typeof(JhMenuHttpApiModule),
+    typeof(AbpQuickComponentsModule)
 
 数据迁移
     添加modelBuilder.ConfigureJhIdentity();
+    创建模块迁移数据上下文MenuDbContext，或者可以复制demo中已经创建好的
 
-DataSeedContributor数据播种--批量替换密匙、添加JsClient
+DataSeedContributor数据播种--批量替换密匙、修改demo中添加todo的地方
 
-xxx.Application.Contracts.xml生成，设置为嵌入的资源，用于Swagger注释显示
+xxx.Application.Contracts生成xml，属性=》输出=》xm文档文件路径:[项目名称].Application.Contracts.xml=》生成，将文件设置为嵌入的资源，用于Swagger注释显示
 
 启动程序
 
-Host添加其他模块
-引用MenuHttpApi、Ef、Application 添加依赖、创建数据迁移即可
-
-远程服务
-引用HttpApi.Client,添加依赖
+HttpApi.Host修改
+    修改appsettings.json参照demo
+    修改Module
+    根据需要添加身份远程服务依赖typeof(JhIdentityHttpApiClientModule),typeof(AbpQuickComponentsModule)
 
 
 layui-admin 修改
+    搜索localhost:60，可进行批量替换
     common.js/oidc-client-sample.js  修改对应的端口、ApiName
 
 ```

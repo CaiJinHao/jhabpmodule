@@ -7,6 +7,7 @@ param (
 )
 
 dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj reference $Pre/libs/QuickComponents/Jh.Abp.QuickComponents/Jh.Abp.QuickComponents.csproj
+#身份远程服务添加引用：Jh.Abp.JhIdentity.HttpApi.Client.csproj
 
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj reference $Pre/libs/Jh.AbpExtensions/Jh.Abp.IdentityServer/Jh.Abp.IdentityServer.csproj
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj reference $Pre/libs/QuickComponents/Jh.Abp.QuickComponents/Jh.Abp.QuickComponents.csproj
