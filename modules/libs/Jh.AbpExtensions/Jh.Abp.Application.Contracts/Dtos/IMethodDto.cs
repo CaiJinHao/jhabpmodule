@@ -5,7 +5,7 @@
         /// <summary>
         /// app service method query dto
         /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         MethodDto<TEntity> MethodInput { get; set; }
     }
 }

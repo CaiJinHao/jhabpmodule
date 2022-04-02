@@ -11,3 +11,10 @@ location /articleUpload {
 location /articleUpload {
             root G:/github/mygithub/jhabpmodule/modules/webapp/host/Jh.Abp.JhWebApp.HttpApi.Host;
         }
+
+## Éý¼¶°ü°æ±¾
+
+code G:\github\mygithub\jhmodule\modules\libs\common.props  
+code G:\github\mygithub\jhmodule\modules\module_extend\menu\common.props  
+code G:\github\mygithub\jhmodule\modules\module_extend\workflow\common.props  
+code G:\github\mygithub\jhmodule\modules\overwrite\identity\common.props  

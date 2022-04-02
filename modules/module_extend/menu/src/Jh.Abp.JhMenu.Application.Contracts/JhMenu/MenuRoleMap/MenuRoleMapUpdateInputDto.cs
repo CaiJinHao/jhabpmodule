@@ -21,6 +21,7 @@ IMethodDto<MenuRoleMap>
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<MenuRoleMap> MethodInput { get; set; }
 		 public virtual Guid? TenantId { get; set; }
 	}

@@ -42,6 +42,7 @@ IMethodDto<WorkflowBacklog>
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<WorkflowBacklog> MethodInput { get; set; }
 	}
 }

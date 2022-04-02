@@ -33,7 +33,7 @@ namespace Jh.Abp.JhIdentity
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
-		[Newtonsoft.Json.JsonIgnore]
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<IdentityRole> MethodInput { get; set; }
 	}
 }

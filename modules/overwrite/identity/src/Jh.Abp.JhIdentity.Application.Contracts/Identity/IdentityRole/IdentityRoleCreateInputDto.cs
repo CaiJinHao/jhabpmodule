@@ -41,6 +41,7 @@ IMethodDto<IdentityRole>
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<IdentityRole> MethodInput { get; set; }
 	}
 }

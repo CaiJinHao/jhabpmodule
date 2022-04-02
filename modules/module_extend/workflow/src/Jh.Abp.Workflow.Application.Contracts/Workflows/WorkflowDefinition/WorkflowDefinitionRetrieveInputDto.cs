@@ -18,7 +18,7 @@ namespace Jh.Abp.Workflow
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
-		[Newtonsoft.Json.JsonIgnore]
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<WorkflowDefinition> MethodInput { get; set; }
 	}
 }

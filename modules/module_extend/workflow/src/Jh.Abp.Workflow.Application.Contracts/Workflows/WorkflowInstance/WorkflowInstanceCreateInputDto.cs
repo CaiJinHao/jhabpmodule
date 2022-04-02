@@ -59,6 +59,7 @@ IMethodDto<WorkflowInstance>
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<WorkflowInstance> MethodInput { get; set; }
 		 public virtual Guid? TenantId { get; set; }
 	}

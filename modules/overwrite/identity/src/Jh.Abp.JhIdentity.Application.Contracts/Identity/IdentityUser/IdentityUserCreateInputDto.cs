@@ -28,6 +28,7 @@ IMethodDto<IdentityUser>
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<IdentityUser> MethodInput { get; set; }
 
 		public Guid[] RoleIds { get; set; }

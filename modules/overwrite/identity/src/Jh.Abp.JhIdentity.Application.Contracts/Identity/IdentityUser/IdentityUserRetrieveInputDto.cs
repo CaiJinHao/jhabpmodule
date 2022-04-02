@@ -82,7 +82,7 @@ namespace Jh.Abp.JhIdentity
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
-		[Newtonsoft.Json.JsonIgnore]
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<IdentityUser> MethodInput { get; set; }
 		public Guid? OrganizationUnitId { get; set; }
 	}

@@ -52,6 +52,7 @@ IMethodDto<WorkflowDefinition>
 		/// <summary>
 		/// 方法参数回调
 		/// </summary>
+		[System.Text.Json.Serialization.JsonIgnore]
 		public MethodDto<WorkflowDefinition> MethodInput { get; set; }
 	}
 }
