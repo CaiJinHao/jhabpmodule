@@ -1,114 +1,173 @@
 // @ts-ignore
 /* eslint-disable */
-import { request } from 'umi';
+import { request } from 'umi'
 
-/** Create user This can only be done by the logged in user. POST /user */
-export async function createUser(body: API.User, options?: { [key: string]: any }) {
-  return request<any>('/user', {
-    method: 'POST',
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** Creates list of users with given input array POST /user/createWithArray */
-export async function createUsersWithArrayInput(
-  body: API.User[],
-  options?: { [key: string]: any },
+/** 此处后端没有提供注释 GET /api/identity/users/${param0} */
+export async function getIdentityUsersById(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,
+  options ?: {[key: string]: any}
 ) {
-  return request<any>('/user/createWithArray', {
-    method: 'POST',
-    data: body,
+  const { 'id': param0, 
+  ...queryParams
+  } = params;
+  return request<API.IdentityUserDto>(`/api/identity/users/${param0}`, {
+  method: 'GET',
+    params: {...queryParams,},
     ...(options || {}),
   });
 }
 
-/** Creates list of users with given input array POST /user/createWithList */
-export async function createUsersWithListInput(body: API.User[], options?: { [key: string]: any }) {
-  return request<any>('/user/createWithList', {
-    method: 'POST',
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** Logs user into the system GET /user/login */
-export async function loginUser(
-  params: {
-    // query
-    /** The user name for login */
-    username: string;
-    /** The password for login in clear text */
-    password: string;
-  },
-  options?: { [key: string]: any },
+/** 此处后端没有提供注释 PUT /api/identity/users/${param0} */
+export async function putIdentityUsersById(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,body: (API.IdentityUserUpdateDto),
+  options ?: {[key: string]: any}
 ) {
-  return request<string>('/user/login', {
-    method: 'GET',
-    params: {
-      ...params,
+  const { 'id': param0, 
+  ...queryParams
+  } = params;
+  return request<API.IdentityUserDto>(`/api/identity/users/${param0}`, {
+  method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json-patch+json',
     },
-    ...(options || {}),
-  });
-}
-
-/** Logs out current logged in user session GET /user/logout */
-export async function logoutUser(options?: { [key: string]: any }) {
-  return request<any>('/user/logout', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** Get user by user name GET /user/${param0} */
-export async function getUserByName(
-  params: {
-    // path
-    /** The name that needs to be fetched. Use user1 for testing.  */
-    username: string;
-  },
-  options?: { [key: string]: any },
-) {
-  const { username: param0 } = params;
-  return request<API.User>(`/user/${param0}`, {
-    method: 'GET',
-    params: { ...params },
-    ...(options || {}),
-  });
-}
-
-/** Updated user This can only be done by the logged in user. PUT /user/${param0} */
-export async function updateUser(
-  params: {
-    // path
-    /** name that need to be updated */
-    username: string;
-  },
-  body: API.User,
-  options?: { [key: string]: any },
-) {
-  const { username: param0 } = params;
-  return request<any>(`/user/${param0}`, {
-    method: 'PUT',
-    params: { ...params },
+    params: {...queryParams,},
     data: body,
     ...(options || {}),
   });
 }
 
-/** Delete user This can only be done by the logged in user. DELETE /user/${param0} */
-export async function deleteUser(
-  params: {
-    // path
-    /** The name that needs to be deleted */
-    username: string;
-  },
-  options?: { [key: string]: any },
+/** 此处后端没有提供注释 DELETE /api/identity/users/${param0} */
+export async function deleteIdentityUsersById(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,
+  options ?: {[key: string]: any}
 ) {
-  const { username: param0 } = params;
-  return request<any>(`/user/${param0}`, {
-    method: 'DELETE',
-    params: { ...params },
+  const { 'id': param0, 
+  ...queryParams
+  } = params;
+  return request<any>(`/api/identity/users/${param0}`, {
+  method: 'DELETE',
+    params: {...queryParams,},
     ...(options || {}),
   });
 }
+
+/** 此处后端没有提供注释 GET /api/identity/users */
+export async function getIdentityUsers(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,
+  options ?: {[key: string]: any}
+) {
+  return request<API.0CultureneutralPublicKeyTokennull>('/api/identity/users', {
+  method: 'GET',
+    params: {
+        
+        
+        
+        ...params,},
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 POST /api/identity/users */
+export async function postIdentityUsers(body: (API.IdentityUserCreateDto),
+  options ?: {[key: string]: any}
+) {
+  return request<API.IdentityUserDto>('/api/identity/users', {
+  method: 'POST',
+    headers: {
+      'Content-Type': 'application/json-patch+json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 GET /api/identity/users/${param0}/roles */
+export async function getIdentityUsersByIdRoles(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,
+  options ?: {[key: string]: any}
+) {
+  const { 'id': param0, 
+  ...queryParams
+  } = params;
+  return request<API.0CultureneutralPublicKeyTokennull>(`/api/identity/users/${param0}/roles`, {
+  method: 'GET',
+    params: {...queryParams,},
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 PUT /api/identity/users/${param0}/roles */
+export async function putIdentityUsersByIdRoles(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,body: (API.IdentityUserUpdateRolesDto),
+  options ?: {[key: string]: any}
+) {
+  const { 'id': param0, 
+  ...queryParams
+  } = params;
+  return request<any>(`/api/identity/users/${param0}/roles`, {
+  method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json-patch+json',
+    },
+    params: {...queryParams,},
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 GET /api/identity/users/assignable-roles */
+export async function getIdentityUsersAssignableRoles(
+  options ?: {[key: string]: any}
+) {
+  return request<API.0CultureneutralPublicKeyTokennull>('/api/identity/users/assignable-roles', {
+  method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 GET /api/identity/users/by-username/${param0} */
+export async function getIdentityUsersByUsernameByUserName(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,
+  options ?: {[key: string]: any}
+) {
+  const { 'userName': param0, 
+  ...queryParams
+  } = params;
+  return request<API.IdentityUserDto>(`/api/identity/users/by-username/${param0}`, {
+  method: 'GET',
+    params: {...queryParams,},
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 GET /api/identity/users/by-email/${param0} */
+export async function getIdentityUsersByEmailByEmail(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.undefinedParams
+    ,
+  options ?: {[key: string]: any}
+) {
+  const { 'email': param0, 
+  ...queryParams
+  } = params;
+  return request<API.IdentityUserDto>(`/api/identity/users/by-email/${param0}`, {
+  method: 'GET',
+    params: {...queryParams,},
+    ...(options || {}),
+  });
+}
+
