@@ -18,7 +18,7 @@ namespace Jh.Abp.Common.Utils
             var values = Enum.GetValues(typeof(T));
             foreach (var item in values)
             {
-                yield return new
+                yield return new OptionDto<int>()
                 {
                     Text = item.ToString(),
                     Value = (int)item
@@ -41,9 +41,9 @@ namespace Jh.Abp.Common.Utils
                 {
                     var arguments = _filed.CustomAttributes
                     .Where(a => a.AttributeType == typeof(DescriptionAttribute)).FirstOrDefault()?.ConstructorArguments;
-                    yield return new
+                    yield return new OptionDto<int>()
                     {
-                        Text = arguments.First().Value,
+                        Text = arguments.First().Value.ToString(),
                         Value = (int)_v
                     };
                 }
