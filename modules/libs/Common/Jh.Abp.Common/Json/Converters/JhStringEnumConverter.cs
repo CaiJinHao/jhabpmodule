@@ -25,7 +25,12 @@ namespace Jh.Abp.Common.Json.Converters
             {
                 var arguments = _filed.CustomAttributes
                         .Where(a => a.AttributeType == typeof(DescriptionAttribute)).FirstOrDefault()?.ConstructorArguments;
-                value = arguments.First().Value;
+                value = arguments.FirstOrDefault()?.Value;
+            }
+            if (value==null)
+            {
+                writer.WriteNull();
+                return;
             }
             writer.WriteValue(value);
         }

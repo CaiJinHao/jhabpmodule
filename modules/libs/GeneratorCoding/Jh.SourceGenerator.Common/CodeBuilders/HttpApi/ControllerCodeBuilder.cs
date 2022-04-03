@@ -183,14 +183,9 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Default)]");
                         builder.AppendLine("\t\t[Route(\"options\")]");
                         builder.AppendLine("\t\t[HttpGet]");
-                        builder.AppendLine($"\t\tpublic virtual Task<ListResultDto<{table.Name}Dto>> GetOptionsAsync([FromBody]{table.Name}RetrieveInputDto inputDto)");
+                        builder.AppendLine($"\t\tpublic virtual Task<ListResultDto<OptionDto<{table.KeyType}>>> GetOptionsAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
                         {
-                            builder.AppendLine("\t\t{");
-                            builder.AppendLine($"\t\t\t //inputDto.MethodInput = new MethodDto<{table.Name}>()");
-                            builder.AppendLine("\t\t\t  //{");
-                            builder.AppendLine("\t\t\t\t//SelectAction = (query) => query.Select(a => new {table.Name}(a.Id){Name = a.Name})");
-                            builder.AppendLine("\t\t\t  //{");
-                            builder.AppendLine($"\t\t\t throw new NotImplementedException();");
+                            builder.AppendLine($"\t\t\t return await {table.Name}AppService.GetOptionsAsync(inputDto);");
                             builder.AppendLine("\t\t}");
                         }
                         builder.AppendLine();
