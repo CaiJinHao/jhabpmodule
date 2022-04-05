@@ -37,11 +37,11 @@ namespace Jh.Abp.JhIdentity.v1
             return await accessTokenAppService.GetRefreshAccessTokenAsync(accessTokenRefreshDto);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("Token")]
-        public async Task<AccessTokenResponseDto> GetAccessTokenAsync()
+        public async Task<AccessTokenResponseDto> GetAccessTokenAsync(string Audience)
         {
-            return await accessTokenAppService.GetAccessTokenAsync();
+            return await accessTokenAppService.GetAccessTokenAsync(Audience);
         }
 
         [Route("claims")]

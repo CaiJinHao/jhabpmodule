@@ -25,7 +25,7 @@
             </summary>
             <returns>IdentityServer响应结果</returns>
         </member>
-        <member name="M:Jh.Abp.JhIdentity.IAccessTokenAppService.GetAccessTokenAsync">
+        <member name="M:Jh.Abp.JhIdentity.IAccessTokenAppService.GetAccessTokenAsync(System.String)">
             <summary>
             提供给没有账号密码又需要授权的接入方使用
             </summary>

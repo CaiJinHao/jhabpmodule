@@ -34,11 +34,12 @@ namespace Jh.Abp.JhIdentity
             return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 
-        public virtual async Task<AccessTokenResponseDto> GetAccessTokenAsync()
+        public virtual async Task<AccessTokenResponseDto> GetAccessTokenAsync(string Audience)
         {
             var configuration = CreateIdentityClientConfiguration();
             configuration.GrantType = OidcConstants.GrantTypes.ClientCredentials;
-            configuration.Scope = _identityClientOptions.Audience;
+            //configuration.Scope = _identityClientOptions.Audience;
+            configuration.Scope = Audience;
 
             var tokenResponse = await JhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration);
             return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);

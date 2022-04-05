@@ -18,7 +18,7 @@ namespace Jh.Abp.JhIdentity
         /// 提供给没有账号密码又需要授权的接入方使用
         /// </summary>
         /// <returns></returns>
-        Task<AccessTokenResponseDto> GetAccessTokenAsync();
+        Task<AccessTokenResponseDto> GetAccessTokenAsync(string Audience);
 
         /// <summary>
         /// 刷新访问令牌
