@@ -25,6 +25,7 @@ public class JhIdentityApplicationContractsModule : AbpModule
             options.ClientId = configuration["AuthServer:AppClientId"];
             options.ClientSecret = configuration["AuthServer:AppClientSecret"];
             options.Scope = configuration["AuthServer:Scope"];
+            options.Audience = configuration["AuthServer:Audience"];
             options.RequireHttps = configuration.GetValue<bool>("AuthServer:RequireHttpsMetadata");
         });
     }

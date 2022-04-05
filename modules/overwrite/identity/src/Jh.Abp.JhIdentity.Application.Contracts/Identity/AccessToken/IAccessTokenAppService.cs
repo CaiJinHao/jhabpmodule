@@ -15,11 +15,14 @@ namespace Jh.Abp.JhIdentity
         Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto);
 
         /// <summary>
+        /// 提供给没有账号密码又需要授权的接入方使用
+        /// </summary>
+        /// <returns></returns>
+        Task<AccessTokenResponseDto> GetAccessTokenAsync();
+
+        /// <summary>
         /// 刷新访问令牌
         /// </summary>
-        /// <param name="refreshToken"></param>
-        /// <param name="organizationName"></param>
-        /// <returns></returns>
-        Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken, string organizationName = null);
+        Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(AccessTokenRefreshDto accessTokenRefreshDto);
     }
 }

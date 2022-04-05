@@ -25,4 +25,10 @@ namespace Jh.Abp.JhIdentity
 
         public string OrganizationName { get; set; }
     }
+
+    public class AccessTokenRefreshDto
+    {
+        public string OrganizationName { get; set; }
+        public string RefreshToken { get; set; }
+    }
 }

@@ -17,7 +17,6 @@ namespace Jh.Abp.JhMenu
     /// </summary>
     public class RoleCreateEventHandler :IDistributedEventHandler<EntityCreatedEto<IdentityRoleEto>>,ITransientDependency
     {
-        public IUnitOfWorkManager UnitOfWorkManager { get; set; }
         public ILogger<RoleCreateEventHandler> Logger { get; set; }
         protected MenuManager MenuManager;
         protected MenuRoleMapManager MenuRoleMapManager;

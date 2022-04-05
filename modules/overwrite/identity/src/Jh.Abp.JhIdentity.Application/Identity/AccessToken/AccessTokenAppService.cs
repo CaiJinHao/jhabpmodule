@@ -34,13 +34,22 @@ namespace Jh.Abp.JhIdentity
             return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 
-        [Authorize]
-        public virtual async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken, string organizationName = null)
+        public virtual async Task<AccessTokenResponseDto> GetAccessTokenAsync()
         {
-            var configuration = CreateIdentityClientConfiguration(organizationName);
+            var configuration = CreateIdentityClientConfiguration();
+            configuration.GrantType = OidcConstants.GrantTypes.ClientCredentials;
+            configuration.Scope = _identityClientOptions.Audience;
+
+            var tokenResponse = await JhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration);
+            return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
+        }
+
+        public virtual async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(AccessTokenRefreshDto accessTokenRefreshDto)
+        {
+            var configuration = CreateIdentityClientConfiguration(accessTokenRefreshDto.OrganizationName);
             configuration.GrantType = OidcConstants.GrantTypes.RefreshToken;
 
-            var tokenResponse = await JhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration, refreshToken);
+            var tokenResponse = await JhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration, accessTokenRefreshDto.RefreshToken);
             return ObjectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 

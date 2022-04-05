@@ -25,13 +25,16 @@
             </summary>
             <returns>IdentityServer响应结果</returns>
         </member>
-        <member name="M:Jh.Abp.JhIdentity.IAccessTokenAppService.GetRefreshAccessTokenAsync(System.String,System.String)">
+        <member name="M:Jh.Abp.JhIdentity.IAccessTokenAppService.GetAccessTokenAsync">
+            <summary>
+            提供给没有账号密码又需要授权的接入方使用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jh.Abp.JhIdentity.IAccessTokenAppService.GetRefreshAccessTokenAsync(Jh.Abp.JhIdentity.AccessTokenRefreshDto)">
             <summary>
             刷新访问令牌
             </summary>
-            <param name="refreshToken"></param>
-            <param name="organizationName"></param>
-            <returns></returns>
         </member>
         <member name="T:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto">
             <summary>

@@ -19,7 +19,7 @@ namespace Jh.Abp.JhIdentity.v1
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    public class AccessTokenController : JhIdentityController
+    public class AccessTokenController : JhIdentityController, IAccessTokenAppService
     {
         protected IAccessTokenAppService accessTokenAppService =>LazyServiceProvider.LazyGetService<IAccessTokenAppService>();
 
@@ -30,10 +30,18 @@ namespace Jh.Abp.JhIdentity.v1
             return await accessTokenAppService.GetAccessTokenAsync(requestDto);
         }
 
+        [Authorize]
         [HttpPost("Refresh")]
-        public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
+        public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync([FromBody] AccessTokenRefreshDto accessTokenRefreshDto)
         {
-            return await accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
+            return await accessTokenAppService.GetRefreshAccessTokenAsync(accessTokenRefreshDto);
+        }
+
+        [Authorize]
+        [HttpPost("Token")]
+        public async Task<AccessTokenResponseDto> GetAccessTokenAsync()
+        {
+            return await accessTokenAppService.GetAccessTokenAsync();
         }
 
         [Route("claims")]
@@ -42,6 +50,8 @@ namespace Jh.Abp.JhIdentity.v1
         {
             return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
         }
+
+  
 
         /*[AllowAnonymous]
         [HttpPost]
