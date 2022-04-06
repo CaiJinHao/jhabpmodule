@@ -6,7 +6,7 @@ import { request } from 'umi'
 export async function postV{apiVersion}JhPermissionsPermissionGranted(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.undefinedParams
-    ,body: (API.PermissionGrantedRetrieveInputDto),
+    ,body: (API.PermissionGrantedByNameRetrieveInputDto),
   options ?: {[key: string]: any}
 ) {
   const { 'apiVersion': param0, 
@@ -33,11 +33,9 @@ export async function getV{apiVersion}JhPermissionsInterfaceTreesAll(
   const { 'apiVersion': param0, 
   ...queryParams
   } = params;
-  return request<any>(`/api/v${param0}/JhPermissions/InterfaceTreesAll`, {
+  return request<API.0CultureneutralPublicKeyTokennull>(`/api/v${param0}/JhPermissions/InterfaceTreesAll`, {
   method: 'GET',
     params: {
-        
-        
         
         ...queryParams,},
     ...(options || {}),

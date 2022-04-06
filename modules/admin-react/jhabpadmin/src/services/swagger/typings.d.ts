@@ -20,6 +20,13 @@ declare namespace API {
      }
     
 
+  type AccessTokenRefreshDto =
+     {
+      'organizationName'?: string;
+      'refreshToken'?: string;
+     }
+    
+
   type AccessTokenRequestDto =
      {
       /** 用户名或者邮箱地址 */
@@ -276,6 +283,13 @@ declare namespace API {
      }
     
 
+  type PermissionGrantedByNameRetrieveInputDto =
+     {
+      'permissionNames'?: string[];
+      'providerName'?: string;
+     }
+    
+
   type PermissionGrantedCreateInputDto =
      {
       /** 权限名称列表 */
@@ -290,15 +304,6 @@ declare namespace API {
       'tenantId'?: string;
       'name'?: string;
       'granted'?: boolean;
-     }
-    
-
-  type PermissionGrantedRetrieveInputDto =
-     {
-      'tenantId'?: string;
-      'permissionNames'?: string[];
-      'providerName'?: string;
-      'providerKey'?: string;
      }
     
 
@@ -1485,7 +1490,13 @@ declare namespace API {
 
   type undefinedParams =
      {
-      'refreshToken'?: string;
+      'apiVersion': string;
+     }
+    
+
+  type undefinedParams =
+     {
+      'audience'?: string;
       'apiVersion': string;
      }
     
@@ -1887,8 +1898,6 @@ declare namespace API {
 
   type undefinedParams =
      {
-      'tenantId'?: string;
-      'permissionNames'?: string[];
       'providerName'?: string;
       'providerKey'?: string;
       'apiVersion': string;
