@@ -9,13 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Auditing;
 using Jh.Abp.JhIdentity;
+using Volo.Abp.Application.Dtos;
+using Jh.Abp.Common;
 
 namespace Jh.Abp.JhPermission
 {
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    public class JhPermissionsController : PermissionsController
+    public class JhPermissionsController : PermissionsController, IJhPermissionAppService
     {
         public JhPermissionsController(IPermissionAppService permissionAppService) : base(permissionAppService)
         {
@@ -25,22 +27,21 @@ namespace Jh.Abp.JhPermission
 
         [DisableAuditing]
         [HttpPost("PermissionGranted")]
-        public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync([FromBody] PermissionGrantedRetrieveInputDto input)
+        public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync([FromBody] PermissionGrantedByNameRetrieveInputDto input)
         {
             return await jhPermissionAppService.GetPermissionGrantedByNameAsync(input);
         }
 
         [HttpGet("InterfaceTreesAll")]
-        public virtual async Task<dynamic> GetInterfaceTreesAsync([FromQuery] PermissionGrantedRetrieveInputDto input)
+        public virtual async Task<ListResultDto<TreeDto>> GetPermissionTreesAsync([FromQuery] PermissionTreesRetrieveInputDto input)
         {
-            var items = await jhPermissionAppService.GetPermissionTreesAsync(input.ProviderName, input.ProviderKey);
-            return new { items };
+            return await jhPermissionAppService.GetPermissionTreesAsync(input);
         }
 
         [HttpPost("Interface")]
-        public virtual async Task UpdateInterfaceAsync(PermissionGrantedCreateInputDto inputDto)
+        public virtual async Task UpdateAsync(PermissionGrantedCreateInputDto inputDto)
         {
-            await jhPermissionAppService.UpdateAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
+            await jhPermissionAppService.UpdateAsync(inputDto);
         }
     }
 }

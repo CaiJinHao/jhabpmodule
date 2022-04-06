@@ -15,7 +15,7 @@ namespace Jh.Abp.JhIdentity
         Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto);
 
         /// <summary>
-        /// 提供给没有账号密码又需要授权的接入方使用
+        /// 此授权只能进行授权验证，并通过不了权限策略比如创建权限
         /// </summary>
         /// <returns></returns>
         Task<AccessTokenResponseDto> GetAccessTokenAsync(string Audience);
