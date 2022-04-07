@@ -57,7 +57,7 @@ export default defineConfig({
     {
       requestLibPath: "import { request } from 'umi'",
       schemaPath: 'https://localhost:6201/swagger/v1/swagger.json',
-      projectName: 'swagger',
+      projectName: 'identity',
       mock: false,
     },
   ],
