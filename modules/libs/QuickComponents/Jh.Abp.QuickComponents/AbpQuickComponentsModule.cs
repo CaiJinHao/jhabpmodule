@@ -29,6 +29,7 @@ namespace Jh.Abp.QuickComponents
                 //use coustomer ContractResolver
                 options.UseHybridSerializer = false;
             });
+
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
@@ -65,6 +66,8 @@ namespace Jh.Abp.QuickComponents
             {
                 options.MapCodeNamespace("JhAbpQuickComponents", typeof(JhAbpQuickComponentsResource));
             });
+
+            Configure<SwaggerApiOptions>(Configuration.GetSection("SwaggerApi"));
         }
     }
 }

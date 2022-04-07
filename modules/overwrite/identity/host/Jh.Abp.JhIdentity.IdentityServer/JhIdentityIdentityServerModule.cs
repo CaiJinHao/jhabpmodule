@@ -10,11 +10,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +125,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         });
 
         var Audience = configuration.GetValue<string>("AuthServer:ApiName");
+        context.Services.AddApiVersion();
         context.Services.AddJhAbpSwagger(configuration,
            new Dictionary<string, string>{
                {Audience, $"{Audience} API"}
@@ -128,7 +134,17 @@ public class JhIdentityIdentityServerModule : AbpModule
         //context.Services.AddAbpSwaggerGen(
         //    options =>
         //    {
-        //        options.SwaggerDoc("v1", new OpenApiInfo { Title = "JhIdentity API", Version = "v1" });
+        //        var apiVersionDescriptionProvider = context.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+        //        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        //        {
+        //            options.SwaggerDoc(
+        //                description.GroupName,
+        //                new OpenApiInfo()
+        //                {
+        //                    Title = $"Sample API {description.ApiVersion}",
+        //                    Version = description.ApiVersion.ToString(),
+        //                });
+        //        }
         //        options.DocInclusionPredicate((docName, description) => true);
         //        options.CustomSchemaIds(type => type.FullName);
         //    });
@@ -217,7 +233,6 @@ public class JhIdentityIdentityServerModule : AbpModule
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
 #endif
 
-        context.Services.AddApiVersion();
         //context.Services.AddSameSiteCookiePolicy();//去除https
         //context.Services.AddAuthorizeFilter(configuration);//为所有请求添加验证
 
@@ -277,7 +292,8 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            options.UseJhSwaggerUiConfig(configuration);
+            var apiVersionDescriptionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+            options.UseJhSwaggerUiConfig(configuration, apiVersionDescriptionProvider);
             //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
         });
         app.UseAuditing();

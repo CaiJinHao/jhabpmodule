@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -30,13 +32,23 @@ namespace Jh.Abp.QuickComponents.Swagger
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
 
+                //options.ApiVersionReader = new UrlSegmentApiVersionReader();
                 //options.ApiVersionReader = new HeaderApiVersionReader("api-version"); //Supports header too
                 //options.ApiVersionReader = new MediaTypeApiVersionReader(); //Supports accept header too
 
                 var mvcOptions = services.ExecutePreConfiguredActions<AbpAspNetCoreMvcOptions>();
                 options.ConfigureAbp(mvcOptions);
                 setupAction?.Invoke(options);
+            }).AddVersionedApiExplorer(options =>
+            {
+                //以通知swagger替换控制器路由中的版本并配置api版本
+                options.SubstituteApiVersionInUrl = true;
+                // 版本名的格式：v+版本号
+                options.GroupNameFormat = "'v'VVV";
+                //是否提供API版本服务
+                options.SubstituteApiVersionInUrl = true;
             });
+
             return services;
         }
 
@@ -47,14 +59,24 @@ namespace Jh.Abp.QuickComponents.Swagger
                 configuration["AuthServer:Authority"], scopes,
                 options =>
                 {
-                    options.SwaggerDoc("v1",
-                      new OpenApiInfo
-                      {
-                          Title = configuration["SwaggerApi:OpenApiInfo:Title"],
-                          Version = configuration["SwaggerApi:OpenApiInfo:Version"],
-                          Description = configuration["SwaggerApi:OpenApiInfo:Description"],
-                      });
-                    options.DocInclusionPredicate((docName, description) => true);
+                    var swaggerApi = services.GetRequiredService<IOptions<SwaggerApiOptions>>().Value;
+                    var apiVersionDescriptionProvider = services.GetRequiredService<IApiVersionDescriptionProvider>();
+                    foreach (var item in apiVersionDescriptionProvider.ApiVersionDescriptions)
+                    {
+                        var apiVersionInfo = swaggerApi.OpenApiInfos.Where(a => a.GroupName == item.GroupName).FirstOrDefault();
+                        options.SwaggerDoc(item.GroupName,
+                          new OpenApiInfo
+                          {
+                              Title = apiVersionInfo?.Title ?? item.GroupName,
+                              Version = item.ApiVersion.ToString(),
+                              Description = apiVersionInfo?.Description ?? item.GroupName
+                          });
+                    }
+
+                    options.DocInclusionPredicate((groupName, apiDesc) =>
+                    {
+                        return apiDesc.RelativePath.Contains(groupName);//相同的groupName放在一个文档中
+                    });
                     options.CustomSchemaIds(type => type.FullName);
 
                     //Swagger添加授权验证服务
@@ -87,9 +109,6 @@ namespace Jh.Abp.QuickComponents.Swagger
                     //options.RequestBodyFilter<>();//请求Body过滤器、修改器
                     //options.OperationFilter<>();//操作过滤器、修改器
                     //options.DocumentFilter<>();//文档过滤器、修改器
-                    //options.IncludeXmlComments();
-                    //var basePath = Directory.GetCurrentDirectory();
-                    //var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
 
                     foreach (var item in contractsType)
                     {
@@ -122,7 +141,7 @@ namespace Jh.Abp.QuickComponents.Swagger
             return services;
         }
 
-        public static void UseJhSwaggerUiConfig(this Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions options, IConfiguration configuration)
+        public static void UseJhSwaggerUiConfig(this Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions options, IConfiguration configuration, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
         {
             //var embeddedFileProvider = new EmbeddedFileProvider(typeof(AbpQuickComponentsModule).Assembly, "Jh.Abp.QuickComponents");//文件必须是嵌入得资源
             //var file = embeddedFileProvider.GetFileInfo("Jh.Abp.Swagger.index.html");
@@ -134,7 +153,11 @@ namespace Jh.Abp.QuickComponents.Swagger
             //options.IndexStream = () => System.Reflection.Assembly.GetExecutingAssembly()
             //.GetManifestResourceStream("Jh.Abp.QuickComponents.Jh.Abp.Swagger.index.html");//这个是用点连接的路径
 
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", configuration["SwaggerApi:SwaggerEndpoint:Name"]);
+            foreach (var item in apiVersionDescriptionProvider.ApiVersionDescriptions)
+            {
+                options.SwaggerEndpoint($"/swagger/{item.GroupName}/swagger.json", $"Version {item.GroupName}");
+            }
+            options.DocumentTitle = configuration["SwaggerApi:DocumentTitle"];
             options.RoutePrefix = configuration["SwaggerApi:RoutePrefix"];
 
             options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
@@ -155,7 +178,6 @@ namespace Jh.Abp.QuickComponents.Swagger
             options.EnableValidator();//启用内置验证器
                                       //options.ShowCommonExtensions();//字段和参数值的显示
                                       //options.EnableTryItOutByDefault();//默认情况下启用“尝试”部分。
-            options.DocumentTitle = configuration["SwaggerApi:DocumentTitle"];//文档得标题
 
             //添加自定义css和js
             //向index.html页面注入额外的CSS样式表
