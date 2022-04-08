@@ -56,6 +56,7 @@ namespace Jh.Abp.JhIdentity.v1
         }
 
         [Authorize(IdentityPermissions.Users.Update)]
+        [HttpPut("Patch/{id}")]//兼容手机端，手机端不支持Patch
         [HttpPatch("{id}")]
         public virtual async Task UpdatePortionAsync(System.Guid id, IdentityUserUpdateInputDto inputDto)
         {
