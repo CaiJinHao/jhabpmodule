@@ -1,0 +1,11 @@
+<% for (const {keyword, specifiers, path} of imports) {%><% if(!(path.indexOf('contracts')>0 | path.indexOf('domain')>0)){ %>
+<%= keyword %> { <%= specifiers.join(', ') %> } from '<%= path %>';
+<% } %><% }
+
+for (let {base, identifier, properties} of interfaces) { %>
+<% if(identifier.indexOf('Dto')>0){ %>
+export interface <%= identifier %> <%= base ? `extends ${base} ` : '' %>{<%
+  for (let {name, optional, type} of properties) { %><% if(name !== 'methodInput'){ %>
+  <%= name + optional %>: <%= type %>;<% } %><% } %>
+}
+<% } %><% } %>
