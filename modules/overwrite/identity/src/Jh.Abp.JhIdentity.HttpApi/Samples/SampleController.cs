@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace Jh.Abp.JhIdentity.Samples;
 
-[ApiVersion("1.0")]
-[ApiVersion("2.0")]
-[ApiVersion("3.0")]
+//[ApiVersion("1.0")]
+//[ApiVersion("2.0")]
+//[ApiVersion("3.0")]
 [Area(JhIdentityRemoteServiceConsts.ModuleName)]
 [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
 [Route("api/v{version:apiVersion}/JhIdentity/sample")]
@@ -52,19 +52,19 @@ public class SampleController : JhIdentityController
         return PostAsync("v1");
     }
 
-    [HttpPost]
-    [MapToApiVersion("2.0")]
-    public Task<string> PostAsyncV2()
-    {
-        return PostAsync("v2");
-    }
+    //[HttpPost]
+    //[MapToApiVersion("2.0")]
+    //public Task<string> PostAsyncV2()
+    //{
+    //    return PostAsync("v2");
+    //}
 
-    [HttpPost]
-    [MapToApiVersion("3.0")]
-    public Task<string> PostAsyncV3()
-    {
-        return PostAsync("v3");
-    }
+    //[HttpPost]
+    //[MapToApiVersion("3.0")]
+    //public Task<string> PostAsyncV3()
+    //{
+    //    return PostAsync("v3");
+    //}
 
     private Task<string> PostAsync(string msg)
     {

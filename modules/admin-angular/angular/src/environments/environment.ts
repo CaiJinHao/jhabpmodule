@@ -10,7 +10,7 @@ export const environment = {
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44359',
+    issuer: 'https://localhost:6201',
     redirectUri: baseUrl,
     clientId: 'angulartest_App',
     responseType: 'code',
@@ -19,7 +19,7 @@ export const environment = {
   },
   apis: {
     default: {
-      url: 'https://localhost:44359',
+      url: 'https://localhost:6201',
       rootNamespace: 'angulartest',
     },
   },

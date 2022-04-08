@@ -39,15 +39,17 @@ namespace Jh.Abp.QuickComponents.Swagger
                 var mvcOptions = services.ExecutePreConfiguredActions<AbpAspNetCoreMvcOptions>();
                 options.ConfigureAbp(mvcOptions);
                 setupAction?.Invoke(options);
-            }).AddVersionedApiExplorer(options =>
-            {
-                //以通知swagger替换控制器路由中的版本并配置api版本
-                options.SubstituteApiVersionInUrl = true;
-                // 版本名的格式：v+版本号
-                options.GroupNameFormat = "'v'VVV";
-                //是否提供API版本服务
-                options.SubstituteApiVersionInUrl = true;
-            });
+            })
+            //.AddVersionedApiExplorer(options =>
+            //{
+            //    //以通知swagger替换控制器路由中的版本并配置api版本
+            //    options.SubstituteApiVersionInUrl = true;
+            //    // 版本名的格式：v+版本号
+            //    options.GroupNameFormat = "'v'VVV";
+            //    //是否提供API版本服务
+            //    options.SubstituteApiVersionInUrl = true;
+            //})
+            ;
 
             return services;
         }

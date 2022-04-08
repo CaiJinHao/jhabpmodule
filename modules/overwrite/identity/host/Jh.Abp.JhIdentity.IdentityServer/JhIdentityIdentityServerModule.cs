@@ -124,30 +124,20 @@ public class JhIdentityIdentityServerModule : AbpModule
             options.UseMySQL();
         });
 
-        var Audience = configuration.GetValue<string>("AuthServer:ApiName");
         context.Services.AddApiVersion();
-        context.Services.AddJhAbpSwagger(configuration,
-           new Dictionary<string, string>{
-               {Audience, $"{Audience} API"}
-           }, contractsType: typeof(JhIdentityApplicationContractsModule));
+        var Audience = configuration.GetValue<string>("AuthServer:ApiName");
+        //context.Services.AddJhAbpSwagger(configuration,
+        //   new Dictionary<string, string>{
+        //       {Audience, $"{Audience} API"}
+        //   }, contractsType: typeof(JhIdentityApplicationContractsModule));
 
-        //context.Services.AddAbpSwaggerGen(
-        //    options =>
-        //    {
-        //        var apiVersionDescriptionProvider = context.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-        //        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
-        //        {
-        //            options.SwaggerDoc(
-        //                description.GroupName,
-        //                new OpenApiInfo()
-        //                {
-        //                    Title = $"Sample API {description.ApiVersion}",
-        //                    Version = description.ApiVersion.ToString(),
-        //                });
-        //        }
-        //        options.DocInclusionPredicate((docName, description) => true);
-        //        options.CustomSchemaIds(type => type.FullName);
-        //    });
+        context.Services.AddAbpSwaggerGen(
+            options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Support APP API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
+                options.CustomSchemaIds(type => type.FullName);
+            });
 
         Configure<AbpLocalizationOptions>(options =>
         {
@@ -292,9 +282,9 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            var apiVersionDescriptionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-            options.UseJhSwaggerUiConfig(configuration, apiVersionDescriptionProvider);
-            //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+            //var apiVersionDescriptionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+            //options.UseJhSwaggerUiConfig(configuration, apiVersionDescriptionProvider);
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
