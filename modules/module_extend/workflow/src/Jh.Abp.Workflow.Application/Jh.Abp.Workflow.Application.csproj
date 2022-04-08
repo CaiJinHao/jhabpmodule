@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Identity.Application" Version="5.1.4" />
-    <PackageReference Include="Volo.Abp.AutoMapper" Version="5.1.4" />
-    <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.1.4" />
+    <PackageReference Include="Volo.Abp.Identity.Application" Version="5.2.0" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="5.2.0" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.2.0" />
     <ProjectReference Include="..\Jh.Abp.Workflow.Application.Contracts\Jh.Abp.Workflow.Application.Contracts.csproj" />
     <ProjectReference Include="..\Jh.Abp.Workflow.Domain\Jh.Abp.Workflow.Domain.csproj" />
   </ItemGroup>

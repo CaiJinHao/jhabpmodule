@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Jh.Abp.Workflow.Samples;
@@ -10,11 +11,5 @@ public class SampleManager_Tests : WorkflowDomainTestBase
     public SampleManager_Tests()
     {
         //_sampleManager = GetRequiredService<SampleManager>();
-    }
-
-    [Fact]
-    public async Task Method1Async()
-    {
-
     }
 }

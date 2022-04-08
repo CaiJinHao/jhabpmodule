@@ -1,9 +1,9 @@
 
-
+  
 
   import type { ListResultDto, PagedResultDto } from '@abp/ng.core';
 
-
+  
 
   import type { TreeDto } from '../../common/models';
 
@@ -15,9 +15,9 @@ import { request } from 'umi';
 
 
 
-export const  createMenuRoleMap = async (input: MenuRoleMapCreateInputDto):Promise<MenuRoleMapDto> => {
+export const  createMenuRoleMap = async (input: MenuRoleMapCreateInputDto): Promise<MenuRoleMapDto> => {
 
-    return await request<MenuRoleMapDto>(`/api/v${apiVersion}/MenuRoleMap`,{
+    return await request<MenuRoleMapDto>('/api/v1/MenuRoleMap',{
       method: 'POST',
       data: input,
     });
@@ -47,7 +47,7 @@ export const  deleteMenuRoleMapBykeys = async (keys: string[]):Promise<void> => 
 
 
 
-export const  getMenuRoleMap = async (id: string):Promise<MenuRoleMapDto> => {
+export const  getMenuRoleMap = async (id: string): Promise<MenuRoleMapDto> => {
 
     return await request<MenuRoleMapDto>(`/api/v${apiVersion}/MenuRoleMap/${id}`,{
       method: 'GET',
@@ -57,9 +57,9 @@ export const  getMenuRoleMap = async (id: string):Promise<MenuRoleMapDto> => {
 
 
 
-export const  getEntitysMenuRoleMap = async (inputDto: MenuRoleMapRetrieveInputDto):Promise<ListResultDto<MenuRoleMapDto>> => {
+export const  getEntitysMenuRoleMap = async (inputDto: MenuRoleMapRetrieveInputDto): Promise<ListResultDto<MenuRoleMapDto>> => {
 
-    return await request<ListResultDto<MenuRoleMapDto>>(`/api/v1/MenuRoleMap/all`,{
+    return await request<ListResultDto<MenuRoleMapDto>>(`/api/v${inputDto}/MenuRoleMap/all`,{
       method: 'GET',
       params: { methodInput_StringTypeQueryMethod: inputDto.methodInput_StringTypeQueryMethod, tenantId: inputDto.tenantId, menuId: inputDto.menuId, roleId: inputDto.roleId, sorting: inputDto.sorting, skipCount: inputDto.skipCount, maxResultCount: inputDto.maxResultCount },
     });
@@ -68,7 +68,7 @@ export const  getEntitysMenuRoleMap = async (inputDto: MenuRoleMapRetrieveInputD
 
 
 
-export const  getListMenuRoleMap = async (input: MenuRoleMapRetrieveInputDto):Promise<PagedResultDto<MenuRoleMapDto>> => {
+export const  getListMenuRoleMap = async (input: MenuRoleMapRetrieveInputDto): Promise<PagedResultDto<MenuRoleMapDto>> => {
 
     return await request<PagedResultDto<MenuRoleMapDto>>(`/api/v${input}/MenuRoleMap`,{
       method: 'GET',
@@ -79,9 +79,9 @@ export const  getListMenuRoleMap = async (input: MenuRoleMapRetrieveInputDto):Pr
 
 
 
-export const  getMenusNavTreesMenuRoleMap = async ():Promise<TreeDto[]> => {
+export const  getMenusNavTreesMenuRoleMap = async (): Promise<TreeDto[]> => {
 
-    return await request<TreeDto[]>(`/api/v${apiVersion}/MenuRoleMap/Trees`,{
+    return await request<TreeDto[]>('/api/v1/MenuRoleMap/Trees',{
       method: 'GET',
     });
   }
@@ -89,9 +89,9 @@ export const  getMenusNavTreesMenuRoleMap = async ():Promise<TreeDto[]> => {
 
 
 
-export const  getMenusTreesMenuRoleMap = async (input: MenuRoleMapRetrieveInputDto):Promise<TreeDto[]> => {
+export const  getMenusTreesMenuRoleMap = async (input: MenuRoleMapRetrieveInputDto): Promise<TreeDto[]> => {
 
-    return await request<TreeDto[]>(`/api/v${input}/MenuRoleMap/TreesAll`,{
+    return await request<TreeDto[]>('/api/v1/MenuRoleMap/TreesAll',{
       method: 'GET',
       params: { methodInput_StringTypeQueryMethod: input.methodInput_StringTypeQueryMethod, tenantId: input.tenantId, menuId: input.menuId, roleId: input.roleId, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     });
@@ -100,7 +100,7 @@ export const  getMenusTreesMenuRoleMap = async (input: MenuRoleMapRetrieveInputD
 
 
 
-export const  updateMenuRoleMap = async (id: string, input: MenuRoleMapUpdateInputDto):Promise<MenuRoleMapDto> => {
+export const  updateMenuRoleMap = async (id: string, input: MenuRoleMapUpdateInputDto): Promise<MenuRoleMapDto> => {
 
     return await request<MenuRoleMapDto>(`/api/v${apiVersion}/MenuRoleMap/${id}`,{
       method: 'PUT',
@@ -111,7 +111,7 @@ export const  updateMenuRoleMap = async (id: string, input: MenuRoleMapUpdateInp
 
 
 
-export const  updatePortionMenuRoleMap = async (id: string, inputDto: MenuRoleMapUpdateInputDto):Promise<void> => {
+export const  updatePortionMenuRoleMap = async (id: string, inputDto: MenuRoleMapUpdateInputDto): Promise<void> => {
 
     return await request<void>(`/api/v${apiVersion}/MenuRoleMap/Patch/${id}`,{
       method: 'PUT',

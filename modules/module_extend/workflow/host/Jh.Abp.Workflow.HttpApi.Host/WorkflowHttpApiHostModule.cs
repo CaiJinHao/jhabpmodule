@@ -222,8 +222,7 @@ public class WorkflowHttpApiHostModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            //需要配置Audience、ApiName，IdentityServer并添加https://localhost:6202CorsOrigins
-            options.UseJhSwaggerUiConfig(configuration);
+            options.UseJhSwaggerUiConfig(configuration, app.ApplicationServices.GetRequiredService<Microsoft.Extensions.Options.IOptions<SwaggerApiOptions>>().Value);
             //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
 
             //var configuration = context.GetConfiguration();
