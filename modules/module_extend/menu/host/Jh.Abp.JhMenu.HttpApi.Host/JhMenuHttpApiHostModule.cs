@@ -233,7 +233,7 @@ public class JhMenuHttpApiHostModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            options.UseJhSwaggerUiConfig(configuration);
+            options.UseJhSwaggerUiConfig(configuration, app.ApplicationServices.GetRequiredService<Microsoft.Extensions.Options.IOptions<SwaggerApiOptions>>().Value);
 
             //options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
 
