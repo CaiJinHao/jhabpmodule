@@ -10,30 +10,33 @@ import { request } from 'umi';
 
 
 
+export const  getSample = async (
+  
+  ) => {
 
-export const  getSample = async (): Promise<SampleDto> => {
-
-    return await request<SampleDto>('/api/JhMenu/sample',{
+    return await request('/api/JhMenu/sample',{
       method: 'GET',
     });
   }
 
 
 
+export const  getAllClaimsSample = async (
+  
+  ) => {
 
-export const  getAllClaimsSample = async (): Promise<object> => {
-
-    return await request<object>('/api/JhMenu/sample/Claims',{
+    return await request('/api/JhMenu/sample/Claims',{
       method: 'GET',
     });
   }
 
 
 
+export const  getAuthorizedSample = async (
+  
+  ) => {
 
-export const  getAuthorizedSample = async (): Promise<SampleDto> => {
-
-    return await request<SampleDto>('/api/JhMenu/sample/authorized',{
+    return await request('/api/JhMenu/sample/authorized',{
       method: 'GET',
     });
   }
