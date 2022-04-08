@@ -37,6 +37,9 @@ public class SampleController : JhIdentityController
 
     [HttpGet("Claims")]
     [Authorize]
+    [MapToApiVersion("1.0")]
+    [MapToApiVersion("2.0")]
+    [MapToApiVersion("3.0")]
     public dynamic GetAllClaims()
     {
         var u = CurrentUser;

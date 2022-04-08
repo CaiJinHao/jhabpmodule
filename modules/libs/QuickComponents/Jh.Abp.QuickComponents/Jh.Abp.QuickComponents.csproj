@@ -17,7 +17,6 @@
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Volo.Abp.AspNetCore" Version="5.1.4" />
     <PackageReference Include="Volo.Abp.AspNetCore.Authentication.OpenIdConnect" Version="5.1.4" />
