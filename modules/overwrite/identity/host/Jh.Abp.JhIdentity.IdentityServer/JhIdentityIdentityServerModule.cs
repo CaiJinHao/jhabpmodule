@@ -10,16 +10,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,7 +92,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
-    
+
     typeof(JhAbpIdentityServerModule),
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityEntityFrameworkCoreModule),
@@ -126,18 +122,18 @@ public class JhIdentityIdentityServerModule : AbpModule
 
         context.Services.AddApiVersion();
         var Audience = configuration.GetValue<string>("AuthServer:ApiName");
-        //context.Services.AddJhAbpSwagger(configuration,
-        //   new Dictionary<string, string>{
-        //       {Audience, $"{Audience} API"}
-        //   }, contractsType: typeof(JhIdentityApplicationContractsModule));
+        context.Services.AddJhAbpSwagger(configuration,
+           new Dictionary<string, string>{
+               {Audience, $"{Audience} API"}
+           }, contractsType: typeof(JhIdentityApplicationContractsModule));
 
-        context.Services.AddAbpSwaggerGen(
-            options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Support APP API", Version = "v1" });
-                options.DocInclusionPredicate((docName, description) => true);
-                options.CustomSchemaIds(type => type.FullName);
-            });
+        //context.Services.AddAbpSwaggerGen(
+        //    options =>
+        //    {
+        //        options.SwaggerDoc("v1", new OpenApiInfo { Title = "JhIdentity API", Version = "v1" });
+        //        options.DocInclusionPredicate((docName, description) => true);
+        //        options.CustomSchemaIds(type => type.FullName);
+        //    });
 
         Configure<AbpLocalizationOptions>(options =>
         {
@@ -282,9 +278,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            //var apiVersionDescriptionProvider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-            //options.UseJhSwaggerUiConfig(configuration, apiVersionDescriptionProvider);
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+            options.UseJhSwaggerUiConfig(configuration, app.ApplicationServices.GetRequiredService<IOptions<SwaggerApiOptions>>().Value);
         });
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();

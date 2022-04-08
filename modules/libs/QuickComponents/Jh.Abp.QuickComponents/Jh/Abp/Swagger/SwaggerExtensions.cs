@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,14 +7,11 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.QuickComponents.Swagger
 {
@@ -39,17 +33,7 @@ namespace Jh.Abp.QuickComponents.Swagger
                 var mvcOptions = services.ExecutePreConfiguredActions<AbpAspNetCoreMvcOptions>();
                 options.ConfigureAbp(mvcOptions);
                 setupAction?.Invoke(options);
-            })
-            //.AddVersionedApiExplorer(options =>
-            //{
-            //    //以通知swagger替换控制器路由中的版本并配置api版本
-            //    options.SubstituteApiVersionInUrl = true;
-            //    // 版本名的格式：v+版本号
-            //    options.GroupNameFormat = "'v'VVV";
-            //    //是否提供API版本服务
-            //    options.SubstituteApiVersionInUrl = true;
-            //})
-            ;
+            });
 
             return services;
         }
@@ -62,22 +46,47 @@ namespace Jh.Abp.QuickComponents.Swagger
                 options =>
                 {
                     var swaggerApi = services.GetRequiredService<IOptions<SwaggerApiOptions>>().Value;
-                    var apiVersionDescriptionProvider = services.GetRequiredService<IApiVersionDescriptionProvider>();
-                    foreach (var item in apiVersionDescriptionProvider.ApiVersionDescriptions)
+                    foreach (var item in swaggerApi.OpenApiInfos)
                     {
-                        var apiVersionInfo = swaggerApi.OpenApiInfos.Where(a => a.GroupName == item.GroupName).FirstOrDefault();
                         options.SwaggerDoc(item.GroupName,
                           new OpenApiInfo
                           {
-                              Title = apiVersionInfo?.Title ?? item.GroupName,
-                              Version = item.ApiVersion.ToString(),
-                              Description = apiVersionInfo?.Description ?? item.GroupName
+                              Title = item?.Title ?? item.GroupName,
+                              Version = item.Version.ToString(),
+                              Description = item?.Description ?? item.GroupName
                           });
                     }
 
+                    //必须保证RelativePath只被替换了一次
+                    var GetRelativePath = (string RelativePath, string groupName) => RelativePath.Replace("v{apiVersion}", groupName);
+
                     options.DocInclusionPredicate((groupName, apiDesc) =>
                     {
-                        return apiDesc.RelativePath.Contains(groupName);//相同的groupName放在一个文档中
+                        var versionGroupName = groupName.ToLower();
+                        //同一个版本的放在同一个文档
+                        if (apiDesc.ActionDescriptor is Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor actionDescrptor)
+                        {
+                            var mapToApiVersionAttrs = actionDescrptor.MethodInfo.CustomAttributes.Where(a => a.AttributeType == typeof(MapToApiVersionAttribute)).ToList();
+                            if (mapToApiVersionAttrs.Any())
+                            {
+                                return mapToApiVersionAttrs.Any(a => {
+                                    var versionArg = a.ConstructorArguments.FirstOrDefault();
+                                    var version = Convert.ToDouble(versionArg.Value.ToString());
+                                    if (versionGroupName.Equals($"v{version}"))
+                                    {
+                                        apiDesc.RelativePath = GetRelativePath(apiDesc.RelativePath, versionGroupName);
+                                        return true;
+                                    }
+                                    return false;
+                                });
+                            }
+                        }
+                        if (versionGroupName == "v1")
+                        {
+                            apiDesc.RelativePath = GetRelativePath(apiDesc.RelativePath, versionGroupName);
+                            return true;
+                        }
+                        return false;
                     });
                     options.CustomSchemaIds(type => type.FullName);
 
@@ -143,22 +152,13 @@ namespace Jh.Abp.QuickComponents.Swagger
             return services;
         }
 
-        public static void UseJhSwaggerUiConfig(this Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions options, IConfiguration configuration, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
+        public static void UseJhSwaggerUiConfig(this Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions options, IConfiguration configuration, SwaggerApiOptions swaggerApi)
         {
-            //var embeddedFileProvider = new EmbeddedFileProvider(typeof(AbpQuickComponentsModule).Assembly, "Jh.Abp.QuickComponents");//文件必须是嵌入得资源
-            //var file = embeddedFileProvider.GetFileInfo("Jh.Abp.Swagger.index.html");
-            //options.IndexStream = () => file.CreateReadStream();
-
-            //var resolver = app.ApplicationServices.GetService<ISwaggerHtmlResolver>();
-            //options.IndexStream = () => resolver.Resolver();
-
-            //options.IndexStream = () => System.Reflection.Assembly.GetExecutingAssembly()
-            //.GetManifestResourceStream("Jh.Abp.QuickComponents.Jh.Abp.Swagger.index.html");//这个是用点连接的路径
-
-            foreach (var item in apiVersionDescriptionProvider.ApiVersionDescriptions)
+            foreach (var item in swaggerApi.OpenApiInfos)
             {
-                options.SwaggerEndpoint($"/swagger/{item.GroupName}/swagger.json", $"Version {item.GroupName}");
+                options.SwaggerEndpoint($"/swagger/{item.GroupName}/swagger.json", item.GroupName);
             }
+
             options.DocumentTitle = configuration["SwaggerApi:DocumentTitle"];
             options.RoutePrefix = configuration["SwaggerApi:RoutePrefix"];
 
@@ -168,9 +168,9 @@ namespace Jh.Abp.QuickComponents.Swagger
             options.OAuthScopes(Audience);
 
             // Display
-            options.DefaultModelExpandDepth(2);//在模型-示例部分，模型的默认扩展深度
-            options.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Example);//模型得显示方式
-                                                                                                   //options.DefaultModelsExpandDepth(-1);//模型的默认扩展深度(设置为-1完全隐藏模型)
+            options.DefaultModelExpandDepth(3);//在模型-示例部分，模型的默认扩展深度
+            options.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);//模型得显示方式
+            options.DefaultModelsExpandDepth(-1);//模型的默认扩展深度(设置为-1完全隐藏模型)
             options.DisplayOperationId();//控制操作列表中operationId的显示
             options.DisplayRequestDuration();//请求的持续时间(以毫秒为单位)的显示
             options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);//文档得展开方式
