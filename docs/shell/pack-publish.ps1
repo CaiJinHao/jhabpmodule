@@ -5,7 +5,7 @@ using namespace System.Xml;
 param (
     [string] $apiKey,
     [string] $execPath = '../../',
-    [string] $outPath = 'G:\Publish\nuget-local',
+    [string] $outPath = 'E:\Publish\nuget-local',
     [string] $publishSource = "https://api.nuget.org/v3/index.json"
 )
 
