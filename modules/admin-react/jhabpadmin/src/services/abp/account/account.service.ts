@@ -1,17 +1,17 @@
 import { request } from 'umi';
-import type { LoginInput } from '../models';
+import type { LoginInput, LoginResponse } from '../account.models';
 
-/**登录 */
-export const accountLogin = async (input: LoginInput): Promise<any> => {
-  return await request<any>(`/identity/api/account/login`, {
+/**统一身份登录 */
+export const accountLogin = async (input: LoginInput): Promise<LoginResponse> => {
+  return await request<LoginResponse>(`/identityapi/account/login`, {
     method: 'POST',
     data: input,
   });
 };
 
-/**登出 */
+/**统一身份登出*/
 export const accountLogout = async () => {
-  return await request(`/identity/api/account/logout`, {
+  return await request(`/identityapi/account/logout`, {
     method: 'GET',
   });
 };
