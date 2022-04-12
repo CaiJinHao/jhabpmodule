@@ -3,7 +3,7 @@ import type { LoginInput, LoginResponse } from '../account.models';
 
 /**统一身份登录 */
 export const accountLogin = async (input: LoginInput): Promise<LoginResponse> => {
-  return await request<LoginResponse>(`/identity/api/account/login`, {
+  return await request<LoginResponse>(`/identityapi/account/login`, {
     method: 'POST',
     data: input,
   });
@@ -11,7 +11,7 @@ export const accountLogin = async (input: LoginInput): Promise<LoginResponse> =>
 
 /**统一身份登出*/
 export const accountLogout = async () => {
-  return await request(`/identity/api/account/logout`, {
+  return await request(`/identityapi/account/logout`, {
     method: 'GET',
   });
 };
