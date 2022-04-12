@@ -11,8 +11,8 @@ import React, { useState } from 'react';
 import { ProFormCaptcha, ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
 import { useIntl, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
-import type { LoginInput, LoginResponse } from '@/services/abp/account.models';
+// import { login } from '@/services/ant-design-pro/api';
+import type { LoginResponse } from '@/services/abp/account.models';
 import { accountLogin } from '@/services/abp/account/account.service';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 
@@ -32,7 +32,7 @@ const LoginMessage: React.FC<{
 );
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [userLoginState, setUserLoginState] = useState<LoginResponse>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
@@ -56,9 +56,10 @@ const Login: React.FC = () => {
         userNameOrEmailAddress: values.username,
         password: values.password,
         rememberMe: values.autoLogin,
+        type: type,
       });
       console.log(loginRes);
-      // if (msg.status === 'ok') {
+      // if (loginRes.status === 'ok') {
       if (loginRes.result === 1) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
@@ -70,12 +71,12 @@ const Login: React.FC = () => {
         if (!history) return;
         const { query } = history.location;
         const { redirect } = query as { redirect: string };
-        // history.push(redirect || '/');
+        history.push(redirect || '/');
         return;
       }
       console.log(loginRes);
       // 如果失败去设置用户错误信息
-      // setUserLoginState(msg);
+      setUserLoginState(loginRes);
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
@@ -84,7 +85,7 @@ const Login: React.FC = () => {
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
+  const { result: status, type: loginType } = userLoginState;
 
   return (
     <div className={styles.container}>
@@ -130,7 +131,7 @@ const Login: React.FC = () => {
             />
           </Tabs>
 
-          {status === 'error' && loginType === 'account' && (
+          {status === 2 && loginType === 'account' && (
             <LoginMessage
               content={intl.formatMessage({
                 id: 'pages.login.accountLogin.errorMessage',
@@ -189,7 +190,7 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+          {status === 2 && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
           {type === 'mobile' && (
             <>
               <ProFormText
@@ -260,10 +261,10 @@ const Login: React.FC = () => {
                   },
                 ]}
                 onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
+                  const _r = await getFakeCaptcha({
                     phone,
                   });
-                  if (result === false) {
+                  if (_r === false) {
                     return;
                   }
                   message.success('获取验证码成功！验证码为：1234');
