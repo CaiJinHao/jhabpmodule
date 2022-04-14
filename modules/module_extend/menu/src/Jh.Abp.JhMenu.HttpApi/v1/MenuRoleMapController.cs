@@ -100,5 +100,12 @@ namespace Jh.Abp.JhMenu.v1
         {
             throw new NotImplementedException();
         }
+
+        [Authorize(JhMenuPermissions.MenuRoleMaps.Default)]
+        [HttpGet("CurrentUserNavMenus")]
+        public async Task<IEnumerable<CurrentUserNavMenusDto>> GeCurrentUserNavMenusAsync()
+        {
+            return await MenuRoleMapAppService.GeCurrentUserNavMenusAsync();
+        }
     }
 }
