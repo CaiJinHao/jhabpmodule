@@ -19,5 +19,11 @@ namespace Jh.Abp.JhMenu
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuRoleMapRetrieveInputDto input);
+
+        /// <summary>
+        /// 获取当前登录用户导航菜单 antd pro 专用
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<CurrentUserNavMenusDto>> GeCurrentUserNavMenusAsync();
     }
 }

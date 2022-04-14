@@ -32,48 +32,48 @@ namespace Jh.Abp.JhMenu
             if (!exist)
             {
                 var rootSort = 0;
-                await CreateAsync(new Menu("A01", "云数据中心", "fa fa-bars", ++rootSort, TenantId));
-                await CreateAsync(new Menu("A0101", "你的菜单", "fa fa-bars", 1, TenantId)
+                await CreateAsync(new Menu("A01", "云数据中心", JhMenuConsts.IsAntdPro ? "HeartOutlined" : "fa fa-bars", ++rootSort, TenantId));
+                await CreateAsync(new Menu("A0101", "欢迎", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", 1, TenantId)
                 {
                     MenuParentCode = "A01",
-                    MenuUrl = "/main/view/equipmentgroup/index.html",
+                    MenuUrl = JhMenuConsts.IsAntdPro ? "/welcome" : "/main/view/equipmentgroup/index.html",
                 });
 
                 if ((MenuRegisterType.SystemSetting & menuRegisterType) == MenuRegisterType.SystemSetting)
                 {
                     //系统设置
-                    await CreateAsync(new Menu("A02", "系统设置", "fa fa-bars", +rootSort, TenantId));
+                    await CreateAsync(new Menu("A02", "系统设置", JhMenuConsts.IsAntdPro ? "SettingOutlined" : "fa fa-bars", +rootSort, TenantId));
 
                     var childSort = 0;
-                    await CreateAsync(new Menu("A0201", "菜单管理", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0201", "菜单管理", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A02",
-                        MenuUrl = "/main/view/menu/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/menu" : "/main/view/menu/index.html",
                     });
-                    await CreateAsync(new Menu("A0202", "菜单权限管理", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0202", "菜单权限管理", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A02",
-                        MenuUrl = "/main/view/rolemenuand/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/permission/menu" : "/main/view/rolemenuand/index.html",
                     });
-                    await CreateAsync(new Menu("A0203", "接口权限管理", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0203", "接口权限管理", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A02",
-                        MenuUrl = "/main/view/roleinterfaceand/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/permission/interface" : "/main/view/roleinterfaceand/index.html",
                     });
-                    await CreateAsync(new Menu("A0204", "用户管理", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0204", "用户管理", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A02",
-                        MenuUrl = "/main/view/user/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/user" : "/main/view/user/index.html",
                     });
-                    await CreateAsync(new Menu("A0205", "组织管理", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0205", "组织管理", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A02",
-                        MenuUrl = "/main/view/organizationunit/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/organization" : "/main/view/organizationunit/index.html",
                     });
-                    await CreateAsync(new Menu("A0206", "系统审计日志", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0206", "系统审计日志", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A02",
-                        MenuUrl = "/main/view/auditLogging/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/auditLogging" : "/main/view/auditLogging/index.html",
                     });
 
                     //await CreateAsync(new Menu(TenantId)
@@ -91,42 +91,42 @@ namespace Jh.Abp.JhMenu
                 if ((MenuRegisterType.Commodity & menuRegisterType) == MenuRegisterType.Commodity)
                 {
                     //商品系统
-                    await CreateAsync(new Menu("A03", "商品系统", "fa fa-bars", ++rootSort, TenantId));
+                    await CreateAsync(new Menu("A03", "商品系统", JhMenuConsts.IsAntdPro ? "HeartOutlined" : "fa fa-bars", ++rootSort, TenantId));
                     var childSort = 0;
-                    await CreateAsync(new Menu("A0301", "商品管理", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0301", "商品管理", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A03",
-                        MenuUrl = "/main/view/commodity/Commodity/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/commodity" : "/main/view/commodity/Commodity/index.html",
                     });
-                    await CreateAsync(new Menu("A0302", "商品类别", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0302", "商品类别", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A03",
-                        MenuUrl = "/main/view/commodity/CommodityCategory/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/CommodityCategory" : "/main/view/commodity/CommodityCategory/index.html",
                     });
-                    await CreateAsync(new Menu("A0303", "商品品牌", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0303", "商品品牌", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A03",
-                        MenuUrl = "/main/view/commodity/CommodityBrand/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/CommodityBrand" : "/main/view/commodity/CommodityBrand/index.html",
                     });
-                    await CreateAsync(new Menu("A0304", "商品标签", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0304", "商品标签", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A03",
-                        MenuUrl = "/main/view/commodity/CommodityLabel/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/CommodityLabel" : "/main/view/commodity/CommodityLabel/index.html",
                     });
-                    await CreateAsync(new Menu("A0305", "商品排行榜", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0305", "商品排行榜", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A03",
-                        MenuUrl = "/main/view/commodity/CommodityTop/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/CommodityTop" : "/main/view/commodity/CommodityTop/index.html",
                     });
-                    await CreateAsync(new Menu("A0306", "商品规格模板", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0306", "商品规格模板", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A03",
-                        MenuUrl = "/main/view/commodity/CommodityCategorySpecification/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/CommodityCategorySpecification" : "/main/view/commodity/CommodityCategorySpecification/index.html",
                     });
-                    await CreateAsync(new Menu("A0307", "商品规格模板详情", "fa fa-bars", ++childSort, TenantId)
+                    await CreateAsync(new Menu("A0307", "商品规格模板详情", JhMenuConsts.IsAntdPro ? "" : "fa fa-bars", ++childSort, TenantId)
                     {
                         MenuParentCode = "A03",
-                        MenuUrl = "/main/view/commodity/CommodityCategorySpecificationDetail/index.html",
+                        MenuUrl = JhMenuConsts.IsAntdPro ? "/CommodityCategorySpecificationDetail" : "/main/view/commodity/CommodityCategorySpecificationDetail/index.html",
                     });
                 }
 
