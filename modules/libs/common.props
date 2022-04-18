@@ -3,12 +3,12 @@
     <LangVersion>latest</LangVersion>
     <Version>5.2.14</Version>
     <NoWarn>$(NoWarn);CS1591;CS0436</NoWarn>
-    <PackageIconUrl>https://portrait.gitee.com/uploads/avatars/user/183/550760_CaiJinHao_1616486865.png</PackageIconUrl>
+    <PackageIconUrl>https://avatars.githubusercontent.com/u/16984784</PackageIconUrl>
     <!-- <PackageIcon>../../docs/images/nugeticon.png</PackageIcon> -->
-    <PackageProjectUrl>https://gitee.com/CaiJinHao/jhabpmodule</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/jhabpmodule</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitee.com/CaiJinHao/jhabpmodule</RepositoryUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/jhabpmodule</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Include symbol files (*.pdb) in the built .nupkg -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
@@ -17,10 +17,13 @@
     <Description>Abp Extension</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
-    <!--<IsPackable>true</IsPackable>-->
-    <!--<OutputType>Library</OutputType>-->
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-  <!--<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -35,8 +38,8 @@
   <ItemGroup Condition="$(AssemblyName.EndsWith('HttpApi.Client'))">
     <EmbeddedResource Include="**\*generate-proxy.json" />
     <Content Remove="**\*generate-proxy.json" />
-  </ItemGroup>-->
-  
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="6.5.3">
@@ -45,7 +48,7 @@
     </PackageReference>
   </ItemGroup>
 
-    <Target Name="NoWarnOnRazorViewImportedTypeConflicts" BeforeTargets="RazorCoreCompile">
+  <Target Name="NoWarnOnRazorViewImportedTypeConflicts" BeforeTargets="RazorCoreCompile">
     <PropertyGroup>
       <NoWarn>$(NoWarn);0436</NoWarn>
     </PropertyGroup>

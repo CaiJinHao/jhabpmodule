@@ -139,8 +139,9 @@ function New-PackByNupkg() {
         $file = $files | Where-Object -FilterScript { $_.BaseName -eq $pack.Name };
         if ($file.Exists) {
             # 三种执行命令的方式
+            dotnet pack $file.FullName -o $outPath
             # powershell.exe "dotnet pack $($file.FullName) -o $outPath"
-            pwsh -Command "dotnet pack $($file.FullName) -o $outPath"
+            # pwsh -Command "dotnet pack $($file.FullName) -o $outPath"
             # cmd /c "dotnet pack $($file.FullName) -o $outPath"
         }
     }
@@ -152,7 +153,8 @@ function Publish-PackNuget() {
     if (![System.String]::IsNullOrEmpty($apiKey)) {
         $files = Get-ChildItem -Path $outPath | Where-Object -FilterScript { $_.Extension -eq '.nupkg' };
         foreach ($item in $files) {
-            pwsh -Command "dotnet nuget push $($item.FullName) --api-key $apiKey --source $publishSource --skip-duplicate";
+            # pwsh -Command "dotnet nuget push $($item.FullName) --api-key $apiKey --source $publishSource --skip-duplicate";
+            dotnet nuget push $item.FullName --api-key $apiKey --source $publishSource --skip-duplicate
         }
     }
 }
