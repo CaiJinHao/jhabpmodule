@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Volo.Abp;
 using System.Linq;
+using System.Threading.Tasks;
+using Volo.Abp;
 
 namespace Jh.Abp.JhIdentity.Samples;
 
@@ -12,7 +12,7 @@ namespace Jh.Abp.JhIdentity.Samples;
 [Area(JhIdentityRemoteServiceConsts.ModuleName)]
 [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
 [Route("api/v{apiVersion:apiVersion}/JhIdentity/sample")]
-public class SampleController : JhIdentityController
+public class SampleController : JhIdentityController, ISampleAppService
 {
     private readonly ISampleAppService _sampleAppService;
 
@@ -72,5 +72,13 @@ public class SampleController : JhIdentityController
     private Task<string> PostAsync(string msg)
     {
         return Task.FromResult($"{msg}-Post-{HttpContext.GetRequestedApiVersion().ToString()}");
+    }
+
+    [Authorize]
+    [HttpGet]
+    [Route("TestTaskFactory")]
+    public async Task TestTaskFactoryAsync()
+    {
+        await _sampleAppService.TestTaskFactoryAsync();
     }
 }

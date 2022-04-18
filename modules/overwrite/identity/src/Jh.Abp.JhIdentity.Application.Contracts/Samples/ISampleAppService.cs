@@ -8,4 +8,6 @@ public interface ISampleAppService : IApplicationService
     Task<SampleDto> GetAsync();
 
     Task<SampleDto> GetAuthorizedAsync();
+
+    Task TestTaskFactoryAsync();
 }
