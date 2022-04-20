@@ -7,7 +7,6 @@
 @inject IHtmlLocalizer<AccountResource> L
 @inject Volo.Abp.Settings.ISettingProvider SettingProvider
 
-
 @section styles{
     <style>
         #main-navbar {
@@ -26,6 +25,21 @@
         .abp-account-container {
             margin-top: 170px;
         }
+
+    .nav-pills .nav-item {
+        flex: 1;
+        text-align: center;
+    }
+
+        .nav-pills .nav-link.active {
+            color: #0d6efd;
+            background-color: #fff;
+            border-bottom:1px solid #0d6efd;
+            border-radius:inherit;
+        }
+        .nav-pills .nav-link{
+        color: black;
+        }
     </style>
 }
 
@@ -42,31 +56,38 @@
         }*@
         @if (Model.EnableLocalLogin)
         {
-            <form method="post" class="mt-4">
-                <div class="form-group">
-                    <label asp-for="LoginInput.UserNameOrEmailAddress"></label>
-                    <input asp-for="LoginInput.UserNameOrEmailAddress" class="form-control" />
-                    <span asp-validation-for="LoginInput.UserNameOrEmailAddress" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LoginInput.Password"></label>
-                    <input asp-for="LoginInput.Password" class="form-control" />
-                    <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
-                </div>
-                <abp-row>
-                    <abp-column>
-                        <abp-input asp-for="LoginInput.RememberMe" class="mb-4" />
-                    </abp-column>
-                    @*<abp-column class="text-right">
-                        <a href="@Url.Page("./ForgotPassword", new {returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash})">@L["ForgotPassword"]</a>
-                    </abp-column>*@
-                </abp-row>
-                <abp-button type="submit" button-type="Primary" name="Action" value="Login" class="btn-block btn-lg mt-3">@L["Login"]</abp-button>
-                @if (Model.ShowCancelButton)
-                {
-                    <abp-button type="submit" button-type="Secondary" formnovalidate="formnovalidate" name="Action" value="Cancel" class="btn-block btn-lg mt-3">@L["Cancel"]</abp-button>
-                }
-            </form>
+            <abp-tabs tab-style="Pill">
+                <abp-tab title="账号登录">
+                    <form method="post" class="mt-4">
+                        <div class="form-group">
+                            <label asp-for="LoginInput.UserNameOrEmailAddress"></label>
+                            <input asp-for="LoginInput.UserNameOrEmailAddress" class="form-control" />
+                            <span asp-validation-for="LoginInput.UserNameOrEmailAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LoginInput.Password"></label>
+                            <input asp-for="LoginInput.Password" class="form-control" />
+                            <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
+                        </div>
+                        <abp-row>
+                            <abp-column>
+                                <abp-input asp-for="LoginInput.RememberMe" class="mb-4" />
+                            </abp-column>
+                            @*<abp-column class="text-right">
+                                <a href="@Url.Page("./ForgotPassword", new {returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash})">@L["ForgotPassword"]</a>
+                                </abp-column>*@
+                        </abp-row>
+                        <abp-button type="submit" button-type="Primary" name="Action" value="Login" class="btn-block btn-lg mt-3">@L["Login"]</abp-button>
+                        @if (Model.ShowCancelButton)
+                        {
+                            <abp-button type="submit" button-type="Secondary" formnovalidate="formnovalidate" name="Action" value="Cancel" class="btn-block btn-lg mt-3">@L["Cancel"]</abp-button>
+                        }
+                    </form>
+                </abp-tab>
+                <abp-tab title="扫码登录">
+                    Content_Profile
+                </abp-tab>
+            </abp-tabs>
         }
 
         @if (Model.VisibleExternalProviders.Any())
