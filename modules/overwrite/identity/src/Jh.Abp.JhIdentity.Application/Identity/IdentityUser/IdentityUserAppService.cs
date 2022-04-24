@@ -197,7 +197,7 @@ namespace Jh.Abp.JhIdentity
                                     join userOrg in userOrgs on user.Id equals userOrg.UserId
                                     where userOrg.OrganizationUnitId == input.OrganizationUnitId || orgAllChildrens.Contains(userOrg.OrganizationUnitId)
                                     select user;
-                        return (query).Distinct();
+                        return (query).Where(a => a.UserName != JhIdentity.JhIdentityConsts.AdminUserName).Distinct();
                     }
                 };
             }
