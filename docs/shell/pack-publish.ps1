@@ -6,6 +6,7 @@ param (
     [string] $apiKey,
     [string] $execPath = '../../',
     [string] $outPath = 'G:\Publish\nuget-local',
+    [string] $module = '',
     [string] $publishSource = "https://api.nuget.org/v3/index.json"
 )
 
@@ -15,61 +16,61 @@ param (
 $packagesDto =
 
 # 公共类库
-@{Name = "Jh.Abp.Common";  },
+@{Name = "Jh.Abp.Common"; Module="libs"; },
 
 # 快速启动组件
-@{Name = "Jh.Abp.QuickComponents";  },
+@{Name = "Jh.Abp.QuickComponents";  Module="libs"; },
 
 # 身份服务类库
-@{Name = "Jh.Abp.IdentityServer";  },
+@{Name = "Jh.Abp.IdentityServer";  Module="libs"; },
 
 # 代码生成类库
-@{Name = "Jh.SourceGenerator.Common";  },
-@{Name = "Jh.SourceGenerator";  },
+@{Name = "Jh.SourceGenerator.Common";  Module="libs"; },
+@{Name = "Jh.SourceGenerator";  Module="libs"; },
 
 # 基础设施类库
-@{Name = "Jh.Abp.Application";  },
-@{Name = "Jh.Abp.Application.Contracts";  },
-@{Name = "Jh.Abp.Domain";  },
-@{Name = "Jh.Abp.Domain.Shared";  },
-@{Name = "Jh.Abp.EntityFrameworkCore";  },
+@{Name = "Jh.Abp.Application";  Module="libs"; },
+@{Name = "Jh.Abp.Application.Contracts"; Module="libs";  },
+@{Name = "Jh.Abp.Domain";  Module="libs"; },
+@{Name = "Jh.Abp.Domain.Shared";   Module="libs";},
+@{Name = "Jh.Abp.EntityFrameworkCore";  Module="libs"; },
 
 
 # 身份模块
 
-@{Name = "Jh.Abp.JhIdentity.Application";  },
-@{Name = "Jh.Abp.JhIdentity.Application.Contracts";  },
-@{Name = "Jh.Abp.JhIdentity.Domain";  },
-@{Name = "Jh.Abp.JhIdentity.Domain.Shared";  },
-@{Name = "Jh.Abp.JhIdentity.EntityFrameworkCore";  },
-@{Name = "Jh.Abp.JhIdentity.HttpApi";  },
-@{Name = "Jh.Abp.JhIdentity.HttpApi.Client";  },
+@{Name = "Jh.Abp.JhIdentity.Application";  Module="JhIdentity"; },
+@{Name = "Jh.Abp.JhIdentity.Application.Contracts";  Module="JhIdentity";  },
+@{Name = "Jh.Abp.JhIdentity.Domain";  Module="JhIdentity";  },
+@{Name = "Jh.Abp.JhIdentity.Domain.Shared"; Module="JhIdentity";   },
+@{Name = "Jh.Abp.JhIdentity.EntityFrameworkCore";  Module="JhIdentity";  },
+@{Name = "Jh.Abp.JhIdentity.HttpApi";   Module="JhIdentity"; },
+@{Name = "Jh.Abp.JhIdentity.HttpApi.Client";  Module="JhIdentity";  },
 
 # 权限模块
 
-@{Name = "Jh.Abp.JhPermission.Application";  },
-@{Name = "Jh.Abp.JhPermission.Application.Contracts";  },
-@{Name = "Jh.Abp.JhPermission.Domain";  },
-@{Name = "Jh.Abp.JhPermission.Domain.Shared";  },
-@{Name = "Jh.Abp.JhPermission.HttpApi";  },
+# @{Name = "Jh.Abp.JhPermission.Application";  Module="JhPermission";  },
+# @{Name = "Jh.Abp.JhPermission.Application.Contracts"; Module="JhPermission";  },
+# @{Name = "Jh.Abp.JhPermission.Domain";  Module="JhPermission"; },
+# @{Name = "Jh.Abp.JhPermission.Domain.Shared";  Module="JhPermission"; },
+# @{Name = "Jh.Abp.JhPermission.HttpApi"; Module="JhPermission";  },
 
 # 菜单模块
 
-@{Name = "Jh.Abp.JhMenu.Application";  },
-@{Name = "Jh.Abp.JhMenu.Application.Contracts";  },
-@{Name = "Jh.Abp.JhMenu.Domain";  },
-@{Name = "Jh.Abp.JhMenu.Domain.Shared";  },
-@{Name = "Jh.Abp.JhMenu.EntityFrameworkCore";  },
-@{Name = "Jh.Abp.JhMenu.HttpApi";  },
+@{Name = "Jh.Abp.JhMenu.Application";  Module="JhMenu"; },
+@{Name = "Jh.Abp.JhMenu.Application.Contracts";  Module="JhMenu";},
+@{Name = "Jh.Abp.JhMenu.Domain"; Module="JhMenu"; },
+@{Name = "Jh.Abp.JhMenu.Domain.Shared"; Module="JhMenu"; },
+@{Name = "Jh.Abp.JhMenu.EntityFrameworkCore"; Module="JhMenu"; },
+@{Name = "Jh.Abp.JhMenu.HttpApi";  Module="JhMenu";},
 
 # 工作流模块
 
-@{Name = "Jh.Abp.Workflow.HttpApi";  },
-@{Name = "Jh.Abp.Workflow.Application";  },
-@{Name = "Jh.Abp.Workflow.Application.Contracts";  },
-@{Name = "Jh.Abp.Workflow.Domain";  },
-@{Name = "Jh.Abp.Workflow.Domain.Shared";  },
-@{Name = "Jh.Abp.Workflow.EntityFrameworkCore";  }
+@{Name = "Jh.Abp.Workflow.HttpApi"; Module="Workflow"; },
+@{Name = "Jh.Abp.Workflow.Application";Module="Workflow";  },
+@{Name = "Jh.Abp.Workflow.Application.Contracts"; Module="Workflow"; },
+@{Name = "Jh.Abp.Workflow.Domain"; Module="Workflow"; },
+@{Name = "Jh.Abp.Workflow.Domain.Shared"; Module="Workflow"; },
+@{Name = "Jh.Abp.Workflow.EntityFrameworkCore"; Module="Workflow"; }
 
 # # 日志模块
 
@@ -136,6 +137,12 @@ function New-PackByNupkg() {
     $files = Get-ChildItem -Path $execPath -Recurse | Where-Object -FilterScript { $_.Mode -EQ "-a----" -and $_.Extension -eq '.csproj' };
 
     foreach ($pack in $packagesDto) {
+        if($module!=''){
+            if($pack.Module -ne $module){
+                $module
+                retrun;
+            }
+        }
         $file = $files | Where-Object -FilterScript { $_.BaseName -eq $pack.Name };
         if ($file.Exists) {
             # 三种执行命令的方式
