@@ -257,13 +257,6 @@ public class JhMenuHttpApiHostModule : AbpModule
             {
                 var data = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
                 var dataSeedContext = new DataSeedContext();
-                var roleService = scope.ServiceProvider.GetRequiredService<IIdentityRoleRepository>();
-                var roles = await roleService.GetListAsync();
-                if (roles.Count > 0)
-                {
-                    dataSeedContext.WithProperty("RoleId", roles.FirstOrDefault()?.Id);//IdentityServerHost创建的角色ID
-                    dataSeedContext.WithProperty("MenuRegisterType", MenuRegisterType.SystemSetting | MenuRegisterType.Commodity | MenuRegisterType.Article | MenuRegisterType.File | MenuRegisterType.WebApp);
-                }
                 await data.SeedAsync(dataSeedContext);
             }
         });

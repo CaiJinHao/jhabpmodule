@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Services;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.Threading;
 using Volo.Abp.Uow;
 
@@ -13,6 +14,9 @@ namespace Jh.Abp.JhMenu
 {
     public class MenuRoleMapManager : DomainService
     {
+        //TODO:×â»§ÐÅÏ¢´ý²âÊÔ
+        public ICurrentTenant CurrentTenant { get; set; }
+
         protected IMenuRoleMapRepository MenuRoleMapRepository { get; }
         protected IMenuRepository MenuRepository { get; }
         public MenuRoleMapManager(IMenuRoleMapRepository menuRoleMapRepository, IMenuRepository menuRepository)

@@ -22,7 +22,8 @@ public class JhMenuDomainModule : AbpModule
 
         Configure<AbpDistributedEntityEventOptions>(options =>
         {
-            
+            options.AutoEventSelectors.Add<Menu>();
+            options.EtoMappings.Add<Menu, MenuEto>();
         });
     }
 }

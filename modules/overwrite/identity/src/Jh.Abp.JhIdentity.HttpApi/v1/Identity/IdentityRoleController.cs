@@ -116,5 +116,12 @@ namespace Jh.Abp.JhIdentity.v1
             };
 		}
 
-	}
+		[AllowAnonymous]
+		[HttpGet("AdminRoleId")]
+		public async Task<Guid?> GetAdminRoleIdAsync()
+        {
+            return await IdentityRoleAppService.GetAdminRoleIdAsync();
+
+		}
+    }
 }
