@@ -1,4 +1,4 @@
-﻿namespace Jh.Abp.Application.Contracts
+﻿namespace Jh.Abp.Domain
 {
     public interface IEntityPropertySetter
     {

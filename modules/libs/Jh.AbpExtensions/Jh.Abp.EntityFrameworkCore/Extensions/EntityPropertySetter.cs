@@ -1,4 +1,4 @@
-﻿using Jh.Abp.Application.Contracts;
+﻿using Jh.Abp.Domain;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;

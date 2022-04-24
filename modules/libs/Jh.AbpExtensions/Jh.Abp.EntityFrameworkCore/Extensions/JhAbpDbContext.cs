@@ -1,4 +1,4 @@
-﻿using Jh.Abp.Application.Contracts;
+﻿using Jh.Abp.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Volo.Abp.EntityFrameworkCore;
