@@ -98,11 +98,11 @@ namespace Jh.Abp.JhIdentity.v1
 		public virtual async Task<dynamic> GetTreeAsync(string name)
 		{
 			var datas = await IdentityRoleAppService.GetEntitysAsync(new IdentityRoleRetrieveInputDto() { Name = name });
-			return new
-			{
-				items = datas.Items.Select(a => new { title = a.Name, id = a.Id, data = a, spread = true })
-			};
-		}
+            return new
+            {
+                items = datas.Items.Where(a => a.Name != JhIdentity.JhIdentityConsts.AdminRoleName).Select(a => new { title = a.Name, id = a.Id, data = a, spread = true })
+            };
+        }
 
 		[Authorize(IdentityPermissions.Roles.Default)]
 		[HttpGet]

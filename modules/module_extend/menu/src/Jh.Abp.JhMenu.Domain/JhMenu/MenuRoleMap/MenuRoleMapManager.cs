@@ -40,6 +40,15 @@ namespace Jh.Abp.JhMenu
             }
         }
 
+        protected virtual async Task CreateAsync(Guid roleId, Guid menuId)
+        {
+            var query = (await MenuRoleMapRepository.GetQueryableAsync()).Where(a => a.RoleId == roleId && a.MenuId == menuId);
+            if (!query.Any())
+            {
+                await MenuRoleMapRepository.CreateAsync(new MenuRoleMap(menuId, roleId));
+            }
+        }
+
         public virtual async Task CreateAsync(Guid[] RoleIds, Guid[] MenuIds, Guid? TenantId)
         {
             foreach (var item in RoleIds)
@@ -56,6 +65,24 @@ namespace Jh.Abp.JhMenu
                 if (!(await MenuRoleMapRepository.GetQueryableAsync()).Any(a => a.RoleId == roleId))
                 {
                     await CreateAsync(roleId, menuIds, TenantId);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 每次启动都会初始化
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="menuIds"></param>
+        /// <returns></returns>
+        public virtual async Task InitMenuByRoleAsync(Guid roleId, Guid[] menuIds)
+        {
+            Volo.Abp.Check.NotNull(roleId, nameof(roleId));
+            if (menuIds.Any())
+            {
+                foreach (var item in menuIds)
+                {
+                    await CreateAsync(roleId, item);
                 }
             }
         }

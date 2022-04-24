@@ -195,9 +195,20 @@ namespace Jh.Abp.JhIdentity
                         var userOrgs = OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>().Result;
                         var query = from user in entity
                                     join userOrg in userOrgs on user.Id equals userOrg.UserId
-                                    where userOrg.OrganizationUnitId == input.OrganizationUnitId || orgAllChildrens.Contains(userOrg.OrganizationUnitId)
+                                    where (userOrg.OrganizationUnitId == input.OrganizationUnitId || orgAllChildrens.Contains(userOrg.OrganizationUnitId))
+                                    && user.UserName != JhIdentity.JhIdentityConsts.AdminUserName
                                     select user;
-                        return (query).Where(a => a.UserName != JhIdentity.JhIdentityConsts.AdminUserName).Distinct();
+                        return (query).Distinct();
+                    }
+                };
+            }
+            else
+            {
+                input.MethodInput = new MethodDto<IdentityUser>()
+                {
+                    QueryAction = (entity) =>
+                    {
+                        return entity.Where(a=>a.UserName != JhIdentity.JhIdentityConsts.AdminUserName);
                     }
                 };
             }
