@@ -112,8 +112,8 @@ namespace Jh.Abp.JhIdentity.v1
 			var datas = await IdentityRoleAppService.GetEntitysAsync(new IdentityRoleRetrieveInputDto() { Name = name });
 			return new
 			{
-				items = datas.Items.Select(a => new { name = a.Name, value = a.Id })
-			};
+                items = datas.Items.Where(a => a.Name != "admin").Select(a => new { name = a.Name, value = a.Id })
+            };
 		}
 
 	}

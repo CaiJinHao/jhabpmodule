@@ -214,7 +214,7 @@ namespace Jh.Abp.JhIdentity
 
         private async Task<Guid[]> GetAllRoleIdAsync()
         {
-            return (await IdentityRoleRepository.GetQueryableAsync(false)).AsNoTracking().Select(a=>a.Id).ToArray();
+            return (await IdentityRoleRepository.GetQueryableAsync(false)).AsNoTracking().Where(a => a.Name != "admin").Select(a => a.Id).ToArray();
         }
 
         public virtual async Task CreateByRoleAsync(Guid roleId)
