@@ -28,7 +28,7 @@ namespace Jh.Abp.JhMenu
             var adminRoleId = await jhIdentityRoleAppService.GetAdminRoleIdAsync();
             if (adminRoleId.HasValue)
             {
-                var menuIds = await (await MenuRepository.GetQueryableAsync()).AsNoTracking().Where(a => a.IsDeleted == false).Select(a => a.Id).ToListAsync();
+                var menuIds = await (await MenuRepository.GetQueryableAsync()).AsNoTracking().Select(a => a.Id).ToListAsync();
                 await MenuRoleMapManager.InitMenuByRoleAsync(adminRoleId.Value, menuIds.ToArray());
             }
         }

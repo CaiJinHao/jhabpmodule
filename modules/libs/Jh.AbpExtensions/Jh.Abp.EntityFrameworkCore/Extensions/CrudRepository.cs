@@ -48,7 +48,7 @@ namespace Jh.Abp.EntityFrameworkCore
 
         public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var _dbSet = await GetDbSetAsync();
+            var _dbSet = await GetQueryableAsync();
             var entitys = _dbSet.AsNoTracking().Where(predicate).ToArray();
             return await DeleteAsync(autoSave, isHard, cancellationToken, entitys: entitys);
         }
@@ -62,18 +62,15 @@ namespace Jh.Abp.EntityFrameworkCore
         /// <summary>
         /// .AsNoTracking() 不跟踪加载不到扩展属性
         /// </summary>
-        /// <param name="includeDetails"></param>
-        /// <returns></returns>
-        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool includeDetails = false)
+        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false)
         {
-            return includeDetails ? await WithDetailsAsync() : await GetDbSetAsync();
+            var query = includeDetails ? await WithDetailsAsync() : await GetDbSetAsync();
+            return inApplyDataFilters ? ApplyDataFilters(query) : query;//添加数据过滤
         }
 
         /// <summary>
         /// .AsNoTracking() 不跟踪加载不到扩展属性
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
         {
             return (await GetDbContextAsync()).Set<T>();

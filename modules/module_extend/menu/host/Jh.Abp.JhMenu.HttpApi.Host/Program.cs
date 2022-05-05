@@ -21,7 +21,11 @@ public class Program
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
             .Enrich.FromLogContext()
-            .WriteTo.Async(c => c.File("Logs/logs.txt"))
+             .WriteTo.Async(c => c.File("Logs/logs.txt",
+                outputTemplate: Jh.Abp.Common.AbpConsts.SerilogOutputTemplate,
+                fileSizeLimitBytes: 1024,
+                rollingInterval: RollingInterval.Day,
+                retainedFileCountLimit: 90))
 #if DEBUG
             .WriteTo.Async(c => c.Console())
 #endif

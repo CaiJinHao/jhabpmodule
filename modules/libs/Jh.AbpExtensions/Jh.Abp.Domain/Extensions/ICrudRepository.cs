@@ -34,12 +34,12 @@ namespace Jh.Abp.Domain
         Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// 获取DbSet
+        /// 获取Queryable
         /// </summary>
-        Task<IQueryable<TEntity>> GetQueryableAsync(bool includeDetails = false);
+        Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false);
 
         /// <summary>
-        /// 获取指定DbSet集合
+        /// 获取指定实体的DbSet集合
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

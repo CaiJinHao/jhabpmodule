@@ -39,10 +39,10 @@ namespace Jh.Abp.JhMenu
         {
             await CheckGetListPolicyAsync();
             var roles = await GetRolesAsync();
-            var auth_menus_id = (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
+            var auth_menus_id = (await crudRepository.GetQueryableAsync(true)).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
             //按照前端要求字段返回
-            var auth_menus = await (await MenuRepository.GetQueryableAsync()).AsNoTracking().Where(m => auth_menus_id.Contains(m.Id))
+            var auth_menus = await (await MenuRepository.GetQueryableAsync(true)).AsNoTracking().Where(m => auth_menus_id.Contains(m.Id))
                 .Select(a => new TreeDto() { value = a.MenuCode, id = a.MenuCode, icon = a.MenuIcon, parent_id = a.MenuParentCode, sort = a.MenuSort.ToString(), title = a.MenuName, url = a.MenuUrl, obj = a }).ToListAsync();
 
             //返回多个根节点
@@ -62,9 +62,9 @@ namespace Jh.Abp.JhMenu
         public virtual async Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuRoleMapRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
-            var auth_menus_id =await (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToListAsync();
+            var auth_menus_id =await (await crudRepository.GetQueryableAsync(true)).AsNoTracking().Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToListAsync();
 
-            var resutlMenus = await (await MenuRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
+            var resutlMenus = await (await MenuRepository.GetQueryableAsync(true)).AsNoTracking().Select(a =>
                 new TreeDto()
                 {
                     id = a.MenuCode,
@@ -87,10 +87,10 @@ namespace Jh.Abp.JhMenu
         public virtual async Task<IEnumerable<CurrentUserNavMenusDto>> GeCurrentUserNavMenusAsync()
         {
             var roles = await GetRolesAsync();
-            var auth_menus_id = (await crudRepository.GetQueryableAsync()).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
+            var auth_menus_id = (await crudRepository.GetQueryableAsync(true)).AsNoTracking().Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
             //按照前端要求字段返回
-            var auth_menus = await (await MenuRepository.GetQueryableAsync()).AsNoTracking().Where(m => auth_menus_id.Contains(m.Id))
+            var auth_menus = await (await MenuRepository.GetQueryableAsync(true)).AsNoTracking().Where(m => auth_menus_id.Contains(m.Id))
                 .Select(a => new CurrentUserNavMenusDto() { Code = a.MenuCode, Name = a.MenuName, Path = a.MenuUrl, Icon = a.MenuIcon, Sort = a.MenuSort, ParentCode = a.MenuParentCode }).ToListAsync();
 
             //返回多个根节点

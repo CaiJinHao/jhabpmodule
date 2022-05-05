@@ -168,6 +168,7 @@
                         var optDefault = {
                             Page: vm.currPage,
                             PageSize: PageSize,//common中定义的全局
+                            Sorting:'',
                         };
                         var formfield = form.val('form_@(table_name_lower)');
                         $.extend(optDefault, formfield);
@@ -348,7 +349,7 @@
                 });
 
             form.on('submit(btn_@(table_name_lower)_from_reset)', function (data) {
-                $('#form_organizationunit')[0].reset();
+                $('#form_@(table_name_lower)')[0].reset();
                    @(table_name_lower)Obj.renderTable();
             });
 
