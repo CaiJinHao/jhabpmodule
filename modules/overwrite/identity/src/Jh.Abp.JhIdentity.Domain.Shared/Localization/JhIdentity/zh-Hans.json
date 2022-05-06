@@ -1,6 +1,8 @@
 {
   "culture": "zh-Hans",
   "texts": {
+    "AccountLogin": "账号登录",
+    "QrLogin": "扫码登录",
     "Permission:JhAuditLogging": "审计日志模块",
     "Permission:AuditLoggings": "审计日志管理",
     "Permission:JhIdentity": "Identity模块",

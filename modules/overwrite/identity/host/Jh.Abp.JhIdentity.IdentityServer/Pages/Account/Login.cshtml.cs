@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Jh.Abp.JhIdentity.Localization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,20 @@ namespace Jh.Abp.JhIdentity.Pages.Account
 {
     public class LoginModel : Volo.Abp.Account.Web.Pages.Account.LoginModel
     {
-        public IConfiguration Configuration { get; init; }
+        protected IConfiguration Configuration { get; init; }
         public LoginModel(IAuthenticationSchemeProvider schemeProvider, IOptions<AbpAccountOptions> accountOptions, IOptions<IdentityOptions> identityOptions, IConfiguration configuration) : base(schemeProvider, accountOptions, identityOptions)
         {
+            LocalizationResourceType = typeof(JhIdentityResource);
         }
 
         protected override string GetAppHomeUrl()
         {
             return Configuration["App:AppHomeUrl"];
+        }
+
+        public string GetLocalizedString(string key)
+        {
+            return L[key];
         }
     }
 }

@@ -45,7 +45,6 @@
 
 <div class="card mt-3 shadow-sm rounded">
     <div class="card-body p-5">
-        <h4>@L["Login"]</h4>
         @*@if (await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled))
         {
             <h6>@Html.Raw(Url.Page("./Register", new { returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash }))</h6>
@@ -57,7 +56,7 @@
         @if (Model.EnableLocalLogin)
         {
             <abp-tabs tab-style="Pill">
-                <abp-tab title="账号登录">
+                <abp-tab title="@Model.GetLocalizedString("AccountLogin")">
                     <form method="post" class="mt-4">
                         <div class="form-group">
                             <label asp-for="LoginInput.UserNameOrEmailAddress"></label>
@@ -77,14 +76,16 @@
                                 <a href="@Url.Page("./ForgotPassword", new {returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash})">@L["ForgotPassword"]</a>
                                 </abp-column>*@
                         </abp-row>
-                        <abp-button type="submit" button-type="Primary" name="Action" value="Login" class="btn-block btn-lg mt-3">@L["Login"]</abp-button>
+                        <abp-row>
+                            <abp-button type="submit" button-type="Primary" name="Action" value="Login" class="btn-block btn-lg mt-3">@L["Login"]</abp-button>
+                        </abp-row>
                         @if (Model.ShowCancelButton)
                         {
                             <abp-button type="submit" button-type="Secondary" formnovalidate="formnovalidate" name="Action" value="Cancel" class="btn-block btn-lg mt-3">@L["Cancel"]</abp-button>
                         }
                     </form>
                 </abp-tab>
-                <abp-tab title="扫码登录">
+                <abp-tab title="@Model.GetLocalizedString("QrLogin")">
                     Content_Profile
                 </abp-tab>
             </abp-tabs>
@@ -113,3 +114,4 @@
 
     </div>
 </div>
+
