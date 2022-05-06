@@ -3,16 +3,16 @@
 @using Volo.Abp.Account.Localization
 @using Volo.Abp.Account.Settings
 @using Volo.Abp.Settings
+@using Volo.Abp.Ui.Branding
+
 @model Jh.Abp.JhIdentity.Pages.Account.LoginModel
 @inject IHtmlLocalizer<AccountResource> L
 @inject Volo.Abp.Settings.ISettingProvider SettingProvider
+@inject IBrandingProvider BrandingProvider
+
 
 @section styles{
 <style>
-    #main-navbar {
-        display: none;
-    }
-
     body {
         background-image: url(/appresources/images/login/loginbg.jpg);
         background-repeat: no-repeat;
@@ -51,6 +51,10 @@
 
 <div class="card mt-3 shadow-sm rounded">
     <div class="card-body p-5">
+        <h4 style="text-align:center;">
+            <img src="@(BrandingProvider.LogoUrl)" class="rounded-circle" width="32"/>
+            @BrandingProvider.AppName
+        </h4>
         @if (Model.EnableLocalLogin)
         {
             <abp-tabs tab-style="Pill">
@@ -61,7 +65,7 @@
                             <input asp-for="LoginInput.UserNameOrEmailAddress" class="form-control" />
                             <span asp-validation-for="LoginInput.UserNameOrEmailAddress" class="text-danger"></span>
                         </div>
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-4">
                             <label asp-for="LoginInput.Password" class="mb-1"></label>
                             <input asp-for="LoginInput.Password" class="form-control" />
                             <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
