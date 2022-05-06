@@ -66,14 +66,14 @@
                             <input asp-for="LoginInput.Password" class="form-control" />
                             <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
                         </div>
-                        <abp-row class="mb-3">
+                         @*<abp-row class="mb-3">
                             <abp-column>
                                 <abp-input asp-for="LoginInput.RememberMe" />
                             </abp-column>
-                       @*     <abp-column class="text-right">
+                           <abp-column class="text-right">
                                 <a href="@Url.Page("./ForgotPassword", new {returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash})">@L["ForgotPassword"]</a>
-                            </abp-column>*@
-                        </abp-row>
+                            </abp-column>
+                        </abp-row>*@
                         <div>
                             <abp-button type="submit" button-type="Primary" name="Action" value="Login" class="btn-block btn-lg w-100">@L["Login"]</abp-button>
                         </div>
