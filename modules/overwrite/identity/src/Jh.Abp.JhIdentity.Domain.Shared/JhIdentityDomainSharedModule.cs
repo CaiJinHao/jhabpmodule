@@ -26,6 +26,10 @@ public class JhIdentityDomainSharedModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
+                .Get<AbpValidationResource>()
+                .AddVirtualJson("/Localization/Account");
+
+            options.Resources
                 .Add<JhIdentityResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddBaseTypes(typeof(JhAbpExtensionsResource))

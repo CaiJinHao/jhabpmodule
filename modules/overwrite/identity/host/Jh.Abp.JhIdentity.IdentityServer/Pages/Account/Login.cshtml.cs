@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Volo.Abp.Account.Web;
 
@@ -16,9 +17,15 @@ namespace Jh.Abp.JhIdentity.Pages.Account
     public class LoginModel : Volo.Abp.Account.Web.Pages.Account.LoginModel
     {
         protected IConfiguration Configuration { get; init; }
-        public LoginModel(IAuthenticationSchemeProvider schemeProvider, IOptions<AbpAccountOptions> accountOptions, IOptions<IdentityOptions> identityOptions, IConfiguration configuration) : base(schemeProvider, accountOptions, identityOptions)
+        protected IStringLocalizer<JhIdentityResource> JhIdentityStringLocalizer { get; init; }
+        public LoginModel(IAuthenticationSchemeProvider schemeProvider,
+            IOptions<AbpAccountOptions> accountOptions, 
+            IOptions<IdentityOptions> identityOptions, 
+            IConfiguration configuration,
+            IStringLocalizer<JhIdentityResource> jhIdentityStringLocalizer) : base(schemeProvider, accountOptions, identityOptions)
         {
-            LocalizationResourceType = typeof(JhIdentityResource);
+            JhIdentityStringLocalizer = jhIdentityStringLocalizer;
+            Configuration = configuration;
         }
 
         protected override string GetAppHomeUrl()
@@ -28,7 +35,7 @@ namespace Jh.Abp.JhIdentity.Pages.Account
 
         public string GetLocalizedString(string key)
         {
-            return L[key];
+            return JhIdentityStringLocalizer[key];
         }
     }
 }

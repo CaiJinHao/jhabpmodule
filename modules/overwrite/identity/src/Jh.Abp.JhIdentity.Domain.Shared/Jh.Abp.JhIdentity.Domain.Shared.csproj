@@ -22,6 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Localization\Account\zh-Hans.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Account\zh-Hans.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Domain.Shared\Jh.Abp.Domain.Shared.csproj" />
   </ItemGroup>
 
