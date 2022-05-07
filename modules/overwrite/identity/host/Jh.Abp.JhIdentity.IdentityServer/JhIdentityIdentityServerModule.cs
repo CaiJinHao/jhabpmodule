@@ -107,6 +107,12 @@ public class JhIdentityIdentityServerModule : AbpModule
 {
     private Microsoft.Extensions.Configuration.IConfiguration configuration;
 
+    public override void PreConfigureServices(ServiceConfigurationContext context)
+    {
+        JhMenuConsts.IsAntdPro = true;
+        base.PreConfigureServices(context);
+    }
+
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
@@ -295,6 +301,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         var dataSeedContext = new DataSeedContext()
             .WithProperty("AdminEmail", "531003539@qq.com")
             .WithProperty("AdminPassword", "KimHo@123");
+
         await data.SeedAsync(dataSeedContext);
     }
 }
