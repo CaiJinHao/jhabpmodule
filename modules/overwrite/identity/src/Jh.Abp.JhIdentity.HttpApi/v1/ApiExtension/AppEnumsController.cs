@@ -12,7 +12,7 @@ namespace Jh.Abp.JhIdentity.v1
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    public partial class AppEnumsController
+    public class AppEnumsController
     {
         [Route("YesOrNo")]
         [HttpGet]
