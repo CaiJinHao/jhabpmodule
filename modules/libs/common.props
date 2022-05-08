@@ -17,29 +17,7 @@
     <Description>Abp Extension</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
-
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="*.abppkg.analyze.json" />
-    <Content Remove="*.abppkg.analyze.json" />
-    <EmbeddedResource Include="*.abppkg.json" />
-    <Content Remove="*.abppkg.json" />
-  </ItemGroup>
-  <ItemGroup Condition="$(AssemblyName.EndsWith('HttpApi.Client'))">
-    <EmbeddedResource Include="**\*generate-proxy.json" />
-    <Content Remove="**\*generate-proxy.json" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" PrivateAssets="All" />
     <PackageReference Include="Fody" Version="6.5.3">
@@ -53,4 +31,25 @@
       <NoWarn>$(NoWarn);0436</NoWarn>
     </PropertyGroup>
   </Target>
+
+  <PropertyGroup>
+    <DebugType Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">full</DebugType>
+    <DebugType Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">portable</DebugType>
+    <IncludeSymbols>True</IncludeSymbols>
+    <!--<Net35FrameworkPathOverride>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client;$(WINDIR)\Microsoft.NET\Framework\v2.0.50727</Net35FrameworkPathOverride>-->
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All"/>
+  </ItemGroup>
 </Project>

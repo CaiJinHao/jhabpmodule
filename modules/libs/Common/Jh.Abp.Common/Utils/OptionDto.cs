@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Jh.Abp.Common.Utils
 {
+    /// <summary>
+    /// select options
+    /// </summary>
+    /// <typeparam name="TValue"></typeparam>
     public class OptionDto<TValue>
     {
         /// <summary>

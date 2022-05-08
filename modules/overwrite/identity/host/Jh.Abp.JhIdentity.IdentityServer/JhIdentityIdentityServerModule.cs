@@ -175,6 +175,11 @@ public class JhIdentityIdentityServerModule : AbpModule
         Configure<AppUrlOptions>(options =>
         {
             options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
+
+            options.RedirectAllowedUrls.AddRange(configuration["App:CorsOrigins"]
+                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                            .Select(o => o.RemovePostFix("/"))
+                            .ToArray());
         });
 
         context.Services.AddAuthentication()
