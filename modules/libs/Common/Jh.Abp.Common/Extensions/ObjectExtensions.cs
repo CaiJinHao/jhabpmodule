@@ -48,7 +48,7 @@ namespace Jh.Abp.Common
             {
                 var arguments = _filed.CustomAttributes
                         .Where(a => a.AttributeType == typeof(DescriptionAttribute)).FirstOrDefault()?.ConstructorArguments;
-                if (arguments==null)
+                if (arguments == null)
                 {
                     return string.Empty;
                 }
