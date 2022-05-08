@@ -1,4 +1,5 @@
-﻿using Jh.Abp.Domain.Shared;
+﻿using Jh.Abp.Common.Utils;
+using Jh.Abp.Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,20 +12,13 @@ namespace Jh.Abp.JhIdentity.v1
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    public class AppEnumsController
+    public partial class AppEnumsController
     {
-        [Route("Use")]
+        [Route("YesOrNo")]
         [HttpGet]
-        public virtual Task<IEnumerable<dynamic>> GetUseAsync()
+        public virtual Task<IEnumerable<OptionDto<int>>> GetYesOrNoAsync()
         {
-            return Task.FromResult(Common.Utils.UtilEnums.GetEnumListByDescription<UseType>());
-        }
-
-        [Route("Delete")]
-        [HttpGet]
-        public virtual Task<IEnumerable<dynamic>> GetDeleteAsync()
-        {
-            return Task.FromResult(Common.Utils.UtilEnums.GetEnumListByDescription<DeleteType>());
+            return Task.FromResult(UtilEnums.GetEnumListByDescription<YesOrNo>());
         }
     }
 }

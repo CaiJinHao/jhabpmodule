@@ -5,29 +5,32 @@ using System.Text;
 
 namespace Jh.Abp.Domain.Shared
 {
-    /// <summary>
-    /// 可用类型(是or否)
-    /// </summary>
+    [Obsolete("Please Use YesOrNo")]
     public enum UseType
     {
-        //[Description("无")]
-        //None = 0,
+        None = 0,
         [Description("是")]
-        Yes = 1,
+        Yes,
         [Description("否")]
-        No = 2,
+        No,
     }
 
-    /// <summary>
-    /// 如果加上无，前端会显示出来
-    /// </summary>
+    [Obsolete("Please Use YesOrNo")]
     public enum DeleteType
     {
-        //[Description("无")]
-        //None = 0,
+        None = 0,
         [Description("是")]
-        Yes = 1,
+        Yes,
         [Description("否")]
-        No = 2,
+        No,
+    }
+
+    public enum YesOrNo
+    {
+        None,
+        [Description("是")]
+        Yes,
+        [Description("否")]
+        No,
     }
 }

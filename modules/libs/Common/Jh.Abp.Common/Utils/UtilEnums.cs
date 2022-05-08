@@ -13,14 +13,14 @@ namespace Jh.Abp.Common.Utils
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IEnumerable<dynamic> GetEnumList<T>() where T : Enum
+        public static IEnumerable<OptionDto<int>> GetEnumList<T>() where T : Enum
         {
             var values = Enum.GetValues(typeof(T));
             foreach (var item in values)
             {
                 yield return new OptionDto<int>()
                 {
-                    Text = item.ToString(),
+                    Label = item.ToString(),
                     Value = (int)item
                 };
             }
@@ -31,7 +31,7 @@ namespace Jh.Abp.Common.Utils
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IEnumerable<dynamic> GetEnumListByDescription<T>() where T : Enum
+        public static IEnumerable<OptionDto<int>> GetEnumListByDescription<T>() where T : Enum
         {
             var fileds = typeof(T).GetFields().Where(a => a.FieldType == typeof(T));
             foreach (var _filed in fileds)
@@ -41,21 +41,23 @@ namespace Jh.Abp.Common.Utils
                 {
                     var arguments = _filed.CustomAttributes
                     .Where(a => a.AttributeType == typeof(DescriptionAttribute)).FirstOrDefault()?.ConstructorArguments;
+                    if (arguments != null)
+                    {
+                        yield return new OptionDto<int>()
+                        {
+                            Label = arguments.First().Value.ToString(),
+                            Value = (int)_v
+                        };
+                    }
+                }
+                else
+                {
                     yield return new OptionDto<int>()
                     {
-                        Text = arguments.First().Value.ToString(),
+                        Label = string.Empty,
                         Value = (int)_v
                     };
                 }
-                //没有特性的枚举不返回
-                //else
-                //{
-                //    yield return new
-                //    {
-                //        Text = _filed.Name,
-                //        Value = (int)_v
-                //    };
-                //}
             }
         }
 
@@ -66,6 +68,10 @@ namespace Jh.Abp.Common.Utils
             {
                 var arguments = _filed.CustomAttributes
                 .Where(a => a.AttributeType == typeof(DescriptionAttribute)).FirstOrDefault()?.ConstructorArguments;
+                if (arguments == null)
+                {
+                    return string.Empty;
+                }
                 return arguments.First().Value.ToString();
             }
             return string.Empty;
