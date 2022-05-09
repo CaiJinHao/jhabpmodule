@@ -25,11 +25,17 @@ namespace Jh.Abp.Domain.Shared
         No,
     }
 
+    /*
+     枚举不传值就是全部
+     */
+
+    /// <summary>
+    /// bool 值也可以使用 1:true,2:false
+    /// </summary>
     public enum YesOrNo
     {
-        None,
         [Description("是")]
-        Yes,
+        Yes=1,
         [Description("否")]
         No,
     }
