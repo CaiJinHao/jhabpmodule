@@ -18,9 +18,10 @@ namespace Jh.Abp.JhIdentity.v1
     {
         [Route("YesOrNo")]
         [HttpGet]
-        public virtual Task<IEnumerable<OptionDto<int>>> GetYesOrNoAsync()
+        public virtual Task<List<OptionDto<int>>> GetYesOrNoAsync()
         {
-            return Task.FromResult(UtilEnums.GetEnumListByDescription<YesOrNo>());
+            var datas = UtilEnums.GetEnumListByDescription<YesOrNo>().ToList();
+            return Task.FromResult(datas);
         }
     }
 }

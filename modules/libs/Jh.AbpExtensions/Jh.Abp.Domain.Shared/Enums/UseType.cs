@@ -27,6 +27,7 @@ namespace Jh.Abp.Domain.Shared
 
     /*
      枚举不传值就是全部
+    没有0，要么1要么2，要么空
      */
 
     /// <summary>

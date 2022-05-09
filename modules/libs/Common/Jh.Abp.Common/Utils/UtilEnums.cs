@@ -11,8 +11,6 @@ namespace Jh.Abp.Common.Utils
         /// <summary>
         /// 获取所有枚举列表
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public static IEnumerable<OptionDto<int>> GetEnumList<T>() where T : Enum
         {
             var values = Enum.GetValues(typeof(T));
@@ -29,8 +27,6 @@ namespace Jh.Abp.Common.Utils
         /// <summary>
         /// 获取枚举列表 没有特性的枚举不返回
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public static IEnumerable<OptionDto<int>> GetEnumListByDescription<T>() where T : Enum
         {
             var fileds = typeof(T).GetFields().Where(a => a.FieldType == typeof(T));

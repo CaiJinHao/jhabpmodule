@@ -191,7 +191,7 @@ namespace Jh.Abp.Application
             {
                 if (inputDto is IRetrieveDelete retrieveDelete)
                 {
-                    if (retrieveDelete.Deleted != null)
+                    if (retrieveDelete.Deleted.HasValue)
                     {
                         switch (retrieveDelete.Deleted)
                         {
