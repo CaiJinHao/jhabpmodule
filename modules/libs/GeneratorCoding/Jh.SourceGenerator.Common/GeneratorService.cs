@@ -271,6 +271,26 @@ namespace Jh.SourceGenerator.Common
             return true;
         }
 
+        protected virtual bool CreateFile(Dictionary<string,ProxyServiceModelCodeBuilder> codeBuilders,string FilePath,string FileName, string Suffix)
+        {
+            if (!string.IsNullOrEmpty(FilePath))
+            {
+                new DirectoryInfo(FilePath).CreateDirectoryInfo();
+                var filePath = Path.Combine(FilePath, FileName + Suffix);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                var content = new StringBuilder();
+                foreach (var item in codeBuilders)
+                {
+                    content.AppendLine(item.Value.ToString());
+                }
+                File.WriteAllText(filePath, content.ToString());
+            }
+            return true;
+        }
+
         /// <summary>
         /// api版本注意从上往下，取最后一个
         /// </summary>
@@ -278,7 +298,9 @@ namespace Jh.SourceGenerator.Common
         {
             foreach (var item in appServiceTypes)
             {
-                CreateFile(new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath,templateFilePath));
+                var service = new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath, templateFilePath);
+                CreateFile(service);
+                CreateFile(service.ProxyServiceModelCodeBuilders, service.FilePath, $"model.{service.FileName}", service.Suffix);
             }
         }
     }

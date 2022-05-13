@@ -3,6 +3,7 @@ using Jh.SourceGenerator.Common.ReactCodeBuilders;
 using RazorEngine;
 using RazorEngine.Templating;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Jh.SourceGenerator.Common
@@ -15,6 +16,7 @@ namespace Jh.SourceGenerator.Common
         private Type ControllerType { get; }
         protected ControllerDto ControllerDto { get; set; } 
         protected string TemplateFilePath { get; set; }
+        public Dictionary<string,ProxyServiceModelCodeBuilder> ProxyServiceModelCodeBuilders { get; set; } = new Dictionary<string,ProxyServiceModelCodeBuilder>();
         public ProxyServiceCodeBuilder(Type controllerType, string filePath,string templateFilePath)
         {
             ControllerType = controllerType;
@@ -24,6 +26,17 @@ namespace Jh.SourceGenerator.Common
             ControllerDto = new ControllerDto(controllerType.Name.Replace("Controller",""));
             FileName = $"{ControllerDto.Name.ToLower()}.service";
             InitPropertys();
+        }
+
+        private void AddProxyServiceModelCodeBuilder(ProxyServiceModelCodeBuilder input)
+        {
+            if (input != null)
+            {
+                if (!ProxyServiceModelCodeBuilders.ContainsKey(input.ModelType.Name))
+                {
+                    ProxyServiceModelCodeBuilders.Add(input.ModelType.Name, input);
+                }
+            }
         }
 
         private void InitPropertys()
@@ -41,14 +54,17 @@ namespace Jh.SourceGenerator.Common
                 var httpAttributes = item.CustomAttributes.Where(a => a.AttributeType.BaseType.Name == HttpMethodAttribute);
                 if (httpAttributes.Any())
                 {
+                    var returnType = item.ReturnType.GetRealType();
+                    AddProxyServiceModelCodeBuilder(GeneratorHelper.CreateProxyServiceModelCodeBuilder(returnType, FilePath));
                     var methodDto = new MethodDto()
                     {
                         Name = item.Name,
-                        ReturnType = item.ReturnType.IsGenericType ? item.ReturnType.GenericTypeArguments.FirstOrDefault()?.Name : item.ReturnType.Name,
+                        ReturnType = returnType.Name,
                         RequestMethod = httpAttributes.First().AttributeType.Name.Replace("Attribute",""),
                     };
                     foreach (var parameterInfo in item.GetParameters())
                     {
+                        AddProxyServiceModelCodeBuilder(GeneratorHelper.CreateProxyServiceModelCodeBuilder(parameterInfo.ParameterType, FilePath));
                         methodDto.Parameters.Add(parameterInfo.Name,parameterInfo.ParameterType.Name);
                     }
                     //方法的版本

@@ -34,8 +34,6 @@ namespace Jh.Abp.Common
             return source;
         }
 
-
-
         public static string ToDescription(this Enum value)
         {
             var result = string.Empty;
@@ -55,6 +53,41 @@ namespace Jh.Abp.Common
                 result = arguments.First().Value.ToString();
             }
             return result;
+        }
+
+        /// <summary>
+        /// 针对泛型需要获取真实 类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Type GetRealType(this Type type)
+        {
+            return type.IsGenericType? type.GenericTypeArguments.FirstOrDefault() : type;
+        }
+
+        /// <summary>
+        /// 只要类型，不要数组类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Type GetRealTypeValue(this Type type)
+        {
+            var result= type.IsGenericType ? type.GenericTypeArguments.FirstOrDefault() : type;
+            if (result.IsArray)
+            {
+                result= Type.GetType(result.FullName.Replace("[]", ""));
+            }
+            return result;
+        }
+
+        public static string GetTypeName(this string input, string regexStr, string replaceTypeName)
+        {
+            var regex = new System.Text.RegularExpressions.Regex(regexStr);
+            if (regex.IsMatch(input))
+            {
+                return regex.Replace(input, replaceTypeName);//为什么是替换，因为可能是数组
+            }
+            return input;
         }
     }
 }
