@@ -53,5 +53,15 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 创建Html路径
         /// </summary>
         public string CreateHtmlPath { get; set; }
+        /// <summary>
+        /// 创建Rect ProxyService
+        /// </summary>
+        public string CreateProxyServicePath { get; set; }
+
+        public GeneratorOptions() { }
+        public GeneratorOptions(string createProxyServicePath)
+        {
+            CreateProxyServicePath = createProxyServicePath;
+        }
     }
 }

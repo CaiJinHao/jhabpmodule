@@ -28,6 +28,11 @@ namespace Jh.SourceGenerator.Common
             GeneratorConsts.ControllerBase = options.ControllerBase;
         }
 
+        public GeneratorService(GeneratorOptions options)
+        { 
+            generatorOptions = options;
+        }
+
         public virtual IEnumerable<Type> GetLoadableTypes()
         {
             return LoadAssembly.DefinedTypes.Select((TypeInfo t) => t.AsType());
@@ -251,7 +256,7 @@ namespace Jh.SourceGenerator.Common
             return true;
         }
 
-        public virtual bool CreateFile(CodeBuilderAbs codeBuilder)
+        public virtual bool CreateFile(CodeBuilderBase codeBuilder)
         {
             if (!string.IsNullOrEmpty(codeBuilder.FilePath))
             {
@@ -264,6 +269,17 @@ namespace Jh.SourceGenerator.Common
                 File.WriteAllText(filePath, codeBuilder.ToString());
             }
             return true;
+        }
+
+        /// <summary>
+        /// api版本注意从上往下，取最后一个
+        /// </summary>
+        public virtual void GeneratorCodeByAppService(string templateFilePath, IEnumerable<Type> appServiceTypes)
+        {
+            foreach (var item in appServiceTypes)
+            {
+                CreateFile(new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath,templateFilePath));
+            }
         }
     }
 }
