@@ -4,6 +4,7 @@ using RazorEngine;
 using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Jh.SourceGenerator.Common
@@ -18,11 +19,14 @@ namespace Jh.SourceGenerator.Common
         protected string TemplateFilePath { get; set; }
         public ProxyServiceCodeBuilder(Type controllerType, string filePath,string templateFilePath)
         {
+            ControllerDto = new ControllerDto(controllerType.Name.Replace("Controller",""));
             ControllerType = controllerType;
             Suffix = ".ts";
-            FilePath = filePath;
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                FilePath = Path.Combine(filePath, ControllerDto.Name);//以表名称为上级文件名创建路径
+            }
             TemplateFilePath = templateFilePath;
-            ControllerDto = new ControllerDto(controllerType.Name.Replace("Controller",""));
             FileName = $"{ControllerDto.Name.ToLower()}.service";
             InitPropertys();
         }

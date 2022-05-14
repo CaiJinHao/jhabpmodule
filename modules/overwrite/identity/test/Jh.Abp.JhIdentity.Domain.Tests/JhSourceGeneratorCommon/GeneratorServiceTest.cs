@@ -20,7 +20,7 @@ namespace Jh.Abp.JhIdentity
         public void TestGetTableClass()
         {
             //模板路径为空不生成
-            var basePathTemp = @"F:\Temp";
+            var basePathTemp = @"G:\Temp";
             var basePath = @"D:\github\mygithub\business\jhabpmodule\modules\identity";
             basePath = basePathTemp;
             var domainAssembly = typeof(JhIdentityDomainModule).Assembly;

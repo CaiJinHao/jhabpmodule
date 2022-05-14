@@ -302,7 +302,7 @@ namespace Jh.SourceGenerator.Common
                 var service = new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath, templateFilePath);
                 CreateFile(service);
                 //创建service中所有的dto对象及参数对象
-                CreateFile(GeneratorHelper.GetProxyServiceModelCodeBuilders(), generatorOptions.CreateProxyServicePath, $"model.{service.FileName}", service.Suffix);
+                CreateFile(GeneratorHelper.GetProxyServiceModelCodeBuilders(), service.FilePath, $"model.{service.FileName}", service.Suffix);
             }
         }
     }
