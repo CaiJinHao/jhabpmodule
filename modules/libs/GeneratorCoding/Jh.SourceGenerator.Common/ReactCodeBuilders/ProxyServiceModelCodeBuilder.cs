@@ -34,10 +34,11 @@ namespace Jh.SourceGenerator.Common
                     .GetTypeName($"{nameof(Guid)}", "string")
                     .GetTypeName($"{nameof(DateTimeOffset)}", "string")
                     .GetTypeName($"{nameof(DateTime)}", "string")
+                    .ToLowerCamelCase()
                     ;
                 propertyTypeName = GeneratorHelper.IsModelType(propertyType) ? "any" : propertyTypeName;
                 //GeneratorHelper.AddProxyServiceModelCodeBuilder(propertyType);//理论上前端不应该有domain的类，所以可以使用any类型
-                builder.AppendLine($"\t {field.Name}?: {propertyTypeName};");
+                builder.AppendLine($"\t {field.Name.ToLowerCamelCase()}?: {propertyTypeName};");
             }
             builder.AppendLine("}");
             StringBuilder = builder;

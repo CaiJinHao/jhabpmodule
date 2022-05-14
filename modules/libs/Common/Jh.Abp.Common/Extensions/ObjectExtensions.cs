@@ -89,5 +89,10 @@ namespace Jh.Abp.Common
             }
             return input;
         }
+
+        public static string ToLowerCamelCase(this string input)
+        {
+            return input.ToLower(new System.Globalization.CultureInfo("en-US"));
+        }
     }
 }
