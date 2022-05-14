@@ -17,9 +17,11 @@ namespace Jh.SourceGenerator.Common
         private Type ControllerType { get; }
         protected ControllerDto ControllerDto { get; set; } 
         protected string TemplateFilePath { get; set; }
-        public ProxyServiceCodeBuilder(Type controllerType, string filePath,string templateFilePath)
+        protected string ProxyName { get; }
+        public ProxyServiceCodeBuilder(Type controllerType, string filePath,string templateFilePath,string moduleNamespace,string globalNamespace,string proxyName)
         {
-            ControllerDto = new ControllerDto(controllerType.Name.Replace("Controller",""));
+            ProxyName = proxyName;
+            ControllerDto = new ControllerDto(controllerType.Name.Replace("Controller",""), moduleNamespace,globalNamespace);
             ControllerType = controllerType;
             Suffix = ".ts";
             if (!string.IsNullOrEmpty(filePath))
@@ -51,13 +53,13 @@ namespace Jh.SourceGenerator.Common
                     var methodDto = new MethodDto()
                     {
                         Name = item.Name,
-                        ReturnType = returnType.Name,
+                        ReturnType = returnType.GetReturnTypeName(ControllerDto.ModuleNamespace, ControllerDto.GlobalNamespace),
                         RequestMethod = httpAttributes.First().AttributeType.Name.Replace("Attribute",""),
                     };
                     foreach (var parameterInfo in item.GetParameters())
                     {
                         GeneratorHelper.AddProxyServiceModelCodeBuilder(parameterInfo.ParameterType);
-                        methodDto.Parameters.Add(parameterInfo.Name,parameterInfo.ParameterType.Name);
+                        methodDto.Parameters.Add(parameterInfo.Name,parameterInfo.ParameterType);
                     }
                     //方法的版本
                     var apiVersionAttrbuteArg = item.CustomAttributes.LastOrDefault(a => a.AttributeType.Name == MapToApiVersionAttribute)?.ConstructorArguments.FirstOrDefault();
@@ -76,8 +78,27 @@ namespace Jh.SourceGenerator.Common
 
         public override string ToString()
         {
-            string razorTemplateContent = TemplateFilePath.ReadFile();
-            return Engine.Razor.RunCompile(razorTemplateContent, FileName, null, ControllerDto);
+            //string razorTemplateContent = TemplateFilePath.ReadFile();
+            //return Engine.Razor.RunCompile(razorTemplateContent, FileName, null, ControllerDto);
+
+            var stringBuilder=new System.Text.StringBuilder();
+            stringBuilder.AppendLine("import { request } from 'umi';");
+            foreach (var method in ControllerDto.MethodDtos)
+            {
+                var returnType = method.ReturnType;
+                switch (method.ReturnType)
+                {
+                    case "Task": { returnType = "void"; } break;
+                }
+                stringBuilder.AppendLine($"export const {method.Name}{ControllerDto.Name} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{returnType}> => {{");
+                stringBuilder.AppendLine($"  return await request<{returnType}>(`${{{ProxyName}}}{method.RouteUrl}`, {{");
+                stringBuilder.AppendLine($"    method: '{method.RequestMethod.Replace("Http", "")}',");
+                stringBuilder.AppendLine(method.Parameters.Count > 0 ? $"data: {method.GetParameterKeys()}" : "");
+                stringBuilder.AppendLine("  });");
+                stringBuilder.AppendLine("};");
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

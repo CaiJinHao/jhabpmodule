@@ -15,7 +15,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public string DbContext { get; set; } = "MenuManagementDbContext";
         /// <summary>
-        /// 项目顶级命名空间
+        /// 项目顶级命名空间 或者dtoNameSpace
         /// </summary>
         public string Namespace { get; set; } = "Jh.Abp.MenuManagement";
         /// <summary>

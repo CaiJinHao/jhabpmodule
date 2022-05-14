@@ -29,15 +29,10 @@ namespace Jh.SourceGenerator.Common
             foreach (var field in fields)
             {
                 var propertyType = field.PropertyType.GetRealType();
-                var propertyTypeName = propertyType.Name
-                    .GetTypeName($"({nameof(Double)})|({nameof(Decimal)})|({nameof(Int64)})|({nameof(Int32)})|({nameof(Int16)})", "number")
-                    .GetTypeName($"{nameof(Guid)}", "string")
-                    .GetTypeName($"{nameof(DateTimeOffset)}", "string")
-                    .GetTypeName($"{nameof(DateTime)}", "string")
-                    .ToLowerCamelCase()
-                    ;
-                propertyTypeName = GeneratorHelper.IsModelType(propertyType) ? "any" : propertyTypeName;
-                //GeneratorHelper.AddProxyServiceModelCodeBuilder(propertyType);//理论上前端不应该有domain的类，所以可以使用any类型
+                var propertyTypeName = propertyType.Name.FormatJsVar(true);
+                propertyTypeName = propertyType.IsModelType() ? "any" : propertyTypeName;
+                //理论上前端不应该有domain的类，所以可以使用any类型
+                //GeneratorHelper.AddProxyServiceModelCodeBuilder(propertyType);
                 builder.AppendLine($"\t {field.Name.ToLowerCamelCase()}?: {propertyTypeName};");
             }
             builder.AppendLine("}");

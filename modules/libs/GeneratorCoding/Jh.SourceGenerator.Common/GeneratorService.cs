@@ -271,7 +271,7 @@ namespace Jh.SourceGenerator.Common
             return true;
         }
 
-        protected virtual bool CreateFile(Dictionary<string,ProxyServiceModelCodeBuilder> codeBuilders,string FilePath,string FileName, string Suffix)
+        protected virtual bool CreateFile(string moduleNamespace, Dictionary<string,ProxyServiceModelCodeBuilder> codeBuilders,string FilePath,string FileName, string Suffix)
         {
             if (!string.IsNullOrEmpty(FilePath))
             {
@@ -282,10 +282,13 @@ namespace Jh.SourceGenerator.Common
                     File.Delete(filePath);
                 }
                 var content = new StringBuilder();
+                content.AppendLine($"declare namespace {moduleNamespace} {{");
                 foreach (var item in codeBuilders)
                 {
                     content.AppendLine(item.Value.ToString());
                 }
+                content.AppendLine("}");
+
                 File.WriteAllText(filePath, content.ToString());
             }
             return true;
@@ -294,15 +297,15 @@ namespace Jh.SourceGenerator.Common
         /// <summary>
         /// api版本注意从上往下，取最后一个
         /// </summary>
-        public virtual void GeneratorCodeByAppService(string templateFilePath, IEnumerable<Type> controllerTypes)
+        public virtual void GeneratorCodeByAppService(string templateFilePath,string moduleNamespace,string globalNamespace, string proxyName,IEnumerable<Type> controllerTypes)
         {
             foreach (var item in controllerTypes)
             {
                 GeneratorHelper.InitialProxyServceModelCodeBuilders();
-                var service = new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath, templateFilePath);
+                var service = new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath, templateFilePath, moduleNamespace,globalNamespace, proxyName);
                 CreateFile(service);
                 //创建service中所有的dto对象及参数对象
-                CreateFile(GeneratorHelper.GetProxyServiceModelCodeBuilders(), service.FilePath, $"model.{service.FileName}", service.Suffix);
+                CreateFile(moduleNamespace, GeneratorHelper.GetProxyServiceModelCodeBuilders(), service.FilePath, $"model.{service.FileName}", ".d.ts");
             }
         }
     }

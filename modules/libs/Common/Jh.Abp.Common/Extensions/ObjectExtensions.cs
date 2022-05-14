@@ -66,6 +66,17 @@ namespace Jh.Abp.Common
         }
 
         /// <summary>
+        /// 获取类型名称,如果是泛型自动使用泛型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetTypeName(this Type type)
+        {
+            var data= type.IsGenericType ? type.Name.Replace("`1", $"<{type.GenericTypeArguments.FirstOrDefault().Name}>") : type.Name;
+            return data;
+        }
+
+        /// <summary>
         /// 只要类型，不要数组类型
         /// </summary>
         /// <param name="type"></param>
@@ -80,6 +91,13 @@ namespace Jh.Abp.Common
             return result;
         }
 
+        /// <summary>
+        /// 将匹配到的类型名，替换为指定的类型名
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="regexStr"></param>
+        /// <param name="replaceTypeName"></param>
+        /// <returns></returns>
         public static string GetTypeName(this string input, string regexStr, string replaceTypeName)
         {
             var regex = new System.Text.RegularExpressions.Regex(regexStr);
@@ -90,9 +108,15 @@ namespace Jh.Abp.Common
             return input;
         }
 
+        /// <summary>
+        /// 将开头字母转为小写
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string ToLowerCamelCase(this string input)
         {
-            return input.ToLower(new System.Globalization.CultureInfo("en-US"));
+            var inputArray = input.ToArray();
+            return $"{inputArray.First().ToString().ToLower()}{new string(inputArray.Skip(1).ToArray())}";
         }
     }
 }

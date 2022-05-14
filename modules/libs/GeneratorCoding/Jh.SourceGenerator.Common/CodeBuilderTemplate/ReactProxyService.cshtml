@@ -1,6 +1,7 @@
 ﻿@{
     var controllerDto = Model;
     var methodDtos = controllerDto.MethodDtos;
+    var moduleNamespace = controllerDto.ModuleNamespace + ".";
 }
 
 import { request } from 'umi';
@@ -12,9 +13,9 @@ import { request } from 'umi';
     {
         case "Task":{ returnType = "void"; }break;
     }
-    <template>
-export const @(method.Name)@(controllerDto.Name) = async (@(method.GetParameters())): Promise<@(returnType)> => {
-  return await request<@(returnType)>(`${Menu_API}@(method.RouteUrl)`, {
+<template>
+export const @(method.Name)@(controllerDto.Name) = async (@(method.GetParameters(moduleNamespace))): Promise<@Html.Raw(returnType)> => {
+  return await request<@(Html.Raw(returnType))>(`${Menu_API}@(method.RouteUrl)`, {
     method: '@(method.RequestMethod.Replace("Http",""))',
     @(method.Parameters.Count > 0? $"data: {method.GetParameterKeys()}":"")
   });

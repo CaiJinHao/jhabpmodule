@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using Jh.Abp.Common;
 
 namespace Jh.SourceGenerator.Common
 {
-    public class GeneratorHelper
+    public static class GeneratorHelper
     {
         private static Dictionary<string, ProxyServiceModelCodeBuilder> ProxyServiceModelCodeBuilders { get; set; }
         public static Dictionary<string, ProxyServiceModelCodeBuilder> GetProxyServiceModelCodeBuilders()
@@ -22,7 +23,7 @@ namespace Jh.SourceGenerator.Common
             ProxyServiceModelCodeBuilders = new Dictionary<string, ProxyServiceModelCodeBuilder>();
         }
 
-        public static bool IsModelType(Type modelType)
+        public static bool IsModelType(this Type modelType)
         {
             var type = modelType.GetRealTypeValue();
             if (!type.IsValueType
@@ -38,7 +39,7 @@ namespace Jh.SourceGenerator.Common
         public static void AddProxyServiceModelCodeBuilder(Type modelType)
         {
             var type = modelType.GetRealTypeValue();
-            if (IsModelType(type))
+            if (type.IsModelType())
             {
                 if (!ProxyServiceModelCodeBuilders.ContainsKey(type.Name))
                 {
@@ -46,6 +47,56 @@ namespace Jh.SourceGenerator.Common
                     ProxyServiceModelCodeBuilders[type.Name] = new ProxyServiceModelCodeBuilder(type);
                 }
             }
+        }
+
+        /// <summary>
+        /// 格式化为js的类型格式
+        /// </summary>
+        public static string FormatJsVar(this string input, bool isToLower = false)
+        {
+            var data = input
+                    .GetTypeName($"({nameof(Double)})|({nameof(Decimal)})|({nameof(Int64)})|({nameof(Int32)})|({nameof(Int16)})", "number")
+                    .GetTypeName($"{nameof(Guid)}", "string")
+                    .GetTypeName($"{nameof(DateTimeOffset)}", "string")
+                    .GetTypeName($"{nameof(DateTime)}", "string")
+                    .GetTypeName($"{nameof(Object)}","any")
+                    ;
+            if (isToLower)
+            {
+                return data.ToLowerCamelCase();
+            }
+            return data;
+        }
+
+        /// <summary>
+        /// 获取类型名称,如果是泛型自动使用泛型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="globalNamespace">全局类型定义的命名空间 一般为API</param>
+        /// <param name="moduleNamespace">模块定义的命名空间</param>
+        /// <returns></returns>
+        public static string GetReturnTypeName(this Type type,string moduleNamespace, string globalNamespace)
+        {
+            var genericTypeName = type.Name;
+            if (type.IsModelType())
+            {
+                if (type.IsGenericType)
+                {
+                    genericTypeName = $"{globalNamespace}.{genericTypeName}";
+                    var genericArgType = type.GenericTypeArguments.FirstOrDefault();
+                    var genericArgTypeName = genericArgType.Name;
+                    if (genericArgType.IsModelType())
+                    {
+                        genericArgTypeName = $"{moduleNamespace}.{genericArgTypeName}";
+                    }
+                    return genericTypeName.Replace("`1", $"<{genericArgTypeName}>");
+                }
+                else
+                {
+                    return $"{moduleNamespace}.{genericTypeName}";
+                }
+            }
+            return genericTypeName.FormatJsVar();
         }
     }
 }
