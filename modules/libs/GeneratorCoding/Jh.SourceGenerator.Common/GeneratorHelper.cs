@@ -22,13 +22,23 @@ namespace Jh.SourceGenerator.Common
             ProxyServiceModelCodeBuilders = new Dictionary<string, ProxyServiceModelCodeBuilder>();
         }
 
-        public static void AddProxyServiceModelCodeBuilder(Type modelType)
+        public static bool IsModelType(Type modelType)
         {
             var type = modelType.GetRealTypeValue();
             if (!type.IsValueType
                 && type.BaseType != null
                 && !new Regex($"({nameof(Task)})|({nameof(String)})").IsMatch(type.Name)//排除生成Model的类型
                 )
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static void AddProxyServiceModelCodeBuilder(Type modelType)
+        {
+            var type = modelType.GetRealTypeValue();
+            if (IsModelType(type))
             {
                 if (!ProxyServiceModelCodeBuilders.ContainsKey(type.Name))
                 {
