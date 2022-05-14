@@ -10,44 +10,41 @@ namespace Jh.SourceGenerator.Common
     {
         public Type ModelType { get; }
         private bool IsGenerator { get; }
-        public ProxyServiceModelCodeBuilder(Type modelType, string filePath)
+        private StringBuilder StringBuilder { get; set; }
+        public ProxyServiceModelCodeBuilder(Type modelType)
         {
             IsGenerator = true;
             ModelType = modelType;
             Suffix = ".ts";
-            FilePath = filePath;
             FileName = $"mode.{modelType.Name.ToLower()}";
+            InitStringBuilder();
         }
 
-        public override string ToString()
+        public void InitStringBuilder()
         {
-            if (ModelType.Name == "String")
-            {
-
-            }
-            if (ModelType.Name == "Object")
-            {
-
-            }
             var builder = new StringBuilder();
             builder.AppendLine($"export interface {ModelType.Name}");
             builder.AppendLine("{");
             var fields = ModelType.GetProperties();
             foreach (var field in fields)
             {
-                var propertyType = field.PropertyType.GetRealType().Name
+                var propertyType = field.PropertyType.GetRealType();
+                var propertyTypeName = propertyType.Name
                     .GetTypeName($"({nameof(Double)})|({nameof(Decimal)})|({nameof(Int64)})|({nameof(Int32)})|({nameof(Int16)})", "number")
-                    .GetTypeName($"{nameof(Guid)}","string")
-                    .GetTypeName($"{nameof(DateTime)}","string")
-                    .GetTypeName($"{nameof(DateTimeOffset)}","string")
+                    .GetTypeName($"{nameof(Guid)}", "string")
+                    .GetTypeName($"{nameof(DateTimeOffset)}", "string")
+                    .GetTypeName($"{nameof(DateTime)}", "string")
                     ;
-
-                builder.AppendLine($"\t {field.Name}?: {propertyType};");
+                GeneratorHelper.AddProxyServiceModelCodeBuilder(propertyType);
+                builder.AppendLine($"\t {field.Name}?: {propertyTypeName};");
             }
             builder.AppendLine("}");
+            StringBuilder = builder;
+        }
 
-            //处理类型嵌套
-            return builder.ToString();
+        public override string ToString()
+        {
+            return StringBuilder.ToString();
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Jh.SourceGenerator.Common
         private Type ControllerType { get; }
         protected ControllerDto ControllerDto { get; set; } 
         protected string TemplateFilePath { get; set; }
-        public Dictionary<string,ProxyServiceModelCodeBuilder> ProxyServiceModelCodeBuilders { get; set; } = new Dictionary<string,ProxyServiceModelCodeBuilder>();
         public ProxyServiceCodeBuilder(Type controllerType, string filePath,string templateFilePath)
         {
             ControllerType = controllerType;
@@ -26,17 +25,6 @@ namespace Jh.SourceGenerator.Common
             ControllerDto = new ControllerDto(controllerType.Name.Replace("Controller",""));
             FileName = $"{ControllerDto.Name.ToLower()}.service";
             InitPropertys();
-        }
-
-        private void AddProxyServiceModelCodeBuilder(ProxyServiceModelCodeBuilder input)
-        {
-            if (input != null)
-            {
-                if (!ProxyServiceModelCodeBuilders.ContainsKey(input.ModelType.Name))
-                {
-                    ProxyServiceModelCodeBuilders.Add(input.ModelType.Name, input);
-                }
-            }
         }
 
         private void InitPropertys()
@@ -55,7 +43,7 @@ namespace Jh.SourceGenerator.Common
                 if (httpAttributes.Any())
                 {
                     var returnType = item.ReturnType.GetRealType();
-                    AddProxyServiceModelCodeBuilder(GeneratorHelper.CreateProxyServiceModelCodeBuilder(returnType, FilePath));
+                    GeneratorHelper.AddProxyServiceModelCodeBuilder(returnType);
                     var methodDto = new MethodDto()
                     {
                         Name = item.Name,
@@ -64,7 +52,7 @@ namespace Jh.SourceGenerator.Common
                     };
                     foreach (var parameterInfo in item.GetParameters())
                     {
-                        AddProxyServiceModelCodeBuilder(GeneratorHelper.CreateProxyServiceModelCodeBuilder(parameterInfo.ParameterType, FilePath));
+                        GeneratorHelper.AddProxyServiceModelCodeBuilder(parameterInfo.ParameterType);
                         methodDto.Parameters.Add(parameterInfo.Name,parameterInfo.ParameterType.Name);
                     }
                     //方法的版本
