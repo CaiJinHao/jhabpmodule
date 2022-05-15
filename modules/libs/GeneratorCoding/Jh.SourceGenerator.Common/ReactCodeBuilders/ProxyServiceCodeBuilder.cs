@@ -16,9 +16,8 @@ namespace Jh.SourceGenerator.Common
         private const string MapToApiVersionAttribute = "MapToApiVersionAttribute";
         private Type ControllerType { get; }
         protected ControllerDto ControllerDto { get; set; } 
-        protected string TemplateFilePath { get; set; }
         protected string ProxyName { get; }
-        public ProxyServiceCodeBuilder(Type controllerType, string filePath,string templateFilePath,string moduleNamespace,string globalNamespace,string proxyName)
+        public ProxyServiceCodeBuilder(Type controllerType, string filePath,string moduleNamespace,string globalNamespace,string proxyName)
         {
             ProxyName = proxyName;
             ControllerDto = new ControllerDto(controllerType.Name.Replace("Controller",""), moduleNamespace,globalNamespace);
@@ -28,7 +27,6 @@ namespace Jh.SourceGenerator.Common
             {
                 FilePath = Path.Combine(filePath, ControllerDto.Name);//以表名称为上级文件名创建路径
             }
-            TemplateFilePath = templateFilePath;
             FileName = $"{ControllerDto.Name.ToLower()}.service";
             InitPropertys();
         }
@@ -78,9 +76,6 @@ namespace Jh.SourceGenerator.Common
 
         public override string ToString()
         {
-            //string razorTemplateContent = TemplateFilePath.ReadFile();
-            //return Engine.Razor.RunCompile(razorTemplateContent, FileName, null, ControllerDto);
-
             var stringBuilder=new System.Text.StringBuilder();
             stringBuilder.AppendLine("import { request } from 'umi';");
             foreach (var method in ControllerDto.MethodDtos)
@@ -90,7 +85,12 @@ namespace Jh.SourceGenerator.Common
                 {
                     case "Task": { returnType = "void"; } break;
                 }
-                stringBuilder.AppendLine($"export const {method.Name}{ControllerDto.Name} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{returnType}> => {{");
+                var methodName = method.Name.Replace("Async", "");
+                if (methodName.StartsWith("Delete"))
+                {
+                    methodName = $"DeleteBy{method.Parameters.First().Key.ToCamelCase(CamelCaseType.UpperCamelCase)}";
+                }
+                stringBuilder.AppendLine($"export const {methodName} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{returnType}> => {{");
                 stringBuilder.AppendLine($"  return await request<{returnType}>(`${{{ProxyName}}}{method.RouteUrl}`, {{");
                 stringBuilder.AppendLine($"    method: '{method.RequestMethod.Replace("Http", "")}',");
                 stringBuilder.AppendLine(method.Parameters.Count > 0 ? $"data: {method.GetParameterKeys()}" : "");

@@ -111,12 +111,32 @@ namespace Jh.Abp.Common
         /// <summary>
         /// 将开头字母转为小写
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static string ToLowerCamelCase(this string input)
+        public static string ToCamelCase(this string input, CamelCaseType camelCaseType)
         {
             var inputArray = input.ToArray();
-            return $"{inputArray.First().ToString().ToLower()}{new string(inputArray.Skip(1).ToArray())}";
+            var first = inputArray.First().ToString();
+            switch (camelCaseType)
+            {
+                case CamelCaseType.UpperCamelCase:
+                    first = first.ToUpper();
+                    break;
+                default:
+                    first = first.ToLower();
+                    break;
+            }
+            return $"{first}{new string(inputArray.Skip(1).ToArray())}";
         }
+    }
+
+    public enum CamelCaseType
+    {
+        /// <summary>
+        /// 开头字母小写
+        /// </summary>
+        LowerCamelCase,
+        /// <summary>
+        /// 开头字母大写
+        /// </summary>
+        UpperCamelCase
     }
 }

@@ -63,7 +63,7 @@ namespace Jh.SourceGenerator.Common
                     ;
             if (isToLower)
             {
-                return data.ToLowerCamelCase();
+                return data.ToCamelCase(CamelCaseType.LowerCamelCase);
             }
             return data;
         }

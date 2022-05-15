@@ -33,7 +33,7 @@ namespace Jh.SourceGenerator.Common
                 propertyTypeName = propertyType.IsModelType() ? "any" : propertyTypeName;
                 //理论上前端不应该有domain的类，所以可以使用any类型
                 //GeneratorHelper.AddProxyServiceModelCodeBuilder(propertyType);
-                builder.AppendLine($"\t {field.Name.ToLowerCamelCase()}?: {propertyTypeName};");
+                builder.AppendLine($"\t {field.Name.ToCamelCase(CamelCaseType.LowerCamelCase)}?: {propertyTypeName};");
             }
             builder.AppendLine("}");
             StringBuilder = builder;

@@ -297,12 +297,12 @@ namespace Jh.SourceGenerator.Common
         /// <summary>
         /// api版本注意从上往下，取最后一个
         /// </summary>
-        public virtual void GeneratorCodeByAppService(string templateFilePath,string moduleNamespace,string globalNamespace, string proxyName,IEnumerable<Type> controllerTypes)
+        public virtual void GeneratorCodeByAppService(string moduleNamespace,string globalNamespace, string proxyName,IEnumerable<Type> controllerTypes)
         {
             foreach (var item in controllerTypes)
             {
                 GeneratorHelper.InitialProxyServceModelCodeBuilders();
-                var service = new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath, templateFilePath, moduleNamespace,globalNamespace, proxyName);
+                var service = new ProxyServiceCodeBuilder(item, generatorOptions.CreateProxyServicePath, moduleNamespace,globalNamespace, proxyName);
                 CreateFile(service);
                 //创建service中所有的dto对象及参数对象
                 CreateFile(moduleNamespace, GeneratorHelper.GetProxyServiceModelCodeBuilders(), service.FilePath, $"model.{service.FileName}", ".d.ts");

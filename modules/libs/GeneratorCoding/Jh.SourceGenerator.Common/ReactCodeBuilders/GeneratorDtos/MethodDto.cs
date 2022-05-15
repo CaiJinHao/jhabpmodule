@@ -25,7 +25,7 @@ namespace Jh.SourceGenerator.Common.ReactCodeBuilders
                 }
                 else
                 {
-                    jsVarType = jsVarType.ToLowerCamelCase();
+                    jsVarType = jsVarType.ToCamelCase(CamelCaseType.LowerCamelCase);
                 }
                 return $"{a.Key}: {jsVarType}";
             }));
