@@ -15,7 +15,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public string DbContext { get; set; } = "MenuManagementDbContext";
         /// <summary>
-        /// 项目顶级命名空间
+        /// 项目顶级命名空间 或者dtoNameSpace
         /// </summary>
         public string Namespace { get; set; } = "Jh.Abp.MenuManagement";
         /// <summary>
@@ -53,5 +53,15 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 创建Html路径
         /// </summary>
         public string CreateHtmlPath { get; set; }
+        /// <summary>
+        /// 创建Rect ProxyService
+        /// </summary>
+        public string CreateProxyServicePath { get; set; }
+
+        public GeneratorOptions() { }
+        public GeneratorOptions(string createProxyServicePath)
+        {
+            CreateProxyServicePath = createProxyServicePath;
+        }
     }
 }

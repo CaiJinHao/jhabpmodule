@@ -1,7 +1,9 @@
 ﻿using Jh.Abp.QuickComponents.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RequestLocalization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Http.Client;
 using Volo.Abp.IdentityModel;
@@ -60,6 +62,15 @@ namespace Jh.Abp.QuickComponents
                     .AddBaseTypes(typeof(AbpValidationResource))
                      //模块资源按照项目名称+文件夹路径写
                      .AddVirtualJson("/Localization/JhAbpQuickComponents");
+            });
+
+            Configure<AbpRequestLocalizationOptions>(options =>
+            {
+                options.RequestLocalizationOptionConfigurators.Add((serviceProvider, localizationOptions) =>
+                {
+                    localizationOptions.RequestCultureProviders.Insert(2, new JhAcceptLanguageHeaderRequestCultureProvider());
+                    return Task.CompletedTask;
+                });
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>
