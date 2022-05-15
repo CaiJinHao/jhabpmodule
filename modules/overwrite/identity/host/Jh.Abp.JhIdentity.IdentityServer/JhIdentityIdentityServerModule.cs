@@ -245,11 +245,6 @@ public class JhIdentityIdentityServerModule : AbpModule
             options.SendExceptionsDetailsToClients = _b;
             options.SendStackTraceToClients = _b;
         });
-
-        Configure<AbpAntiForgeryOptions>(options =>
-        {
-            options.AutoValidate = false;//关闭CSRF
-        });
     }
 
     public async override Task OnApplicationInitializationAsync(ApplicationInitializationContext context)

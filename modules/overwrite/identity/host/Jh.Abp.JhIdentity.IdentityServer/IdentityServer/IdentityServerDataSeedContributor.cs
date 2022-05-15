@@ -167,6 +167,27 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
             );
         }
 
+        var antdClientId = configurationSection[$"{clientName}_Antd:ClientId"];
+        if (!antdClientId.IsNullOrWhiteSpace())
+        {
+            var webClientRootUrl = configurationSection[$"{clientName}_Antd:RootUrl"].EnsureEndsWith('/');
+            var redirectUri = configurationSection[$"{clientName}_Antd:RedirectUri"];
+
+            /* JhIdentity_Web client is only needed if you created a tiered
+             * solution. Otherwise, you can delete this client. */
+
+            await CreateClientAsync(
+                name: antdClientId,
+                scopes: commonScopes,
+                grantTypes: new[] { "implicit" },
+                secret: (configurationSection[$"{clientName}_Antd:ClientSecret"] ?? "KimHo@666").Sha256(),
+                redirectUri: redirectUri,
+                postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
+                frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
+                corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
+            );
+        }
+
         //Web Client
         var webClientId = configurationSection["WebAppYourName_Web:ClientId"];
         if (!webClientId.IsNullOrWhiteSpace())
