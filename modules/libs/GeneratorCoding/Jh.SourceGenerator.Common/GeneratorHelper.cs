@@ -23,12 +23,18 @@ namespace Jh.SourceGenerator.Common
             ProxyServiceModelCodeBuilders = new Dictionary<string, ProxyServiceModelCodeBuilder>();
         }
 
-        public static bool IsModelType(this Type modelType)
+        /// <summary>
+        /// 判断类型是否为js类型对象
+        /// </summary>
+        /// <param name="modelType"></param>
+        /// <returns></returns>
+        public static bool NotJsType(this Type modelType)
         {
-            var type = modelType.GetRealTypeValue();
-            if (!type.IsValueType
-                && type.BaseType != null
-                && !new Regex($"({nameof(Task)})|({nameof(String)})").IsMatch(type.Name)//排除生成Model的类型
+            if (!modelType.IsValueType
+                && modelType.BaseType != null
+                //正则不能换行
+                && !new Regex($"({nameof(Double)})|({nameof(Decimal)})|({nameof(Int64)})|({nameof(Int32)})|({nameof(Int16)})|({nameof(Guid)})|({nameof(DateTimeOffset)})|({nameof(DateTime)})|({nameof(String)})|({nameof(Object)})|({nameof(Task)})")
+                .IsMatch(modelType.Name)//排除生成Model的类型
                 )
             {
                 return true;
@@ -36,10 +42,14 @@ namespace Jh.SourceGenerator.Common
             return false;
         }
 
+        /// <summary>
+        /// 不会添加泛型，只会添加泛型内的类型
+        /// </summary>
+        /// <param name="modelType"></param>
         public static void AddProxyServiceModelCodeBuilder(Type modelType)
         {
-            var type = modelType.GetRealTypeValue();
-            if (type.IsModelType())
+            var type = modelType.GetRealType();
+            if (type.NotJsType())
             {
                 if (!ProxyServiceModelCodeBuilders.ContainsKey(type.Name))
                 {
@@ -56,10 +66,9 @@ namespace Jh.SourceGenerator.Common
         {
             var data = input
                     .GetTypeName($"({nameof(Double)})|({nameof(Decimal)})|({nameof(Int64)})|({nameof(Int32)})|({nameof(Int16)})", "number")
-                    .GetTypeName($"{nameof(Guid)}", "string")
-                    .GetTypeName($"{nameof(DateTimeOffset)}", "string")
-                    .GetTypeName($"{nameof(DateTime)}", "string")
+                    .GetTypeName($"{nameof(Guid)}|{nameof(DateTimeOffset)}|{nameof(DateTime)}|{nameof(String)}", "string")
                     .GetTypeName($"{nameof(Object)}","any")
+                    .GetTypeName($"{nameof(Task)}","void")
                     ;
             if (isToLower)
             {
@@ -68,35 +77,25 @@ namespace Jh.SourceGenerator.Common
             return data;
         }
 
-        /// <summary>
-        /// 获取类型名称,如果是泛型自动使用泛型
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="globalNamespace">全局类型定义的命名空间 一般为API</param>
-        /// <param name="moduleNamespace">模块定义的命名空间</param>
-        /// <returns></returns>
-        public static string GetReturnTypeName(this Type type,string moduleNamespace, string globalNamespace)
+        public static string GetTypeName(this Type type, string moduleNamespace, string globalNamespace)
         {
-            var genericTypeName = type.Name;
-            if (type.IsModelType())
+            if (!type.NotJsType() && type.IsGenericType)
             {
+                return GetTypeName(type.GenericTypeArguments.FirstOrDefault(), moduleNamespace, globalNamespace);
+            }
+            //是js类型或者泛型类型
+            if (type.NotJsType())
+            {
+                var typeName = type.Name;
                 if (type.IsGenericType)
                 {
-                    genericTypeName = $"{globalNamespace}.{genericTypeName}";
+                    typeName = $"{globalNamespace}.{typeName}";
                     var genericArgType = type.GenericTypeArguments.FirstOrDefault();
-                    var genericArgTypeName = genericArgType.Name;
-                    if (genericArgType.IsModelType())
-                    {
-                        genericArgTypeName = $"{moduleNamespace}.{genericArgTypeName}";
-                    }
-                    return genericTypeName.Replace("`1", $"<{genericArgTypeName}>");
+                    return typeName.Replace("`1", $"<{GetTypeName(genericArgType, moduleNamespace, globalNamespace)}>");
                 }
-                else
-                {
-                    return $"{moduleNamespace}.{genericTypeName}";
-                }
+                return $"{moduleNamespace}.{typeName}";
             }
-            return genericTypeName.FormatJsVar();
+            return type.Name.FormatJsVar();
         }
     }
 }

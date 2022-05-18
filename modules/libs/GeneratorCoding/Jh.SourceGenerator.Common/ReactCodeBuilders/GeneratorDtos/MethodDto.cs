@@ -19,7 +19,7 @@ namespace Jh.SourceGenerator.Common.ReactCodeBuilders
             //判断类型是否需要添加命名空间
             return string.Join(",", Parameters.Select(a => {
                 var jsVarType = a.Value.Name.FormatJsVar();
-                if (a.Value.IsModelType())
+                if (a.Value.NotJsType())
                 {
                     jsVarType = $"{moduleNamespace}.{jsVarType}";
                 }

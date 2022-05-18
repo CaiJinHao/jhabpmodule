@@ -56,39 +56,22 @@ namespace Jh.Abp.Common
         }
 
         /// <summary>
-        /// 针对泛型需要获取真实 类型
+        /// 获取真实类型
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
         public static Type GetRealType(this Type type)
         {
-            return type.IsGenericType? type.GenericTypeArguments.FirstOrDefault() : type;
-        }
-
-        /// <summary>
-        /// 获取类型名称,如果是泛型自动使用泛型
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static string GetTypeName(this Type type)
-        {
-            var data= type.IsGenericType ? type.Name.Replace("`1", $"<{type.GenericTypeArguments.FirstOrDefault().Name}>") : type.Name;
-            return data;
-        }
-
-        /// <summary>
-        /// 只要类型，不要数组类型
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static Type GetRealTypeValue(this Type type)
-        {
-            var result= type.IsGenericType ? type.GenericTypeArguments.FirstOrDefault() : type;
-            if (result.IsArray)
+            var resultType= type.IsGenericType ? type.GenericTypeArguments.FirstOrDefault() : type;
+            if (resultType.IsArray)
             {
-                result= Type.GetType(result.FullName.Replace("[]", ""));
+                resultType = Type.GetType(resultType.FullName.Replace("[]", ""));
             }
-            return result;
+            if (resultType.IsGenericType)
+            {
+                return GetRealType(resultType);
+            }
+            return resultType;
         }
 
         /// <summary>

@@ -46,12 +46,11 @@ namespace Jh.SourceGenerator.Common
                 var httpAttributes = item.CustomAttributes.Where(a => a.AttributeType.BaseType.Name == HttpMethodAttribute);
                 if (httpAttributes.Any())
                 {
-                    var returnType = item.ReturnType.GetRealType();
-                    GeneratorHelper.AddProxyServiceModelCodeBuilder(returnType);
+                    GeneratorHelper.AddProxyServiceModelCodeBuilder(item.ReturnType);
                     var methodDto = new MethodDto()
                     {
                         Name = item.Name,
-                        ReturnType = returnType.GetReturnTypeName(ControllerDto.ModuleNamespace, ControllerDto.GlobalNamespace),
+                        ReturnType = item.ReturnType.GetTypeName(ControllerDto.ModuleNamespace, ControllerDto.GlobalNamespace),
                         RequestMethod = httpAttributes.First().AttributeType.Name.Replace("Attribute",""),
                     };
                     foreach (var parameterInfo in item.GetParameters())
@@ -80,11 +79,6 @@ namespace Jh.SourceGenerator.Common
             stringBuilder.AppendLine("import { request } from 'umi';");
             foreach (var method in ControllerDto.MethodDtos)
             {
-                var returnType = method.ReturnType;
-                switch (method.ReturnType)
-                {
-                    case "Task": { returnType = "void"; } break;
-                }
                 var methodName = method.Name.Replace("Async", "");
                 var parameterName = method.GetParameterKeys();
                 if (methodName.StartsWith("Delete"))
@@ -95,11 +89,11 @@ namespace Jh.SourceGenerator.Common
                     parameterName = method.Parameters.Last().Key;
                 }
                 method.RouteUrl = new System.Text.RegularExpressions.Regex(@"{").Replace(method.RouteUrl, "${");//给参数添加js语法 字符串插值
-                stringBuilder.AppendLine($"export const {methodName} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{returnType}> => {{");
+                stringBuilder.AppendLine($"export const {methodName} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{method.ReturnType}> => {{");
                 if (methodName.Equals("Create")) {
                     stringBuilder.AppendLine("if (!input.extraProperties) { input.extraProperties = {}; }");
                 }
-                stringBuilder.AppendLine($"  return await request<{returnType}>(`${{{ProxyName}}}{method.RouteUrl}`, {{");
+                stringBuilder.AppendLine($"  return await request<{method.ReturnType}>(`${{{ProxyName}}}{method.RouteUrl}`, {{");
                 var requestMethod = method.RequestMethod.Replace("Http", "");
                 stringBuilder.AppendLine($"    method: '{requestMethod}',");
                 //判断参数是不是已经在路由中包含了
@@ -114,7 +108,7 @@ namespace Jh.SourceGenerator.Common
                         else
                         {
                             //判断参数是对象不是
-                            if (method.Parameters.First().Value.IsModelType())
+                            if (method.Parameters.First().Value.NotJsType())
                             {
                                 stringBuilder.AppendLine($"params: {parameterName}");
                             }
