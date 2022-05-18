@@ -10,6 +10,16 @@
     "Permission:Delete": "删除",
     "Permission:BatchDelete": "批量删除",
     "Permission:Recover": "恢复",
-    "Permission:ManagePermissions": "管理权限"
+    "Permission:ManagePermissions": "管理权限",
+    "JhAbp:Operation": "操作",
+    "JhAbp:TenantId": "租户",
+    "JhAbp:IsDeleted": "是否删除",
+    "JhAbp:DeleterId": "删除人",
+    "JhAbp:DeletionTime": "删除时间",
+    "JhAbp:LastModificationTime": "最后修改时间",
+    "JhAbp:LastModifierId": "最后修改人",
+    "JhAbp:CreationTime": "创建时间",
+    "JhAbp:CreatorId": "创建人",
+    "JhAbp:ExtraProperties": "扩展属性"
   }
 }
