@@ -86,14 +86,25 @@ namespace Jh.SourceGenerator.Common
                     case "Task": { returnType = "void"; } break;
                 }
                 var methodName = method.Name.Replace("Async", "");
+                var data = method.GetParameterKeys();
                 if (methodName.StartsWith("Delete"))
                 {
                     methodName = $"DeleteBy{method.Parameters.First().Key.ToCamelCase(CamelCaseType.UpperCamelCase)}";
                 }
+                else if (methodName.StartsWith("Update")) {
+                    data = method.Parameters.Last().Key;
+                }
+                method.RouteUrl = new System.Text.RegularExpressions.Regex(@"{").Replace(method.RouteUrl, "${");//给参数添加js语法 字符串插值
                 stringBuilder.AppendLine($"export const {methodName} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{returnType}> => {{");
+                if (methodName.Equals("Create")) {
+                    stringBuilder.AppendLine("if (!input.extraProperties) { input.extraProperties = {}; }");
+                }
                 stringBuilder.AppendLine($"  return await request<{returnType}>(`${{{ProxyName}}}{method.RouteUrl}`, {{");
                 stringBuilder.AppendLine($"    method: '{method.RequestMethod.Replace("Http", "")}',");
-                stringBuilder.AppendLine(method.Parameters.Count > 0 ? $"data: {method.GetParameterKeys()}" : "");
+                if (method.Parameters.Count > 0 && data != "id")
+                {
+                    stringBuilder.AppendLine($"data: {data}");
+                }
                 stringBuilder.AppendLine("  });");
                 stringBuilder.AppendLine("};");
             }

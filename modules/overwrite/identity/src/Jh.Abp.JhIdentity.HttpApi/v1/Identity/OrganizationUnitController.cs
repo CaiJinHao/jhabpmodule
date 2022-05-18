@@ -34,7 +34,8 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Delete)]
-		[HttpDelete("{id}")]
+		[Route("{id}")]
+		[HttpDelete]
 		public virtual async Task DeleteAsync(System.Guid id)
 		{
 			await OrganizationUnitAppService.DeleteAsync(id);
@@ -49,24 +50,24 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Update)]
-		[HttpPut("{id}")]
+		[Route("{id}")]
+		[HttpPut]
 		public virtual async Task<OrganizationUnitDto> UpdateAsync(System.Guid id, OrganizationUnitUpdateInputDto input)
 		{
 			return await OrganizationUnitAppService.UpdateAsync(id, input);
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Update)]
-		[HttpPatch("{id}")]
-		[HttpPut("Patch/{id}")]
+		[Route("{id}")]
+		[HttpPatch]
 		public virtual async Task UpdatePortionAsync(System.Guid id, OrganizationUnitUpdateInputDto inputDto)
 		{
 			await OrganizationUnitAppService.UpdatePortionAsync(id, inputDto);
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Recover)]
-		[HttpPatch]
-		[HttpPut]
 		[Route("{id}/Recover")]
+		[HttpPatch]
 		public async Task RecoverAsync(Guid id)
 		{
 			await OrganizationUnitAppService.RecoverAsync(id);
@@ -91,30 +92,32 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Detail)]
-		[HttpGet("{id}")]
+		[Route("{id}")]
+		[HttpGet]
 		public virtual async Task<OrganizationUnitDto> GetAsync(System.Guid id)
 		{
 			return await OrganizationUnitAppService.GetAsync(id);
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
-		[HttpGet]
 		[Route("{id}/roles")]
+		[HttpGet]
 		public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
 		{
 			return await OrganizationUnitAppService.GetRolesAsync(id);
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
-		[HttpGet("Trees")]
+		[Route("Trees")]
+		[HttpGet]
 		public virtual async Task<ListResultDto<TreeDto>> GetOrganizationTreeAsync()
 		{
 			return await OrganizationUnitAppService.GetOrganizationTreeAsync();
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
-		[HttpGet]
 		[Route("select")]
+		[HttpGet]
 		public virtual async Task<dynamic> GetSelectAsync(string name)
 		{
 			var datas = await OrganizationUnitAppService.GetEntitysAsync(new OrganizationUnitRetrieveInputDto() { DisplayName = name });
@@ -125,14 +128,16 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
-		[HttpGet("{id}/Members")]
+		[Route("{id}/Members")]
+		[HttpGet]
 		public async Task<ListResultDto<IdentityUserDto>> GetMembersAsync(Guid id)
         {
 			return await OrganizationUnitAppService.GetMembersAsync(id);
         }
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Create)]
-		[HttpGet("Role/{roleId}")]
+		[Route("Role/{roleId}")]
+		[HttpGet]
 		public Task CreateByRoleAsync(Guid roleId)
         {
             throw new NotImplementedException();

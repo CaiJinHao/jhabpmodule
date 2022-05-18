@@ -58,7 +58,8 @@ using Volo.Abp.Data;");
 
 
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Delete)]");
-                    builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
+                    builder.AppendLine("\t\t[Route(\"{id}\")]");
+                    builder.AppendLine("\t\t[HttpDelete]");
                     builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");
@@ -81,7 +82,8 @@ using Volo.Abp.Data;");
 
 
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Update)]");
-                    builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
+                    builder.AppendLine("\t\t[Route(\"{id}\")]");
+                    builder.AppendLine("\t\t[HttpPut]");
                     builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
@@ -92,8 +94,9 @@ using Volo.Abp.Data;");
 
 
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Update)]");
-                    builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
-                    builder.AppendLine("\t\t[HttpPatch(\"Patch/{id}\")]");
+                    builder.AppendLine("\t\t[Route(\"{id}\")]");
+                    builder.AppendLine("\t\t[HttpPatch]");
+                    //builder.AppendLine("\t\t[HttpPut(\"Patch/{id}\")]");//兼容手机端用得
                     builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
@@ -106,9 +109,9 @@ using Volo.Abp.Data;");
                     if (table.IsDelete)
                     {
                         builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Recover)]");
+                        builder.AppendLine("\t\t[Route(\"{id}/Recover\")]");
                         builder.AppendLine("\t\t[HttpPatch]");
                         builder.AppendLine("\t\t[HttpPut]");
-                        builder.AppendLine("\t\t[Route(\"{id}/Recover\")]");
                         builder.AppendLine($"\t\t public async Task RecoverAsync({table.KeyType} id)");
                         {
                             builder.AppendLine("\t\t{");
@@ -146,7 +149,8 @@ using Volo.Abp.Data;");
 
 
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Detail)]");
-                    builder.AppendLine("\t\t[HttpGet(\"{id}\")]");
+                    builder.AppendLine("\t\t[Route(\"{id}\")]");
+                    builder.AppendLine("\t\t[HttpGet]");
                     builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> GetAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");

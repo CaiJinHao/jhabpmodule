@@ -15,7 +15,7 @@ namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
         [Fact]
         public void ReactProxyServiceCodeBuilder_Test()
         {
-            var generatorPath = @"F:\Temp";
+            var generatorPath = @"G:\Temp";
             var service = new GeneratorService(new GeneratorOptions(generatorPath));
             service.GeneratorCodeByAppService("API.JhIdentity", "API", "Identity_API", new Type[] { typeof(OrganizationUnitController) });
         }

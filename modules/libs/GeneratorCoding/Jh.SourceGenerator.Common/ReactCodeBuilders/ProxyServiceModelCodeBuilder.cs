@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Jh.Abp.Common;
+using System.Linq;
 
 namespace Jh.SourceGenerator.Common
 {
@@ -25,7 +26,8 @@ namespace Jh.SourceGenerator.Common
             var builder = new StringBuilder();
             builder.AppendLine($"export interface {ModelType.Name}");
             builder.AppendLine("{");
-            var fields = ModelType.GetProperties();
+            //ignore attribute
+            var fields = ModelType.GetProperties().Where(a => !a.CustomAttributes.Any(a => a.AttributeType == typeof(Newtonsoft.Json.JsonIgnoreAttribute)));
             foreach (var field in fields)
             {
                 var propertyType = field.PropertyType.GetRealType();
