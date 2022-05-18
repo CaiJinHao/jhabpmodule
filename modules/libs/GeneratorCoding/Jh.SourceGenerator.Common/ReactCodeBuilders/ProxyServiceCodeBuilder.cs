@@ -86,13 +86,13 @@ namespace Jh.SourceGenerator.Common
                     case "Task": { returnType = "void"; } break;
                 }
                 var methodName = method.Name.Replace("Async", "");
-                var data = method.GetParameterKeys();
+                var parameterName = method.GetParameterKeys();
                 if (methodName.StartsWith("Delete"))
                 {
                     methodName = $"DeleteBy{method.Parameters.First().Key.ToCamelCase(CamelCaseType.UpperCamelCase)}";
                 }
                 else if (methodName.StartsWith("Update")) {
-                    data = method.Parameters.Last().Key;
+                    parameterName = method.Parameters.Last().Key;
                 }
                 method.RouteUrl = new System.Text.RegularExpressions.Regex(@"{").Replace(method.RouteUrl, "${");//给参数添加js语法 字符串插值
                 stringBuilder.AppendLine($"export const {methodName} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{returnType}> => {{");
@@ -100,10 +100,30 @@ namespace Jh.SourceGenerator.Common
                     stringBuilder.AppendLine("if (!input.extraProperties) { input.extraProperties = {}; }");
                 }
                 stringBuilder.AppendLine($"  return await request<{returnType}>(`${{{ProxyName}}}{method.RouteUrl}`, {{");
-                stringBuilder.AppendLine($"    method: '{method.RequestMethod.Replace("Http", "")}',");
-                if (method.Parameters.Count > 0 && data != "id")
+                var requestMethod = method.RequestMethod.Replace("Http", "");
+                stringBuilder.AppendLine($"    method: '{requestMethod}',");
+                //判断参数是不是已经在路由中包含了
+                if (!new System.Text.RegularExpressions.Regex($"{{{parameterName}}}").IsMatch(method.RouteUrl))
                 {
-                    stringBuilder.AppendLine($"data: {data}");
+                    if (method.Parameters.Count > 0 )
+                    {
+                        if (requestMethod.ToLower() != "get")
+                        {
+                            stringBuilder.AppendLine($"data: {parameterName}");
+                        }
+                        else
+                        {
+                            //判断参数是对象不是
+                            if (method.Parameters.First().Value.IsModelType())
+                            {
+                                stringBuilder.AppendLine($"params: {parameterName}");
+                            }
+                            else
+                            {
+                                stringBuilder.AppendLine($"params: {{{parameterName}}}");
+                            }
+                        }
+                    }
                 }
                 stringBuilder.AppendLine("  });");
                 stringBuilder.AppendLine("};");
