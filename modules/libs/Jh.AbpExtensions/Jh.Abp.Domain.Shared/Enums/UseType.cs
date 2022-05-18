@@ -32,6 +32,7 @@ namespace Jh.Abp.Domain.Shared
 
     /// <summary>
     /// bool 值也可以使用 1:true,2:false
+    /// 针对后台枚举使用
     /// </summary>
     public enum YesOrNo
     {
@@ -39,5 +40,16 @@ namespace Jh.Abp.Domain.Shared
         Yes=1,
         [Description("否")]
         No,
+    }
+
+    /// <summary>
+    /// 针对前端Form表单查询筛选使用
+    /// </summary>
+    public enum YesOrNoOption
+    {
+        [Description("否")]
+        No =1,
+        [Description("是")]
+        Yes,
     }
 }

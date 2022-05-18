@@ -20,7 +20,7 @@ namespace Jh.Abp.JhIdentity.v1
         [HttpGet]
         public virtual Task<List<OptionDto<int>>> GetYesOrNoAsync()
         {
-            var datas = UtilEnums.GetEnumListByDescription<YesOrNo>().ToList();
+            var datas = UtilEnums.GetEnumListByDescription<YesOrNoOption>().ToList();
             return Task.FromResult(datas);
         }
     }
