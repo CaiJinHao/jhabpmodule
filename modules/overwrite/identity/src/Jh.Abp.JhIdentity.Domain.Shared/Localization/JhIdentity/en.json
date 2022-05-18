@@ -1,7 +1,13 @@
 {
   "culture": "en",
   "texts": {
-    "MyAccount":  "My account",
-    "SamplePageMessage": "A sample page for the JhIdentity module"
+    "Permission:JhAuditLogging": "Audit log module",
+    "Permission:AuditLoggings": "Audit Log Management",
+    "Permission:JhIdentity": "Identity module",
+    "Permission:OrganizationUnits": "Organization management",
+    "JhIdentity:JhOrganizationUnit:ParentId": "Parent",
+    "JhIdentity:JhOrganizationUnit:Code": "Code",
+    "JhIdentity:JhOrganizationUnit:DisplayName": "DisplayName",
+    "JhIdentity:JhOrganizationUnit:LeaderId": "Leader"
   }
 }

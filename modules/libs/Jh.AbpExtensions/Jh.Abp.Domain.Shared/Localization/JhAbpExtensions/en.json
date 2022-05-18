@@ -10,6 +10,16 @@
     "Permission:Delete": "Delete",
     "Permission:BatchDelete": "Batch Delete",
     "Permission:Recover": "Recover",
-    "Permission:ManagePermissions": "Manage Permissions"
+    "Permission:ManagePermissions": "Manage Permissions",
+    "JhAbp:Operation": "Operation",
+    "JhAbp:TenantId": "Tenant",
+    "JhAbp:IsDeleted": "Is Deleted",
+    "JhAbp:DeleterId": "Deleter",
+    "JhAbp:DeletionTime": "Deletion Time",
+    "JhAbp:LastModificationTime": "Last Modification Time",
+    "JhAbp:LastModifierId": "LastModifier",
+    "JhAbp:CreationTime": "Creation Time",
+    "JhAbp:CreatorId": "Creator",
+    "JhAbp:ExtraProperties": "Extra Properties"
   }
 }
