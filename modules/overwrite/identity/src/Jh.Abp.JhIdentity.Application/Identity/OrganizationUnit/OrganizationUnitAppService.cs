@@ -1,6 +1,7 @@
 using Jh.Abp.Application;
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common;
+using Jh.Abp.Common.Utils;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -229,6 +230,12 @@ namespace Jh.Abp.JhIdentity
                 }
                 item.AddRole(roleId);
             }
+        }
+
+        public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
+        {
+            var datas = await OrganizationUnitRepository.GetQueryableAsync(true);
+            return new ListResultDto<OptionDto<Guid>>(datas.Select(a => new OptionDto<Guid> { Label = a.DisplayName, Value = a.Id }).ToList());
         }
     }
 }

@@ -1,5 +1,6 @@
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common;
+using Jh.Abp.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,5 +20,6 @@ namespace Jh.Abp.JhIdentity
 		Task<ListResultDto<IdentityUserDto>> GetMembersAsync(Guid organizationUnitId);
 
 		Task CreateByRoleAsync(Guid roleId);
+		Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name);
 	}
 }

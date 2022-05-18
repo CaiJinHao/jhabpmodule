@@ -1,7 +1,9 @@
 using Jh.Abp.Common;
+using Jh.Abp.Common.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -116,15 +118,11 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
-		[Route("select")]
+		[Route("options")]
 		[HttpGet]
-		public virtual async Task<dynamic> GetSelectAsync(string name)
+		public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
 		{
-			var datas = await OrganizationUnitAppService.GetEntitysAsync(new OrganizationUnitRetrieveInputDto() { DisplayName = name });
-			return new
-			{
-				items = datas.Items.Select(a => new { name = a.DisplayName, value = a.Id })
-			};
+			return await OrganizationUnitAppService.GetOptionsAsync(name);
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
