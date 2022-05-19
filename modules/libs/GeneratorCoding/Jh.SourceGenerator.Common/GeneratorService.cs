@@ -33,6 +33,10 @@ namespace Jh.SourceGenerator.Common
             generatorOptions = options;
         }
 
+        public GeneratorService()
+        {
+        }
+
         public virtual IEnumerable<Type> GetLoadableTypes()
         {
             return LoadAssembly.DefinedTypes.Select((TypeInfo t) => t.AsType());
