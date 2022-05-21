@@ -161,5 +161,6 @@ function Publish-PackNuget() {
 }
 
 Write-Host '正在处理，请稍后。。。';
-New-PackByNupkg;
+# New-PackByNupkg;
+Publish-PackNuget;
 Write-Host "处理完成"

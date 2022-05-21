@@ -8,7 +8,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="5.1.4" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="5.2.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jh.Abp.Domain.Shared\Jh.Abp.Domain.Shared.csproj" />
