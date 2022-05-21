@@ -30,8 +30,6 @@ namespace Jh.Abp.QuickComponents.Swagger
                 //options.ApiVersionReader = new HeaderApiVersionReader("api-version"); //Supports header too
                 //options.ApiVersionReader = new MediaTypeApiVersionReader(); //Supports accept header too
 
-                var mvcOptions = services.ExecutePreConfiguredActions<AbpAspNetCoreMvcOptions>();
-                options.ConfigureAbp(mvcOptions);
                 setupAction?.Invoke(options);
             });
 
