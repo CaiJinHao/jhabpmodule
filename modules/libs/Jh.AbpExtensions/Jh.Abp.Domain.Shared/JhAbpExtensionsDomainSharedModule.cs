@@ -23,7 +23,7 @@ namespace Jh.Abp.Domain.Shared
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<JhAbpExtensionsResource>("en")
+                    .Add<JhAbpExtensionsResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))//继承资源
                      //模块资源按照项目名称+文件夹路径写
                     .AddVirtualJson("/Localization/JhAbpExtensions");

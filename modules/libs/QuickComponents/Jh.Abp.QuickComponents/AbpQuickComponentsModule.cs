@@ -58,7 +58,7 @@ namespace Jh.Abp.QuickComponents
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<JhAbpQuickComponentsResource>("en")
+                    .Add<JhAbpQuickComponentsResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
                      //模块资源按照项目名称+文件夹路径写
                      .AddVirtualJson("/Localization/JhAbpQuickComponents");

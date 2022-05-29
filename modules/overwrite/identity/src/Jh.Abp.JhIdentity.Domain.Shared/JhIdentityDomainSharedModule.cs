@@ -7,6 +7,7 @@ using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 using Jh.Abp.Domain.Localization;
 using Jh.Abp.Domain.Shared;
+using Volo.Abp.Identity.Localization;
 
 namespace Jh.Abp.JhIdentity;
 
@@ -25,14 +26,20 @@ public class JhIdentityDomainSharedModule : AbpModule
 
         Configure<AbpLocalizationOptions>(options =>
         {
+            //重写资源类型得本地化文件
             options.Resources
                 .Get<AbpValidationResource>()
                 .AddVirtualJson("/Localization/Account");
 
+
+            //新的资源文件类型,继承，用得时候必须用该资源类型
             options.Resources
-                .Add<JhIdentityResource>("en")
-                .AddBaseTypes(typeof(AbpValidationResource))
+                .Add<JhIdentityResource>("zh-Hans")
+                .AddBaseTypes(typeof(IdentityResource))
                 .AddBaseTypes(typeof(JhAbpExtensionsResource))
+                //.AddBaseTypes(typeof(AccountResource))
+                //.AddBaseTypes(typeof(AuditLoggingResource))
+                //.AddBaseTypes(typeof(AbpFeatureManagementResource))
                 .AddVirtualJson("/Localization/JhIdentity");
         });
 

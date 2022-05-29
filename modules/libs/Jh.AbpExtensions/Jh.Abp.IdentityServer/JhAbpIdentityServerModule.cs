@@ -34,7 +34,7 @@ namespace Jh.Abp.IdentityServer
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<JhAbpIdentityServerResource>("en")
+                    .Add<JhAbpIdentityServerResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpIdentityServerResource))
                     //模块资源按照项目名称+文件夹路径写
                     .AddVirtualJson("/Localization/JhAbpIdentityServer");

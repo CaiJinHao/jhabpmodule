@@ -128,11 +128,14 @@ public class JhIdentityIdentityServerModule : AbpModule
         });
 
         context.Services.AddApiVersion();
-        var Audience = configuration.GetValue<string>("AuthServer:ApiName");
-        context.Services.AddJhAbpSwagger(configuration,
-           new Dictionary<string, string>{
+        if (Convert.ToBoolean(configuration["AppSettings:SwaggerUI"]))
+        {
+            var Audience = configuration.GetValue<string>("AuthServer:ApiName");
+            context.Services.AddJhAbpSwagger(configuration,
+               new Dictionary<string, string>{
                {Audience, $"{Audience} API"}
-           }, contractsType: typeof(JhIdentityApplicationContractsModule));
+               }, contractsType: typeof(JhIdentityApplicationContractsModule));
+        }
 
         //context.Services.AddAbpSwaggerGen(
         //    options =>
@@ -283,11 +286,14 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseAbpRequestLocalization();
         app.UseIdentityServer();
         app.UseAuthorization();
-        app.UseSwagger();
-        app.UseAbpSwaggerUI(options =>
+        if (Convert.ToBoolean(configuration["AppSettings:SwaggerUI"]))
         {
-            options.UseJhSwaggerUiConfig(configuration, app.ApplicationServices.GetRequiredService<IOptions<SwaggerApiOptions>>().Value);
-        });
+            app.UseSwagger();
+            app.UseAbpSwaggerUI(options =>
+            {
+                options.UseJhSwaggerUiConfig(configuration, app.ApplicationServices.GetRequiredService<Microsoft.Extensions.Options.IOptions<SwaggerApiOptions>>().Value);
+            });
+        }
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
