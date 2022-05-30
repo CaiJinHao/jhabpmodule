@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Identity;
 using Xunit;
 
 namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
@@ -15,9 +16,11 @@ namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
         [Fact]
         public void ReactProxyServiceCodeBuilder_Test()
         {
+            var moduleNamespace = "API.JhIdentity";
             var generatorPath = @"G:\Temp";
             var service = new GeneratorService(new GeneratorOptions(generatorPath));
-            service.GeneratorCodeByAppService("API.JhIdentity", "API", "Identity_API", new Type[] { typeof(OrganizationUnitController) });
+            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(IdentityRoleController) });
+            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(IdentityRole) }, "JhIdentity");
         }
     }
 }

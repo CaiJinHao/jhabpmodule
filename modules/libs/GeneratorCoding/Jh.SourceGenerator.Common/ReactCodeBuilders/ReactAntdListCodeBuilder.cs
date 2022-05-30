@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Jh.SourceGenerator.Common.ReactCodeBuilders
+namespace Jh.SourceGenerator.Common
 {
     public class ReactAntdListCodeBuilder : CodeBuilderBase
     {
@@ -11,19 +11,27 @@ namespace Jh.SourceGenerator.Common.ReactCodeBuilders
         //输出的Dto的所有字段
         protected Type DomainType { get; }
         protected string ModuleNamespace { get; }
-        protected string ModuleName { get; set; }
+        protected string JhModuleName { get; set; }
         protected GeneratorService GeneratorService { get;  }
-        public ReactAntdListCodeBuilder(Type domainType, string filePath, string moduleName)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domainType">Domain类</param>
+        /// <param name="filePath">生成的临时文件夹</param>
+        /// <param name="moduleNamespace">Dto命名空间</param>
+        /// <param name="jhModuleName">后台模块名称，一般问数据库连接名,给本地化使用</param>
+        public ReactAntdListCodeBuilder(Type domainType, string filePath, string moduleNamespace,string jhModuleName)
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                FilePath = Path.Combine(filePath);
+                FilePath = Path.Combine(filePath, domainType.Name);//以表名称为上级文件名创建路径
             }
             FileName = "index";
             Suffix = ".tsx";
             DomainType = domainType;
-            ModuleName = moduleName;
-            ModuleNamespace = $"API.{moduleName}";
+            JhModuleName = jhModuleName;
+            ModuleNamespace = moduleNamespace;
 
             GeneratorService = new GeneratorService();
         }
@@ -180,7 +188,7 @@ const requestYesOrNoOptions = async () => {
                 var fieldName = item.Name;
                 var fieldDescription = item.Description;
                 stringBuilder.AppendLine("{");
-                stringBuilder.AppendLine($"title: intl.formatMessage({{id: '{ModuleName}:{DomainType.Name}:{fieldName}',defaultMessage: '{fieldDescription}',}}),dataIndex: '{fieldName}',");
+                stringBuilder.AppendLine($"title: intl.formatMessage({{id: '{JhModuleName}:{DomainType.Name}:{fieldName}',defaultMessage: '{fieldDescription}',}}),dataIndex: '{fieldName}',");
                 stringBuilder.AppendLine("},");
             }
             
@@ -255,8 +263,7 @@ const requestYesOrNoOptions = async () => {
     <>
       <PageContainer>");
             stringBuilder.AppendLine($"<ProTable<{ComponentDtoName}>");
-            stringBuilder.AppendLine(@"
-actionRef={proTableActionRef}
+            stringBuilder.AppendLine(@"actionRef={proTableActionRef}
           columns={columns}
           rowSelection={rowSelection}
           request={(params, sorter, filter) => getTableDataSource(params, sorter, filter)}
