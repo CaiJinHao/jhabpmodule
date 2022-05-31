@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Volo.Abp.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Volo.Abp.Application.Dtos;
+using Jh.Abp.Common.Utils;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -27,6 +29,12 @@ namespace Jh.Abp.JhIdentity
 				return role.Id;
             }
 			return null;
+        }
+
+        public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
+        {
+            var datas = await IdentityRoleRepository.GetQueryableAsync(true);
+            return new ListResultDto<OptionDto<Guid>>(datas.Where(a => a.Name.Contains(name)).Select(a => new OptionDto<Guid> { Label = a.Name, Value = a.Id }).ToList());
         }
     }
 }

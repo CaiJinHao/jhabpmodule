@@ -302,8 +302,9 @@ const requestYesOrNoOptions = async () => {
           }}
         />
       </PageContainer>");
+
+            stringBuilder.AppendLine($"<OperationModal{DomainType.Name}");
             stringBuilder.AppendLine(@"
-<OperationModalOrganizationUnit
         detail={detailOperation}
         visible={visibleOperation}
         current={currentOperation}

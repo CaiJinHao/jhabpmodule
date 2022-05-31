@@ -1,6 +1,8 @@
+using Jh.Abp.Common.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -21,13 +23,6 @@ namespace Jh.Abp.JhIdentity.v1
 		protected IJhIdentityRoleAppService IdentityRoleAppService => LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleAppService>();
 
 		[Authorize(IdentityPermissions.Roles.Create)]
-		[HttpPost]
-		public virtual async Task<IdentityRoleDto> CreateAsync(IdentityRoleCreateInputDto input)
-		{
-			return await IdentityRoleAppService.CreateAsync(input);
-		}
-
-		[Authorize(IdentityPermissions.Roles.Default)]
 		[HttpPost("roles")]
 		public virtual async Task<Volo.Abp.Identity.IdentityRoleDto> CreateAsync(Volo.Abp.Identity.IdentityRoleCreateDto input)
 		{
@@ -37,34 +32,41 @@ namespace Jh.Abp.JhIdentity.v1
 			return data;
 		}
 
+		[Authorize(IdentityPermissions.Roles.Create)]
+		[HttpPost]
+		public Task<IdentityRoleDto> CreateAsync(IdentityRoleCreateInputDto input)
+		{
+			throw new NotImplementedException();
+		}
+
 		[Authorize(IdentityPermissions.Roles.Delete)]
 		[HttpDelete]
 		[Route("{id}")]
 		public virtual Task DeleteAsync(Guid id)
 		{
-			return RoleAppService.DeleteAsync(id);
+			throw new NotImplementedException();
 		}
 
 		[Authorize(IdentityPermissions.Roles.Delete)]
 		[Route("keys")]
 		[HttpDelete]
-		public virtual async Task DeleteAsync([FromBody] System.Guid[] keys)
+		public virtual  Task DeleteAsync([FromBody] System.Guid[] keys)
 		{
-			await IdentityRoleAppService.DeleteAsync(keys);
+			throw new NotImplementedException();
 		}
 
 		[Authorize(IdentityPermissions.Roles.Update)]
 		[HttpPut("{id}")]
-		public virtual async Task<IdentityRoleDto> UpdateAsync(System.Guid id, IdentityRoleUpdateInputDto input)
+		public virtual  Task<IdentityRoleDto> UpdateAsync(System.Guid id, IdentityRoleUpdateInputDto input)
 		{
-			return await IdentityRoleAppService.UpdateAsync(id, input);
+			throw new NotImplementedException();
 		}
 
 		[Authorize(IdentityPermissions.Roles.Update)]
 		[HttpPatch("{id}")]
-		public virtual async Task UpdatePortionAsync(System.Guid id, IdentityRoleUpdateInputDto inputDto)
+		public virtual  Task UpdatePortionAsync(System.Guid id, IdentityRoleUpdateInputDto inputDto)
 		{
-			await IdentityRoleAppService.UpdatePortionAsync(id, inputDto);
+			throw new NotImplementedException();
 		}
 
 		[Authorize(IdentityPermissions.Roles.Default)]
@@ -106,14 +108,10 @@ namespace Jh.Abp.JhIdentity.v1
 
 		[Authorize(IdentityPermissions.Roles.Default)]
 		[HttpGet]
-		[Route("select")]
-		public virtual async Task<dynamic> GetSelectAsync(string name)
+		[Route("options")]
+		public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
 		{
-			var datas = await IdentityRoleAppService.GetEntitysAsync(new IdentityRoleRetrieveInputDto() { Name = name });
-			return new
-			{
-                items = datas.Items.Where(a => a.Name != JhIdentityConsts.AdminRoleName).Select(a => new { name = a.Name, value = a.Id })
-            };
+			return await IdentityRoleAppService.GetOptionsAsync(name);
 		}
 
 		[AllowAnonymous]
@@ -121,7 +119,6 @@ namespace Jh.Abp.JhIdentity.v1
 		public async Task<Guid?> GetAdminRoleIdAsync()
         {
             return await IdentityRoleAppService.GetAdminRoleIdAsync();
-
 		}
     }
 }
