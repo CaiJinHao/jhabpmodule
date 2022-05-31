@@ -1,6 +1,7 @@
 using Jh.Abp.Application;
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common.Extensions;
+using Jh.Abp.Common.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System;
@@ -151,13 +152,13 @@ namespace Jh.Abp.JhIdentity
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
         }
 
-        public virtual async Task RecoverAsync(System.Guid id,bool isDelete)
+        public virtual async Task RecoverAsync(System.Guid id)
         {
-            await CheckUpdatePolicyAsync();
+            await CheckPolicyAsync(JhIdentityPermissions.IdentityUsers.Recover);
             using (DataFilter.Disable<ISoftDelete>())
             {
                 var entity = await crudRepository.FindAsync(id, false);
-                entity.IsDeleted = isDelete;
+                entity.IsDeleted = true;
                 entity.DeleterId = CurrentUser.Id;
                 entity.DeletionTime = Clock.Now;
             }
@@ -244,6 +245,13 @@ namespace Jh.Abp.JhIdentity
                 (await UserManager.SetLockoutEnabledAsync(user, lockoutEnabled)).CheckErrors();
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
+        }
+
+        public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync()
+        {
+            var query = await IdentityUserRepository.GetQueryableAsync(true);
+            return new ListResultDto<OptionDto<Guid>>(query.Where(a => a.UserName != JhIdentitySettings.SuperadminUserName)
+                .Select(a => new OptionDto<Guid> { Label = $"{a.Name}-{a.UserName}", Value = a.Id }).ToList());
         }
     }
 }

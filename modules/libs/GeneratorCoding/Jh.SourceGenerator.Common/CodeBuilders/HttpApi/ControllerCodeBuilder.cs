@@ -111,7 +111,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Recover)]");
                         builder.AppendLine("\t\t[Route(\"{id}/Recover\")]");
                         builder.AppendLine("\t\t[HttpPatch]");
-                        builder.AppendLine("\t\t[HttpPut]");
+                        builder.AppendLine("//\t\t[HttpPut]");
                         builder.AppendLine($"\t\t public async Task RecoverAsync({table.KeyType} id)");
                         {
                             builder.AppendLine("\t\t{");

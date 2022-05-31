@@ -25,7 +25,7 @@ namespace Jh.SourceGenerator.Common
             Suffix = ".ts";
             if (!string.IsNullOrEmpty(filePath))
             {
-                FilePath = Path.Combine(filePath, ControllerDto.Name);//以表名称为上级文件名创建路径
+                FilePath = Path.Combine(filePath, $"services/{ControllerDto.Name}");//以表名称为上级文件名创建路径
             }
             FileName = $"{ControllerDto.Name.ToLower()}.service";
             InitPropertys();

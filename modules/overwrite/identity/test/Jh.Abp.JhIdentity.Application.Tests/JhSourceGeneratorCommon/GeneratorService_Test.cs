@@ -19,8 +19,8 @@ namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
             var moduleNamespace = "API.JhIdentity";
             var generatorPath = @"G:\Temp";
             var service = new GeneratorService(new GeneratorOptions(generatorPath));
-            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(IdentityRoleController) });
-            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(IdentityRole) }, "JhIdentity");
+            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(IdentityUserController) });
+            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(IdentityUser) }, "JhIdentity");
         }
     }
 }

@@ -5,6 +5,7 @@
     "Permission:AuditLoggings": "审计日志管理",
     "Permission:JhIdentity": "Identity模块",
     "Permission:OrganizationUnits": "组织管理",
+    "Permission:IdentityUsers": "用户管理",
     "JhIdentity:JhOrganizationUnit:ParentId": "上级组织",
     "JhIdentity:JhOrganizationUnit:Code": "组织编号",
     "JhIdentity:JhOrganizationUnit:DisplayName": "组织名称",

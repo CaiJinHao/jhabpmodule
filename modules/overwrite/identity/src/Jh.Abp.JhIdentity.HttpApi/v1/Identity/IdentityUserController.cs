@@ -1,4 +1,5 @@
 using Jh.Abp.Application.Contracts;
+using Jh.Abp.Common.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,21 +27,21 @@ namespace Jh.Abp.JhIdentity.v1
 
         public IDataFilter<ISoftDelete> DataFilterDelete { get; set; }
 
-        [Authorize(IdentityPermissions.Users.Create)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Create)]
         [HttpPost]
         public virtual async Task<IdentityUserDto> CreateAsync(IdentityUserCreateInputDto input)
         {
             return await IdentityUserAppService.CreateAsync(input);
         }
 
-        [Authorize(IdentityPermissions.Users.Delete)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Delete)]
         [HttpDelete("{id}")]
         public virtual async Task DeleteAsync(System.Guid id)
         {
             await IdentityUserAppService.DeleteAsync(id);
         }
 
-        [Authorize(IdentityPermissions.Users.Delete)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Delete)]
         [Route("keys")]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromBody] System.Guid[] keys)
@@ -48,22 +49,22 @@ namespace Jh.Abp.JhIdentity.v1
             await IdentityUserAppService.DeleteAsync(keys);
         }
 
-        [Authorize(IdentityPermissions.Users.Update)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
         [HttpPut("{id}")]
         public virtual async Task<IdentityUserDto> UpdateAsync(System.Guid id, IdentityUserUpdateInputDto input)
         {
             return await IdentityUserAppService.UpdateAsync(id, input);
         }
 
-        [Authorize(IdentityPermissions.Users.Update)]
-        [HttpPut("Patch/{id}")]//兼容手机端，手机端不支持Patch
+        [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
+        //[HttpPut("Patch/{id}")]//兼容手机端，手机端不支持Patch
         [HttpPatch("{id}")]
         public virtual async Task UpdatePortionAsync(System.Guid id, IdentityUserUpdateInputDto inputDto)
         {
             await IdentityUserAppService.UpdatePortionAsync(id, inputDto);
         }
 
-        [Authorize(IdentityPermissions.Users.Update)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
         [HttpPatch]
         [Route("{id}/lockoutEnabled")]
         public virtual async Task UpdateLockoutEnabledAsync(Guid id, [FromBody] bool lockoutEnabled)
@@ -71,23 +72,23 @@ namespace Jh.Abp.JhIdentity.v1
             await IdentityUserAppService.UpdateLockoutEnabledAsync(id,lockoutEnabled);
         }
 
-        [Authorize(IdentityPermissions.Users.Update)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Recover)]
         [HttpPatch]
-        [HttpPut]
+        //[HttpPut]
         [Route("{id}/Recover")]
-        public async Task RecoverAsync(Guid id, [FromBody] bool isDelete)
+        public async Task RecoverAsync(Guid id)
         {
-            await IdentityUserAppService.RecoverAsync(id, isDelete);
+            await IdentityUserAppService.RecoverAsync(id);
         }
 
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [HttpGet("{id}")]
         public virtual async Task<IdentityUserDto> GetAsync(System.Guid id)
         {
            return await IdentityUserAppService.GetAsync(id);
         }
 
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [HttpGet]
         [Route("{id}/roles")]
         public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
@@ -95,7 +96,7 @@ namespace Jh.Abp.JhIdentity.v1
             return await IdentityUserAppService.GetRolesAsync(id);
         }
 
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [HttpGet]
         public virtual async Task<PagedResultDto<IdentityUserDto>> GetListAsync([FromQuery] IdentityUserRetrieveInputDto input)
         {
@@ -105,7 +106,7 @@ namespace Jh.Abp.JhIdentity.v1
             }
         }
 
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [Route("all")]
         [HttpGet]
         public virtual async Task<ListResultDto<IdentityUserDto>> GetEntitysAsync([FromQuery] IdentityUserRetrieveInputDto inputDto)
@@ -117,14 +118,14 @@ namespace Jh.Abp.JhIdentity.v1
         /// 当前登录用户信息
         /// </summary>
         /// <returns></returns>
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [HttpGet("info")]
         public virtual async Task<IdentityUserDto> GetCurrentAsync()
         {
             return await IdentityUserAppService.GetCurrentAsync();
         }
 
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [HttpGet]
         [Route("{id}/organizationunits")]
         public virtual async Task<ListResultDto<IdentityUserDto>> GetOrganizationsAsync(Guid id)
@@ -132,26 +133,22 @@ namespace Jh.Abp.JhIdentity.v1
             return await IdentityUserAppService.GetOrganizationsAsync(id);
         }
 
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [Route("options")]
         [HttpGet]
-        public virtual async Task<ListResultDto<IdentityUserDto>> GetOptionsAsync([FromQuery] IdentityUserRetrieveInputDto inputDto)
+        public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync()
         {
-            inputDto.MethodInput = new MethodDto<IdentityUser>()
-            {
-                SelectAction = (query) => query.Where(a => a.UserName != JhIdentitySettings.SuperadminUserName).Select(a => new IdentityUser(a.Id, a.UserName, a.Email, null) { Name = a.Name })
-            };
-            return await IdentityUserAppService.GetEntitysAsync(inputDto);
+            return await IdentityUserAppService.GetOptionsAsync();
         }
 
-        [Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
         [HttpGet("{userId}/SuperiorUser")]
         public async Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId)
         {
             return await IdentityUserAppService.GetSuperiorUserAsync(userId);
         }
 
-        //由于每个人都需要改密码所以注销权限策略
+        //由于每个人都需要改密码所以不使用权限策略
         [Authorize]
         [HttpPost]
         [Route("change-password")]

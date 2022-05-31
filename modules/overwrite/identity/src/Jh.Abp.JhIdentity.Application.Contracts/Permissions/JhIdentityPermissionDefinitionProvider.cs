@@ -18,6 +18,15 @@ public class JhIdentityPermissionDefinitionProvider : PermissionDefinitionProvid
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.Recover, L("Permission:Recover"));
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.ManagePermissions, L("Permission:ManagePermissions"));
 
+		var IdentityUsersPermission = JhIdentityGroup.AddPermission(JhIdentityPermissions.IdentityUsers.Default, L("Permission:IdentityUsers"));
+		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Detail, L("Permission:Detail"));
+		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Create, L("Permission:Create"));
+		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Update, L("Permission:Edit"));
+		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Delete, L("Permission:Delete"));
+		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.BatchDelete, L("Permission:BatchDelete"));
+		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Recover, L("Permission:Recover"));
+		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.ManagePermissions, L("Permission:ManagePermissions"));
+
 	}
 
 	private static LocalizableString L(string name)

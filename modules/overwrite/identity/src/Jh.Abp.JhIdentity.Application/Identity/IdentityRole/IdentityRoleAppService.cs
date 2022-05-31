@@ -33,8 +33,12 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
         {
-            var datas = await IdentityRoleRepository.GetQueryableAsync(true);
-            return new ListResultDto<OptionDto<Guid>>(datas.Where(a => a.Name.Contains(name)).Select(a => new OptionDto<Guid> { Label = a.Name, Value = a.Id }).ToList());
+            var query = await IdentityRoleRepository.GetQueryableAsync(true);
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(a => a.Name.Contains(name));
+            }
+            return new ListResultDto<OptionDto<Guid>>(query.Select(a => new OptionDto<Guid> { Label = a.Name, Value = a.Id }).ToList());
         }
     }
 }

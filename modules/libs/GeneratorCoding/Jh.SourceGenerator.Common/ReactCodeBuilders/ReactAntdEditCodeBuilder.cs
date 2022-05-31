@@ -15,7 +15,7 @@ namespace Jh.SourceGenerator.Common
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                FilePath = Path.Combine(filePath, domainType.Name);//以表名称为上级文件名创建路径
+                FilePath = Path.Combine(filePath, $"pages/{domainType.Name}/components");//以表名称为上级文件名创建路径
             }
             DomainDescription = domainDescription;
             FileName = "OperationModal";
