@@ -63,7 +63,7 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(IdentityPermissions.Roles.Update)]
-		[HttpPatch("{id}")]
+		[HttpPut("Patch/{id}")]
 		public virtual  Task UpdatePortionAsync(System.Guid id, IdentityRoleUpdateInputDto inputDto)
 		{
 			throw new NotImplementedException();

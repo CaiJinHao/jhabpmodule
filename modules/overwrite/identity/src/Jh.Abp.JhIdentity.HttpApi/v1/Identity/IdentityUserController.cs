@@ -41,6 +41,7 @@ namespace Jh.Abp.JhIdentity.v1
             await IdentityUserAppService.DeleteAsync(id);
         }
 
+        //必须使用FromBody，否则接收不到数据
         [Authorize(JhIdentityPermissions.IdentityUsers.Delete)]
         [Route("keys")]
         [HttpDelete]
@@ -57,24 +58,23 @@ namespace Jh.Abp.JhIdentity.v1
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
-        //[HttpPut("Patch/{id}")]//兼容手机端，手机端不支持Patch
-        [HttpPatch("{id}")]
+        [HttpPut("Patch/{id}")]
         public virtual async Task UpdatePortionAsync(System.Guid id, IdentityUserUpdateInputDto inputDto)
         {
             await IdentityUserAppService.UpdatePortionAsync(id, inputDto);
         }
 
+        //不能用FromBody否则会报415错误 
         [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
-        [HttpPatch]
+        [HttpPut]
         [Route("{id}/lockoutEnabled")]
-        public virtual async Task UpdateLockoutEnabledAsync(Guid id, [FromBody] bool lockoutEnabled)
+        public virtual async Task UpdateLockoutEnabledAsync(Guid id, bool lockoutEnabled)
         {
             await IdentityUserAppService.UpdateLockoutEnabledAsync(id,lockoutEnabled);
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Recover)]
-        [HttpPatch]
-        //[HttpPut]
+        [HttpPut]
         [Route("{id}/Recover")]
         public async Task RecoverAsync(Guid id)
         {

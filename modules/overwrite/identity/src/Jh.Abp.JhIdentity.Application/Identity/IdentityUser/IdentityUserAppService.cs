@@ -158,7 +158,7 @@ namespace Jh.Abp.JhIdentity
             using (DataFilter.Disable<ISoftDelete>())
             {
                 var entity = await crudRepository.FindAsync(id, false);
-                entity.IsDeleted = true;
+                entity.IsDeleted = false;
                 entity.DeleterId = CurrentUser.Id;
                 entity.DeletionTime = Clock.Now;
             }

@@ -35,7 +35,15 @@ namespace Jh.SourceGenerator.Common
                 propertyTypeName = propertyType.NotJsType() ? "any" : propertyTypeName;
                 //理论上前端不应该有domain的类，所以可以使用any类型
                 //GeneratorHelper.AddProxyServiceModelCodeBuilder(propertyType);
-                builder.AppendLine($"\t {field.Name.ToCamelCase(CamelCaseType.LowerCamelCase)}?: {propertyTypeName};");
+                //判断类型是否可为空
+                if (field.PropertyType.IsGenericType && field.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    builder.AppendLine($"\t {field.Name.ToCamelCase(CamelCaseType.LowerCamelCase)}?: {propertyTypeName};");
+                }
+                else
+                {
+                    builder.AppendLine($"\t {field.Name.ToCamelCase(CamelCaseType.LowerCamelCase)}: {propertyTypeName};");
+                }
             }
             builder.AppendLine("}");
             StringBuilder = builder;

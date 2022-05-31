@@ -95,8 +95,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Update)]");
                     builder.AppendLine("\t\t[Route(\"{id}\")]");
-                    builder.AppendLine("\t\t[HttpPatch]");
-                    //builder.AppendLine("\t\t[HttpPut(\"Patch/{id}\")]");//兼容手机端用得
+                    builder.AppendLine("\t\t[HttpPut(\"Patch/{id}\")]");//兼容手机端用得
                     builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
@@ -110,8 +109,7 @@ using Volo.Abp.Data;");
                     {
                         builder.AppendLine($"\t\t[Authorize({PermissionsNamePrefix}.Recover)]");
                         builder.AppendLine("\t\t[Route(\"{id}/Recover\")]");
-                        builder.AppendLine("\t\t[HttpPatch]");
-                        builder.AppendLine("//\t\t[HttpPut]");
+                        builder.AppendLine("\t\t[HttpPut]");
                         builder.AppendLine($"\t\t public async Task RecoverAsync({table.KeyType} id)");
                         {
                             builder.AppendLine("\t\t{");

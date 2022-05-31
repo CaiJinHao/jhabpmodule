@@ -81,8 +81,9 @@ const requestYesOrNoOptions = async () => {
   };
 
   // columns functions
-  const handlerIsDeleted = async (record: any, action: any) => {
-    if (record.isDeleted) {
+");
+            stringBuilder.AppendLine($"const handlerIsDeleted = async (record: {ComponentDtoName}, action: any) => {{");
+                stringBuilder.AppendLine(@"if (record.isDeleted) {
       confirm({
         icon: <ExclamationCircleOutlined />,
         content: (
@@ -109,7 +110,7 @@ const requestYesOrNoOptions = async () => {
           <>
             {intl.formatMessage({
               id: 'ProTable.delete.Delete',
-              defaultMessage: '确定要删除吗?',
+              defaultMessage: '确定要禁用吗?',
             })}
           </>
         ),
@@ -149,7 +150,7 @@ const requestYesOrNoOptions = async () => {
           <>
             {intl.formatMessage({
               id: 'ProTable.delete.BatchDelete',
-              defaultMessage: '确定要删除选中项吗?',
+              defaultMessage: '确定要禁用选中项吗?',
             })}
           </>
         ),
@@ -193,7 +194,7 @@ const requestYesOrNoOptions = async () => {
             }
             
             stringBuilder.AppendLine(@"{
-      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否删除' }),
+      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否禁用' }),
       dataIndex: 'isDeleted',
       search: false,
       render: (text, record, index, action) => {
@@ -226,7 +227,7 @@ const requestYesOrNoOptions = async () => {
         ],
     },
     {
-      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否删除' }),
+      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否禁用' }),
       dataIndex: 'deleted',
       hideInTable: true,
       valueType: 'select',

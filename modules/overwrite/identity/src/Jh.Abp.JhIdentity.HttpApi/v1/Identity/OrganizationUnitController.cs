@@ -60,8 +60,7 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Update)]
-		[Route("{id}")]
-		[HttpPatch]
+		[Route("Patch/{id}")]
 		public virtual async Task UpdatePortionAsync(System.Guid id, OrganizationUnitUpdateInputDto inputDto)
 		{
 			await OrganizationUnitAppService.UpdatePortionAsync(id, inputDto);
@@ -69,7 +68,7 @@ namespace Jh.Abp.JhIdentity.v1
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Recover)]
 		[Route("{id}/Recover")]
-		[HttpPatch]
+		[HttpPut]
 		public async Task RecoverAsync(Guid id)
 		{
 			await OrganizationUnitAppService.RecoverAsync(id);
