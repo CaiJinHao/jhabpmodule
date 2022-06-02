@@ -23,7 +23,6 @@ namespace Jh.Abp.JhIdentity
 		: CrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>,
 		IOrganizationUnitAppService
 	{
-        //todo:添加根据上级组织查询下级所有组织
         protected IJhIdentityRoleRepository IdentityRoleRepository=>LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleRepository>();
         protected Volo.Abp.Identity.IOrganizationUnitRepository OrganizationUnitsRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         private readonly IOrganizationUnitRepository OrganizationUnitRepository;
@@ -46,13 +45,21 @@ namespace Jh.Abp.JhIdentity
         {
             await CheckGetListPolicyAsync();
             IsTracking = true;
-            if (!string.IsNullOrEmpty(input.Code))
+            input.MethodInput = new MethodDto<OrganizationUnit>()
             {
-                input.MethodInput = new MethodDto<OrganizationUnit>()
+                QueryAction = entity =>
                 {
-                    QueryAction = entity => entity.Where(a => a.Code.StartsWith(input.Code))
-                };
-            }
+                    if (!string.IsNullOrEmpty(input.Code))
+                    {
+                        entity = entity.Where(a => a.Code.StartsWith(input.Code));
+                    }
+                    if (input.LeaderId.HasValue)
+                    {
+                        entity = entity.Where(a => EF.Property<Guid>(a, nameof(JhOrganizationUnit.LeaderId)) == input.LeaderId);
+                    }
+                    return entity;
+                }
+            };
             return await base.GetListAsync(input);
         }
 

@@ -11,13 +11,16 @@ namespace Jh.Abp.JhIdentity
     public class OrganizationUnitRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<OrganizationUnit>
 , IRetrieveDelete
 	{
-		//todo:添加查询负责人
+		/// <summary>
+		/// 查询负责人
+		/// </summary>
+		public Guid? LeaderId { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
 		public Guid? ParentId { get; set; }
 		/// <summary>
-		/// 
+		/// 根据上级Code可以查询到下级所有组织
 		/// </summary>
 		public String Code { get; set; }
 		/// <summary>
