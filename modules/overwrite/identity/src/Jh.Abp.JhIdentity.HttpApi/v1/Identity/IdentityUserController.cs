@@ -81,7 +81,7 @@ namespace Jh.Abp.JhIdentity.v1
             await IdentityUserAppService.RecoverAsync(id);
         }
 
-        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
+        [Authorize(JhIdentityPermissions.IdentityUsers.Detail)]
         [HttpGet("{id}")]
         public virtual async Task<IdentityUserDto> GetAsync(System.Guid id)
         {

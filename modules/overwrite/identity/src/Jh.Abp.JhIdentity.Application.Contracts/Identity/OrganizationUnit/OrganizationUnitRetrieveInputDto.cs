@@ -11,6 +11,7 @@ namespace Jh.Abp.JhIdentity
     public class OrganizationUnitRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<OrganizationUnit>
 , IRetrieveDelete
 	{
+		//todo:添加查询负责人
 		/// <summary>
 		/// 
 		/// </summary>
