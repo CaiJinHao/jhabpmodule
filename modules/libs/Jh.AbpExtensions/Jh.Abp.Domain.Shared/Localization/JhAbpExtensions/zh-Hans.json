@@ -1,8 +1,7 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "Permission:Export": "导出",
-    "Permission:Detail": "详细",
+    "Permission:Detail": "详情",
     "Permission:Create": "创建",
     "Permission:BatchCreate": "批量创建",
     "Permission:Edit": "编辑",
@@ -13,9 +12,9 @@
     "Permission:ManagePermissions": "管理权限",
     "JhAbp:Operation": "操作",
     "JhAbp:TenantId": "租户",
-    "JhAbp:IsDeleted": "是否删除",
-    "JhAbp:DeleterId": "删除人",
-    "JhAbp:DeletionTime": "删除时间",
+    "JhAbp:IsDeleted": "是否禁用",
+    "JhAbp:DeleterId": "禁用人",
+    "JhAbp:DeletionTime": "禁用时间",
     "JhAbp:LastModificationTime": "最后修改时间",
     "JhAbp:LastModifierId": "最后修改人",
     "JhAbp:CreationTime": "创建时间",

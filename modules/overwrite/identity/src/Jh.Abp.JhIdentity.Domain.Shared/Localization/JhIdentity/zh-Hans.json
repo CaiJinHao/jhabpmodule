@@ -9,6 +9,14 @@
     "JhIdentity:JhOrganizationUnit:ParentId": "上级组织",
     "JhIdentity:JhOrganizationUnit:Code": "组织编号",
     "JhIdentity:JhOrganizationUnit:DisplayName": "组织名称",
-    "JhIdentity:JhOrganizationUnit:LeaderId": "组织负责人"
+    "JhIdentity:JhOrganizationUnit:LeaderId": "组织负责人",
+    "JhIdentity:IdentityRole:DisplayName": "角色名称",
+    "JhIdentity:IdentityUser:UserName": "用户账号",
+    "JhIdentity:IdentityUser:Name": "用户名称",
+    "JhIdentity:IdentityUser:Email": "邮箱",
+    "JhIdentity:IdentityUser:PhoneNumber": "手机号",
+    "JhIdentity:IdentityUser:LockoutEnd": "登录锁结束时间",
+    "JhIdentity:IdentityUser:LockoutEnabled": "启用登录锁",
+    "JhIdentity:IdentityUser:AccessFailedCount": "登录错误次数"
   }
 }

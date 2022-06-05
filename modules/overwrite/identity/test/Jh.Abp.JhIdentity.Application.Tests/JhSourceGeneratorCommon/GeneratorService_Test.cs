@@ -17,10 +17,10 @@ namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
         public void ReactProxyServiceCodeBuilder_Test()
         {
             var moduleNamespace = "API.JhIdentity";
-            var generatorPath = @"G:\Temp";
-            var service = new GeneratorService(new GeneratorOptions(generatorPath));
-            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(IdentityUserController) });
-            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(IdentityUser) }, "JhIdentity");
+            var generatorPath = @"F:\Temp";
+            var service = new GeneratorService(new GeneratorOptions(generatorPath), GneratorType.AllField);
+            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(IdentityRoleController) });
+            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(OrganizationUnit) }, "JhIdentity");
         }
     }
 }

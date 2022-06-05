@@ -28,11 +28,16 @@ namespace Jh.SourceGenerator.Common
             GeneratorConsts.ControllerBase = options.ControllerBase;
         }
 
-        public GeneratorService(GeneratorOptions options)
+        public GeneratorService(GeneratorOptions options, GneratorType _gneratorType = GneratorType.AttributeField)
         { 
             generatorOptions = options;
+            generatorType = _gneratorType;
         }
 
+        public GeneratorService(GneratorType _gneratorType)
+        {
+            generatorType = _gneratorType;
+        }
         public GeneratorService()
         {
         }
@@ -319,7 +324,7 @@ namespace Jh.SourceGenerator.Common
         {
             foreach (var item in domainTypes)
             {
-                CreateFile(new ReactAntdListCodeBuilder(item, generatorOptions.CreateProxyServicePath, moduleNamespace, jhModuleName));
+                CreateFile(new ReactAntdListCodeBuilder(item, generatorOptions.CreateProxyServicePath, moduleNamespace, jhModuleName, generatorType));
                 CreateFile(new ReactAntdEditCodeBuilder(item, generatorOptions.CreateProxyServicePath, moduleNamespace, GetTableDescription(item)));
             }
         }

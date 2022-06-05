@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Volo.Abp.Application.Dtos;
 using Jh.Abp.Common.Utils;
+using Jh.Abp.Application.Contracts;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -21,6 +22,18 @@ namespace Jh.Abp.JhIdentity
 		IdentityRoleDapperRepository = identityroleDapperRepository;
 		}
 
+        public override Task<PagedResultDto<IdentityRoleDto>> GetListAsync(IdentityRoleRetrieveInputDto input)
+        {
+            input.MethodInput = new MethodDto<IdentityRole>()
+            {
+                QueryAction = (entity) =>
+                {
+                    return entity.Where(a => a.Name != JhIdentity.JhIdentityConsts.AdminRoleName);
+                }
+            };
+            return base.GetListAsync(input);
+        }
+
         public async Task<Guid?> GetAdminRoleIdAsync()
         {
             var role = await (await IdentityRoleRepository.GetQueryableAsync()).AsNoTracking().FirstOrDefaultAsync(a => a.Name == JhIdentity.JhIdentityConsts.AdminRoleName);
@@ -34,6 +47,7 @@ namespace Jh.Abp.JhIdentity
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
         {
             var query = await IdentityRoleRepository.GetQueryableAsync(true);
+            query = query.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
             if (!string.IsNullOrEmpty(name))
             {
                 query = query.Where(a => a.Name.Contains(name));

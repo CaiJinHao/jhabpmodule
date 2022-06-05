@@ -456,6 +456,11 @@
             
             </summary>
         </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.LeaderId">
+            <summary>
+            查询负责人
+            </summary>
+        </member>
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.ParentId">
             <summary>
             
@@ -463,7 +468,7 @@
         </member>
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.Code">
             <summary>
-            
+            根据上级Code可以查询到下级所有组织
             </summary>
         </member>
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.DisplayName">

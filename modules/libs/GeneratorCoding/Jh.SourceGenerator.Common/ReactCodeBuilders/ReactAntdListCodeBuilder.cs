@@ -21,7 +21,7 @@ namespace Jh.SourceGenerator.Common
         /// <param name="filePath">生成的临时文件夹</param>
         /// <param name="moduleNamespace">Dto命名空间</param>
         /// <param name="jhModuleName">后台模块名称，一般问数据库连接名,给本地化使用</param>
-        public ReactAntdListCodeBuilder(Type domainType, string filePath, string moduleNamespace,string jhModuleName)
+        public ReactAntdListCodeBuilder(Type domainType, string filePath, string moduleNamespace,string jhModuleName, GneratorType generatorType)
         {
             if (!string.IsNullOrEmpty(filePath))
             {
@@ -33,7 +33,7 @@ namespace Jh.SourceGenerator.Common
             JhModuleName = jhModuleName;
             ModuleNamespace = moduleNamespace;
 
-            GeneratorService = new GeneratorService();
+            GeneratorService = new GeneratorService(generatorType);
         }
 
         public override string ToString()
@@ -46,7 +46,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Switch, message, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { getYesOrNo } from '@/services/jhabp/app.enums';
+import { getYesOrNo, ViewOperator } from '@/services/jhabp/app.enums';
 import { useIntl } from 'umi';
 ");
             var operationModalName = $"OperationModal{DomainType.Name}";//操作ModalName
@@ -60,7 +60,7 @@ import { useIntl } from 'umi';
 
             stringBuilder.AppendLine(@"
   const [visibleOperation, setVisibleOperation] = useState<boolean>(false);
-  const [detailOperation, setDetailOperation] = useState<boolean>(false);
+  const [detailOperation, setDetailOperation] = useState<ViewOperator>(ViewOperator.Detail);
   const { confirm } = Modal;
   const intl = useIntl();
   const proTableActionRef = useRef<ActionType>();
@@ -137,7 +137,7 @@ const requestYesOrNoOptions = async () => {
   };
 
   const create = () => {
-    setDetailOperation(false);
+    setDetailOperation(ViewOperator.Add);
     setVisibleOperation(true);
     setCurrentOperation(undefined);
   };
@@ -170,15 +170,18 @@ const requestYesOrNoOptions = async () => {
     }
   };
 ");
+            stringBuilder.AppendLine($"const loadDetail = (record: {ComponentDtoName}) => {{");
+            stringBuilder.AppendLine(@"setVisibleOperation(true);
+    const detailDto = await defaultService.Get(record.id);//如果有额外得字段才会需要重新获取
+    setCurrentOperation(detailDto);
+  };");
             stringBuilder.AppendLine($"const edit = (record: {ComponentDtoName}) => {{");
-            stringBuilder.AppendLine(@"setDetailOperation(false);
-    setVisibleOperation(true);
-    setCurrentOperation(record);
+            stringBuilder.AppendLine(@"setDetailOperation(ViewOperator.Edit);
+    await loadDetail(record);
   };");
             stringBuilder.AppendLine($"const detail = (record: {ComponentDtoName}) => {{");
-            stringBuilder.AppendLine(@"setDetailOperation(true);
-    setVisibleOperation(true);
-    setCurrentOperation(record);
+            stringBuilder.AppendLine(@"setDetailOperation(ViewOperator.Detail);
+    await loadDetail(record);
   };");
 
 
@@ -305,8 +308,7 @@ const requestYesOrNoOptions = async () => {
       </PageContainer>");
 
             stringBuilder.AppendLine($"<OperationModal{DomainType.Name}");
-            stringBuilder.AppendLine(@"
-        detail={detailOperation}
+            stringBuilder.AppendLine(@"operator={detailOperation}
         visible={visibleOperation}
         current={currentOperation}
         onCancel={onCancelOperation}
