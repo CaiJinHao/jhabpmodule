@@ -47,7 +47,7 @@ type OperationModalProps = {
   operator: ViewOperator;
   visible: boolean;
   onCancel: () => void;");
-            stringBuilder.AppendLine($"current: {ComponentDtoName};");
+            stringBuilder.AppendLine($"current?: {ComponentDtoName};");
             stringBuilder.AppendLine($"onSubmit: (values: {ComponentDtoName}) => void;");
             stringBuilder.AppendLine("};");
 

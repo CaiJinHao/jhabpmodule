@@ -68,7 +68,7 @@ import { useIntl } from 'umi';
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [yesOrNoOptions, setYesOrNoOptions] = useState([]);
 ");
-            stringBuilder.AppendLine($"  const [currentOperation, setCurrentOperation] = useState<Partial<{ComponentDtoName}> | undefined>(undefined);");
+            stringBuilder.AppendLine($"  const [currentOperation, setCurrentOperation] = useState<{ComponentDtoName} | undefined>(undefined);");
 
             stringBuilder.AppendLine(@"
 const requestYesOrNoOptions = async () => {
@@ -170,16 +170,16 @@ const requestYesOrNoOptions = async () => {
     }
   };
 ");
-            stringBuilder.AppendLine($"const loadDetail = (record: {ComponentDtoName}) => {{");
+            stringBuilder.AppendLine($"const loadDetail = async (record: {ComponentDtoName}) => {{");
             stringBuilder.AppendLine(@"setVisibleOperation(true);
     const detailDto = await defaultService.Get(record.id);//如果有额外得字段才会需要重新获取
     setCurrentOperation(detailDto);
   };");
-            stringBuilder.AppendLine($"const edit = (record: {ComponentDtoName}) => {{");
+            stringBuilder.AppendLine($"const edit = async (record: {ComponentDtoName}) => {{");
             stringBuilder.AppendLine(@"setDetailOperation(ViewOperator.Edit);
     await loadDetail(record);
   };");
-            stringBuilder.AppendLine($"const detail = (record: {ComponentDtoName}) => {{");
+            stringBuilder.AppendLine($"const detail = async (record: {ComponentDtoName}) => {{");
             stringBuilder.AppendLine(@"setDetailOperation(ViewOperator.Detail);
     await loadDetail(record);
   };");

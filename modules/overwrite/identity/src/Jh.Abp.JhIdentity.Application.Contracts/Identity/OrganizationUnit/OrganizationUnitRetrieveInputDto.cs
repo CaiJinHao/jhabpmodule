@@ -15,6 +15,7 @@ namespace Jh.Abp.JhIdentity
 		/// 查询负责人
 		/// </summary>
 		public Guid? LeaderId { get; set; }
+		public string LeaderName { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>

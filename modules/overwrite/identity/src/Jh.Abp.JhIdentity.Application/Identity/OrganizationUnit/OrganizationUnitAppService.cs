@@ -41,11 +41,10 @@ namespace Jh.Abp.JhIdentity
             BatchDeletePolicyName = JhIdentityPermissions.OrganizationUnits.BatchDelete;
         }
 
-        public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input)
+        private MethodDto<OrganizationUnit> GetMethodDto(OrganizationUnitRetrieveInputDto input)
         {
-            await CheckGetListPolicyAsync();
             IsTracking = true;
-            input.MethodInput = new MethodDto<OrganizationUnit>()
+            return new MethodDto<OrganizationUnit>()
             {
                 QueryAction = entity =>
                 {
@@ -57,9 +56,19 @@ namespace Jh.Abp.JhIdentity
                     {
                         entity = entity.Where(a => EF.Property<Guid>(a, nameof(JhOrganizationUnit.LeaderId)) == input.LeaderId);
                     }
+                    if (!string.IsNullOrEmpty(input.LeaderName))
+                    {
+                        entity = entity.Where(a => EF.Property<string>(a, nameof(JhOrganizationUnit.LeaderName)).StartsWith(input.LeaderName));
+                    }
                     return entity;
                 }
             };
+        }
+
+        public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input)
+        {
+            await CheckGetListPolicyAsync();
+            input.MethodInput = GetMethodDto(input);
             return await base.GetListAsync(input);
         }
 
@@ -127,6 +136,7 @@ namespace Jh.Abp.JhIdentity
                     entity.AddRole(item);
                 }
             }
+            //扩展属性值修改值为null,前端直接给null
             if (input.ExtraProperties.Count > 0)
             {
                 foreach (var item in input.ExtraProperties)
