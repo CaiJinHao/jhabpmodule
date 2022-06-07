@@ -38,10 +38,5 @@ namespace Jh.Abp.JhIdentity
 		[System.Text.Json.Serialization.JsonIgnore]
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<OrganizationUnit> MethodInput { get; set; }
-
-		/// <summary>
-		/// 组织树查询 上级及下级
-		/// </summary>
-		public Guid? OrParentId { get; set; }
 	}
 }

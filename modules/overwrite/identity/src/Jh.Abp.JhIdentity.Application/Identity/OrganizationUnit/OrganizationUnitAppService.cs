@@ -186,22 +186,21 @@ namespace Jh.Abp.JhIdentity
             return data;
         }
 
-		public virtual async Task<ListResultDto<TreeDto>> GetOrganizationTreeAsync()
+		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
             await CheckGetListPolicyAsync();
             var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
-               new TreeDto()
+               new TreeAntdDto()
                {
                    id = a.Id.ToString(),
-                   parent_id = a.ParentId.ToString(),
+                   parentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null,
                    title = a.DisplayName,
-                   value = a.Id.ToString(),
-                   sort = a.CreationTime.ToString("yyyyMMddHHmmssfff"),
-                   obj = a
+                   order = a.Code,
+                   data = a
                }
            ).ToListAsync();
-            var data= await UtilTree.GetMenusTreeAsync(resutlMenus);
-            return new ListResultDto<TreeDto>(data);
+            var data= await UtilTree.GetTreeByAntdAsync(resutlMenus);
+            return new ListResultDto<TreeAntdDto>(data);
         }
 
         public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId)

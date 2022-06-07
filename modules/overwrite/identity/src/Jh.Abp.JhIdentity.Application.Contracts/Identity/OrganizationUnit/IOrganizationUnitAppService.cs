@@ -13,7 +13,7 @@ namespace Jh.Abp.JhIdentity
 		: ICrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>
 	{
 		Task RecoverAsync(Guid id);
-		Task<ListResultDto<TreeDto>> GetOrganizationTreeAsync();
+		Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync();
 
 		Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid organizationUnitId);
 

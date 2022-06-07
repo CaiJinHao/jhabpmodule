@@ -8,16 +8,17 @@ namespace Jh.Abp.Common
     {
         public string id { get; set; }
         public string title { get; set; }
-        public string name { get { return title; } }
-        public string url { get; set; }
-        public string href { get { return this.url; } }
         public string icon { get; set; }
         public string parent_id { get; set; }
-        public bool spread { get; set; } = true;
         public bool @checked { get; set; }
         public bool disabled { get; set; }
         public object obj { get; set; }
         public string sort { get; set; }
+
+        public string url { get; set; }
+        public string href { get { return this.url; } }
+        public string name { get { return title; } }
+        public bool spread { get; set; } = true;
 
         private IEnumerable<TreeDto> _children = new TreeDto[] { };
         /// <summary>

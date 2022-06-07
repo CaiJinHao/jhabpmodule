@@ -112,7 +112,7 @@ namespace Jh.Abp.JhIdentity.v1
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
 		[Route("Trees")]
 		[HttpGet]
-		public virtual async Task<ListResultDto<TreeDto>> GetOrganizationTreeAsync()
+		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
 			return await OrganizationUnitAppService.GetOrganizationTreeAsync();
 		}
