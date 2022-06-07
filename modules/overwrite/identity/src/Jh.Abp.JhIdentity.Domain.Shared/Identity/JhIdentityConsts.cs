@@ -8,5 +8,6 @@ namespace Jh.Abp.JhIdentity
     {
         public const string AdminUserName = "admin";
         public const string AdminRoleName = "admin";
+        public static string InitPassword { get; set; } = "Admin@123";
     }
 }

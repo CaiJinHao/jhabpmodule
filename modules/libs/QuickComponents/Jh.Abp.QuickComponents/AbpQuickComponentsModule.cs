@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RequestLocalization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Http.Client;
@@ -11,6 +12,7 @@ using Volo.Abp.Json;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
+using Volo.Abp.Timing;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
@@ -76,6 +78,11 @@ namespace Jh.Abp.QuickComponents
             Configure<AbpExceptionLocalizationOptions>(options =>
             {
                 options.MapCodeNamespace("JhAbpQuickComponents", typeof(JhAbpQuickComponentsResource));
+            });
+
+            Configure<AbpClockOptions>(options =>
+            {
+                options.Kind = DateTimeKind.Local;
             });
 
             Configure<SwaggerApiOptions>(Configuration.GetSection("SwaggerApi"));

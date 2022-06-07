@@ -118,6 +118,7 @@ public class JhIdentityIdentityServerModule : AbpModule
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         configuration = context.Services.GetConfiguration();
+        JhIdentityConsts.InitPassword = configuration["App:InitPassword"];
 
         Configure<AbpDbContextOptions>(options =>
         {

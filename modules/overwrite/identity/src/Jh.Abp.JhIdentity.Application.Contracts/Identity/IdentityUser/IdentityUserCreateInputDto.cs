@@ -20,7 +20,7 @@ IMethodDto<IdentityUser>
 		[DisableAuditing]
 		[Required]
 		[DynamicStringLength(typeof(IdentityUserConsts), nameof(IdentityUserConsts.MaxPasswordLength))]
-		public string Password { get; set; }
+		public string Password { get; set; } = JhIdentityConsts.InitPassword;
 		/// <summary>
 		/// 并发检测字段 必须和数据库中的值一样才会允许更新
 		/// </summary>

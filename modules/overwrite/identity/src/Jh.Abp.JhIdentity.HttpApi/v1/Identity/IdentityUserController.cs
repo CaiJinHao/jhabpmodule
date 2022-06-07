@@ -67,11 +67,10 @@ namespace Jh.Abp.JhIdentity.v1
             await IdentityUserAppService.UpdatePortionAsync(id, inputDto);
         }
 
-        //不能用FromBody否则会报415错误 
         [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
-        [Route("{id}/lockoutEnabled")]
+        [Route("{id}/lockoutEnabled/{lockoutEnabled}")]
         [HttpPut]
-        public virtual async Task UpdateLockoutEnabledAsync(Guid id, bool lockoutEnabled)
+        public virtual async Task UpdateLockoutEnabledAsync(Guid id,bool lockoutEnabled)
         {
             await IdentityUserAppService.UpdateLockoutEnabledAsync(id,lockoutEnabled);
         }
