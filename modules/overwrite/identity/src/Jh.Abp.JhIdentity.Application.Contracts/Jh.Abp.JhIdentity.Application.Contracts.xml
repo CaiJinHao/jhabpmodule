@@ -486,11 +486,6 @@
             方法参数回调
             </summary>
         </member>
-        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.OrParentId">
-            <summary>
-            组织树查询 上级及下级
-            </summary>
-        </member>
         <member name="T:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto">
             <summary>
             

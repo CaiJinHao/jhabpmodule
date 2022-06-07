@@ -26,7 +26,6 @@ namespace Jh.Abp.JhIdentity
         public IdentityUserManager UserManager { get; set; }
         protected IOrganizationUnitAppService OrganizationUnitAppService =>LazyServiceProvider.LazyGetRequiredService<OrganizationUnitAppService>();    
         protected IOrganizationUnitRepository OrganizationUnits => LazyServiceProvider.LazyGetRequiredService<IOrganizationUnitRepository>();
-        protected Volo.Abp.Identity.IOrganizationUnitRepository OrganizationUnitRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         protected IOptions<IdentityOptions> IdentityOptions { get; }
 
         private readonly IIdentityUserRepository IdentityUserRepository;
@@ -185,18 +184,18 @@ namespace Jh.Abp.JhIdentity
 
         public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(IdentityUserRetrieveInputDto input)
         {
-            if (input.OrganizationUnitId.HasValue)
+            if (!string.IsNullOrEmpty(input.OrganizationUnitCode))
             {
-                var parentOrg = await OrganizationUnits.GetAsync(input.OrganizationUnitId.Value, includeDetails: false);
                 input.MethodInput = new MethodDto<IdentityUser>()
                 {
-                    QueryAction = (entity) =>
+                    QueryAction =  (entity) =>
                     {
-                        var orgAllChildrens = OrganizationUnitRepository.GetAllChildrenWithParentCodeAsync(parentOrg.Code, parentOrg.Id).Result.Select(a => a.Id);
+                        var orgAllChildrens = OrganizationUnits.GetQueryableAsync(true).Result
+                                             .Where(a => a.Code.StartsWith(input.OrganizationUnitCode)).Select(a => a.Id);
                         var userOrgs = OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>().Result;
                         var query = from user in entity
                                     join userOrg in userOrgs on user.Id equals userOrg.UserId
-                                    where (userOrg.OrganizationUnitId == input.OrganizationUnitId || orgAllChildrens.Contains(userOrg.OrganizationUnitId))
+                                    where orgAllChildrens.Contains(userOrg.OrganizationUnitId)
                                     && user.UserName != JhIdentity.JhIdentityConsts.AdminUserName
                                     select user;
                         return (query).Distinct();

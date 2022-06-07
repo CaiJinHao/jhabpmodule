@@ -85,6 +85,6 @@ namespace Jh.Abp.JhIdentity
 		[System.Text.Json.Serialization.JsonIgnore]
 		[Newtonsoft.Json.JsonIgnore]
 		public MethodDto<IdentityUser> MethodInput { get; set; }
-		public Guid? OrganizationUnitId { get; set; }
+		public string OrganizationUnitCode { get; set; }
 	}
 }
