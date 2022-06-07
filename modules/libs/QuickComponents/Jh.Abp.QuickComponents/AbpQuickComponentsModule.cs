@@ -80,11 +80,6 @@ namespace Jh.Abp.QuickComponents
                 options.MapCodeNamespace("JhAbpQuickComponents", typeof(JhAbpQuickComponentsResource));
             });
 
-            Configure<AbpClockOptions>(options =>
-            {
-                options.Kind = DateTimeKind.Local;
-            });
-
             Configure<SwaggerApiOptions>(Configuration.GetSection("SwaggerApi"));
         }
     }
