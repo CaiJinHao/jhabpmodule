@@ -40,7 +40,7 @@ namespace Jh.SourceGenerator.Common
         {
             var stringBuilder = new System.Text.StringBuilder();
             stringBuilder.AppendLine(@"
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Switch, message, Modal } from 'antd';
@@ -71,7 +71,7 @@ import { useIntl } from 'umi';
             stringBuilder.AppendLine($"  const [currentOperation, setCurrentOperation] = useState<{ComponentDtoName} | undefined>(undefined);");
 
             stringBuilder.AppendLine(@"
-const requestYesOrNoOptions = async () => {
+  const requestYesOrNoOptions = async () => {
     if (yesOrNoOptions.length == 0) {
       const data = await getYesOrNo();
       setYesOrNoOptions(data);
@@ -79,8 +79,6 @@ const requestYesOrNoOptions = async () => {
     }
     return yesOrNoOptions;
   };
-
-  // columns functions
 ");
             stringBuilder.AppendLine($"const handlerIsDeleted = async (record: {ComponentDtoName}, action: any) => {{");
                 stringBuilder.AppendLine(@"if (record.isDeleted) {
@@ -172,7 +170,7 @@ const requestYesOrNoOptions = async () => {
 ");
             stringBuilder.AppendLine($"const loadDetail = async (record: {ComponentDtoName}) => {{");
             stringBuilder.AppendLine(@"setVisibleOperation(true);
-    const detailDto = await defaultService.Get(record.id);//如果有额外得字段才会需要重新获取
+    const detailDto = await defaultService.Get(record.id);//如果有额外得字段才会需要重新获取,否则可以直接使用record传递
     setCurrentOperation(detailDto);
   };");
             stringBuilder.AppendLine($"const edit = async (record: {ComponentDtoName}) => {{");
@@ -183,7 +181,11 @@ const requestYesOrNoOptions = async () => {
             stringBuilder.AppendLine(@"setDetailOperation(ViewOperator.Detail);
     await loadDetail(record);
   };");
-
+            stringBuilder.AppendLine(@"
+  useEffect(() => {
+    setCurrentOperation(undefined);
+  }, [visibleOperation]);
+");
 
             stringBuilder.AppendLine($"const columns: ProColumns<{ComponentDtoName}>[] = [");
             //循环创建所有字段

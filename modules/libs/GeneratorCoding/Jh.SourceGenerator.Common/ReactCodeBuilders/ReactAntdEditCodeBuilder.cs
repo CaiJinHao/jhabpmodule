@@ -30,7 +30,8 @@ namespace Jh.SourceGenerator.Common
             var stringBuilder = new System.Text.StringBuilder();
             stringBuilder.AppendLine(@"
 import ProForm, { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-form';
-import { FC, useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ViewOperator } from '@/services/jhabp/app.enums';
 import { useIntl } from 'umi';
 ");
@@ -55,9 +56,11 @@ type OperationModalProps = {
             stringBuilder.AppendLine(@"const { operator, visible, current, onCancel, onSubmit, children } = props;
   const [title, setTitle] = useState<string>();
   const intl = useIntl();
+  const [extraProperties, setExtraProperties] = useState<any>();
 ");
             stringBuilder.AppendLine(@"
   const modalFormFinish = async (values: any) => {
+    values.extraProperties = extraProperties;
     if (current) {");
             stringBuilder.AppendLine($"const _data = values as {ComponentUpdateInputDtoName};");
             stringBuilder.AppendLine(@"_data.concurrencyStamp = current.concurrencyStamp;
@@ -83,8 +86,9 @@ type OperationModalProps = {
   };
 */");
 
-            stringBuilder.AppendLine($"const initTitle = () => {{ let _t = '{DomainDescription}';");
-            stringBuilder.AppendLine(@"switch (operator) {
+            stringBuilder.AppendLine($"  const initTitle = useCallback(() => {{ let _t = '{DomainDescription}';");
+            stringBuilder.AppendLine(@"
+   switch (operator) {
       case ViewOperator.Add:
         {
           _t = `${_t}${intl.formatMessage({
@@ -109,15 +113,26 @@ type OperationModalProps = {
           })}`;
         }
         break;
+      default:
+        break;
     }
     setTitle(_t);
+  }, [intl, operator]);
+
+  const leaderSelectedChange = (value: any, option: any) => {
+    setExtraProperties({
+      ...extraProperties,
+      LeaderId: value ?? null,
+      LeaderName: value ? option.label : null,
+    });
   };
 
   useEffect(() => {
     initTitle();
-  }, [operator]);
+    setExtraProperties(current?.extraProperties);
+  }, [current, initTitle]);
 
-  if (!current) {
+  if (!current && operator != ViewOperator.Add) {
     return <></>;
   }
 ");
@@ -126,11 +141,11 @@ type OperationModalProps = {
     <>
 ");
             stringBuilder.AppendLine($"<ModalForm<{ComponentDtoName}>");
-            stringBuilder.AppendLine(@"
+            stringBuilder.AppendLine(@"width={378}
         visible={visible}
         title={title}
-        onFinish ={modalFormFinish}
-        initialValues={current}
+        onFinish={modalFormFinish}
+        initialValues={operator == ViewOperator.Add ? {} : current}
         trigger={<>{children}</>}
         modalProps={{
           onCancel: () => onCancel(),
