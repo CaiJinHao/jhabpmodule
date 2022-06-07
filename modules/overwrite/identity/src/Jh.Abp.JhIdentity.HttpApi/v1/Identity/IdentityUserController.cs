@@ -35,7 +35,8 @@ namespace Jh.Abp.JhIdentity.v1
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Delete)]
-        [HttpDelete("{id}")]
+        [Route("{id}")]
+        [HttpDelete]
         public virtual async Task DeleteAsync(System.Guid id)
         {
             await IdentityUserAppService.DeleteAsync(id);
@@ -51,14 +52,16 @@ namespace Jh.Abp.JhIdentity.v1
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
-        [HttpPut("{id}")]
+        [Route("{id}")]
+        [HttpPut]
         public virtual async Task<IdentityUserDto> UpdateAsync(System.Guid id, IdentityUserUpdateInputDto input)
         {
             return await IdentityUserAppService.UpdateAsync(id, input);
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
-        [HttpPut("Patch/{id}")]
+        [Route("Patch/{id}")]
+        [HttpPut]
         public virtual async Task UpdatePortionAsync(System.Guid id, IdentityUserUpdateInputDto inputDto)
         {
             await IdentityUserAppService.UpdatePortionAsync(id, inputDto);
@@ -66,31 +69,32 @@ namespace Jh.Abp.JhIdentity.v1
 
         //不能用FromBody否则会报415错误 
         [Authorize(JhIdentityPermissions.IdentityUsers.Update)]
-        [HttpPut]
         [Route("{id}/lockoutEnabled")]
+        [HttpPut]
         public virtual async Task UpdateLockoutEnabledAsync(Guid id, bool lockoutEnabled)
         {
             await IdentityUserAppService.UpdateLockoutEnabledAsync(id,lockoutEnabled);
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Recover)]
-        [HttpPut]
         [Route("{id}/Recover")]
+        [HttpPut]
         public async Task RecoverAsync(Guid id)
         {
             await IdentityUserAppService.RecoverAsync(id);
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Detail)]
-        [HttpGet("{id}")]
+        [Route("{id}")]
+        [HttpGet]
         public virtual async Task<IdentityUserDto> GetAsync(System.Guid id)
         {
            return await IdentityUserAppService.GetAsync(id);
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
-        [HttpGet]
         [Route("{id}/roles")]
+        [HttpGet]
         public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
         {
             return await IdentityUserAppService.GetRolesAsync(id);
@@ -119,15 +123,16 @@ namespace Jh.Abp.JhIdentity.v1
         /// </summary>
         /// <returns></returns>
         [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
-        [HttpGet("info")]
+        [Route("info")]
+        [HttpGet]
         public virtual async Task<IdentityUserDto> GetCurrentAsync()
         {
             return await IdentityUserAppService.GetCurrentAsync();
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
-        [HttpGet]
         [Route("{id}/organizationunits")]
+        [HttpGet]
         public virtual async Task<ListResultDto<IdentityUserDto>> GetOrganizationsAsync(Guid id)
         {
             return await IdentityUserAppService.GetOrganizationsAsync(id);
@@ -142,7 +147,8 @@ namespace Jh.Abp.JhIdentity.v1
         }
 
         [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
-        [HttpGet("{userId}/SuperiorUser")]
+        [Route("{userId}/SuperiorUser")]
+        [HttpGet]
         public async Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId)
         {
             return await IdentityUserAppService.GetSuperiorUserAsync(userId);
@@ -150,8 +156,8 @@ namespace Jh.Abp.JhIdentity.v1
 
         //由于每个人都需要改密码所以不使用权限策略
         [Authorize]
-        [HttpPost]
         [Route("change-password")]
+        [HttpPost]
         public virtual async Task ChangePasswordAsync(ChangePasswordInputDto input)
         {
             await IdentityUserAppService.ChangePasswordAsync(input);
