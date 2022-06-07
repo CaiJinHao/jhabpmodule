@@ -74,7 +74,7 @@ namespace Jh.Abp.JhIdentity
                     methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(user);
                 }
             }
-
+            //await UserManager.SetLockoutEnabledAsync(user, true);//ÆôÓÃµÇÂ¼´íÎóËø
             (await UserManager.CreateAsync(user, inputDto.Password)).CheckErrors();
             await UpdateUserByInput(user, inputDto);
             (await UserManager.UpdateAsync(user)).CheckErrors();
