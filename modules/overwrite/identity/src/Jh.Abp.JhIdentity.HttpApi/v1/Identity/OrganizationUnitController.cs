@@ -61,6 +61,7 @@ namespace Jh.Abp.JhIdentity.v1
 
 		[Authorize(JhIdentityPermissions.OrganizationUnits.Update)]
 		[Route("Patch/{id}")]
+		[HttpPut]
 		public virtual async Task UpdatePortionAsync(System.Guid id, OrganizationUnitUpdateInputDto inputDto)
 		{
 			await OrganizationUnitAppService.UpdatePortionAsync(id, inputDto);

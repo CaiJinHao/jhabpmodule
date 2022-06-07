@@ -325,7 +325,7 @@ namespace Jh.SourceGenerator.Common
             foreach (var item in domainTypes)
             {
                 CreateFile(new ReactAntdListCodeBuilder(item, generatorOptions.CreateProxyServicePath, moduleNamespace, jhModuleName, generatorType));
-                CreateFile(new ReactAntdEditCodeBuilder(item, generatorOptions.CreateProxyServicePath, moduleNamespace, GetTableDescription(item)));
+                CreateFile(new ReactAntdEditCodeBuilder(item, generatorOptions.CreateProxyServicePath, moduleNamespace, GetTableDescription(item), generatorType));
             }
         }
 

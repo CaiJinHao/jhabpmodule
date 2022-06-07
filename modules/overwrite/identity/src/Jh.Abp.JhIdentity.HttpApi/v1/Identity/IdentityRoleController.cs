@@ -23,7 +23,8 @@ namespace Jh.Abp.JhIdentity.v1
 		protected IJhIdentityRoleAppService IdentityRoleAppService => LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleAppService>();
 
 		[Authorize(IdentityPermissions.Roles.Create)]
-		[HttpPost("roles")]
+        [Route("roles")]
+		[HttpPost]
 		public virtual async Task<Volo.Abp.Identity.IdentityRoleDto> CreateAsync(Volo.Abp.Identity.IdentityRoleCreateDto input)
 		{
 			//将该角色添加到所有组织
@@ -40,8 +41,8 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(IdentityPermissions.Roles.Delete)]
-		[HttpDelete]
 		[Route("{id}")]
+		[HttpDelete]
 		public virtual Task DeleteAsync(Guid id)
 		{
 			throw new NotImplementedException();
@@ -56,14 +57,16 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(IdentityPermissions.Roles.Update)]
-		[HttpPut("{id}")]
+        [Route("{id}")]
+		[HttpPut]
 		public virtual  Task<IdentityRoleDto> UpdateAsync(System.Guid id, IdentityRoleUpdateInputDto input)
 		{
 			throw new NotImplementedException();
 		}
 
 		[Authorize(IdentityPermissions.Roles.Update)]
-		[HttpPut("Patch/{id}")]
+        [Route("Patch/{id}")]
+		[HttpPut]
 		public virtual  Task UpdatePortionAsync(System.Guid id, IdentityRoleUpdateInputDto inputDto)
 		{
 			throw new NotImplementedException();
@@ -88,15 +91,16 @@ namespace Jh.Abp.JhIdentity.v1
 		}
 
 		[Authorize(IdentityPermissions.Roles.Default)]
-		[HttpGet("{id}")]
+        [Route("{id}")]
+		[HttpGet]
 		public virtual async Task<IdentityRoleDto> GetAsync(System.Guid id)
 		{
 			return await IdentityRoleAppService.GetAsync(id);
 		}
 
 		[Authorize(IdentityPermissions.Roles.Default)]
-		[HttpGet]
 		[Route("tree")]
+		[HttpGet]
 		public virtual async Task<dynamic> GetTreeAsync(string name)
 		{
 			var datas = await IdentityRoleAppService.GetEntitysAsync(new IdentityRoleRetrieveInputDto() { Name = name });
@@ -107,15 +111,16 @@ namespace Jh.Abp.JhIdentity.v1
         }
 
 		[Authorize(IdentityPermissions.Roles.Default)]
-		[HttpGet]
 		[Route("options")]
+		[HttpGet]
 		public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
 		{
 			return await IdentityRoleAppService.GetOptionsAsync(name);
 		}
 
 		[AllowAnonymous]
-		[HttpGet("AdminRoleId")]
+        [Route("AdminRoleId")]
+		[HttpGet]
 		public async Task<Guid?> GetAdminRoleIdAsync()
         {
             return await IdentityRoleAppService.GetAdminRoleIdAsync();

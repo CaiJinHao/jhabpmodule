@@ -11,7 +11,7 @@ namespace Jh.SourceGenerator.Common
         protected string ModuleNamespace { get; }
         protected GeneratorService GeneratorService { get; }
         protected string DomainDescription { get; set; }
-        public ReactAntdEditCodeBuilder(Type domainType, string filePath, string moduleNamespace, string domainDescription)
+        public ReactAntdEditCodeBuilder(Type domainType, string filePath, string moduleNamespace, string domainDescription, GneratorType generatorType)
         {
             if (!string.IsNullOrEmpty(filePath))
             {
@@ -22,7 +22,7 @@ namespace Jh.SourceGenerator.Common
             Suffix = ".tsx";
             DomainType = domainType;
             ModuleNamespace = moduleNamespace;
-            GeneratorService = new GeneratorService();
+            GeneratorService = new GeneratorService(generatorType);
         }
 
         public override string ToString()
@@ -69,7 +69,7 @@ type OperationModalProps = {
         onSubmit(updateDto);
       }
     } else {");
-            stringBuilder.AppendLine($"const _data = values as {ComponentCreateInputDtoName});");
+            stringBuilder.AppendLine($"const _data = values as {ComponentCreateInputDtoName};");
             stringBuilder.AppendLine(@"const createDto = await defaultService.Create(_data);
       if (createDto) {
         onSubmit(createDto);
@@ -119,6 +119,7 @@ type OperationModalProps = {
     setTitle(_t);
   }, [intl, operator]);
 
+/*
   const leaderSelectedChange = (value: any, option: any) => {
     setExtraProperties({
       ...extraProperties,
@@ -126,6 +127,7 @@ type OperationModalProps = {
       LeaderName: value ? option.label : null,
     });
   };
+*/
 
   useEffect(() => {
     initTitle();

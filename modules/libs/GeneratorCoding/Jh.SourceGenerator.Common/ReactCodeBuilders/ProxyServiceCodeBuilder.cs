@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace Jh.SourceGenerator.Common
 {
+    /// <summary>
+    /// 不要使用Http谓词写路由,否则生成不了路由，并且路由放在上边
+    /// </summary>
     public class ProxyServiceCodeBuilder: CodeBuilderBase
     {
         private const string RouteAttribute = "RouteAttribute";
@@ -88,11 +91,12 @@ namespace Jh.SourceGenerator.Common
                 else if (methodName.StartsWith("Update")) {
                     parameterName = method.Parameters.Last().Key;
                 }
-                method.RouteUrl = new System.Text.RegularExpressions.Regex(@"{").Replace(method.RouteUrl, "${");//给参数添加js语法 字符串插值
                 stringBuilder.AppendLine($"export const {methodName} = async ({method.GetParameters(ControllerDto.ModuleNamespace)}): Promise<{method.ReturnType}> => {{");
                 if (methodName.Equals("Create")) {
                     stringBuilder.AppendLine("if (!input.extraProperties) { input.extraProperties = {}; }");
                 }
+
+                method.RouteUrl = new System.Text.RegularExpressions.Regex(@"{").Replace(method.RouteUrl, "${");//给参数添加js语法 字符串插值
                 stringBuilder.AppendLine($"  return await request<{method.ReturnType}>(`${{{ProxyName}}}{method.RouteUrl}`, {{");
                 var requestMethod = method.RequestMethod.Replace("Http", "");
                 stringBuilder.AppendLine($"    method: '{requestMethod}',");

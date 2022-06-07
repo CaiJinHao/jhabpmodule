@@ -21,6 +21,7 @@ namespace Jh.SourceGenerator.Common
         /// <param name="filePath">生成的临时文件夹</param>
         /// <param name="moduleNamespace">Dto命名空间</param>
         /// <param name="jhModuleName">后台模块名称，一般问数据库连接名,给本地化使用</param>
+        /// <param name="generatorType">如何生成属性</param>
         public ReactAntdListCodeBuilder(Type domainType, string filePath, string moduleNamespace,string jhModuleName, GneratorType generatorType)
         {
             if (!string.IsNullOrEmpty(filePath))
@@ -272,7 +273,7 @@ import { useIntl } from 'umi';
             stringBuilder.AppendLine(@"actionRef={proTableActionRef}
           columns={columns}
           rowSelection={rowSelection}
-          request={(params, sorter, filter) => getTableDataSource(params, sorter, filter)}
+          request={(params, sorter) => getTableDataSource(params, sorter)}
           rowKey=""id""
           pagination={{
             pageSize: 10,
