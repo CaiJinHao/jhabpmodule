@@ -242,7 +242,7 @@ import { useIntl } from 'umi';
             stringBuilder.AppendLine("];");
             stringBuilder.AppendLine(@"
   //table functions
-  const getTableDataSource = async (params: any, sorter: any, filter: any) => {
+  const getTableDataSource = async (params: any, sorter: any) => {
     const sortings = [];
     const _sorter = new Object(sorter);
     for (const key in _sorter) {
