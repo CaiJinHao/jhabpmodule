@@ -70,7 +70,9 @@ import { useIntl } from 'umi';
   const [yesOrNoOptions, setYesOrNoOptions] = useState([]);
 ");
             stringBuilder.AppendLine($"  const [currentOperation, setCurrentOperation] = useState<{ComponentDtoName} | undefined>(undefined);");
-
+            stringBuilder.AppendLine(@"  const reloadProTable = () => {
+    proTableActionRef.current?.reload();
+  };");
             stringBuilder.AppendLine(@"
   const requestYesOrNoOptions = async () => {
     if (yesOrNoOptions.length == 0) {
@@ -98,7 +100,7 @@ import { useIntl } from 'umi';
           message.success(
             intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }),
           );
-          action?.reload();
+          reloadProTable();
         },
         onCancel() {},
       });
@@ -118,7 +120,7 @@ import { useIntl } from 'umi';
           message.success(
             intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }),
           );
-          action?.reload();
+          reloadProTable();
         },
         onCancel() {},
       });
@@ -132,7 +134,7 @@ import { useIntl } from 'umi';
   const onSubmitOperation = () => {
     setVisibleOperation(false);
     message.success(intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }));
-    proTableActionRef.current?.reload();
+    reloadProTable();
   };
 
   const create = () => {
@@ -158,7 +160,7 @@ import { useIntl } from 'umi';
           message.success(
             intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }),
           );
-          proTableActionRef.current?.reload();
+          reloadProTable();
         },
         onCancel() {},
       });
