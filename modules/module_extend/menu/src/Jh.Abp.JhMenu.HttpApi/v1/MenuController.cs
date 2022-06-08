@@ -29,7 +29,8 @@ namespace Jh.Abp.JhMenu.v1
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Delete)]
-		[HttpDelete("{id}")]
+        [Route("{id}")]
+		[HttpDelete]
 		public virtual async Task DeleteAsync(System.Guid id)
 		{
 			await MenuAppService.DeleteAsync(id);
@@ -44,24 +45,24 @@ namespace Jh.Abp.JhMenu.v1
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Update)]
-		[HttpPut("{id}")]
+        [Route("{id}")]
+		[HttpPut]
 		public virtual async Task<MenuDto> UpdateAsync(System.Guid id, MenuUpdateInputDto input)
 		{
 			return await MenuAppService.UpdateAsync(id, input);
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Update)]
-		[HttpPut("Patch/{id}")]//兼容手机端，手机端不支持Patch
-		[HttpPatch("{id}")]
+        [Route(("Patch/{id}"))]
+		[HttpPut]
 		public virtual async Task UpdatePortionAsync(System.Guid id, MenuUpdateInputDto inputDto)
 		{
 			await MenuAppService.UpdatePortionAsync(id, inputDto);
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Recover)]
-		[HttpPatch]
-		[HttpPut]
 		[Route("{id}/Recover")]
+		[HttpPut]
 		public async Task RecoverAsync(Guid id)
 		{
 			await MenuAppService.RecoverAsync(id);
@@ -86,14 +87,16 @@ namespace Jh.Abp.JhMenu.v1
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Detail)]
-		[HttpGet("{id}")]
+        [Route("{id}")]
+		[HttpGet]
 		public virtual async Task<MenuDto> GetAsync(System.Guid id)
 		{
 			return await MenuAppService.GetAsync(id);
 		}
 
 		[Authorize(JhMenuPermissions.Menus.Create)]
-		[HttpGet("MaxCode/{parentCode}")]
+        [Route("MaxCode/{parentCode}")]
+		[HttpGet]
 		public async Task<string> GetMaxMenuCodeAsync(string parentCode)
         {
 			return await MenuAppService.GetMaxMenuCodeAsync(parentCode);
