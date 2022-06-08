@@ -55,30 +55,31 @@ namespace Jh.Abp.JhIdentity
                 inputDto.Email,
                 CurrentTenant.Id
             );
+            UpdateEntity(user, inputDto);
+            (await UserManager.CreateAsync(user, inputDto.Password)).CheckErrors();//先创建
+            await UpdateUserByInput(user, inputDto);//之后更新
+            await CurrentUnitOfWork.SaveChangesAsync();
+            return MapToGetOutputDto(user);
+        }
 
-            if (inputDto.OrganizationUnitIds != null)
+        protected virtual void UpdateEntity(IdentityUser user, IdentityUserCreateOrUpdateDto input)
+        {
+            input.MapExtraPropertiesTo(user);
+            if (input.OrganizationUnitIds != null)
             {
-                foreach (var item in inputDto.OrganizationUnitIds)
+                user.OrganizationUnits.Clear();
+                foreach (var item in input.OrganizationUnitIds)
                 {
                     user.AddOrganizationUnit(item);
                 }
             }
-
-            inputDto.MapExtraPropertiesTo(user);
-
-            if (inputDto is IMethodDto<IdentityUser> methodDto)
+            if (input is IMethodDto<IdentityUser> methodDto)
             {
                 if (methodDto.MethodInput != null)
                 {
                     methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(user);
                 }
             }
-            (await UserManager.CreateAsync(user, inputDto.Password)).CheckErrors();
-            await UpdateUserByInput(user, inputDto);
-            (await UserManager.UpdateAsync(user)).CheckErrors();
-
-            await CurrentUnitOfWork.SaveChangesAsync();
-            return MapToGetOutputDto(user);
         }
 
         protected virtual async Task UpdateUserByInput(IdentityUser user, IdentityUserCreateOrUpdateDto input, CancellationToken cancellationToken = default)
@@ -120,26 +121,9 @@ namespace Jh.Abp.JhIdentity
             var user = await UserManager.GetByIdAsync(id);
             user.ConcurrencyStamp = input.ConcurrencyStamp;
 
+            UpdateEntity(user,input);
             await UpdateUserByInput(user, input);
-            input.MapExtraPropertiesTo(user);
-            if (input.OrganizationUnitIds != null)
-            {
-                user.OrganizationUnits.Clear();
-                foreach (var item in input.OrganizationUnitIds)
-                {
-                    user.AddOrganizationUnit(item);
-                }
-            }
-            if (input is IMethodDto<IdentityUser> methodDto)
-            {
-                if (methodDto.MethodInput != null)
-                {
-                    methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(user);
-                }
-            }
-
-            (await UserManager.UpdateAsync(user)).CheckErrors();
-
+            
             if (!input.Password.IsNullOrEmpty())
             {
                 (await UserManager.RemovePasswordAsync(user)).CheckErrors();
