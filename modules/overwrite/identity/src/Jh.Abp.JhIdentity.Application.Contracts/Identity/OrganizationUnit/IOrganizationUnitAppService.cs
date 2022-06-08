@@ -21,5 +21,7 @@ namespace Jh.Abp.JhIdentity
 
 		Task CreateByRoleAsync(Guid roleId);
 		Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name);
+
+		Task<ListResultDto<OptionDto<Guid>>> GetRoleOptionsAsync(Guid[] orgIds);
 	}
 }

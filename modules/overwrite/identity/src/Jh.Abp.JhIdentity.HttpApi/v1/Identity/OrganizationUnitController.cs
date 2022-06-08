@@ -140,5 +140,14 @@ namespace Jh.Abp.JhIdentity.v1
         {
             throw new NotImplementedException();
         }
+
+
+		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
+		[Route("RoleOptions")]
+		[HttpGet]
+		public async Task<ListResultDto<OptionDto<Guid>>> GetRoleOptionsAsync(Guid[] orgIds)
+        {
+			return await OrganizationUnitAppService.GetRoleOptionsAsync(orgIds);
+        }
     }
 }

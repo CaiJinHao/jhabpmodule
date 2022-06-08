@@ -73,7 +73,6 @@ namespace Jh.Abp.JhIdentity
                     methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(user);
                 }
             }
-            //await UserManager.SetLockoutEnabledAsync(user, true);//启用登录错误锁
             (await UserManager.CreateAsync(user, inputDto.Password)).CheckErrors();
             await UpdateUserByInput(user, inputDto);
             (await UserManager.UpdateAsync(user)).CheckErrors();
@@ -84,6 +83,8 @@ namespace Jh.Abp.JhIdentity
 
         protected virtual async Task UpdateUserByInput(IdentityUser user, IdentityUserCreateOrUpdateDto input, CancellationToken cancellationToken = default)
         {
+            (await UserManager.SetUserNameAsync(user, input.UserName)).CheckErrors();
+
             if (!string.Equals(user.Email, input.Email, StringComparison.InvariantCultureIgnoreCase))
             {
                 (await UserManager.SetEmailAsync(user, input.Email)).CheckErrors();
@@ -94,7 +95,8 @@ namespace Jh.Abp.JhIdentity
                 (await UserManager.SetPhoneNumberAsync(user, input.PhoneNumber)).CheckErrors();
             }
 
-            (await UserManager.SetLockoutEnabledAsync(user, input.LockoutEnabled)).CheckErrors();
+            //不更新是否启用锁定，不更新编辑表单中没有的字段
+            //(await UserManager.SetLockoutEnabledAsync(user, input.LockoutEnabled)).CheckErrors();
 
             user.Name = input.Name;
             user.Surname = input.Surname;
@@ -117,8 +119,6 @@ namespace Jh.Abp.JhIdentity
 
             var user = await UserManager.GetByIdAsync(id);
             user.ConcurrencyStamp = input.ConcurrencyStamp;
-
-            (await UserManager.SetUserNameAsync(user, input.UserName)).CheckErrors();
 
             await UpdateUserByInput(user, input);
             input.MapExtraPropertiesTo(user);
