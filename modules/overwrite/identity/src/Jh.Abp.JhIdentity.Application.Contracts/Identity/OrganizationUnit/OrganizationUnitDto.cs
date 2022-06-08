@@ -1,15 +1,16 @@
 using System;
+using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Domain.Entities;
-using Volo.Abp.Data;
+using Volo.Abp.Identity;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.JhIdentity
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class OrganizationUnitDto: ExtensibleFullAuditedEntityDto<System.Guid>,IMultiTenant
+    /// <summary>
+    /// 
+    /// </summary>
+    public class OrganizationUnitDto: ExtensibleFullAuditedEntityDto<System.Guid>,IMultiTenant
 		, IHasConcurrencyStamp
 	{
         /// <summary>
@@ -29,5 +30,12 @@ namespace Jh.Abp.JhIdentity
 		/// 并发标识
 		/// </summary>
 		public string ConcurrencyStamp { get; set; }
+
+		public Guid[] RoleIds { get; set; }
+
+		[System.Text.Json.Serialization.JsonIgnore]
+		[Newtonsoft.Json.JsonIgnore]
+		public virtual ICollection<OrganizationUnitRole> Roles { get; set; }
+
 	}
 }

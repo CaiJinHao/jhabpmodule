@@ -65,6 +65,11 @@ namespace Jh.Abp.JhIdentity
             };
         }
 
+        public override Task<OrganizationUnitDto> GetAsync(Guid id)
+        {
+            return base.GetAsync(id,true);
+        }
+
         public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
@@ -79,7 +84,6 @@ namespace Jh.Abp.JhIdentity
             {
                 ConcurrencyStamp = input.ConcurrencyStamp
             };
-            input.RoleIds = await GetAllRoleIdAsync();//添加所有的角色到该组织
             if (input.RoleIds != null)
             {
                 foreach (var item in input.RoleIds)
