@@ -5,9 +5,18 @@
     "Permission:AuditLoggings": "Audit Log Management",
     "Permission:JhIdentity": "Identity module",
     "Permission:OrganizationUnits": "Organization management",
+    "Permission:IdentityUsers": "User management",
     "JhIdentity:JhOrganizationUnit:ParentId": "Parent",
     "JhIdentity:JhOrganizationUnit:Code": "Code",
     "JhIdentity:JhOrganizationUnit:DisplayName": "DisplayName",
-    "JhIdentity:JhOrganizationUnit:LeaderId": "Leader"
+    "JhIdentity:JhOrganizationUnit:LeaderId": "Leader",
+    "JhIdentity:IdentityRole:DisplayName": "Role name",
+    "JhIdentity:IdentityUser:UserName": "User account",
+    "JhIdentity:IdentityUser:Name": "User name",
+    "JhIdentity:IdentityUser:Email": "Email",
+    "JhIdentity:IdentityUser:PhoneNumber": "Phone Number",
+    "JhIdentity:IdentityUser:LockoutEnd": "Account lock End",
+    "JhIdentity:IdentityUser:LockoutEnabled": "Enabling Account Lock",
+    "JhIdentity:IdentityUser:AccessFailedCount": "Access Failed Count"
   }
 }
