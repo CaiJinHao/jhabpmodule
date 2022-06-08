@@ -86,12 +86,12 @@ type OperationModalProps = {
   };
 */");
 
-            stringBuilder.AppendLine($"  const initTitle = useCallback(() => {{ let _t = '{DomainDescription}';");
+            stringBuilder.AppendLine($"  const initTitle = useCallback(() => {{ let _t = intl.formatMessage({{id: 'DisplayName:{DomainType.Name}',defaultMessage: '{DomainDescription}'}});");
             stringBuilder.AppendLine(@"
    switch (operator) {
       case ViewOperator.Add:
         {
-          _t = `${_t}${intl.formatMessage({
+          _t = `${_t} ${intl.formatMessage({
             id: 'Permission:Create',
             defaultMessage: '创建',
           })}`;
@@ -99,7 +99,7 @@ type OperationModalProps = {
         break;
       case ViewOperator.Edit:
         {
-          _t = `${_t}${intl.formatMessage({
+          _t = `${_t} ${intl.formatMessage({
             id: 'Permission:Edit',
             defaultMessage: '编辑',
           })}`;
@@ -107,7 +107,7 @@ type OperationModalProps = {
         break;
       case ViewOperator.Detail:
         {
-          _t = `${_t}${intl.formatMessage({
+          _t = `${_t} ${intl.formatMessage({
             id: 'Permission:Detail',
             defaultMessage: '详情',
           })}`;
@@ -162,7 +162,14 @@ type OperationModalProps = {
             {
                 var fieldName = item.Name;
                 var fieldDescription = item.Description;
-                stringBuilder.AppendLine(@$"<ProFormText width=""md"" name=""{fieldName}"" label=""{fieldDescription}""  rules={{[{{ required: true, message: '请输入{fieldDescription}' }}]}} placeholder=""请输入"" />");
+                if (item.IsRequired)
+                {
+                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" name=""{fieldName}"" label=""{fieldDescription}""  rules={{[{{required: true,message: `${{intl.formatMessage({{id: 'Form.rules.message',defaultMessage: '请输入',}})}} ${{intl.formatMessage({{id: '${ModuleNamespace}:${DomainType.Name}:{fieldName}',defaultMessage: '${fieldDescription}',}})}}`, />");
+                }
+                else
+                {
+                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" name=""{fieldName}"" label=""{fieldDescription}"" />");
+                }
             }
             stringBuilder.AppendLine("</ProForm.Group>");
 
