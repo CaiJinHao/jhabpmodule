@@ -29,7 +29,11 @@ public class JhIdentityDomainSharedModule : AbpModule
             //重写资源类型得本地化文件
             options.Resources
                 .Get<AbpValidationResource>()
-                .AddVirtualJson("/Localization/Account");
+                .AddVirtualJson("/Localization/JhIdentity");
+
+            options.Resources
+               .Get<IdentityResource>()
+               .AddVirtualJson("/Localization/JhIdentity");
 
 
             //新的资源文件类型,继承，用得时候必须用该资源类型
@@ -37,9 +41,6 @@ public class JhIdentityDomainSharedModule : AbpModule
                 .Add<JhIdentityResource>("zh-Hans")
                 .AddBaseTypes(typeof(IdentityResource))
                 .AddBaseTypes(typeof(JhAbpExtensionsResource))
-                //.AddBaseTypes(typeof(AccountResource))
-                //.AddBaseTypes(typeof(AuditLoggingResource))
-                //.AddBaseTypes(typeof(AbpFeatureManagementResource))
                 .AddVirtualJson("/Localization/JhIdentity");
         });
 

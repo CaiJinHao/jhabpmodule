@@ -1,8 +1,0 @@
-{
-  "culture": "zh-Hans",
-  "texts": {
-    "AccountLogin": "账号登录",
-    "QrLogin": "扫码登录",
-    "The {0} field is required.": "{0}不可为空."
-  }
-}
