@@ -35,10 +35,10 @@ namespace Jh.Abp.Common
         /// 禁掉 checkbox
         /// </summary>
         public bool disableCheckbox { get; set; }
-        /// <summary>
-        /// 当树为 checkable 时，设置独立节点是否展示 Checkbox
+    /*    /// <summary>
+        /// 当树为 checkable 时，设置独立节点是否展示 Checkbox,默认所有都展示
         /// </summary>
-        public bool checkable { get; set; }
+        public bool checkable { get; set; }*/
 
         public List<TreeAntdDto> children { get; set; }
 

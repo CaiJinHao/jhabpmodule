@@ -4,6 +4,7 @@ using Volo.Abp.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Volo.Abp.Identity;
+using Volo.Abp.PermissionManagement;
 
 namespace Jh.Abp.JhIdentity;
 
@@ -11,6 +12,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(JhIdentityDomainSharedModule),
     typeof(AbpDddApplicationContractsModule),
     typeof(AbpIdentityApplicationContractsModule),
+    typeof(AbpPermissionManagementApplicationContractsModule),
     typeof(AbpAuthorizationModule)
     )]
 public class JhIdentityApplicationContractsModule : AbpModule

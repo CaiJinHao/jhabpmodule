@@ -47,11 +47,12 @@ namespace Jh.Abp.JhPermission.JhPermission
             {
                 if (await SimpleStateCheckerManager.IsEnabledAsync(item))
                 {
-                    await PermissionManager.SetAsync(item.Name, inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames.ToNullList().Contains(item.Name));
+                    await PermissionManager.SetAsync(item.Name, inputDto.ProviderName, inputDto.RoleName, inputDto.PermissionNames.ToNullList().Contains(item.Name));
                 }
             }
         }
 
+        [Obsolete]
         public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedByNameRetrieveInputDto input)
         {
             await CheckProviderPolicy(input.ProviderName);
@@ -59,9 +60,28 @@ namespace Jh.Abp.JhPermission.JhPermission
             foreach (var permissionName in input.PermissionNames)
             {
                 var isGranted = CheckPermission(permissionName, input.ProviderName);
-                result.Add(new PermissionGrantedDto() { Name = permissionName, Granted = isGranted });
+                result.Add(new PermissionGrantedDto() { Name = permissionName, IsGranted = isGranted });
             }
             return result;
+        }
+
+        /// <summary>
+        /// 当前用户的权限，全然菜单及按钮权限
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task<ListResultDto<PermissionGrantedDto>> GetPermissionGrantedAsync(PermissionGrantedRetrieveInputDto input)
+        {
+            var grantedPermission= await PermissionManager.GetAllAsync(input.ProviderName,input.RoleName);
+            var datas = grantedPermission.Select(a => new PermissionGrantedDto() { Name = a.Name, IsGranted = a.IsGranted }).ToList();
+            return new ListResultDto<PermissionGrantedDto>(datas);
+        }
+
+        public virtual async Task<ListResultDto<string>> GetPermissionGrantedByRoleAsync(PermissionGrantedRetrieveInputDto input)
+        {
+            var grantedPermission = await PermissionManager.GetAllAsync(input.ProviderName, input.RoleName);
+            var datas = grantedPermission.Where(a=>a.IsGranted).Select(a => a.Name).ToList();
+            return new ListResultDto<string>(datas);
         }
 
         public virtual Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)

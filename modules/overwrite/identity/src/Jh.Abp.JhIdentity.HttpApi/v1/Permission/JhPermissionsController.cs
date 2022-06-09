@@ -11,9 +11,12 @@ using Volo.Abp.Auditing;
 using Jh.Abp.JhIdentity;
 using Volo.Abp.Application.Dtos;
 using Jh.Abp.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jh.Abp.JhPermission
 {
+    [Authorize]
+    [DisableAuditing]
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
@@ -25,11 +28,18 @@ namespace Jh.Abp.JhPermission
 
         public IJhPermissionAppService jhPermissionAppService { get; set; }
 
-        [DisableAuditing]
-        [HttpPost("PermissionGranted")]
-        public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync([FromBody] PermissionGrantedByNameRetrieveInputDto input)
+        [Route("GrantedByRole")]
+        [HttpGet]
+        public async Task<ListResultDto<string>> GetPermissionGrantedByRoleAsync(PermissionGrantedRetrieveInputDto input)
         {
-            return await jhPermissionAppService.GetPermissionGrantedByNameAsync(input);
+            return await jhPermissionAppService.GetPermissionGrantedByRoleAsync(input);
+        }
+
+        [Route("GrantedByRole")]
+        [HttpPut]
+        public virtual async Task UpdateAsync(PermissionGrantedCreateInputDto inputDto)
+        {
+            await jhPermissionAppService.UpdateAsync(inputDto);
         }
 
         [Route("Tree")]
@@ -37,12 +47,6 @@ namespace Jh.Abp.JhPermission
         public async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
         {
             return await jhPermissionAppService.GetTreesAsync(inputDto);
-        }
-
-        [HttpPost("Interface")]
-        public virtual async Task UpdateAsync(PermissionGrantedCreateInputDto inputDto)
-        {
-            await jhPermissionAppService.UpdateAsync(inputDto);
         }
     }
 }

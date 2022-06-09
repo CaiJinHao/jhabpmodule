@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Auditing;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.PermissionManagement;
 
@@ -15,13 +16,15 @@ namespace Jh.Abp.JhPermission
     {
         Task UpdateAsync(PermissionGrantedCreateInputDto inputDto);
 
-        Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedByNameRetrieveInputDto input);
-
         /// <summary>
         /// 获取树
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
+        [DisableAuditing]
         Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto);
+
+        [DisableAuditing]
+        Task<ListResultDto<string>> GetPermissionGrantedByRoleAsync(PermissionGrantedRetrieveInputDto input);
     }
 }

@@ -5,10 +5,10 @@ using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.JhPermission
 {
-    public class PermissionGrantedDto : IMultiTenant
+    public class PermissionGrantedDto 
     {
-        public virtual Guid? TenantId { get; set; }
         public string Name { get; set; }
-        public bool Granted { get; set; }
+
+        public bool IsGranted { get; set; }
     }
 }

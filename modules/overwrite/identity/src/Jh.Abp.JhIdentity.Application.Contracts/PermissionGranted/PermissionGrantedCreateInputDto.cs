@@ -12,6 +12,6 @@ namespace Jh.Abp.JhPermission
         /// </summary>
         public string[] PermissionNames { get; set; }
         public string ProviderName { get; set; } = RolePermissionValueProvider.ProviderName;
-        public string ProviderKey { get; set; }
+        public string RoleName { get; set; }
     }
 }
