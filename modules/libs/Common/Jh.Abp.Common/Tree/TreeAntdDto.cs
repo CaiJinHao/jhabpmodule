@@ -16,10 +16,6 @@ namespace Jh.Abp.Common
         public object data { get; set; }
         public string key { get { return id; } }
         /// <summary>
-        /// 设置节点是否可被选中
-        /// </summary>
-        public bool selectable { get; set; } = true;
-        /// <summary>
         /// 设置为叶子节点 (设置了 loadData 时有效)。为 false 时会强制将其作为父节点
         /// </summary>
         public bool isLeaf { get; set; }
@@ -35,10 +31,6 @@ namespace Jh.Abp.Common
         /// 禁掉 checkbox
         /// </summary>
         public bool disableCheckbox { get; set; }
-    /*    /// <summary>
-        /// 当树为 checkable 时，设置独立节点是否展示 Checkbox,默认所有都展示
-        /// </summary>
-        public bool checkable { get; set; }*/
 
         public List<TreeAntdDto> children { get; set; }
 
