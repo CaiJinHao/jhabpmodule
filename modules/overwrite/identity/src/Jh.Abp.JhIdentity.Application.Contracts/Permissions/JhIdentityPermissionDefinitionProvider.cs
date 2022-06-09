@@ -10,12 +10,10 @@ public class JhIdentityPermissionDefinitionProvider : PermissionDefinitionProvid
     public override void Define(IPermissionDefinitionContext context)
     {
 		var identityGroup = context.GetGroup(IdentityPermissions.GroupName);
-
 		var IdentityUsersPermission = identityGroup.GetPermissionOrNull(JhIdentityPermissions.IdentityUsers.Default);
 		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Detail, L("Permission:Detail"));
 		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.BatchDelete, L("Permission:BatchDelete"));
 		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Recover, L("Permission:Recover"));
-
 
 		var JhIdentityGroup = context.AddGroup(JhIdentityPermissions.GroupName, L("Permission:JhIdentity"));
 		var OrganizationUnitsPermission = JhIdentityGroup.AddPermission(JhIdentityPermissions.OrganizationUnits.Default, L("Permission:OrganizationUnits"));
