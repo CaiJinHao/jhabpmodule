@@ -17,6 +17,11 @@ namespace Jh.Abp.JhPermission
 
         Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedByNameRetrieveInputDto input);
 
-        Task<ListResultDto<TreeDto>> GetPermissionTreesAsync(PermissionTreesRetrieveInputDto inputDto);
+        /// <summary>
+        /// 获取树
+        /// </summary>
+        /// <param name="inputDto"></param>
+        /// <returns></returns>
+        Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto);
     }
 }

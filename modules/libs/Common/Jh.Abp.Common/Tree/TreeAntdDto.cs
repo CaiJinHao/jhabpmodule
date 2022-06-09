@@ -9,12 +9,12 @@ namespace Jh.Abp.Common
         /// <summary>
         /// 排序值
         /// </summary>
-        public string order { get; set; }
+        public string order { get; private set; }
+        public string id { get; private set; }
+        public string title { get; private set; }
         public string parentId { get; set; }
-        public string id { get; set; }
         public object data { get; set; }
         public string key { get { return id; } }
-        public string title { get; set; }
         /// <summary>
         /// 设置节点是否可被选中
         /// </summary>
@@ -41,5 +41,12 @@ namespace Jh.Abp.Common
         public bool checkable { get; set; }
 
         public List<TreeAntdDto> children { get; set; }
+
+        public TreeAntdDto(string _id,string _title, string _order)
+        {
+            id= _id;
+            title = _title;
+            order = _order;
+        }
     }
 }

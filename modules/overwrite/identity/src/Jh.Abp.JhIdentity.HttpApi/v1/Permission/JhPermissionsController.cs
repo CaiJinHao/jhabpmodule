@@ -32,10 +32,11 @@ namespace Jh.Abp.JhPermission
             return await jhPermissionAppService.GetPermissionGrantedByNameAsync(input);
         }
 
-        [HttpGet("InterfaceTreesAll")]
-        public virtual async Task<ListResultDto<TreeDto>> GetPermissionTreesAsync([FromQuery] PermissionTreesRetrieveInputDto input)
+        [Route("Tree")]
+        [HttpGet]
+        public async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
         {
-            return await jhPermissionAppService.GetPermissionTreesAsync(input);
+            return await jhPermissionAppService.GetTreesAsync(inputDto);
         }
 
         [HttpPost("Interface")]

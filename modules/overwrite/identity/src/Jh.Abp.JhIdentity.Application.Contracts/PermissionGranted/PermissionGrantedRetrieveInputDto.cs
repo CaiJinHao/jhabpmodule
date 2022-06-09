@@ -15,6 +15,5 @@ namespace Jh.Abp.JhPermission
     public class PermissionTreesRetrieveInputDto 
     {
         public string ProviderName { get; set; } = RolePermissionValueProvider.ProviderName;
-        public string ProviderKey { get; set; }
     }
 }

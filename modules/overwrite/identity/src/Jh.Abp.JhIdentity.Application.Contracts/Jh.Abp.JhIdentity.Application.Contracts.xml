@@ -516,6 +516,13 @@
             方法参数回调
             </summary>
         </member>
+        <member name="M:Jh.Abp.JhPermission.IJhPermissionAppService.GetTreesAsync(Jh.Abp.JhPermission.PermissionTreesRetrieveInputDto)">
+            <summary>
+            获取树
+            </summary>
+            <param name="inputDto"></param>
+            <returns></returns>
+        </member>
         <member name="P:Jh.Abp.JhPermission.PermissionGrantedCreateInputDto.PermissionNames">
             <summary>
             权限名称列表

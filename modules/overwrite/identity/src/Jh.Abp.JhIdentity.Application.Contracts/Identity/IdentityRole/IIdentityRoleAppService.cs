@@ -1,4 +1,5 @@
 using Jh.Abp.Application.Contracts;
+using Jh.Abp.Common;
 using Jh.Abp.Common.Utils;
 using System;
 using System.Threading.Tasks;
@@ -11,5 +12,6 @@ namespace Jh.Abp.JhIdentity
 	{
 		Task<Guid?> GetAdminRoleIdAsync();
 		Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name);
+		Task<ListResultDto<TreeAntdDto>> GetTreesAsync();
 	}
 }

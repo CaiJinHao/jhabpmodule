@@ -194,12 +194,9 @@ namespace Jh.Abp.JhIdentity
 		{
             await CheckGetListPolicyAsync();
             var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
-               new TreeAntdDto()
+               new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
                {
-                   id = a.Id.ToString(),
                    parentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null,
-                   title = a.DisplayName,
-                   order = a.Code,
                    data = a
                }
            ).ToListAsync();

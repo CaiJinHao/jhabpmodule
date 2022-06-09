@@ -1,3 +1,4 @@
+using Jh.Abp.Common;
 using Jh.Abp.Common.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -125,5 +126,13 @@ namespace Jh.Abp.JhIdentity.v1
         {
             return await IdentityRoleAppService.GetAdminRoleIdAsync();
 		}
+
+		[Authorize(IdentityPermissions.Roles.Default)]
+		[Route("Trees")]
+		[HttpGet]
+		public  async Task<ListResultDto<TreeAntdDto>> GetTreesAsync()
+        {
+			return await IdentityRoleAppService.GetTreesAsync();
+        }
     }
 }

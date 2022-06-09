@@ -7,6 +7,7 @@ using System.Linq;
 using Volo.Abp.Application.Dtos;
 using Jh.Abp.Common.Utils;
 using Jh.Abp.Application.Contracts;
+using Jh.Abp.Common;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -53,6 +54,13 @@ namespace Jh.Abp.JhIdentity
                 query = query.Where(a => a.Name.Contains(name));
             }
             return new ListResultDto<OptionDto<Guid>>(query.Select(a => new OptionDto<Guid> { Label = a.Name, Value = a.Id }).ToList());
+        }
+
+        public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync()
+        {
+            var query = await IdentityRoleRepository.GetQueryableAsync(true);
+            query = query.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
+            return new ListResultDto<TreeAntdDto>(query.Select(a => new TreeAntdDto(a.Id.ToString(), a.Name, a.NormalizedName) { isLeaf = true }).ToList());
         }
     }
 }
