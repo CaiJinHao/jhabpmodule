@@ -43,19 +43,6 @@ namespace Jh.Abp.JhPermission.JhPermission
             }
         }
 
-        [Obsolete]
-        public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedByNameRetrieveInputDto input)
-        {
-            await CheckProviderPolicy(input.ProviderName);
-            var result = new List<PermissionGrantedDto>();
-            foreach (var permissionName in input.PermissionNames)
-            {
-                var isGranted = CheckPermission(permissionName, input.ProviderName);
-                result.Add(new PermissionGrantedDto() { Name = permissionName, IsGranted = isGranted });
-            }
-            return result;
-        }
-
         /// <summary>
         /// 当前用户的权限，菜单及按钮权限
         /// </summary>
