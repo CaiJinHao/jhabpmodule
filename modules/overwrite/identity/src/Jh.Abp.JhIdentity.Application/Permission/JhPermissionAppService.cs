@@ -36,19 +36,10 @@ namespace Jh.Abp.JhPermission.JhPermission
         public virtual async Task UpdateAsync(PermissionGrantedCreateInputDto inputDto)
         {
             await CheckProviderPolicy(inputDto.ProviderName);
-
-            var multiTenancySide = CurrentTenant.GetMultiTenancySide();
-            var permissions = PermissionDefinitionManager.GetPermissions()
-                .Where(a => (a.Providers.Contains(RolePermissionValueProvider.ProviderName) || a.Providers.Count == 0)
-                && a.IsEnabled
-                && a.MultiTenancySide.HasFlag(multiTenancySide));
-
+            var permissions = GetAllPermission(inputDto.ProviderName);
             foreach (var item in permissions)
             {
-                if (await SimpleStateCheckerManager.IsEnabledAsync(item))
-                {
-                    await PermissionManager.SetAsync(item.Name, inputDto.ProviderName, inputDto.RoleName, inputDto.PermissionNames.ToNullList().Contains(item.Name));
-                }
+                await PermissionManager.SetAsync(item.Name, inputDto.ProviderName, inputDto.RoleName, inputDto.PermissionNames.ToNullList().Contains(item.Name));
             }
         }
 
@@ -66,7 +57,7 @@ namespace Jh.Abp.JhPermission.JhPermission
         }
 
         /// <summary>
-        /// 当前用户的权限，全然菜单及按钮权限
+        /// 当前用户的权限，菜单及按钮权限
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -84,7 +75,7 @@ namespace Jh.Abp.JhPermission.JhPermission
             return new ListResultDto<string>(datas);
         }
 
-        public virtual Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
+        protected virtual List<PermissionDefinition> GetAllPermission(string providerName)
         {
             var permissionGroupDefinition = PermissionDefinitionManager.GetGroups();//根据模块名称分组的权限
             var permissionsDefinition = permissionGroupDefinition.SelectMany(a => a.Permissions);//根据表名分组的权限
@@ -92,9 +83,15 @@ namespace Jh.Abp.JhPermission.JhPermission
             var permissions = permissionsDefinition
                                     .Where(x => x.IsEnabled)
                                     .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
-                                    .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName))
+                                    .Where(x => !x.Providers.Any() || x.Providers.Contains(providerName))
                                     .ToList();
+            return permissions;
+        }
 
+        public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
+        {
+            await CheckProviderPolicy(inputDto.ProviderName);
+            var permissions = GetAllPermission(inputDto.ProviderName);
             List<TreeAntdDto> GetChildrens(IEnumerable<PermissionDefinition> _pDefinitions)
             {
                 var _p = new List<TreeAntdDto>();
@@ -119,7 +116,7 @@ namespace Jh.Abp.JhPermission.JhPermission
             }
 
             var trees = GetChildrens(permissions);
-            return Task.FromResult(new ListResultDto<TreeAntdDto>(trees));
+            return new ListResultDto<TreeAntdDto>(trees);
         }
     }
 }
