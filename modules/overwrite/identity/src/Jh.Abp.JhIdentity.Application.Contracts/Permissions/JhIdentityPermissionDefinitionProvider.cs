@@ -24,6 +24,11 @@ public class JhIdentityPermissionDefinitionProvider : PermissionDefinitionProvid
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.BatchDelete, L("Permission:BatchDelete"));
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.Recover, L("Permission:Recover"));
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.ManagePermissions, L("Permission:ManagePermissions"));
+
+		var JhPermissionsPermission = JhIdentityGroup.AddPermission(JhIdentityPermissions.JhPermissions.Default, L("Permission:JhPermissions"));
+		JhPermissionsPermission.AddChild(JhIdentityPermissions.JhPermissions.Detail, L("Permission:Detail"));
+		JhPermissionsPermission.AddChild(JhIdentityPermissions.JhPermissions.Update, L("Permission:Edit"));
+		JhPermissionsPermission.AddChild(JhIdentityPermissions.JhPermissions.ManagePermissions, L("Permission:ManagePermissions"));
 	}
 
 	private static LocalizableString L(string name)

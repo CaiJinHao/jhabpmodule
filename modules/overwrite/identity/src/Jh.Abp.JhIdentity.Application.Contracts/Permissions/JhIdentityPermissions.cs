@@ -7,6 +7,14 @@ public class JhIdentityPermissions
 {
     public const string GroupName = "JhIdentity";
 
+    public class JhPermissions
+    {
+        public const string Default = GroupName + ".JhPermissions";
+        public const string Detail = Default + ".Detail";
+        public const string Update = Default + ".Update";
+        public const string ManagePermissions = Default + ".ManagePermissions";
+    }
+
     public class OrganizationUnits
     {
         public const string Default = GroupName + ".OrganizationUnits";
@@ -31,7 +39,6 @@ public class JhIdentityPermissions
         public const string Detail = Default + ".Detail";
         public const string BatchDelete = Default + ".BatchDelete";
         public const string Recover = Default + ".Recover";
-
     }
 
     public static string[] GetAll()

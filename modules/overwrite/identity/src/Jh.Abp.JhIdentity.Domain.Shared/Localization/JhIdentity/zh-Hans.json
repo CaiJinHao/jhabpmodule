@@ -10,6 +10,8 @@
     "Permission:JhIdentity": "Identity模块",
     "Permission:OrganizationUnits": "组织管理",
     "Permission:IdentityUsers": "用户管理",
+    "Permission:JhPermissions": "权限管理",
+    "DisplayName:JhPermissions:Save": "修改权限",
     "DisplayName:JhOrganizationUnit": "组织",
     "DisplayName:JhOrganizationUnit:ParentId": "上级组织",
     "DisplayName:JhOrganizationUnit:Code": "组织编号",
