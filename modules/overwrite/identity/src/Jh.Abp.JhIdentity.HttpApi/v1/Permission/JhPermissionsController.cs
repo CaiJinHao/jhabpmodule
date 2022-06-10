@@ -15,16 +15,13 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Jh.Abp.JhPermission
 {
+    [Authorize]
     [DisableAuditing]
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]
     [Area(JhIdentityRemoteServiceConsts.ModuleName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    public class JhPermissionsController : PermissionsController, IJhPermissionAppService
+    public class JhPermissionsController : JhIdentityController, IJhPermissionAppService
     {
-        public JhPermissionsController(IPermissionAppService permissionAppService) : base(permissionAppService)
-        {
-        }
-
         public IJhPermissionAppService jhPermissionAppService { get; set; }
 
         [Authorize(JhIdentityPermissions.JhPermissions.Default)]
@@ -49,6 +46,14 @@ namespace Jh.Abp.JhPermission
         public async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
         {
             return await jhPermissionAppService.GetTreesAsync(inputDto);
+        }
+
+        [Authorize(JhIdentityPermissions.JhPermissions.Default)]
+        [Route("CurrentGranted")]
+        [HttpGet]
+        public async Task<ListResultDto<PermissionGrantedDto>> GetCurrentGrantedAsync()
+        {
+            return await jhPermissionAppService.GetCurrentGrantedAsync();
         }
     }
 }

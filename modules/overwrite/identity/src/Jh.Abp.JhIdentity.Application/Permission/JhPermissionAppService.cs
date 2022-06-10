@@ -48,10 +48,15 @@ namespace Jh.Abp.JhPermission.JhPermission
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public virtual async Task<ListResultDto<PermissionGrantedDto>> GetPermissionGrantedAsync(PermissionGrantedRetrieveInputDto input)
+        public virtual async Task<ListResultDto<PermissionGrantedDto>> GetCurrentGrantedAsync()
         {
-            var grantedPermission= await PermissionManager.GetAllAsync(input.ProviderName,input.RoleName);
-            var datas = grantedPermission.Select(a => new PermissionGrantedDto() { Name = a.Name, IsGranted = a.IsGranted }).ToList();
+            var allPermission = new List<PermissionWithGrantedProviders>();
+            foreach (var roleName in CurrentUser.Roles)
+            {
+                var grantedPermission = await PermissionManager.GetAllAsync(RolePermissionValueProvider.ProviderName, roleName);
+                allPermission.AddRange(grantedPermission);
+            }
+            var datas = allPermission.Distinct().Select(a => new PermissionGrantedDto() { Name = a.Name, IsGranted = a.IsGranted }).ToList();
             return new ListResultDto<PermissionGrantedDto>(datas);
         }
 

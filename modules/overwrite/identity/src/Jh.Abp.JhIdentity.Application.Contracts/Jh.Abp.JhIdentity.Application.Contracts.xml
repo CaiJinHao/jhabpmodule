@@ -523,6 +523,12 @@
             <param name="inputDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Jh.Abp.JhPermission.IJhPermissionAppService.GetCurrentGrantedAsync">
+            <summary>
+            获取当前用户的授权权限列表，用于前端渲染
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Jh.Abp.JhPermission.PermissionGrantedCreateInputDto.PermissionNames">
             <summary>
             权限名称列表

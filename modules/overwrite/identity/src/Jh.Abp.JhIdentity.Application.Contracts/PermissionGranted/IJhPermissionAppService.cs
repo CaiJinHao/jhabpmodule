@@ -26,5 +26,12 @@ namespace Jh.Abp.JhPermission
 
         [DisableAuditing]
         Task<ListResultDto<string>> GetPermissionGrantedByRoleAsync(PermissionGrantedRetrieveInputDto input);
+
+        /// <summary>
+        /// 获取当前用户的授权权限列表，用于前端渲染
+        /// </summary>
+        /// <returns></returns>
+        [DisableAuditing]
+        Task<ListResultDto<PermissionGrantedDto>> GetCurrentGrantedAsync();
     }
 }
