@@ -192,7 +192,6 @@ namespace Jh.Abp.JhIdentity
 
 		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
-            await CheckGetListPolicyAsync();
             var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
                new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
                {

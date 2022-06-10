@@ -48,7 +48,7 @@ namespace Jh.Abp.JhPermission
             return await jhPermissionAppService.GetTreesAsync(inputDto);
         }
 
-        [Authorize(JhIdentityPermissions.JhPermissions.Default)]
+        [Authorize]
         [Route("CurrentGranted")]
         [HttpGet]
         public async Task<ListResultDto<PermissionGrantedDto>> GetCurrentGrantedAsync()

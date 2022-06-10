@@ -109,7 +109,7 @@ namespace Jh.Abp.JhIdentity.v1
 			return await OrganizationUnitAppService.GetRolesAsync(id);
 		}
 
-		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
+		[Authorize]
 		[Route("Trees")]
 		[HttpGet]
 		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
@@ -117,7 +117,7 @@ namespace Jh.Abp.JhIdentity.v1
 			return await OrganizationUnitAppService.GetOrganizationTreeAsync();
 		}
 
-		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
+		[Authorize]
 		[Route("options")]
 		[HttpGet]
 		public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
@@ -141,8 +141,7 @@ namespace Jh.Abp.JhIdentity.v1
             throw new NotImplementedException();
         }
 
-
-		[Authorize(JhIdentityPermissions.OrganizationUnits.Default)]
+		[Authorize]
 		[Route("RoleOptions")]
 		[HttpGet]
 		public async Task<ListResultDto<OptionDto<Guid>>> GetRoleOptionsAsync(Guid[] orgIds)
