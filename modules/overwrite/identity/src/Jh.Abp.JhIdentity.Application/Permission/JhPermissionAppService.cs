@@ -1,4 +1,5 @@
 ﻿using Jh.Abp.Common;
+using Jh.Abp.JhIdentity;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,13 @@ namespace Jh.Abp.JhPermission.JhPermission
 
         public virtual async Task UpdateAsync(PermissionGrantedCreateInputDto inputDto)
         {
-            await CheckProviderPolicy(inputDto.ProviderName);
-            var permissions = GetAllPermission(inputDto.ProviderName);
+            await CheckProviderPolicy(JhIdentityPermissions.JhPermissions.Update);
+            var permissionsDefinition = PermissionDefinitionManager.GetPermissions();
+            var permissions = permissionsDefinition
+                               .Where(x => x.IsEnabled)
+                               .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
+                               .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName))
+                               .ToList();
             foreach (var item in permissions)
             {
                 await PermissionManager.SetAsync(item.Name, inputDto.ProviderName, inputDto.RoleName, inputDto.PermissionNames.ToNullList().Contains(item.Name));
@@ -67,7 +73,7 @@ namespace Jh.Abp.JhPermission.JhPermission
             return new ListResultDto<string>(datas);
         }
 
-        protected virtual List<PermissionDefinition> GetAllPermission(string providerName)
+        protected virtual List<PermissionDefinition> GetPermissionGroups(string providerName)
         {
             var permissionGroupDefinition = PermissionDefinitionManager.GetGroups();//根据模块名称分组的权限
             var permissionsDefinition = permissionGroupDefinition.SelectMany(a => a.Permissions);//根据表名分组的权限
@@ -83,7 +89,7 @@ namespace Jh.Abp.JhPermission.JhPermission
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
         {
             await CheckProviderPolicy(inputDto.ProviderName);
-            var permissions = GetAllPermission(inputDto.ProviderName);
+            var permissions = GetPermissionGroups(inputDto.ProviderName);
             List<TreeAntdDto> GetChildrens(IEnumerable<PermissionDefinition> _pDefinitions)
             {
                 var _p = new List<TreeAntdDto>();

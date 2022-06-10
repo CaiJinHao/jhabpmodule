@@ -40,7 +40,7 @@ namespace Jh.Abp.JhPermission
             await jhPermissionAppService.UpdateAsync(inputDto);
         }
 
-        [Authorize(JhIdentityPermissions.JhPermissions.Default)]
+        [Authorize]
         [Route("Tree")]
         [HttpGet]
         public async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)

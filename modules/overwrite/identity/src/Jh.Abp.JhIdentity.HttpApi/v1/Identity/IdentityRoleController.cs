@@ -99,19 +99,7 @@ namespace Jh.Abp.JhIdentity.v1
 			return await IdentityRoleAppService.GetAsync(id);
 		}
 
-		[Authorize(IdentityPermissions.Roles.Default)]
-		[Route("tree")]
-		[HttpGet]
-		public virtual async Task<dynamic> GetTreeAsync(string name)
-		{
-			var datas = await IdentityRoleAppService.GetEntitysAsync(new IdentityRoleRetrieveInputDto() { Name = name });
-            return new
-            {
-                items = datas.Items.Where(a => a.Name != JhIdentity.JhIdentityConsts.AdminRoleName).Select(a => new { title = a.Name, id = a.Id, data = a, spread = true })
-            };
-        }
-
-		[Authorize(IdentityPermissions.Roles.Default)]
+		[Authorize]
 		[Route("options")]
 		[HttpGet]
 		public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
@@ -127,7 +115,7 @@ namespace Jh.Abp.JhIdentity.v1
             return await IdentityRoleAppService.GetAdminRoleIdAsync();
 		}
 
-		[Authorize(IdentityPermissions.Roles.Default)]
+		[Authorize]
 		[Route("Trees")]
 		[HttpGet]
 		public  async Task<ListResultDto<TreeAntdDto>> GetTreesAsync()

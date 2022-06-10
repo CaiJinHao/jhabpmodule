@@ -121,7 +121,7 @@ namespace Jh.Abp.JhIdentity.v1
         /// 当前登录用户信息
         /// </summary>
         /// <returns></returns>
-        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
+        [Authorize]
         [Route("info")]
         [HttpGet]
         public virtual async Task<IdentityUserDto> GetCurrentAsync()
@@ -137,7 +137,7 @@ namespace Jh.Abp.JhIdentity.v1
             return await IdentityUserAppService.GetOrganizationsAsync(id);
         }
 
-        [Authorize(JhIdentityPermissions.IdentityUsers.Default)]
+        [Authorize]
         [Route("options")]
         [HttpGet]
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync()
@@ -153,7 +153,6 @@ namespace Jh.Abp.JhIdentity.v1
             return await IdentityUserAppService.GetSuperiorUserAsync(userId);
         }
 
-        //由于每个人都需要改密码所以不使用权限策略
         [Authorize]
         [Route("change-password")]
         [HttpPost]
