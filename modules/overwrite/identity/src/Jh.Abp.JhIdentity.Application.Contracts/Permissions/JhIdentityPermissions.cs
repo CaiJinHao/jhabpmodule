@@ -5,7 +5,7 @@ namespace Jh.Abp.JhIdentity;
 
 public class JhIdentityPermissions
 {
-    public const string GroupName = "JhIdentity";
+    public const string GroupName = IdentityPermissions.GroupName;
 
     public class JhPermissions
     {

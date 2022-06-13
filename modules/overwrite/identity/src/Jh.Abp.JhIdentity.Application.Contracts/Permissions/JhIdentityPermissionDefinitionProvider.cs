@@ -15,8 +15,7 @@ public class JhIdentityPermissionDefinitionProvider : PermissionDefinitionProvid
 		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.BatchDelete, L("Permission:BatchDelete"));
 		IdentityUsersPermission.AddChild(JhIdentityPermissions.IdentityUsers.Recover, L("Permission:Recover"));
 
-		var JhIdentityGroup = context.AddGroup(JhIdentityPermissions.GroupName, L("Permission:JhIdentity"));
-		var OrganizationUnitsPermission = JhIdentityGroup.AddPermission(JhIdentityPermissions.OrganizationUnits.Default, L("Permission:OrganizationUnits"));
+		var OrganizationUnitsPermission = identityGroup.AddPermission(JhIdentityPermissions.OrganizationUnits.Default, L("Permission:OrganizationUnits"));
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.Detail, L("Permission:Detail"));
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.Create, L("Permission:Create"));
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.Update, L("Permission:Edit"));
@@ -25,7 +24,7 @@ public class JhIdentityPermissionDefinitionProvider : PermissionDefinitionProvid
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.Recover, L("Permission:Recover"));
 		OrganizationUnitsPermission.AddChild(JhIdentityPermissions.OrganizationUnits.ManagePermissions, L("Permission:ManagePermissions"));
 
-		var JhPermissionsPermission = JhIdentityGroup.AddPermission(JhIdentityPermissions.JhPermissions.Default, L("Permission:JhPermissions"));
+		var JhPermissionsPermission = identityGroup.AddPermission(JhIdentityPermissions.JhPermissions.Default, L("Permission:JhPermissions"));
 		JhPermissionsPermission.AddChild(JhIdentityPermissions.JhPermissions.Detail, L("Permission:Detail"));
 		JhPermissionsPermission.AddChild(JhIdentityPermissions.JhPermissions.Update, L("Permission:Edit"));
 		JhPermissionsPermission.AddChild(JhIdentityPermissions.JhPermissions.ManagePermissions, L("Permission:ManagePermissions"));
