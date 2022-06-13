@@ -1,4 +1,5 @@
-﻿using Jh.Abp.JhIdentity.v1;
+﻿using Jh.Abp.JhAuditLogging;
+using Jh.Abp.JhIdentity.v1;
 using Jh.Abp.JhPermission;
 using Jh.SourceGenerator.Common;
 using Jh.SourceGenerator.Common.GeneratorDtos;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.AuditLogging;
 using Volo.Abp.Identity;
 using Xunit;
 
@@ -20,8 +22,8 @@ namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
             var moduleNamespace = "API.JhIdentity";
             var generatorPath = @"G:\Temp";
             var service = new GeneratorService(new GeneratorOptions(generatorPath), GneratorType.AllField);
-            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(JhPermissionsController) });
-            //service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(OrganizationUnit) }, "JhIdentity");
+            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(AuditLoggingController) });
+            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(AuditLog) }, "JhIdentity");
         }
     }
 }

@@ -44,7 +44,8 @@ namespace Jh.Abp.JhAuditLogging
         }
 
 		[Authorize(JhAuditLoggingPermissions.AuditLoggings.Detail)]
-        [HttpGet("{id}")]
+        [Route("{id}")]
+        [HttpGet]
         public virtual async Task<AuditLog> GetAsync(System.Guid id)
         {
             return await auditLoggingAppService.GetAsync(id,true);
@@ -81,7 +82,8 @@ namespace Jh.Abp.JhAuditLogging
         /// <param name="id"></param>
         /// <returns></returns>
 		[Authorize(JhAuditLoggingPermissions.AuditLoggings.Delete)]
-        [HttpDelete("{id}")]
+        [Route("{id}")]
+        [HttpDelete]
         public virtual async Task DeleteAsync(Guid id)
         {
             await auditLoggingAppService.DeleteAsync(id);

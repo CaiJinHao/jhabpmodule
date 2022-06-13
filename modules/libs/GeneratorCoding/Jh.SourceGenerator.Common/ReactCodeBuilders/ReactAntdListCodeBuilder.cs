@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jh.Abp.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -197,7 +198,7 @@ import { useIntl } from 'umi';
                 var fieldName = item.Name;
                 var fieldDescription = item.Description;
                 stringBuilder.AppendLine("{");
-                stringBuilder.AppendLine($"title: intl.formatMessage({{id: '{JhModuleName}:{DomainType.Name}:{fieldName}',defaultMessage: '{fieldDescription}',}}),dataIndex: '{fieldName}',");
+                stringBuilder.AppendLine($"title: intl.formatMessage({{id: 'DisplayName:{DomainType.Name}:{fieldName}',defaultMessage: '{fieldDescription}',}}),dataIndex: '{fieldName.ToCamelCase(CamelCaseType.LowerCamelCase)}',");
                 stringBuilder.AppendLine("},");
             }
             

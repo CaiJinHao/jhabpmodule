@@ -1,3 +1,4 @@
+using Jh.Abp.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -160,15 +161,15 @@ type OperationModalProps = {
             stringBuilder.AppendLine("<ProForm.Group>");
             foreach (var item in GeneratorService.GetFieldDto(GeneratorService.GetMembers<GeneratorAttributes.CreateOrUpdateInputDtoAttribute>(DomainType)))
             {
-                var fieldName = item.Name;
                 var fieldDescription = item.Description;
+                var _lable = @$"name=""{item.Name.ToCamelCase(CamelCaseType.LowerCamelCase)}"" label={{intl.formatMessage({{id: 'DisplayName:{DomainType.Name}:{item.Name}', defaultMessage: '{fieldDescription}',}})}} ";
                 if (item.IsRequired)
                 {
-                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" name=""{fieldName}"" label=""{fieldDescription}""  rules={{[{{required: true,message: `${{intl.formatMessage({{id: 'Form.rules.message',defaultMessage: '请输入',}})}}\${{label}}',defaultMessage: '${fieldDescription}',}})}}`, />");
+                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" {_lable} rules={{[{{required: true,message: `${{intl.formatMessage({{id: 'Form.rules.message',defaultMessage: '请输入',}})}}\${{label}}',defaultMessage: '${fieldDescription}',}})}}` />");
                 }
                 else
                 {
-                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" name=""{fieldName}"" label=""{fieldDescription}"" />");
+                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" {_lable} />");
                 }
             }
             stringBuilder.AppendLine("</ProForm.Group>");
