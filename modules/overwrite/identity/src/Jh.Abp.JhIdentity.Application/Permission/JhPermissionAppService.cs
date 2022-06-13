@@ -36,7 +36,7 @@ namespace Jh.Abp.JhPermission.JhPermission
 
         public virtual async Task UpdateAsync(PermissionGrantedCreateInputDto inputDto)
         {
-            await CheckProviderPolicy(JhIdentityPermissions.JhPermissions.Update);
+            await CheckPolicyAsync(JhIdentityPermissions.JhPermissions.Update);
             var permissionsDefinition = PermissionDefinitionManager.GetPermissions();
             var permissions = permissionsDefinition
                                .Where(x => x.IsEnabled)
@@ -88,11 +88,15 @@ namespace Jh.Abp.JhPermission.JhPermission
 
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
         {
-            await CheckProviderPolicy(inputDto.ProviderName);
-            var permissions = GetPermissionGroups(inputDto.ProviderName);
+            await CheckPolicyAsync(JhIdentityPermissions.JhPermissions.Default);
+            var permissions = PermissionDefinitionManager.GetGroups();
             List<TreeAntdDto> GetChildrens(IEnumerable<PermissionDefinition> _pDefinitions)
             {
                 var _p = new List<TreeAntdDto>();
+                var pdefs= _pDefinitions.Where(x => x.IsEnabled)
+                                    .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
+                                    .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName))
+                                    .ToList();
                 foreach (var item in _pDefinitions)
                 {
                     //判断权限,必须要有父级权限
@@ -112,8 +116,17 @@ namespace Jh.Abp.JhPermission.JhPermission
                 }
                 return _p;
             }
-
-            var trees = GetChildrens(permissions);
+            var trees = new List<TreeAntdDto>();
+            foreach (var item in permissions.Where(a=>
+                                    a.Permissions.Where(x => x.IsEnabled)
+                                    .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
+                                    .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName)).Any())
+                )
+            {
+                var node = new TreeAntdDto(item.Name, item.DisplayName.Localize(StringLocalizerFactory), item.Name);
+                node.children = GetChildrens(item.Permissions);
+                trees.Add(node);
+            }
             return new ListResultDto<TreeAntdDto>(trees);
         }
     }
