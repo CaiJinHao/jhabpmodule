@@ -26,7 +26,7 @@ using Volo.Abp;");
                 builder.AppendLine($"\t\tI{table.Name}AppService");
                 builder.AppendLine("\t{");
                 {
-                    builder.AppendLine($"\t\t protected I{table.Name}DapperRepository {table.Name}DapperRepository => LazyServiceProvider.LazyGetRequiredService<I{table.Name}DapperRepository>();");
+                    //builder.AppendLine($"\t\t protected I{table.Name}DapperRepository {table.Name}DapperRepository => LazyServiceProvider.LazyGetRequiredService<I{table.Name}DapperRepository>();");
                     builder.AppendLine($"\t\t protected readonly I{table.Name}Repository {table.Name}Repository;");
                     builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}Repository repository) : base(repository)");
                     builder.AppendLine("\t\t{");

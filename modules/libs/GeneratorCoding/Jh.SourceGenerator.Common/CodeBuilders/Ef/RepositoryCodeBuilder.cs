@@ -28,8 +28,9 @@ using Volo.Abp.EntityFrameworkCore;");
             {
                 builder.AppendLine($"\tpublic class {FileName} : CrudRepository<{table.DbContext}, {table.Name}, {table.KeyType}>, I{table.Name}Repository");
                 builder.AppendLine("\t{");
-                builder.AppendLine($"\t\t protected readonly I{table.Name}DapperRepository {table.Name}DapperRepository;");
-                builder.AppendLine($"\t\t public {FileName}(IDbContextProvider<{table.DbContext}> dbContextProvider, I{table.Name}DapperRepository {table.Name.ToLower()}DapperRepository) : base(dbContextProvider)");
+                //builder.AppendLine($"\t\t protected readonly I{table.Name}DapperRepository {table.Name}DapperRepository;");
+                //, I{table.Name}DapperRepository {table.Name.ToLower()}DapperRepository
+                builder.AppendLine($"\t\t public {FileName}(IDbContextProvider<{table.DbContext}> dbContextProvider) : base(dbContextProvider)");
                 builder.AppendLine("\t\t{");
                 builder.AppendLine($"\t\t\t{table.Name}DapperRepository={table.Name.ToLower()}DapperRepository;");
                 builder.AppendLine("\t\t}");

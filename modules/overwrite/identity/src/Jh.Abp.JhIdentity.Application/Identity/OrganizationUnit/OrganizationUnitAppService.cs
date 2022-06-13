@@ -26,12 +26,10 @@ namespace Jh.Abp.JhIdentity
         protected IJhIdentityRoleRepository IdentityRoleRepository=>LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleRepository>();
         protected Volo.Abp.Identity.IOrganizationUnitRepository OrganizationUnitsRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         private readonly IOrganizationUnitRepository OrganizationUnitRepository;
-		private readonly IOrganizationUnitDapperRepository OrganizationUnitDapperRepository;
 		private JhOrganizationUnitManager OrganizationUnitManager => LazyServiceProvider.LazyGetRequiredService<JhOrganizationUnitManager>();
-        public OrganizationUnitAppService(IOrganizationUnitRepository repository, IOrganizationUnitDapperRepository organizationunitDapperRepository) : base(repository)
+        public OrganizationUnitAppService(IOrganizationUnitRepository repository) : base(repository)
         {
             OrganizationUnitRepository = repository;
-            OrganizationUnitDapperRepository = organizationunitDapperRepository;
 
             CreatePolicyName = JhIdentityPermissions.OrganizationUnits.Create;
             UpdatePolicyName = JhIdentityPermissions.OrganizationUnits.Update;

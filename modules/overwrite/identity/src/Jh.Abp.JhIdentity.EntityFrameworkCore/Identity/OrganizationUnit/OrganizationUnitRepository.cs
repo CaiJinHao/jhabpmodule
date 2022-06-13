@@ -11,10 +11,8 @@ namespace Jh.Abp.JhIdentity
 {
     public class OrganizationUnitRepository : CrudRepository<IIdentityDbContext, OrganizationUnit, System.Guid>, IOrganizationUnitRepository
 	{
-        protected readonly IOrganizationUnitDapperRepository OrganizationUnitDapperRepository;
-        public OrganizationUnitRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider, IOrganizationUnitDapperRepository organizationunitDapperRepository) : base(dbContextProvider)
+        public OrganizationUnitRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider) : base(dbContextProvider)
         {
-            OrganizationUnitDapperRepository = organizationunitDapperRepository;
         }
 
         public override async Task<IQueryable<OrganizationUnit>> WithDetailsAsync()

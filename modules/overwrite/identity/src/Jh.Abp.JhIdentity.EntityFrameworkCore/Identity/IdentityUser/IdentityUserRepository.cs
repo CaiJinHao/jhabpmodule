@@ -19,10 +19,8 @@ namespace Jh.Abp.JhIdentity
 	{
 		public IJhIdentityDbContext jhIdentityDbContext { get; set; }
 		public IRepository<JhOrganizationUnit, Guid> _appRoleRepository { get; set; }
-		protected readonly IIdentityUserDapperRepository IdentityUserDapperRepository;
-		 public IdentityUserRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider, IIdentityUserDapperRepository identityuserDapperRepository) : base(dbContextProvider)
+		 public IdentityUserRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider) : base(dbContextProvider)
 		{
-			IdentityUserDapperRepository=identityuserDapperRepository;
 		}
 
 		public virtual async Task<List<Volo.Abp.Identity.IdentityRole>> GetRolesAsync(

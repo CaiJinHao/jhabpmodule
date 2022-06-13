@@ -16,11 +16,9 @@ namespace Jh.Abp.JhIdentity
 		IJhIdentityRoleAppService
 	{
 		private readonly IJhIdentityRoleRepository IdentityRoleRepository;
-		private readonly IIdentityRoleDapperRepository IdentityRoleDapperRepository;
-		public JhIdentityRoleAppService(IJhIdentityRoleRepository repository, IIdentityRoleDapperRepository identityroleDapperRepository) : base(repository)
+		public JhIdentityRoleAppService(IJhIdentityRoleRepository repository) : base(repository)
 		{
 		IdentityRoleRepository = repository;
-		IdentityRoleDapperRepository = identityroleDapperRepository;
 		}
 
         public override Task<PagedResultDto<IdentityRoleDto>> GetListAsync(IdentityRoleRetrieveInputDto input)

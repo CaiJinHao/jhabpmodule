@@ -238,7 +238,7 @@ namespace Jh.SourceGenerator.Common
                 CreateFile(new DataSeedContributor(tableDto, generatorOptions.CreateDomainPath));
 
                 //EfCore
-                CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
+                //CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));//使用频率不高，不再自动生成，需要手动
                 CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
 
                 //Application

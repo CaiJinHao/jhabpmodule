@@ -29,12 +29,10 @@ namespace Jh.Abp.JhIdentity
         protected IOptions<IdentityOptions> IdentityOptions { get; }
 
         private readonly IIdentityUserRepository IdentityUserRepository;
-		private readonly IIdentityUserDapperRepository IdentityUserDapperRepository;
         public IdentityUserAppService(IIdentityUserRepository repository,
-            IOptions<IdentityOptions> identityOptions, IIdentityUserDapperRepository identityuserDapperRepository) : base(repository)
+            IOptions<IdentityOptions> identityOptions) : base(repository)
         {
             IdentityUserRepository = repository;
-            IdentityUserDapperRepository = identityuserDapperRepository;
             IdentityOptions = identityOptions;
 
             CreatePolicyName = IdentityPermissions.Users.Create;
