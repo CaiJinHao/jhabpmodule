@@ -42,6 +42,8 @@
     "DisplayName:AuditLog:Exceptions": "异常",
     "DisplayName:AuditLog:BrowserInfo": "浏览器信息",
     "DisplayName:AuditLog:ClientId": "客户端Id",
-    "DisplayName:AuditLog:ClientName": "客户端名称"
+    "DisplayName:AuditLog:ClientName": "客户端名称",
+    "DisplayName:AuditLog:Actions": "执行过程",
+    "DisplayName:AuditLog:EntityChanges": "更改实体"
   }
 }
