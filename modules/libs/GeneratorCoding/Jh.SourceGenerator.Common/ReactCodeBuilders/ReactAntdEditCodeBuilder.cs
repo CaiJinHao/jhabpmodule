@@ -164,7 +164,7 @@ type OperationModalProps = {
                 var fieldDescription = item.Description;
                 if (item.IsRequired)
                 {
-                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" name=""{fieldName}"" label=""{fieldDescription}""  rules={{[{{required: true,message: `${{intl.formatMessage({{id: 'Form.rules.message',defaultMessage: '请输入',}})}} ${{intl.formatMessage({{id: '${ModuleNamespace}:${DomainType.Name}:{fieldName}',defaultMessage: '${fieldDescription}',}})}}`, />");
+                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" name=""{fieldName}"" label=""{fieldDescription}""  rules={{[{{required: true,message: `${{intl.formatMessage({{id: 'Form.rules.message',defaultMessage: '请输入',}})}}\${{label}}',defaultMessage: '${fieldDescription}',}})}}`, />");
                 }
                 else
                 {

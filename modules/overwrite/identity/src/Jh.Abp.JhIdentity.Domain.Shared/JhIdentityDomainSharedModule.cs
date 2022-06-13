@@ -26,22 +26,23 @@ public class JhIdentityDomainSharedModule : AbpModule
 
         Configure<AbpLocalizationOptions>(options =>
         {
+            //新的资源文件类型,继承，用得时候必须用该资源类型
+            options.Resources
+                .Add<JhIdentityResource>("zh-Hans")
+                .AddBaseTypes(typeof(IdentityResource))
+                .AddBaseTypes(typeof(JhAbpExtensionsResource)) //继承资源
+                .AddVirtualJson("/Localization/JhIdentity");
+
             //重写资源类型得本地化文件
             options.Resources
                 .Get<AbpValidationResource>()
                 .AddVirtualJson("/Localization/JhIdentity");
 
             options.Resources
-               .Get<IdentityResource>()
-               .AddVirtualJson("/Localization/JhIdentity");
-
-
-            //新的资源文件类型,继承，用得时候必须用该资源类型
-            options.Resources
-                .Add<JhIdentityResource>("zh-Hans")
-                .AddBaseTypes(typeof(IdentityResource))
-                .AddBaseTypes(typeof(JhAbpExtensionsResource))
-                .AddVirtualJson("/Localization/JhIdentity");
+                .Get<IdentityResource>()
+                .AddVirtualJson("/Localization/JhIdentity")
+                .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
+               ;
         });
 
         Configure<AbpExceptionLocalizationOptions>(options =>

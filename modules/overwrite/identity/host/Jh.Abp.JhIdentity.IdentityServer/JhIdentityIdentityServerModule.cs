@@ -57,6 +57,7 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.TenantManagement.Localization;
 using Volo.Abp.UI.Navigation.Urls;
 
 namespace Jh.Abp.JhIdentity;
@@ -119,7 +120,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         configuration = context.Services.GetConfiguration();
         JhIdentityConsts.InitPassword = configuration["App:InitPassword"];
-
+        ConfigureLocalizationOptions();
         Configure<AbpDbContextOptions>(options =>
         {
             //options.UseSqlServer(options => {
@@ -300,6 +301,17 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseConfiguredEndpoints();
 
         await SeedData(context);
+    }
+
+    private void ConfigureLocalizationOptions()
+    {
+        Configure<AbpLocalizationOptions>(options =>
+        {
+            options.Resources
+                .Get<AbpTenantManagementResource>()
+                .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
+               ;
+        });
     }
 
     private static async Task SeedData(ApplicationInitializationContext context)
