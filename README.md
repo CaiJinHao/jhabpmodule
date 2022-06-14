@@ -41,6 +41,9 @@ xxx.Application.Contracts生成xml，属性=》输出=》xm文档文件路径:[�
     dotnet ef migrations add initial
     dotnet ef database update
 
+css
+   把wwwroot下的文件Copy到你的项目
+    
 启动程序
 
 下载前端代码：git clone -b  dev  jhabpadmin
