@@ -9,6 +9,7 @@ namespace Jh.Abp.JhAuditLogging
 {
     public class AuditLoggingRetrieveInputDto: PagedAndSortedResultRequestDto
     {
+        public  string TenantName { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public string HttpMethod { get; set; }
