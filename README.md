@@ -49,6 +49,7 @@ css
 下载前端代码：git clone -b  dev  jhabpadmin
 安装依赖：yarn
 修改代理地址
+启动项目：yarn start
 
 HttpApi.Host修改
     修改appsettings.json参照demo
