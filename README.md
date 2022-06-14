@@ -7,7 +7,8 @@ JH ABP Module Extension 基于[Abp VNext](https://docs.abp.io) 构造的快速�
 关于基础使用请移步[AbpVnext](https://docs.abp.io/)或 [Abp VNext For Github](https://github.com/abpframework/abp)
 
 ```Use Steps
-abp new YourCompany.YourProjectName -t module -d ef -cs "server=192.168.12.99;database=test_identity;uid=sa;pwd=12345"
+
+abp new YourCompany.YourProjectName -t module -d ef -cs "server=127.0.0.1;database=EquipmentManagement;uid=root;pwd=1234565"
 
 .\addrefrence.ps1 -execPath ..\..\modules\module_extend\menu\ -slnName Jh.Abp.JhMenu
 
@@ -23,20 +24,28 @@ IdentityServerModule 修改参照Demo、根据需要更换数据库驱动
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(JhIdentityHttpApiModule),
-    typeof(JhMenuApplicationModule),
-    typeof(JhMenuEntityFrameworkCoreModule),
-    typeof(JhMenuHttpApiModule),
     typeof(AbpQuickComponentsModule)
+    参照Demo修改
 
-数据迁移
-    添加modelBuilder.ConfigureJhIdentity();
-    创建模块迁移数据上下文MenuDbContext，或者可以复制demo中已经创建好的
+数据迁移修改
+    MigrationsDbContext添加modelBuilder.ConfigureJhIdentity();
 
 DataSeedContributor数据播种--批量替换密匙、修改demo中添加todo的地方
 
 xxx.Application.Contracts生成xml，属性=》输出=》xm文档文件路径:[项目名称].Application.Contracts.xml=》生成，将文件设置为嵌入的资源，用于Swagger注释显示
 
+修改Pages
+    将Account文件夹和Layouts文件夹Copy到你的项目
+
+删除Migrations，重新创建迁移
+    dotnet ef migrations add initial
+    dotnet ef database update
+
 启动程序
+
+下载前端代码：git clone -b  dev  jhabpadmin
+安装依赖：yarn
+修改代理地址
 
 HttpApi.Host修改
     修改appsettings.json参照demo

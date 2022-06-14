@@ -38,6 +38,10 @@ dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhMenu.Application
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhMenu.EntityFrameworkCore
 
+# MySql
+dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Volo.Abp.EntityFrameworkCore.MySQL
+
+
 # dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.HttpApi
 # dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.Application
 # dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.EntityFrameworkCore

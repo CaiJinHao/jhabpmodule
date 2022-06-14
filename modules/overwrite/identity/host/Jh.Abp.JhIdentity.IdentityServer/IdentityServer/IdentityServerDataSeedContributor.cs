@@ -285,7 +285,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                     name
                 )
                 {
-                    AllowAccessTokensViaBrowser=true,//TODO:modify
+                    AllowAccessTokensViaBrowser=true,//TODO:modify  允许通过浏览器访问令牌
                     ClientName = name,
                     ProtocolType = "oidc",
                     Description = name,

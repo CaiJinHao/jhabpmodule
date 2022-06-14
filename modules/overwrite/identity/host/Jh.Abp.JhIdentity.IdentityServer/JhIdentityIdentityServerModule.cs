@@ -109,6 +109,16 @@ public class JhIdentityIdentityServerModule : AbpModule
 {
     private Microsoft.Extensions.Configuration.IConfiguration configuration;
 
+    private void ConfigureLocalizationOptions()
+    {
+        Configure<AbpLocalizationOptions>(options =>
+        {
+            options.Resources
+                .Get<AbpTenantManagementResource>()
+                .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
+               ;
+        });
+    }
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
         JhMenuConsts.IsAntdPro = true;
@@ -303,18 +313,8 @@ public class JhIdentityIdentityServerModule : AbpModule
         await SeedData(context);
     }
 
-    private void ConfigureLocalizationOptions()
-    {
-        Configure<AbpLocalizationOptions>(options =>
-        {
-            options.Resources
-                .Get<AbpTenantManagementResource>()
-                .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
-               ;
-        });
-    }
 
-    private static async Task SeedData(ApplicationInitializationContext context)
+    private async Task SeedData(ApplicationInitializationContext context)
     {
         using var scope = context.ServiceProvider.CreateScope();
         var data = scope.ServiceProvider
