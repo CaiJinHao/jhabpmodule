@@ -44,6 +44,8 @@
     "DisplayName:AuditLog:ClientId": "客户端Id",
     "DisplayName:AuditLog:ClientName": "客户端名称",
     "DisplayName:AuditLog:Actions": "执行过程",
-    "DisplayName:AuditLog:EntityChanges": "更改实体"
+    "DisplayName:AuditLog:EntityChanges": "更改实体",
+    "DisplayName:AuditLog:DateTimeRange": "执行时间区间",
+    "DisplayName:AuditLog:HasException": "数据异常过滤"
   }
 }

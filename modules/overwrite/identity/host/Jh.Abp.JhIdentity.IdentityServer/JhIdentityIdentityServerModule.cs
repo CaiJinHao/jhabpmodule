@@ -1,8 +1,6 @@
 using Jh.Abp.IdentityServer;
 using Jh.Abp.JhIdentity.EntityFrameworkCore;
 using Jh.Abp.JhIdentity.MultiTenancy;
-using Jh.Abp.JhMenu;
-using Jh.Abp.JhMenu.EntityFrameworkCore;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Swagger;
 using Jh.Abp.Workflow;
@@ -14,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -26,7 +23,6 @@ using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
@@ -99,9 +95,9 @@ namespace Jh.Abp.JhIdentity;
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(JhIdentityHttpApiModule),
-    typeof(JhMenuApplicationModule),
-    typeof(JhMenuEntityFrameworkCoreModule),
-    typeof(JhMenuHttpApiModule),
+    //typeof(JhMenuApplicationModule),
+    //typeof(JhMenuEntityFrameworkCoreModule),
+    //typeof(JhMenuHttpApiModule),
     typeof(WorkflowHttpApiModule),
     typeof(AbpQuickComponentsModule)
     )]
@@ -118,11 +114,6 @@ public class JhIdentityIdentityServerModule : AbpModule
                 .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
                ;
         });
-    }
-    public override void PreConfigureServices(ServiceConfigurationContext context)
-    {
-        JhMenuConsts.IsAntdPro = true;
-        base.PreConfigureServices(context);
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)

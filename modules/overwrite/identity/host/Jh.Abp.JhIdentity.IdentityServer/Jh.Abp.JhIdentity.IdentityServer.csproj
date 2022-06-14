@@ -56,9 +56,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="EntityFrameworkCore\Menu\**" />
     <Compile Remove="Logs\**" />
+    <Content Remove="EntityFrameworkCore\Menu\**" />
     <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="EntityFrameworkCore\Menu\**" />
     <EmbeddedResource Remove="Logs\**" />
+    <None Remove="EntityFrameworkCore\Menu\**" />
     <None Remove="Logs\**" />
   </ItemGroup>
 
@@ -81,10 +85,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.IdentityServer\Jh.Abp.IdentityServer.csproj" />
     <ProjectReference Include="..\..\..\..\libs\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj" />
-    <ProjectReference Include="..\..\..\..\module_extend\menu\src\Jh.Abp.JhMenu.HttpApi\Jh.Abp.JhMenu.HttpApi.csproj" />
     <ProjectReference Include="..\..\..\..\module_extend\workflow\src\Jh.Abp.Workflow.HttpApi\Jh.Abp.Workflow.HttpApi.csproj" />
-    <ProjectReference Include="..\..\..\..\module_extend\menu\src\Jh.Abp.JhMenu.Application\Jh.Abp.JhMenu.Application.csproj" />
-    <ProjectReference Include="..\..\..\..\module_extend\menu\src\Jh.Abp.JhMenu.EntityFrameworkCore\Jh.Abp.JhMenu.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\..\..\module_extend\workflow\src\Jh.Abp.Workflow.Application\Jh.Abp.Workflow.Application.csproj" />
     <ProjectReference Include="..\..\..\..\module_extend\workflow\src\Jh.Abp.Workflow.EntityFrameworkCore\Jh.Abp.Workflow.EntityFrameworkCore.csproj" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <Version>5.2.21</Version>
+    <Version>5.2.22</Version>
     <NoWarn>$(NoWarn);CS1591;CS0436</NoWarn>
     <PackageIconUrl>https://avatars.githubusercontent.com/u/16984784</PackageIconUrl>
     <!-- <PackageIcon>../../docs/images/nugeticon.png</PackageIcon> -->
@@ -49,7 +49,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All"/>
-  </ItemGroup>
+  </ItemGroup>-->
 </Project>
