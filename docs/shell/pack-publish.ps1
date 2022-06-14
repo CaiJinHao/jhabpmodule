@@ -5,7 +5,7 @@ using namespace System.Xml;
 param (
     [string] $apiKey,
     [string] $execPath = '../../',
-    [string] $outPath = 'E:\Publish\nuget-local',
+    [string] $outPath = 'G:\Publish\nuget-local',
     [string] $module = '',
     [string] $publishSource = "https://api.nuget.org/v3/index.json"
 )
@@ -44,7 +44,7 @@ $packagesDto =
 @{Name = "Jh.Abp.JhIdentity.Domain.Shared";   },
 @{Name = "Jh.Abp.JhIdentity.EntityFrameworkCore";  },
 @{Name = "Jh.Abp.JhIdentity.HttpApi"; },
-@{Name = "Jh.Abp.JhIdentity.HttpApi.Client";  },
+@{Name = "Jh.Abp.JhIdentity.HttpApi.Client";  }
 
 # 权限模块
 
@@ -56,21 +56,21 @@ $packagesDto =
 
 # 菜单模块
 
-@{Name = "Jh.Abp.JhMenu.Application"; },
-@{Name = "Jh.Abp.JhMenu.Application.Contracts";},
-@{Name = "Jh.Abp.JhMenu.Domain"; },
-@{Name = "Jh.Abp.JhMenu.Domain.Shared"; },
-@{Name = "Jh.Abp.JhMenu.EntityFrameworkCore"; },
-@{Name = "Jh.Abp.JhMenu.HttpApi";},
+# @{Name = "Jh.Abp.JhMenu.Application"; },
+# @{Name = "Jh.Abp.JhMenu.Application.Contracts";},
+# @{Name = "Jh.Abp.JhMenu.Domain"; },
+# @{Name = "Jh.Abp.JhMenu.Domain.Shared"; },
+# @{Name = "Jh.Abp.JhMenu.EntityFrameworkCore"; },
+# @{Name = "Jh.Abp.JhMenu.HttpApi";},
 
 # 工作流模块
 
-@{Name = "Jh.Abp.Workflow.HttpApi"; },
-@{Name = "Jh.Abp.Workflow.Application";  },
-@{Name = "Jh.Abp.Workflow.Application.Contracts"; },
-@{Name = "Jh.Abp.Workflow.Domain"; },
-@{Name = "Jh.Abp.Workflow.Domain.Shared"; },
-@{Name = "Jh.Abp.Workflow.EntityFrameworkCore"; }
+# @{Name = "Jh.Abp.Workflow.HttpApi"; },
+# @{Name = "Jh.Abp.Workflow.Application";  },
+# @{Name = "Jh.Abp.Workflow.Application.Contracts"; },
+# @{Name = "Jh.Abp.Workflow.Domain"; },
+# @{Name = "Jh.Abp.Workflow.Domain.Shared"; },
+# @{Name = "Jh.Abp.Workflow.EntityFrameworkCore"; }
 
 # # 日志模块
 
@@ -147,7 +147,7 @@ function New-PackByNupkg() {
         }
     }
 
-    Publish-PackNuget;
+    # Publish-PackNuget;
 }
 
 function Publish-PackNuget() {
@@ -161,6 +161,6 @@ function Publish-PackNuget() {
 }
 
 Write-Host '正在处理，请稍后。。。';
-# New-PackByNupkg;
-Publish-PackNuget;
+New-PackByNupkg;
+# Publish-PackNuget;
 Write-Host "处理完成"

@@ -21,7 +21,7 @@ dotnet add $execPath\src\$slnName.Domain\$slnName.Domain.csproj package Jh.Sourc
 dotnet add $execPath\src\$slnName.Domain.Shared\$slnName.Domain.Shared.csproj package Jh.Abp.Domain.Shared
 
 # Volo
-dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj package Volo.Abp.Dapper
+# dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj package Volo.Abp.Dapper
 
 # 项目引用
 
