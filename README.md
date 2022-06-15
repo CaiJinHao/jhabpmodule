@@ -51,10 +51,7 @@ css
 修改代理地址
 启动项目：yarn start
 
-HttpApi.Host修改
-    修改appsettings.json参照demo
-    修改Module
-    根据需要添加身份远程服务依赖typeof(JhIdentityHttpApiClientModule),typeof(AbpQuickComponentsModule)
+
 
 创建Domain
     创建Domain文件夹
@@ -64,8 +61,14 @@ HttpApi.Host修改
     如：b.HasMany<EquipmentGroup>().WithOne().HasForeignKey(eg => eg.ParentId);
         b.HasMany(eg => eg.EquipmentGroupEquipments).WithOne().HasForeignKey(ege => ege.EquipmentGroupId);
     去除Domain中主键字段
-生成底层CRUD代码
-
+生成底层CRUD代码(中间表不需要CRUD)
+HttpApi.Host修改
+    修改appsettings.json参照demo
+    修改Module
+    根据需要添加身份远程服务依赖typeof(JhIdentityHttpApiClientModule),typeof(AbpQuickComponentsModule)
+如果有用到远程服务，再Application层添加xxxContractsModule依赖，如依赖用户模块：typeof(JhIdentityApplicationContractsModule),
+在ApplicationContractsModule添加typeof(JhAbpContractsModule),
+在EntityFrameworkCoreModule添加typeof(JhAbpEntityFrameworkCoreModule),
 
 layui-admin 修改
     搜索localhost:60，可进行批量替换

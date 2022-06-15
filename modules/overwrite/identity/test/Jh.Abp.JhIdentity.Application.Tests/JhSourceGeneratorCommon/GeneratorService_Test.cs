@@ -19,11 +19,12 @@ namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
         [Fact]
         public void ReactProxyServiceCodeBuilder_Test()
         {
-            var moduleNamespace = "API.JhIdentity";
+            var moduleName = "JhIdentity";
+            var moduleNamespace = $"API.{moduleName}";
             var generatorPath = @"G:\Temp";
             var service = new GeneratorService(new GeneratorOptions(generatorPath), GneratorType.AllField);
-            service.GeneratorCodeByAppService(moduleNamespace, "API", "Identity_API", new Type[] { typeof(AuditLoggingController) });
-            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(AuditLog) }, "JhIdentity");
+            service.GeneratorCodeByAppService(moduleNamespace, "API", $"{moduleName}_API", new Type[] { typeof(AuditLoggingController) });
+            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(AuditLog) }, moduleName);
         }
     }
 }

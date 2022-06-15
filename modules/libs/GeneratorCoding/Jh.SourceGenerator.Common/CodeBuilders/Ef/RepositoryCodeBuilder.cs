@@ -32,7 +32,7 @@ using Volo.Abp.EntityFrameworkCore;");
                 //, I{table.Name}DapperRepository {table.Name.ToLower()}DapperRepository
                 builder.AppendLine($"\t\t public {FileName}(IDbContextProvider<{table.DbContext}> dbContextProvider) : base(dbContextProvider)");
                 builder.AppendLine("\t\t{");
-                builder.AppendLine($"\t\t\t{table.Name}DapperRepository={table.Name.ToLower()}DapperRepository;");
+                //builder.AppendLine($"\t\t\t{table.Name}DapperRepository={table.Name.ToLower()}DapperRepository;");
                 builder.AppendLine("\t\t}");
                 builder.AppendLine("\t}");
             }

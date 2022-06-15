@@ -38,11 +38,14 @@ public class JhIdentityDomainSharedModule : AbpModule
                 .Get<AbpValidationResource>()
                 .AddVirtualJson("/Localization/JhIdentity");
 
-            options.Resources
-                .Get<IdentityResource>()
-                .AddVirtualJson("/Localization/JhIdentity")
+            var IdentityResource = options.Resources
+                .Get<IdentityResource>();
+            if (IdentityResource != null)//远程服务引用的时候会找不到 IdentityResource
+            {
+                IdentityResource.AddVirtualJson("/Localization/JhIdentity")
                 .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
                ;
+            }
         });
 
         Configure<AbpExceptionLocalizationOptions>(options =>
