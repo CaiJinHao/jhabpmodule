@@ -56,6 +56,16 @@ HttpApi.Host修改
     修改Module
     根据需要添加身份远程服务依赖typeof(JhIdentityHttpApiClientModule),typeof(AbpQuickComponentsModule)
 
+创建Domain
+    创建Domain文件夹
+        创建SubDomain文件夹、创建SubDomain类（根据OOM生成类）
+添加数据上下文及Model映射（根据PDM生成映射C#代码）
+    添加Domain中外键，及关系（只在一对多的domain中添加关系）
+    如：b.HasMany<EquipmentGroup>().WithOne().HasForeignKey(eg => eg.ParentId);
+        b.HasMany(eg => eg.EquipmentGroupEquipments).WithOne().HasForeignKey(ege => ege.EquipmentGroupId);
+    去除Domain中主键字段
+生成底层CRUD代码
+
 
 layui-admin 修改
     搜索localhost:60，可进行批量替换
