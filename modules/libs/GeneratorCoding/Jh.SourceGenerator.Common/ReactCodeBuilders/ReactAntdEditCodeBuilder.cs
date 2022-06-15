@@ -165,7 +165,7 @@ type OperationModalProps = {
                 var _lable = @$"name=""{item.Name.ToCamelCase(CamelCaseType.LowerCamelCase)}"" label={{intl.formatMessage({{id: 'DisplayName:{DomainType.Name}:{item.Name}', defaultMessage: '{fieldDescription}',}})}} ";
                 if (item.IsRequired)
                 {
-                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" {_lable} rules={{[{{required: true,message: `${{intl.formatMessage({{id: 'Form.rules.message',defaultMessage: '请输入',}})}}\${{label}}',defaultMessage: '${fieldDescription}',}})}}` />");
+                    stringBuilder.AppendLine(@$"<ProFormText width=""md"" {_lable} rules={{[{{required: true,message: `${{intl.formatMessage({{id: 'Form.rules.message',defaultMessage: '请输入',}})}}\${{label}}`}},]}} />");
                 }
                 else
                 {
