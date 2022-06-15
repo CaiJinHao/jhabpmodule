@@ -52,7 +52,7 @@ import { getYesOrNo, ViewOperator } from '@/services/jhabp/app.enums';
 import { useIntl } from 'umi';
 ");
             var operationModalName = $"OperationModal{DomainType.Name}";//操作ModalName
-            stringBuilder.AppendLine($"import * as defaultService from '@/services/jhabp/identity/{DomainType.Name}/{DomainType.Name.ToLower()}.service';");
+            stringBuilder.AppendLine($"import * as defaultService from '@/services/jhabp/{JhModuleName}/{DomainType.Name}/{DomainType.Name.ToLower()}.service';");
             stringBuilder.AppendLine($"import {operationModalName} from './components/OperationModal';");
 
 
@@ -190,7 +190,7 @@ import { useIntl } from 'umi';
     setCurrentOperation(undefined);
   }, [visibleOperation]);
 ");
-
+            var displayName = new StringBuilder();
             stringBuilder.AppendLine($"const columns: ProColumns<{ComponentDtoName}>[] = [");
             //循环创建所有字段
             foreach (var item in GeneratorService.GetFieldDto(GeneratorService.GetMembers<GeneratorAttributes.CreateOrUpdateInputDtoAttribute>(DomainType)))
@@ -200,6 +200,7 @@ import { useIntl } from 'umi';
                 stringBuilder.AppendLine("{");
                 stringBuilder.AppendLine($"title: intl.formatMessage({{id: 'DisplayName:{DomainType.Name}:{fieldName}',defaultMessage: '{fieldDescription}',}}),dataIndex: '{fieldName.ToCamelCase(CamelCaseType.LowerCamelCase)}',");
                 stringBuilder.AppendLine("},");
+                displayName.AppendLine($"\"DisplayName:{DomainType.Name}:{fieldName}\": \"{fieldDescription}\",");
             }
             
             stringBuilder.AppendLine(@"{
@@ -323,6 +324,10 @@ import { useIntl } from 'umi';
 ");
             stringBuilder.AppendLine("};");
             stringBuilder.AppendLine($"export default {ComponentName};");
+
+            stringBuilder.AppendLine("/* 后台本地化显示配置");
+            stringBuilder.AppendLine(displayName.ToString());
+            stringBuilder.AppendLine("*/");
             return stringBuilder.ToString();
         }
     }

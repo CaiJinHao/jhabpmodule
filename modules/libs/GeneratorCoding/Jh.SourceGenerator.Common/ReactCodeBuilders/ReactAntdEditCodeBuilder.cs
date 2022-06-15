@@ -9,10 +9,11 @@ namespace Jh.SourceGenerator.Common
     public class ReactAntdEditCodeBuilder : CodeBuilderBase
     {
         protected Type DomainType { get; }
+        protected string JhModuleName { get; set; }
         protected string ModuleNamespace { get; }
         protected GeneratorService GeneratorService { get; }
         protected string DomainDescription { get; set; }
-        public ReactAntdEditCodeBuilder(Type domainType, string filePath, string moduleNamespace, string domainDescription, GneratorType generatorType)
+        public ReactAntdEditCodeBuilder(Type domainType, string filePath, string moduleNamespace, string jhModuleName, string domainDescription, GneratorType generatorType)
         {
             if (!string.IsNullOrEmpty(filePath))
             {
@@ -23,6 +24,7 @@ namespace Jh.SourceGenerator.Common
             Suffix = ".tsx";
             DomainType = domainType;
             ModuleNamespace = moduleNamespace;
+            JhModuleName = jhModuleName;
             GeneratorService = new GeneratorService(generatorType);
         }
 
@@ -37,7 +39,7 @@ import { ViewOperator } from '@/services/jhabp/app.enums';
 import { useIntl } from 'umi';
 ");
 
-            stringBuilder.AppendLine($"import * as defaultService from '@/services/jhabp/identity/{DomainType.Name}/{DomainType.Name.ToLower()}.service';");
+            stringBuilder.AppendLine($"import * as defaultService from '@/services/jhabp/{JhModuleName}/{DomainType.Name}/{DomainType.Name.ToLower()}.service';");
 
             var ComponentName = $"OperationModal{DomainType.Name}";//组件名称
             var ComponentDtoName = $"{ModuleNamespace}.{DomainType.Name}Dto";//组件Dto

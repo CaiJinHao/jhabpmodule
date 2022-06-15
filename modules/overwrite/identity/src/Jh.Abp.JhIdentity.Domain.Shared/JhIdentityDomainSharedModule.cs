@@ -27,9 +27,8 @@ public class JhIdentityDomainSharedModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             //新的资源文件类型,继承，用得时候必须用该资源类型
-            options.Resources
+            var JhIdentityResource= options.Resources
                 .Add<JhIdentityResource>("zh-Hans")
-                .AddBaseTypes(typeof(IdentityResource))
                 .AddBaseTypes(typeof(JhAbpExtensionsResource)) //继承资源
                 .AddVirtualJson("/Localization/JhIdentity");
 
@@ -42,6 +41,8 @@ public class JhIdentityDomainSharedModule : AbpModule
                 .Get<IdentityResource>();
             if (IdentityResource != null)//远程服务引用的时候会找不到 IdentityResource
             {
+                JhIdentityResource.AddBaseTypes(typeof(IdentityResource));
+
                 IdentityResource.AddVirtualJson("/Localization/JhIdentity")
                 .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
                ;
