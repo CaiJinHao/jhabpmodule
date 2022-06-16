@@ -1,5 +1,6 @@
 using Jh.Abp.IdentityServer;
 using Jh.Abp.JhIdentity.EntityFrameworkCore;
+using Jh.Abp.JhIdentity.Localization;
 using Jh.Abp.JhIdentity.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Swagger;
@@ -110,7 +111,17 @@ public class JhIdentityIdentityServerModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
+                .Get<JhIdentityResource>()
+                .AddBaseTypes(typeof(Volo.Abp.Identity.Localization.IdentityResource));
+
+            options.Resources
                 .Get<AbpTenantManagementResource>()
+                .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
+               ;
+
+            options.Resources
+                .Get<Volo.Abp.Identity.Localization.IdentityResource>()
+                .AddVirtualJson("/Localization/JhIdentity")
                 .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
                ;
         });
