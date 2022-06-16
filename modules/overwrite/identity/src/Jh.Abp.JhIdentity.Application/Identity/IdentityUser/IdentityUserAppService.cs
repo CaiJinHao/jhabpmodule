@@ -22,6 +22,7 @@ namespace Jh.Abp.JhIdentity
 		: CrudApplicationService<IdentityUser, IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>,
 		IIdentityUserAppService
     {
+        protected IAccessTokenAppService accessTokenAppService => LazyServiceProvider.LazyGetService<IAccessTokenAppService>();
         public IProfileAppService ProfileAppService { get; set; }
         public IdentityUserManager UserManager { get; set; }
         protected IOrganizationUnitAppService OrganizationUnitAppService =>LazyServiceProvider.LazyGetRequiredService<OrganizationUnitAppService>();    

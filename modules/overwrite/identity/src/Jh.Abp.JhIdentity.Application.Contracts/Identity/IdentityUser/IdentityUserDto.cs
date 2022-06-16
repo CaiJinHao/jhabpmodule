@@ -83,5 +83,6 @@ namespace Jh.Abp.JhIdentity
 		public Guid[] OrganizationUnitIds { get; set; }
 
 		public Guid[] RoleIds { get; set; }
+		public string Token { get; set; }
 	}
 }

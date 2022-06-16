@@ -214,7 +214,6 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
             var webClientRootUrl = configurationSection["WebAppYourName_App:RootUrl"]?.TrimEnd('/');
-            var redirectUri = configurationSection[$"{clientName}_Antd:RedirectUri"];
 
             await CreateClientAsync(
                 name: consoleAndAngularClientId,
@@ -222,7 +221,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
                 grantTypes: new[] { "password", "client_credentials", "authorization_code" },
                 secret: (configurationSection["WebAppYourName_App:ClientSecret"] ?? "KimHo@666").Sha256(),
                 requireClientSecret: false,
-                redirectUri: redirectUri,//webClientRootUrl
+                redirectUri: webClientRootUrl,
                 postLogoutRedirectUri: webClientRootUrl,
                 corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
             );

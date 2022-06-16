@@ -8,7 +8,8 @@ namespace Jh.Abp.JhIdentity
 	{
 		public IdentityUserProfile()
 		{
-            CreateMap<IdentityUser, IdentityUserDto>().Ignore(a => a.OrganizationUnitIds).Ignore(a => a.RoleIds);
+            CreateMap<IdentityUser, IdentityUserDto>().Ignore(a => a.OrganizationUnitIds).Ignore(a => a.RoleIds)
+				;
 		}
 	}
 }
