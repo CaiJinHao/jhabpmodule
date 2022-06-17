@@ -190,7 +190,7 @@ namespace Jh.Abp.JhIdentity
 
 		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
-            var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync()).AsNoTracking().Select(a =>
+            var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync(true)).AsNoTracking().Select(a =>
                new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
                {
                    parentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null,

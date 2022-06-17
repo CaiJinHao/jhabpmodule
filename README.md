@@ -48,7 +48,14 @@ css
 
 下载前端代码：git clone -b  dev  jhabpadmin
 安装依赖：yarn
-修改代理地址
+修改environments配置
+批量修改系统名称：JH Abp Admin 
+批量修改公司名称：金浩出品必属精品
+修改logo: 将public文件下logo.png替换
+替换favicon.ico
+删除public下无用的文件
+创建业务模块文件夹（可随意添加）：
+如：moudles
 启动项目：yarn start
 
 
