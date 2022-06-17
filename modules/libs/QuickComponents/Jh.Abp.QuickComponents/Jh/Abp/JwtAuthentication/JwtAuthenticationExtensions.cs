@@ -13,9 +13,21 @@ namespace Jh.Abp.QuickComponents
 {
     public static class JwtAuthenticationExtensions
     {
+        /*
+  "AuthServer": {
+    "Authority": "https://localhost:6201/",
+    "RequireHttpsMetadata": "false",
+    //oidc
+    "ClientId": "WebAppYourName_Web",
+    "ClientSecret": "KimHo@666",
+    "CookieExpireTimeSpanHours": 48,
+    "Scope": "email openid profile role phone address WebAppYourName offline_access"
+  },
+         */
         /// <summary>
         /// 混合模式
         /// web 需要去除AbpAccountWebModule依赖
+        /// 需要在AuthServer中添加oidc配置
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
@@ -62,10 +74,13 @@ namespace Jh.Abp.QuickComponents
 
         /// <summary>
         /// 为所有请求添加权限验证，使用之后页面都会进行验证，需要配合appsettings.json AllowAnonymousRegex使用，过滤不需要权限得请求
+        /// "AllowAnonymousRegex": "(^/[aA]bp)|(^/[aA]ccount)|(^/api/[aA]bp)|(^/)", //如果开启权限需要排除
         /// </summary>
+        [Obsolete("不建议使用，请移步使用授权策略验证或者手动添加特性")]
         public static IServiceCollection AddAuthorizeFilter(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers(options => {
+            services.AddControllers(options =>
+            {
                 var policy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
                          .RequireAuthenticatedUser()
                          .Build();
@@ -73,6 +88,5 @@ namespace Jh.Abp.QuickComponents
             });
             return services;
         }
-
     }
 }

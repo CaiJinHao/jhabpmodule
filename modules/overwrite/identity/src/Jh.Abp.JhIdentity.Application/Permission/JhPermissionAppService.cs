@@ -52,7 +52,6 @@ namespace Jh.Abp.JhPermission.JhPermission
         /// <summary>
         /// 当前用户的权限，菜单及按钮权限
         /// </summary>
-        /// <param name="input"></param>
         /// <returns></returns>
         public virtual async Task<ListResultDto<PermissionGrantedDto>> GetCurrentGrantedAsync()
         {

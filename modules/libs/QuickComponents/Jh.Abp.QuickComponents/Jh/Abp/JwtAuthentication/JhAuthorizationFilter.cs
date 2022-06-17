@@ -11,9 +11,18 @@ using System.Threading.Tasks;
 
 namespace Jh.Abp.QuickComponents
 {
+    /// <summary>
+    /// 此过滤器会将所有方法添加授权验证，如果需要某些方法不进行授权请手动过滤或添加表达式过滤
+    /// </summary>
+    [Obsolete("不建议使用，请移步使用授权策略验证或者手动添加特性")]
     public class JhAuthorizationFilter : AuthorizeFilter
     {
         public IConfiguration Configuration;
+        /// <summary>
+        /// 此过滤器会将所有方法添加授权验证，如果需要某些方法不进行授权请手动过滤或添加表达式过滤
+        /// </summary>
+        /// <param name="policy"></param>
+        /// <param name="configuration"></param>
         public JhAuthorizationFilter(AuthorizationPolicy policy, IConfiguration configuration) : base(policy)
         {
             Configuration = configuration;
