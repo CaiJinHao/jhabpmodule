@@ -27,6 +27,25 @@
     "DisplayName:IdentityUser:PhoneNumber": "Phone Number",
     "DisplayName:IdentityUser:LockoutEnd": "Account lock End",
     "DisplayName:IdentityUser:LockoutEnabled": "Enabling Account Lock",
-    "DisplayName:IdentityUser:AccessFailedCount": "Access Failed Count"
+    "DisplayName:IdentityUser:AccessFailedCount": "Access Failed Count",
+    "DisplayName:AuditLog": "AuditLog",
+    "DisplayName:AuditLog:ApplicationName": "ApplicationName",
+    "DisplayName:AuditLog:UserName": "UserName",
+    "DisplayName:AuditLog:TenantName": "TenantName",
+    "DisplayName:AuditLog:ExecutionTime": "ExecutionTime",
+    "DisplayName:AuditLog:ExecutionDuration": "ExecutionDuration",
+    "DisplayName:AuditLog:ClientIpAddress": "ClientIpAddress",
+    "DisplayName:AuditLog:HttpMethod": "HttpMethod",
+    "DisplayName:AuditLog:Url": "Url",
+    "DisplayName:AuditLog:HttpStatusCode": "HttpStatusCode",
+    "DisplayName:AuditLog:Comments": "Comments",
+    "DisplayName:AuditLog:Exceptions": "Exceptions",
+    "DisplayName:AuditLog:BrowserInfo": "BrowserInfo",
+    "DisplayName:AuditLog:ClientId": "ClientId",
+    "DisplayName:AuditLog:ClientName": "ClientName",
+    "DisplayName:AuditLog:Actions": "Actions",
+    "DisplayName:AuditLog:EntityChanges": "EntityChanges",
+    "DisplayName:AuditLog:DateTimeRange": "DateTimeRange",
+    "DisplayName:AuditLog:HasException": "HasException"
   }
 }
