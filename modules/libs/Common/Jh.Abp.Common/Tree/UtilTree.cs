@@ -33,7 +33,7 @@ namespace Jh.Abp.Common
             return roots;
         }
 
-        public static async Task<List<T>> GetTreeByAntdAsync<T>(List<T> menus) where T : TreeAntdDto
+        public static async Task<List<T>> GetTreeByAntdAsync<T>(List<T> menus, Action<T> actionLeaf = null) where T : TreeAntdDto
         {
             var _type = typeof(T);
             //组装树
@@ -47,6 +47,7 @@ namespace Jh.Abp.Common
                     if (item.children.Count==0)
                     {
                         item.isLeaf = true;
+                        actionLeaf?.Invoke(item);
                     }
                 }
                 return childs.OrderBy(a => a.order).ToList();
@@ -61,6 +62,7 @@ namespace Jh.Abp.Common
                 if (item.children.Count == 0)
                 {
                     item.isLeaf = true;
+                    actionLeaf?.Invoke(item);
                 }
             }
             return roots;

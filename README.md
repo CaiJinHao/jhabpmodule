@@ -59,16 +59,10 @@ css
 启动项目：yarn start
 
 
+layui-admin 修改（已不再更新维护，请使用antdpro前端）
+    搜索localhost:60，可进行批量替换
+    common.js/oidc-client-sample.js  修改对应的端口、ApiName
 
-创建Domain
-    创建Domain文件夹
-        创建SubDomain文件夹、创建SubDomain类（根据OOM生成类）
-添加数据上下文及Model映射（根据PDM生成映射C#代码）
-    添加Domain中外键，及关系（只在一对多的domain中添加关系）
-    如：b.HasMany<EquipmentGroup>().WithOne().HasForeignKey(eg => eg.ParentId);
-        b.HasMany(eg => eg.EquipmentGroupEquipments).WithOne().HasForeignKey(ege => ege.EquipmentGroupId);
-    去除Domain中主键字段
-生成底层CRUD代码(中间表不需要CRUD)
 HttpApi.Host修改
     修改appsettings.json参照demo
     修改Module
@@ -77,9 +71,21 @@ HttpApi.Host修改
 在ApplicationContractsModule添加typeof(JhAbpContractsModule),
 在EntityFrameworkCoreModule添加typeof(JhAbpEntityFrameworkCoreModule),
 
-layui-admin 修改
-    搜索localhost:60，可进行批量替换
-    common.js/oidc-client-sample.js  修改对应的端口、ApiName
+数据库设计：
+创建模块文件夹
+    创建Domain文件夹
+        创建SubDomain文件夹、创建SubDomain类（根据OOM生成类）
+添加数据上下文及Model映射（根据PDM生成映射C#代码）
+    添加Domain中外键，及关系
+    如：
+b.HasMany<EquipmentGroup>().WithOne().HasForeignKey(eg => eg.ParentId);
+b.HasMany(eg => eg.EquipmentGroupEquipments).WithOne().HasForeignKey(ege => ege.EquipmentGroupId);
+b.HasOne<EquipmentGroup>().WithMany().HasForeignKey(ege => ege.EquipmentGroupId).IsRequired();
+b.HasIndex(ege => new { ege.EquipmentGroupId, ege.EquipmentId });
+    添加或者去除Domain中多余字段
+生成底层CRUD代码(中间表不需要CRUD)
+生成AntdPro前端CRUD代码
+
 
 ```
 
