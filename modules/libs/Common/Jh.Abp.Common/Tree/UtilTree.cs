@@ -8,7 +8,7 @@ namespace Jh.Abp.Common
 {
     public class UtilTree
     {
-        public static async Task<List<T>> GetMenusTreeAsync<T>(List<T> menus,string Sorting="sort") where T : TreeDto
+        public static async Task<List<T>> GetMenusTreeAsync<T>(List<T> menus, string Sorting = "sort") where T : TreeDto
         {
             var _type = typeof(T);
             //组装树
@@ -28,12 +28,12 @@ namespace Jh.Abp.Common
             foreach (var item in roots)
             {
                 var _data = await GetChildNodesAsync(item.id);
-                item.children = (_data as IEnumerable<TreeDto>).OrderBy(a=>a.sort);
+                item.children = (_data as IEnumerable<TreeDto>).OrderBy(a => a.sort);
             }
             return roots;
         }
 
-        public static async Task<List<T>> GetTreeByAntdAsync<T>(List<T> menus, Action<T> actionLeaf = null) where T : TreeAntdDto
+        public static async Task<List<T>> GetTreeByAntdAsync<T>(List<T> menus, Action<T> actionNode = null) where T : TreeAntdDto
         {
             var _type = typeof(T);
             //组装树
@@ -44,11 +44,11 @@ namespace Jh.Abp.Common
                 {
                     var _data = await GetChildNodesAsync(item.id);
                     item.children = (_data as IEnumerable<TreeAntdDto>).OrderBy(a => a.order).ToList();
-                    if (item.children.Count==0)
+                    if (item.children.Count == 0)
                     {
                         item.isLeaf = true;
-                        actionLeaf?.Invoke(item);
                     }
+                    actionNode?.Invoke(item);
                 }
                 return childs.OrderBy(a => a.order).ToList();
             }
@@ -62,8 +62,8 @@ namespace Jh.Abp.Common
                 if (item.children.Count == 0)
                 {
                     item.isLeaf = true;
-                    actionLeaf?.Invoke(item);
                 }
+                actionNode?.Invoke(item);
             }
             return roots;
         }
