@@ -113,7 +113,7 @@ import { useAccess, useIntl } from 'umi';
           <>
             {intl.formatMessage({
               id: 'ProTable.delete.Delete',
-              defaultMessage: '确定要禁用吗?',
+              defaultMessage: '确定要删除吗?',
             })}
           </>
         ),
@@ -153,7 +153,7 @@ import { useAccess, useIntl } from 'umi';
           <>
             {intl.formatMessage({
               id: 'ProTable.delete.BatchDelete',
-              defaultMessage: '确定要禁用选中项吗?',
+              defaultMessage: '确定要删除选中项吗?',
             })}
           </>
         ),
@@ -205,13 +205,13 @@ import { useAccess, useIntl } from 'umi';
             }
 
             stringBuilder.AppendLine(@"{
-      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否禁用' }),
+      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否删除' }),
       dataIndex: 'isDeleted',
       search: false,
       render: (text, record, index, action) => {
         return (
             <Switch disabled={");
-          stringBuilder.AppendLine($"access['{permissionName}.Recover']");
+          stringBuilder.AppendLine($"!(access['{permissionName}.Recover'] &&access['{permissionName}.Delete'])");
             stringBuilder.AppendLine(@");
 } checked={record.isDeleted} onChange={() => handlerIsDeleted(record, action)} />
       },
@@ -239,7 +239,7 @@ import { useAccess, useIntl } from 'umi';
         ],
     },
     {
-      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否禁用' }),
+      title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否删除' }),
       dataIndex: 'deleted',
       hideInTable: true,
       valueType: 'select',
@@ -301,7 +301,7 @@ import { useAccess, useIntl } from 'umi';
               onClick={deleteByKeys}
             >
               <DeleteOutlined />
-              {intl.formatMessage({ id: 'Permission:BatchDelete', defaultMessage: '批量禁用' })}
+              {intl.formatMessage({ id: 'Permission:BatchDelete', defaultMessage: '批量删除' })}
             </Button>),
           ]}
           search={{
