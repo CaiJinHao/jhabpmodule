@@ -10,7 +10,7 @@ namespace Jh.Abp.Common
         /// 排序值
         /// </summary>
         public string order { get; private set; }
-        public string id { get; private set; }
+        public string id { get; set; }
         public string title { get; private set; }
         public string parentId { get; set; }
         public object data { get; set; }

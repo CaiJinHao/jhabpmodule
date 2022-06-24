@@ -45,7 +45,7 @@ namespace Jh.Abp.JhPermission.JhPermission
                                .ToList();
             foreach (var item in permissions)
             {
-                await PermissionManager.SetAsync(item.Name, inputDto.ProviderName, inputDto.RoleName, inputDto.PermissionNames.ToNullList().Contains(item.Name));
+                await PermissionManager.SetAsync(item.Name, inputDto.ProviderName, inputDto.RoleName, inputDto.AnyPermissionName(item.Name));
             }
         }
 
@@ -104,7 +104,9 @@ namespace Jh.Abp.JhPermission.JhPermission
                         var node = new TreeAntdDto(item.Name, item.DisplayName.Localize(StringLocalizerFactory), item.Name);
                         if (item.Children.Count > 0)
                         {
-                            node.children = GetChildrens(item.Children);
+                            node.id = $"{JhIdentityConsts.PermissionGroupPrefix}{item.Name}";
+                            node.children = new List<TreeAntdDto>() { new TreeAntdDto(item.Name, node.title, item.Name) { isLeaf = true } };
+                            node.children.AddRange(GetChildrens(item.Children));
                         }
                         else
                         {
@@ -116,13 +118,13 @@ namespace Jh.Abp.JhPermission.JhPermission
                 return _p;
             }
             var trees = new List<TreeAntdDto>();
-            foreach (var item in permissions.Where(a=>
+            foreach (var item in permissions.Where(a =>
                                     a.Permissions.Where(x => x.IsEnabled)
                                     .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
                                     .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName)).Any())
                 )
             {
-                var node = new TreeAntdDto(item.Name, item.DisplayName.Localize(StringLocalizerFactory), item.Name);
+                var node = new TreeAntdDto(item.Name, item.DisplayName.Localize(StringLocalizerFactory), item.Name);//保存的时候需要过滤掉
                 node.children = GetChildrens(item.Permissions);
                 trees.Add(node);
             }
