@@ -55,7 +55,7 @@ import { useAccess, useIntl } from 'umi';
             stringBuilder.AppendLine($"import * as defaultService from '@/services/jhabp/{JhModuleName}/{DomainType.Name}/{DomainType.Name.ToLower()}.service';");
             stringBuilder.AppendLine($"import {operationModalName} from './components/OperationModal';");
 
-            var permissionName = $"AbpIdentity.{DomainType.Name}s";
+            var permissionName = $"{ModuleNamespace}.{DomainType.Name}s";
             var ComponentName = $"{DomainType.Name}List";//组件名称
             var ComponentDtoName = $"{ModuleNamespace}.{DomainType.Name}Dto";//组件Dto
             stringBuilder.AppendLine($"const {ComponentName} = () => {{");
