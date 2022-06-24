@@ -49,18 +49,19 @@ import { Button, Switch, message, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { PlusOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { getYesOrNo, ViewOperator } from '@/services/jhabp/app.enums';
-import { useIntl } from 'umi';
+import { useAccess, useIntl } from 'umi';
 ");
             var operationModalName = $"OperationModal{DomainType.Name}";//操作ModalName
             stringBuilder.AppendLine($"import * as defaultService from '@/services/jhabp/{JhModuleName}/{DomainType.Name}/{DomainType.Name.ToLower()}.service';");
             stringBuilder.AppendLine($"import {operationModalName} from './components/OperationModal';");
 
-
+            var permissionName = $"AbpIdentity.{DomainType.Name}s";
             var ComponentName = $"{DomainType.Name}List";//组件名称
             var ComponentDtoName = $"{ModuleNamespace}.{DomainType.Name}Dto";//组件Dto
             stringBuilder.AppendLine($"const {ComponentName} = () => {{");
 
             stringBuilder.AppendLine(@"
+  const access = useAccess();
   const [visibleOperation, setVisibleOperation] = useState<boolean>(false);
   const [detailOperation, setDetailOperation] = useState<ViewOperator>(ViewOperator.Detail);
   const { confirm } = Modal;
@@ -202,15 +203,17 @@ import { useIntl } from 'umi';
                 stringBuilder.AppendLine("},");
                 displayName.AppendLine($"\"DisplayName:{DomainType.Name}:{fieldName}\": \"{fieldDescription}\",");
             }
-            
+
             stringBuilder.AppendLine(@"{
       title: intl.formatMessage({ id: 'JhAbp:IsDeleted', defaultMessage: '是否禁用' }),
       dataIndex: 'isDeleted',
       search: false,
       render: (text, record, index, action) => {
         return (
-          <Switch checked={record.isDeleted} onChange={() => handlerIsDeleted(record, action)} />
-        );
+            <Switch disabled={");
+          stringBuilder.AppendLine($"access['{permissionName}.Recover']");
+            stringBuilder.AppendLine(@");
+} checked={record.isDeleted} onChange={() => handlerIsDeleted(record, action)} />
       },
     },
     {
@@ -225,13 +228,14 @@ import { useIntl } from 'umi';
       key: 'option',
       valueType: 'option',
       render: (_, record) =>
-        !record.isDeleted && [
-          <a key=""edit"" onClick={() => edit(record)}>
+        !record.isDeleted && [");
+            stringBuilder.AppendLine(@$"access['${permissionName}.Update'] && (");
+            stringBuilder.AppendLine(@"<a key=""edit"" onClick={() => edit(record)}>
             { intl.formatMessage({ id: 'Permission:Edit', defaultMessage: '编辑' })}
-          </ a >,
-          < a key = ""detail"" onClick ={ () => detail(record)}>
+          </a>),
+          <a key = ""detail"" onClick ={ () => detail(record)}>
             { intl.formatMessage({ id: 'Permission:Detail', defaultMessage: '详情' })}
-          </ a >,
+          </a>,
         ],
     },
     {
@@ -282,12 +286,14 @@ import { useIntl } from 'umi';
             total: totalPage,
           }}
           dateFormatter=""string""
-          toolBarRender ={() => [
-            <Button type=""primary"" key =""create"" shape =""round"" onClick ={create}>
+          toolBarRender ={() => [");
+            stringBuilder.AppendLine(@$"access['${permissionName}.Create'] && ( ");
+            stringBuilder.AppendLine(@"<Button type=""primary"" key =""create"" shape =""round"" onClick ={create}>
               <PlusOutlined />
               {intl.formatMessage({ id: 'Permission:Create', defaultMessage: '创建' })}
-            </Button>,
-            <Button
+            </Button>),");
+            stringBuilder.AppendLine(@$"access['${permissionName}.BatchDelete'] && ( ");
+            stringBuilder.AppendLine(@"<Button
               type=""default""
               key =""delete_keys""
               shape =""round""
@@ -296,7 +302,7 @@ import { useIntl } from 'umi';
             >
               <DeleteOutlined />
               {intl.formatMessage({ id: 'Permission:BatchDelete', defaultMessage: '批量禁用' })}
-            </Button>,
+            </Button>),
           ]}
           search={{
             labelWidth: 100,
