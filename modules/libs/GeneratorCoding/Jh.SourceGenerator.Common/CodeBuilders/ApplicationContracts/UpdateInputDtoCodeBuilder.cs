@@ -47,13 +47,14 @@ using Volo.Abp.ObjectExtending;");
                         builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
 
+                    /*不应该编辑时删除
                     if (table.IsDelete)
                     {
                         builder.AppendLine("\t\t/// <summary>");
                         builder.AppendLine("\t\t/// 是否删除");
                         builder.AppendLine("\t\t/// </summary>");
                         builder.AppendLine("\t\tpublic  bool IsDeleted { get; set; }");
-                    }
+                    }*/
 
                     if (table.IsConcurrencyStamp)
                     {

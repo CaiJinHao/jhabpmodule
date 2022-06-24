@@ -20,10 +20,6 @@ IMethodDto<IdentityUser>
 		[DynamicStringLength(typeof(IdentityUserConsts), nameof(IdentityUserConsts.MaxPasswordLength))]
 		public string Password { get; set; }
 		/// <summary>
-		/// 是否删除
-		/// </summary>
-		public  bool IsDeleted { get; set; }
-		/// <summary>
 		/// 并发检测字段 必须和数据库中的值一样才会允许更新
 		/// </summary>
 		public string ConcurrencyStamp { get; set; }

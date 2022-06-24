@@ -386,11 +386,6 @@
             
             </summary>
         </member>
-        <member name="P:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto.IsDeleted">
-            <summary>
-            是否删除
-            </summary>
-        </member>
         <member name="P:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto.ConcurrencyStamp">
             <summary>
             并发检测字段 必须和数据库中的值一样才会允许更新
@@ -499,11 +494,6 @@
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.DisplayName">
             <summary>
             
-            </summary>
-        </member>
-        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.IsDeleted">
-            <summary>
-            是否删除
             </summary>
         </member>
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.ConcurrencyStamp">

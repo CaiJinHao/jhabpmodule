@@ -39,7 +39,7 @@ namespace Jh.Abp.Common
             //组装树
             async Task<IEnumerable<T>> GetChildNodesAsync(string parentNodeId)
             {
-                var childs = menus.Where(a => a.parentId == parentNodeId);
+                var childs = menus.Where(a => a.parentId == parentNodeId).ToList();
                 foreach (var item in childs)
                 {
                     var _data = await GetChildNodesAsync(item.id);
@@ -52,20 +52,20 @@ namespace Jh.Abp.Common
                 }
                 return childs.OrderBy(a => a.order).ToList();
             }
-
-            //找到根节点
-            var roots = menus.Where(a => a.parentId == null).OrderBy(a => a.order).ToList();
-            foreach (var item in roots)
-            {
-                var _data = await GetChildNodesAsync(item.id);
-                item.children = (_data as IEnumerable<TreeAntdDto>).OrderBy(a => a.order).ToList();
-                if (item.children.Count == 0)
-                {
-                    item.isLeaf = true;
-                }
-                actionNode?.Invoke(item);
-            }
-            return roots;
+            var roots = await GetChildNodesAsync(null);
+            ////找到根节点
+            //var roots = menus.Where(a => a.parentId == null).OrderBy(a => a.order).ToList();
+            //foreach (var item in roots)
+            //{
+            //    var _data = await GetChildNodesAsync(item.id);
+            //    item.children = (_data as IEnumerable<TreeAntdDto>).OrderBy(a => a.order).ToList();
+            //    if (item.children.Count == 0)
+            //    {
+            //        item.isLeaf = true;
+            //    }
+            //    actionNode?.Invoke(item);
+            //}
+            return roots.ToList();
         }
     }
 }

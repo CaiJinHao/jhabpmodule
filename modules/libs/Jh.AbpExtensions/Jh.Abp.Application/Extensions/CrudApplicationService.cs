@@ -197,14 +197,14 @@ namespace Jh.Abp.Application
                         {
                             case 1:
                                 {
-                                    query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 1);
-                                    //query = query.Where(e => ((ISoftDelete)e).IsDeleted == true);
+                                    //query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 1);
+                                    query = query.Where(e => ((ISoftDelete)e).IsDeleted);
                                 }
                                 break;
                             case 2:
                                 {
-                                    query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 0);
-                                    //query = query.Where(e => ((ISoftDelete)e).IsDeleted == false);
+                                    //query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 0);
+                                    query = query.Where(e => !((ISoftDelete)e).IsDeleted);
                                 }
                                 break;
                             default:
@@ -218,7 +218,6 @@ namespace Jh.Abp.Application
 
         protected virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default)
         {
-            await CheckGetListPolicyAsync();
             var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(), inputDto);
             return query.Any();
         }
