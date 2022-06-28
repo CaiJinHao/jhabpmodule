@@ -25,6 +25,7 @@ namespace Jh.Abp.Document.Excel.Models
         /// 二维数组数据
         /// </summary>
         public object[,] data { get; private set; }
+        public List<CellDto> celldata { get;  set; }
         ///// <summary>
         ///// 一维对象
         ///// </summary>
@@ -35,9 +36,40 @@ namespace Jh.Abp.Document.Excel.Models
         /// </summary>
         public List<dynamic> calcChain { get; set; }
 
+        /// <summary>
+        /// 二维表格
+        /// </summary>
+        /// <param name="_id"></param>
+        /// <param name="_name"></param>
+        /// <param name="_row"></param>
+        /// <param name="_col"></param>
+        /// <param name="_rowHeight"></param>
+        /// <param name="_colWidth"></param>
+        /// <param name="_data"></param>
         public SheetDto(string _id,string _name,int _row, int _col, int _rowHeight, int _colWidth, object[,] _data)
         {
             data = _data;
+            id = _id;
+            name = _name;
+            row = _row;
+            column = _col;
+            defaultRowHeight = _rowHeight;
+            defaultColWidth = _colWidth;
+        }
+
+        /// <summary>
+        /// sheet对象
+        /// </summary>
+        /// <param name="_id"></param>
+        /// <param name="_name"></param>
+        /// <param name="_row"></param>
+        /// <param name="_col"></param>
+        /// <param name="_rowHeight"></param>
+        /// <param name="_colWidth"></param>
+        /// <param name="_data"></param>
+        public SheetDto(string _id, string _name, int _row, int _col, int _rowHeight, int _colWidth,List<CellDto> _data)
+        {
+            celldata = _data;
             id = _id;
             name = _name;
             row = _row;
