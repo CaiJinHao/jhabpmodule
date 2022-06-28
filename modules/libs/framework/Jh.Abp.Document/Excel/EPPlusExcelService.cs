@@ -38,6 +38,7 @@ namespace Jh.Abp.Document.Excel
                 cell = workSheet.Cells[row + 1, col + 1];
                 setCellValue();
             }
+           
             //cell.FormulaR1C1 = string.Format();
         }
 
@@ -61,6 +62,11 @@ namespace Jh.Abp.Document.Excel
                             }
                         }
                     }
+
+                    workSheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    workSheet.Cells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    workSheet.Cells.Style.WrapText = true;//自动换行
+                    workSheet.Cells.AutoFitColumns(20,100);
                 }
                 return await package.GetAsByteArrayAsync();
             }
