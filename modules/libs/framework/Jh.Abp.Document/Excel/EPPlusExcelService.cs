@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Jh.Abp.Document.Excel
 {
-    public class EPPlusExcelService: ExcelService
+    public class EPPlusExcelService: IExcelService
     {
         public EPPlusExcelService() : base()
         {
@@ -66,7 +66,19 @@ namespace Jh.Abp.Document.Excel
             }
         }
 
-        public async Task<byte[]> CreateSheetsByDoubleArrayAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
+        /// <summary>
+        /// 全局设置
+        /// </summary>
+        /// <param name="workSheet"></param>
+        protected virtual void SetWorksheets(ExcelWorksheet workSheet)
+        {
+            workSheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            workSheet.Cells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            workSheet.Cells.Style.WrapText = true;//自动换行
+            workSheet.Cells.AutoFitColumns(20, 100);
+        }
+
+        public virtual async Task<byte[]> CreateSheetsByDoubleArrayAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
         {
             using (var package = new ExcelPackage())
             {
@@ -87,16 +99,13 @@ namespace Jh.Abp.Document.Excel
                         }
                     }
 
-                    workSheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                    workSheet.Cells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                    workSheet.Cells.Style.WrapText = true;//自动换行
-                    workSheet.Cells.AutoFitColumns(20,100);
+                    SetWorksheets(workSheet);
                 }
                 return await package.GetAsByteArrayAsync();
             }
         }
 
-        public async Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
+        public virtual async Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
         {
             using (var package = new ExcelPackage())
             {
@@ -114,10 +123,7 @@ namespace Jh.Abp.Document.Excel
                         }
                     }
 
-                    workSheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                    workSheet.Cells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                    workSheet.Cells.Style.WrapText = true;//自动换行
-                    workSheet.Cells.AutoFitColumns(20, 100);
+                    SetWorksheets(workSheet);
                 }
                 return await package.GetAsByteArrayAsync();
             }
