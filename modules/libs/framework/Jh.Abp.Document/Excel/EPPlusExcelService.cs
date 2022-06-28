@@ -102,7 +102,7 @@ namespace Jh.Abp.Document.Excel
             {
                 foreach (var sheet in sheets)
                 {
-                    var sheetDataCells = sheet.celldata.OrderBy(a => a.r).ThenBy(a => a.c).ToList();
+                    var sheetDataCells = sheet.celldata;
                     var workSheet = package.Workbook.Worksheets.Add(sheet.name);
 
                     foreach (var cell in sheetDataCells)
