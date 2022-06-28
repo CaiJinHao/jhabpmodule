@@ -19,6 +19,28 @@ namespace Jh.Abp.Document.Excel
             
         }
 
+        protected virtual void SetExcelRange(ExcelWorksheet workSheet, int row, int col, JObject dataCell) {
+            ExcelRange cell = null;
+
+            var setCellValue = () => cell.Value = dataCell["v"].Value<string>();
+
+            if (dataCell["mc"] != null)
+            {
+                var mc = dataCell["mc"] as JObject;
+                var _r = mc["r"].Value<int>();
+                var _c = mc["c"].Value<int>();
+                cell = workSheet.Cells[_r + 1, _c + 1, _r + mc["rs"].Value<int>(), _c + mc["cs"].Value<int>()];
+                setCellValue();
+                cell.Merge = true;
+            }
+            else
+            {
+                cell = workSheet.Cells[row + 1, col + 1];
+                setCellValue();
+            }
+            //cell.FormulaR1C1 = string.Format();
+        }
+
         public async Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
         {
             using (var package = new ExcelPackage())
@@ -35,13 +57,11 @@ namespace Jh.Abp.Document.Excel
                             var dataCell = sheetDataCells[row, col] as JObject;
                             if (dataCell != null)
                             {
-                                workSheet.SetValue(row + 1, col + 1, dataCell["v"].ToString());
+                                SetExcelRange(workSheet, row, col, dataCell);
                             }
                         }
                     }
-
                 }
-
                 return await package.GetAsByteArrayAsync();
             }
         }
