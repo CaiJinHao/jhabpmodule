@@ -24,7 +24,7 @@ namespace Jh.Abp.Document.Excel.Models
         /// <summary>
         /// 二维数组数据
         /// </summary>
-        public object[,] data { get; set; }
+        public object[,] data { get; private set; }
         ///// <summary>
         ///// 一维对象
         ///// </summary>
@@ -35,8 +35,9 @@ namespace Jh.Abp.Document.Excel.Models
         /// </summary>
         public List<dynamic> calcChain { get; set; }
 
-        public SheetDto(string _id,string _name,int _row, int _col, int _rowHeight, int _colWidth)
+        public SheetDto(string _id,string _name,int _row, int _col, int _rowHeight, int _colWidth, object[,] _data)
         {
+            data = _data;
             id = _id;
             name = _name;
             row = _row;
