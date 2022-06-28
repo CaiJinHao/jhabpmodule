@@ -16,6 +16,13 @@ namespace Jh.Abp.Document.Excel
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="workSheet"></param>
+        /// <param name="row">从0开始</param>
+        /// <param name="col">从0开始</param>
+        /// <param name="dataCell"></param>
         protected virtual void SetExcelRange(ExcelWorksheet workSheet, int row, int col, JObject dataCell) 
         {
             ExcelRange cell = null;
@@ -103,11 +110,7 @@ namespace Jh.Abp.Document.Excel
                         var dataCell = cell.v as JObject;
                         if (dataCell != null)
                         {
-                            SetExcelRange(workSheet, cell.r + 1, cell.c + 1, dataCell);
-                        }
-                        else
-                        {
-
+                            SetExcelRange(workSheet, cell.r, cell.c, dataCell);
                         }
                     }
 
