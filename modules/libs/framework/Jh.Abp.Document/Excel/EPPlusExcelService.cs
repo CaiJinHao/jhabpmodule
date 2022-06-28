@@ -78,7 +78,7 @@ namespace Jh.Abp.Document.Excel
             workSheet.Cells.AutoFitColumns(20, 100);
         }
 
-        public virtual async Task<byte[]> CreateSheetsByDoubleArrayAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
+        public virtual async Task<byte[]> CreateSheetsByDoubleArrayAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets, Action<ExcelWorksheet> actionSheet = null)
         {
             using (var package = new ExcelPackage())
             {
@@ -100,12 +100,13 @@ namespace Jh.Abp.Document.Excel
                     }
 
                     SetWorksheets(workSheet);
+                    actionSheet?.Invoke(workSheet);
                 }
                 return await package.GetAsByteArrayAsync();
             }
         }
 
-        public virtual async Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
+        public virtual async Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets, Action<ExcelWorksheet> actionSheet = null)
         {
             using (var package = new ExcelPackage())
             {
@@ -124,6 +125,7 @@ namespace Jh.Abp.Document.Excel
                     }
 
                     SetWorksheets(workSheet);
+                    actionSheet?.Invoke(workSheet);
                 }
                 return await package.GetAsByteArrayAsync();
             }

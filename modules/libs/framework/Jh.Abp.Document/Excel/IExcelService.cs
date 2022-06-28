@@ -12,14 +12,12 @@ namespace Jh.Abp.Document.Excel
         /// <summary>
         /// 根据二维表格创建
         /// </summary>
-        /// <param name="sheets"></param>
         /// <returns></returns>
-        public Task<byte[]> CreateSheetsByDoubleArrayAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets);
+        public Task<byte[]> CreateSheetsByDoubleArrayAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets, Action<ExcelWorksheet> actionSheet = null);
         /// <summary>
-        /// 根据一味对象创建
+        /// 根据一维对象创建
         /// </summary>
-        /// <param name="sheets"></param>
         /// <returns></returns>
-        public Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets);
+        public Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets, Action<ExcelWorksheet> actionSheet = null);
     }
 }
