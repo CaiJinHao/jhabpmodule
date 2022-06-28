@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,8 +39,24 @@ namespace Jh.Abp.Document.Excel
                 cell = workSheet.Cells[row + 1, col + 1];
                 setCellValue();
             }
-           
-            //cell.FormulaR1C1 = string.Format();
+
+            //函数公式
+            if (dataCell["f"] != null)
+            {
+                cell.Formula = dataCell["f"].Value<string>();
+            }
+
+            //加粗
+            if (dataCell["bl"] != null)
+            {
+                cell.Style.Font.Bold = true;
+            }
+
+            //字体大小
+            if (dataCell["fs"] != null)
+            {
+                cell.Style.Font.Size = dataCell["fs"].Value<int>();
+            }
         }
 
         public async Task<byte[]> CreateSheetsAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets)
