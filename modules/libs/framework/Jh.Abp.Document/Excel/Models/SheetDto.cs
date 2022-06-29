@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,14 +23,13 @@ namespace Jh.Abp.Document.Excel.Models
         public  int defaultRowHeight { get;  set; }
         public int defaultColWidth { get;  set; }
 
-        [Newtonsoft.Json.JsonIgnore]
         public List<CellDto> celldata { get;  set; }
 
         /// <summary>
         /// 二维数组数据
         /// </summary>
         public object[,] data { get;  set; }
-        public object config { get; set; }
+        public JObject config { get; set; }
         /// <summary>
         /// 公式
         /// </summary>

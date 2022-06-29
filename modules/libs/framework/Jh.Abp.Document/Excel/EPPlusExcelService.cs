@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Jh.Abp.Document.Excel.Models;
 
 namespace Jh.Abp.Document.Excel
 {
     public class EPPlusExcelService: IExcelService
     {
-        public EPPlusExcelService() : base()
+        public EPPlusExcelService() 
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
@@ -29,11 +30,21 @@ namespace Jh.Abp.Document.Excel
             var isMerge = false;
             if (dataCell["mc"] != null)
             {
-                var mc = dataCell["mc"] as JObject;
+                var mc = dataCell["mc"];
                 var _r = mc["r"].Value<int>();
                 var _c = mc["c"].Value<int>();
-                cell = workSheet.Cells[_r + 1, _c + 1, _r + mc["rs"].Value<int>(), _c + mc["cs"].Value<int>()];
-                isMerge = true;
+                var _rs = mc["rs"];
+                var _cs = mc["cs"];
+                if (_rs != null && _cs != null)
+                {
+                    cell = workSheet.Cells[_r + 1, _c + 1, _r + _rs.Value<int>(), _c + _cs.Value<int>()];
+                    isMerge = true;
+                }
+                else
+                {
+                    //被合并的单元格不处理
+                    return;
+                }
             }
             else
             {
@@ -48,34 +59,47 @@ namespace Jh.Abp.Document.Excel
             }
 
             //函数公式
-            if (dataCell["f"] != null)
+            var f = dataCell["f"];
+            if (f != null)
             {
-                cell.Formula = dataCell["f"].Value<string>();
+                cell.Formula = f.Value<string>();
             }
 
             //加粗
-            if (dataCell["bl"] != null)
+            var bl = dataCell["bl"];
+            if (bl != null)
             {
                 cell.Style.Font.Bold = true;
             }
 
             //字体大小
-            if (dataCell["fs"] != null)
+            var fs = dataCell["fs"];
+            if (fs != null)
             {
-                cell.Style.Font.Size = dataCell["fs"].Value<int>();
+                cell.Style.Font.Size = fs.Value<int>();
             }
         }
 
         /// <summary>
         /// 全局设置
         /// </summary>
-        /// <param name="workSheet"></param>
-        protected virtual void SetWorksheets(ExcelWorksheet workSheet)
+        protected virtual void SetWorksheets(ExcelWorksheet workSheet,SheetDto sheetData)
         {
             workSheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             workSheet.Cells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             workSheet.Cells.Style.WrapText = true;//自动换行
             workSheet.Cells.AutoFitColumns(20, 100);
+
+            var rowlen = sheetData.config["rowlen"];
+            if (rowlen != null)
+            {
+                foreach (JProperty item in rowlen)
+                {
+                    var rowIndex = Convert.ToInt32(item.Name);
+                    var excelRow = workSheet.Row(rowIndex == 0 ? 1 : rowIndex);
+                    excelRow.Height = item.Value.Value<int>();
+                }
+            }
         }
 
         public virtual async Task<byte[]> CreateSheetsByDoubleArrayAsync(List<Jh.Abp.Document.Excel.Models.SheetDto> sheets, Action<ExcelWorksheet> actionSheet = null)
@@ -96,10 +120,11 @@ namespace Jh.Abp.Document.Excel
                             {
                                 SetExcelRange(workSheet, row, col, dataCell);
                             }
+                            //没有值的不处理
                         }
                     }
 
-                    SetWorksheets(workSheet);
+                    SetWorksheets(workSheet, sheet);
                     actionSheet?.Invoke(workSheet);
                 }
                 return await package.GetAsByteArrayAsync();
@@ -124,7 +149,7 @@ namespace Jh.Abp.Document.Excel
                         }
                     }
 
-                    SetWorksheets(workSheet);
+                    SetWorksheets(workSheet,sheet);
                     actionSheet?.Invoke(workSheet);
                 }
                 return await package.GetAsByteArrayAsync();
