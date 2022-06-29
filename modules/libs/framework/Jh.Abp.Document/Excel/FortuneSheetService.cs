@@ -8,6 +8,15 @@ using System.Text.RegularExpressions;
 
 namespace Jh.Abp.Document.Excel
 {
+    /*
+     https://ruilisi.github.io/fortune-sheet-docs/zh/guide/cell.html#%E5%9F%BA%E6%9C%AC%E5%8D%95%E5%85%83%E6%A0%BC
+     https://ruilisi.github.io/fortune-sheet-docs/zh/guide/sheet.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE
+
+     r:行 c:列 v:单元格值 ht:水平对齐 vt:垂直对其 mc:合并单元格 cs:合并得列数 rs:合并得行数   ct单元格格式 f:函数
+
+     dynamic 类型不能套入 JObject,JObject可以套入dynamic
+     */
+   
     public class FortuneSheetService
     {
         /// <summary>
@@ -135,7 +144,7 @@ namespace Jh.Abp.Document.Excel
                 {
                     if (r != _r)
                     {
-                        data[r, _c] = new { mc = new { _r, _c } };
+                        data[r, _c] = new { mc = new { r = _r, c = _c } };
                     }
                 }
 
@@ -144,7 +153,7 @@ namespace Jh.Abp.Document.Excel
                 {
                     if (c != _c)
                     {
-                        data[_r, c] = new { mc = new { _r, _c } };
+                        data[_r, c] = new { mc = new { r = _r, c = _c } };
                     }
                 }
 
