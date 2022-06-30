@@ -17,6 +17,7 @@ $packagesDto =
 
 # 公共类库
 @{Name = "Jh.Abp.Common"; },
+@{Name = "Jh.Abp.Document"; },
 
 # 快速启动组件
 @{Name = "Jh.Abp.QuickComponents"; },
