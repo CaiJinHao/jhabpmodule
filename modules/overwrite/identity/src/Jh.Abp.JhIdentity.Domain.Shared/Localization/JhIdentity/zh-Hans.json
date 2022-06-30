@@ -28,6 +28,7 @@
     "DisplayName:IdentityUser:LockoutEnd": "登录锁结束时间",
     "DisplayName:IdentityUser:LockoutEnabled": "启用登录锁",
     "DisplayName:IdentityUser:AccessFailedCount": "登录错误次数",
+    "DisplayName:IdentityUser:RegisterTime": "注册时间",
     "DisplayName:AuditLog": "审计日志",
     "DisplayName:AuditLog:ApplicationName": "应用名称",
     "DisplayName:AuditLog:UserName": "用户账号",
