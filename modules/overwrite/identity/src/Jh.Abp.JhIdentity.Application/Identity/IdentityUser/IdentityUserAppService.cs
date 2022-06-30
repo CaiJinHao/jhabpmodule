@@ -1,3 +1,4 @@
+using IdentityModel;
 using Jh.Abp.Application;
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common.Extensions;
@@ -15,6 +16,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -146,7 +148,7 @@ namespace Jh.Abp.JhIdentity
             }
         }
 
-        public override async Task<IdentityUserDto> GetAsync(Guid id)
+        protected async Task<IdentityUserDto> GetUserAsync(Guid id)
         {
             var entity = await crudRepository.FindAsync(id);
             var data = await MapToGetOutputDtoAsync(entity);
@@ -155,6 +157,11 @@ namespace Jh.Abp.JhIdentity
             await crudRepository.EnsureCollectionLoadedAsync(entity, u => u.Roles);
             data.RoleIds = entity.Roles.Select(a => a.RoleId).ToArray();
             return data;
+        }
+
+        public override async Task<IdentityUserDto> GetAsync(Guid id)
+        {
+            return await GetUserAsync(id);
         }
 
         public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
@@ -200,8 +207,13 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<IdentityUserDto> GetCurrentAsync()
         {
-            var user = await GetAsync((Guid)CurrentUser.Id);
-            user.RoleIds = CurrentUser.FindClaims(JhJwtClaimTypes.RoleId).Select(a=>new Guid(a.Value)).ToArray();
+            var user = await GetUserAsync((Guid)CurrentUser.Id);
+            user.Roles = CurrentUser.FindClaims(JwtClaimTypes.Role).Select(a=> a.Value).ToArray();
+            if (user.OrganizationUnitIds.Length>0)
+            {
+                user.OrganizationUnits = (await (OrganizationUnits.GetQueryableAsync(true))).AsNoTracking()
+                         .Where(a => user.OrganizationUnitIds.Contains(a.Id)).Select(a => a.DisplayName).ToArray();
+            }
             return user;
         }
 
