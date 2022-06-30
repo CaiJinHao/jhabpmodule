@@ -64,10 +64,10 @@ type OperationModalProps = {
             stringBuilder.AppendLine(@"
   const modalFormFinish = async (values: any) => {
     values.extraProperties = extraProperties;
-    if (current) {");
-            stringBuilder.AppendLine($"const _data = values as {ComponentUpdateInputDtoName};");
-            stringBuilder.AppendLine(@"_data.concurrencyStamp = current.concurrencyStamp;
-      const updateDto = await defaultService.Update(current.id, _data);
+    if (current) {
+      const _data = Object.assign(current, values);");
+            stringBuilder.AppendLine($"const updateDto = await defaultService.Update(current.id,_data as {ComponentUpdateInputDtoName});");
+            stringBuilder.AppendLine(@"
       if (updateDto) {
         onSubmit(updateDto);
       }
