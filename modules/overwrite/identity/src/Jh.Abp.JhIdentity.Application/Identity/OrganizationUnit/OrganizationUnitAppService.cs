@@ -158,6 +158,7 @@ namespace Jh.Abp.JhIdentity
             {
                 foreach (var item in await GetParentsAsync(id, true))
                 {
+                    //启用得时候需要将组织角色中间表关系添加上，或者由前端自行编辑添加
                     item.IsDeleted = false;
                     item.DeleterId = CurrentUser.Id;
                     item.DeletionTime = Clock.Now;

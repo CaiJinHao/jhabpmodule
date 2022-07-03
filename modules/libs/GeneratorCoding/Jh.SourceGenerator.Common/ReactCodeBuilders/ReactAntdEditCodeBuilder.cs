@@ -33,8 +33,8 @@ namespace Jh.SourceGenerator.Common
             var stringBuilder = new System.Text.StringBuilder();
             stringBuilder.AppendLine(@"
 import ProForm, { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-form';
-import type { FC } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import type { FC , useMemo} from 'react';
+import { useEffect, useState } from 'react';
 import { ViewOperator } from '@/services/jhabp/app.enums';
 import { useIntl } from 'umi';
 ");
@@ -89,7 +89,7 @@ type OperationModalProps = {
   };
 */");
 
-            stringBuilder.AppendLine($"  const initTitle = useCallback(() => {{ let _t = intl.formatMessage({{id: 'DisplayName:{DomainType.Name}',defaultMessage: '{DomainDescription}'}});");
+            stringBuilder.AppendLine($"  const operatorTitle = useMemo(() => {{ let _t = intl.formatMessage({{id: 'DisplayName:{DomainType.Name}',defaultMessage: '{DomainDescription}'}});");
             stringBuilder.AppendLine(@"
    switch (operator) {
       case ViewOperator.Add:
@@ -119,8 +119,8 @@ type OperationModalProps = {
       default:
         break;
     }
-    setTitle(_t);
-  }, [intl, operator]);
+    return _t;
+  }, [operator]);
 
 /*
   const leaderSelectedChange = (value: any, option: any) => {
@@ -133,9 +133,9 @@ type OperationModalProps = {
 */
 
   useEffect(() => {
-    initTitle();
+    setTitle(operatorTitle);
     setExtraProperties(current?.extraProperties);
-  }, [current, initTitle]);
+  }, [current]);
 
   if (!current && operator != ViewOperator.Add) {
     return <></>;

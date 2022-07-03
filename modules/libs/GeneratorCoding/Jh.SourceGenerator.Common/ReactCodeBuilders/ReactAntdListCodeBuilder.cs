@@ -271,6 +271,41 @@ import { useAccess, useIntl } from 'umi';
     onChange: (srk: any) => setSelectedRowKeys(srk),
   };
 ");
+
+            stringBuilder.AppendLine(@"  const toolBarRender = useMemo(() => {
+    return [");
+            stringBuilder.AppendLine(@$"access['${permissionName}.Create'] && ( ");
+            stringBuilder.AppendLine(@"<Button type=""primary"" key =""create"" shape =""round"" onClick ={create}>
+              <PlusOutlined />
+              {intl.formatMessage({ id: 'Permission:Create', defaultMessage: '创建' })}
+            </Button>),");
+            stringBuilder.AppendLine(@$"access['${permissionName}.BatchDelete'] && ( ");
+            stringBuilder.AppendLine(@"<Button type=""default"" key =""delete_keys"" shape =""round"" danger ={true} onClick={deleteByKeys}>
+          <DeleteOutlined />
+          {intl.formatMessage({
+            id: 'Permission:BatchDelete',
+            defaultMessage: '批量删除',
+          })}
+        </Button>
+      ),");
+            stringBuilder.AppendLine(@"];
+  }, []);
+
+    const tableSearch = useMemo(() => {
+    return {
+      labelWidth: 100,
+      searchText: intl.formatMessage({
+        id: 'proTable.search.searchText',
+        defaultMessage: '查询',
+      }),
+      resetText: intl.formatMessage({
+        id: 'proTable.search.resetText',
+        defaultMessage: '重置',
+      }),
+    };
+    }, []);");
+
+
             stringBuilder.AppendLine(@"
   return (
     <>
@@ -286,35 +321,8 @@ import { useAccess, useIntl } from 'umi';
             total: totalPage,
           }}
           dateFormatter=""string""
-          toolBarRender ={() => [");
-            stringBuilder.AppendLine(@$"access['${permissionName}.Create'] && ( ");
-            stringBuilder.AppendLine(@"<Button type=""primary"" key =""create"" shape =""round"" onClick ={create}>
-              <PlusOutlined />
-              {intl.formatMessage({ id: 'Permission:Create', defaultMessage: '创建' })}
-            </Button>),");
-            stringBuilder.AppendLine(@$"access['${permissionName}.BatchDelete'] && ( ");
-            stringBuilder.AppendLine(@"<Button
-              type=""default""
-              key =""delete_keys""
-              shape =""round""
-              danger ={true}
-              onClick={deleteByKeys}
-            >
-              <DeleteOutlined />
-              {intl.formatMessage({ id: 'Permission:BatchDelete', defaultMessage: '批量删除' })}
-            </Button>),
-          ]}
-          search={{
-            labelWidth: 100,
-            searchText: intl.formatMessage({
-              id: 'ProTable.search.searchText',
-              defaultMessage: '查询',
-            }),
-            resetText: intl.formatMessage({
-              id: 'ProTable.search.resetText',
-              defaultMessage: '重置',
-            }),
-          }}
+          toolBarRender={() => toolBarRender}
+          search={tableSearch}
         />
       </PageContainer>");
 
