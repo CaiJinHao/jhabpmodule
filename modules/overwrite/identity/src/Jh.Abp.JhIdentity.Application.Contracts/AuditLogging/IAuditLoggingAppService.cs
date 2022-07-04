@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AuditLogging;
 
-namespace Jh.Abp.JhAuditLogging
+namespace Jh.Abp.AuditLogging
 {
     public interface IAuditLoggingAppService
     {

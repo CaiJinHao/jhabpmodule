@@ -11,7 +11,7 @@ using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.DependencyInjection;
 
-namespace Jh.Abp.JhAuditLogging
+namespace Jh.Abp.AuditLogging
 {
     [DisableAuditing]
     public class AuditLoggingAppService : JhIdentityAppService, IAuditLoggingAppService, ITransientDependency

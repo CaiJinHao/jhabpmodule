@@ -1,4 +1,4 @@
-﻿using Jh.Abp.JhAuditLogging.Permissions;
+﻿using Jh.Abp.AuditLogging.Permissions;
 using Jh.Abp.JhIdentity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging;
 
-namespace Jh.Abp.JhAuditLogging
+namespace Jh.Abp.AuditLogging
 {
     [DisableAuditing]
     [RemoteService(Name = JhIdentityRemoteServiceConsts.RemoteServiceName)]

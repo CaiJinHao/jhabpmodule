@@ -4,7 +4,7 @@ using System.Text;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.MultiTenancy;
 
-namespace Jh.Abp.JhPermission
+namespace Jh.Abp.PermissionManagement
 {
 
     public class PermissionGrantedRetrieveInputDto

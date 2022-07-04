@@ -5,7 +5,7 @@ using Volo.Abp.Authorization.Permissions;
 using System.Linq;
 using Jh.Abp.JhIdentity;
 
-namespace Jh.Abp.JhPermission
+namespace Jh.Abp.PermissionManagement
 {
     public  class PermissionGrantedCreateInputDto
     {

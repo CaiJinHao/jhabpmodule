@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.MultiTenancy;
 
-namespace Jh.Abp.JhPermission
+namespace Jh.Abp.PermissionManagement
 {
     public class PermissionGrantedDto 
     {

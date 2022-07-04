@@ -12,7 +12,7 @@ using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 
-namespace Jh.Abp.JhAuditLogging
+namespace Jh.Abp.AuditLogging
 {
     public class AuditLoggingRepository : EfCoreAuditLogRepository, IAuditLoggingRepository, ITransientDependency
     {

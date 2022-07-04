@@ -13,7 +13,7 @@ using Volo.Abp.Application.Dtos;
 using Jh.Abp.Common;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Jh.Abp.JhPermission
+namespace Jh.Abp.PermissionManagement
 {
     [Authorize]
     [DisableAuditing]

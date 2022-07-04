@@ -1,6 +1,6 @@
-﻿using Jh.Abp.JhAuditLogging;
+﻿using Jh.Abp.AuditLogging;
 using Jh.Abp.JhIdentity.v1;
-using Jh.Abp.JhPermission;
+using Jh.Abp.PermissionManagement;
 using Jh.SourceGenerator.Common;
 using Jh.SourceGenerator.Common.GeneratorDtos;
 using System;

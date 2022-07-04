@@ -10,7 +10,7 @@ using Volo.Abp.Auditing;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.PermissionManagement;
 
-namespace Jh.Abp.JhPermission
+namespace Jh.Abp.PermissionManagement
 {
     public interface IJhPermissionAppService:  IApplicationService, IRemoteService
     {

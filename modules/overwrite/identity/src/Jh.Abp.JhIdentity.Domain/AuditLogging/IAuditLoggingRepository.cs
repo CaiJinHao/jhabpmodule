@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.AuditLogging;
 
-namespace Jh.Abp.JhAuditLogging
+namespace Jh.Abp.AuditLogging
 {
     public interface IAuditLoggingRepository : IAuditLogRepository
     {

@@ -5,7 +5,7 @@ using System.Text;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Auditing;
 
-namespace Jh.Abp.JhAuditLogging
+namespace Jh.Abp.AuditLogging
 {
     public class AuditLoggingRetrieveInputDto: PagedAndSortedResultRequestDto
     {

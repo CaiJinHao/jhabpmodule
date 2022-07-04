@@ -2,7 +2,7 @@
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 
-namespace Jh.Abp.JhAuditLogging.Permissions
+namespace Jh.Abp.AuditLogging.Permissions
 {
     public class JhAuditLoggingPermissionDefinitionProvider : PermissionDefinitionProvider
     {

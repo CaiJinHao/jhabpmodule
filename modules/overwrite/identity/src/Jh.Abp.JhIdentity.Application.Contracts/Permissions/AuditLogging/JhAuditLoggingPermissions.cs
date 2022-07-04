@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Reflection;
 
-namespace Jh.Abp.JhAuditLogging.Permissions
+namespace Jh.Abp.AuditLogging.Permissions
 {
     public class JhAuditLoggingPermissions
     {
