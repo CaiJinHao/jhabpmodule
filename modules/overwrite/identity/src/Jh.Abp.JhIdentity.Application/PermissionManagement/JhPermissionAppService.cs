@@ -14,7 +14,7 @@ using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SimpleStateChecking;
 
-namespace Jh.Abp.JhPermission.JhPermission
+namespace Jh.Abp.JhPermission
 {
     [DisableAuditing]
     public class JhPermissionAppService : PermissionAppService, IJhPermissionAppService, IPermissionAppService, ITransientDependency

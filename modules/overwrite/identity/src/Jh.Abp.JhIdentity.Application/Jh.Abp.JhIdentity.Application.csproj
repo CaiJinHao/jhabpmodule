@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Application\Jh.Abp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SettingManagement\" />
+  </ItemGroup>
+
 </Project>

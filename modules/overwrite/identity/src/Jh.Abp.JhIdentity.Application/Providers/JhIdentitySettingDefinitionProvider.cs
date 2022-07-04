@@ -4,7 +4,7 @@ using Volo.Abp.Account.Settings;
 using Volo.Abp.Localization;
 using Volo.Abp.Settings;
 
-namespace Jh.Abp.JhIdentity.Settings
+namespace Jh.Abp.JhIdentity
 {
     public class JhIdentitySettingDefinitionProvider : SettingDefinitionProvider
     {
