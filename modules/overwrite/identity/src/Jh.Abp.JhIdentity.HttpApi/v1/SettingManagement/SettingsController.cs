@@ -14,6 +14,7 @@ using Jh.Abp.Common;
 using Microsoft.AspNetCore.Authorization;
 using Jh.Abp.SettingManagement;
 using Jh.Abp.SettingManagement.Permissions;
+using Volo.Abp.Settings;
 
 namespace Jh.Abp.JhIdentity.v1.SettingManagement
 {
@@ -24,6 +25,14 @@ namespace Jh.Abp.JhIdentity.v1.SettingManagement
     public class SettingsController : JhIdentityController, ISettingsAppService
     {
         public ISettingsAppService settingsAppService { get; set; }
+
+        [Authorize(JhSettingManagementPermissions.Settings.Default)]
+        [Route("all")]
+        [HttpGet]
+        public async Task<List<SettingValue>> GetAllAsync(SettingRetrieveInputDto input)
+        {
+            return await settingsAppService.GetAllAsync(input);
+        }
 
         [Authorize(JhSettingManagementPermissions.Settings.Default)]
         [HttpGet]
