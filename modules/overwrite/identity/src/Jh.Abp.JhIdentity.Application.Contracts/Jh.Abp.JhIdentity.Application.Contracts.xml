@@ -524,5 +524,25 @@
             权限名称列表
             </summary>
         </member>
+        <member name="T:Jh.Abp.SettingManagement.SettingCreateOrUpdateInputDto">
+            <summary>
+            使用前需要先在Provider中进行定义
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.SettingManagement.SettingCreateOrUpdateInputDto.ForceToSet">
+            <summary>
+            强制设置
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.SettingManagement.SettingInputDto.ProviderName">
+            <summary>
+            数据类型
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.SettingManagement.SettingInputDto.ProviderKey">
+            <summary>
+            租户ID,用户ID,等自定义,当前登录的租户、用户直接传NULL
+            </summary>
+        </member>
     </members>
 </doc>

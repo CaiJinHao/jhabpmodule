@@ -1,5 +1,6 @@
 ﻿using Volo.Abp.Identity;
 using Volo.Abp.Reflection;
+using Volo.Abp.SettingManagement;
 
 namespace Jh.Abp.JhIdentity;
 
