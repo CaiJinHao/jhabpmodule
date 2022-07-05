@@ -551,7 +551,7 @@
         </member>
         <member name="P:Jh.Abp.SettingManagement.SettingRetrieveInputDto.ProviderKey">
             <summary>
-            租户ID,用户ID,等自定义,当前登录的租户、用户直接传NULL
+            当ProviderName 为U和T的时候必填
             </summary>
         </member>
     </members>

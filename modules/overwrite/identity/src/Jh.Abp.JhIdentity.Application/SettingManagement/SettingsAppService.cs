@@ -14,9 +14,9 @@ namespace Jh.Abp.SettingManagement
 {
     public class SettingsAppService: SettingManagementAppServiceBase, ISettingsAppService, ITransientDependency
     {
-        protected ISettingManager SettingManager { get; }
+        protected IJhSettingManager SettingManager { get; }
 
-        public SettingsAppService(ISettingManager settingManager)
+        public SettingsAppService(IJhSettingManager settingManager)
         {
             SettingManager = settingManager;
         }
