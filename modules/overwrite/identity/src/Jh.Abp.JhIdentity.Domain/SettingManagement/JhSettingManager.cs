@@ -22,9 +22,12 @@ namespace Jh.Abp.SettingManagement
         {
         }
 
-        public virtual async Task<List<SettingDefinitionDto>> GetEntitysAsync([CanBeNull]string providerName, string providerKey)
+        public virtual async Task<List<SettingDefinitionDto>> GetEntitysAsync([CanBeNull]string providerName, string providerKey,string name=null)
         {
             var settingDefinitions = SettingDefinitionManager.GetAll();
+            if (!string.IsNullOrEmpty(name)) {
+                settingDefinitions = settingDefinitions.Where(a => a.Name.Contains(name)).ToList();
+            }
             var providers = Enumerable.Reverse(Providers);
             if (!string.IsNullOrEmpty(providerName))
             {
@@ -68,19 +71,22 @@ namespace Jh.Abp.SettingManagement
                     );
                 }
 
-                if (setting.IsEncrypted)
+                if (value != null || string.IsNullOrEmpty(providerName))//首次加载可以加载vlaue为null,搜索不允许加载为null的值
                 {
-                    value = SettingEncryptionService.Decrypt(setting, value);
-                }
+                    if (setting.IsEncrypted)
+                    {
+                        value = SettingEncryptionService.Decrypt(setting, value);
+                    }
 
-                settingValues[setting.Name] = new SettingDefinitionDto(setting.Name, value, valueProviderName, providerKey)
-                {
-                    Description = setting.Description.Localize(StringLocalizerFactory).ToString(),
-                    DisplayName = setting.DisplayName.Localize(StringLocalizerFactory).ToString(),
-                    IsEncrypted = setting.IsEncrypted,
-                    IsInherited = setting.IsInherited,
-                    Properties = setting.Properties
-                };
+                    settingValues[setting.Name] = new SettingDefinitionDto(setting.Name, value, valueProviderName, providerKey)
+                    {
+                        Description = setting.Description.Localize(StringLocalizerFactory).ToString(),
+                        DisplayName = setting.DisplayName.Localize(StringLocalizerFactory).ToString(),
+                        IsEncrypted = setting.IsEncrypted,
+                        IsInherited = setting.IsInherited,
+                        Properties = setting.Properties
+                    };
+                }
             }
 
             return settingValues.Values.OrderByDescending(a => a.ProviderNameEnum).ToList();

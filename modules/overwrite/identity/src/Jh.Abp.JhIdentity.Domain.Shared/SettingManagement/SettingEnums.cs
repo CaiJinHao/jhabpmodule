@@ -7,8 +7,6 @@ namespace Jh.Abp.SettingManagement
 {
     public enum ProviderNameEnum
     {
-        [Description("Empty")]
-        A,
         /// <summary>
         /// DefaultValueSettingManagementProvider
         /// </summary>

@@ -40,10 +40,10 @@ namespace Jh.Abp.SettingManagement
 
         public virtual async Task<ListResultDto<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
         {
-            var datas = await SettingManager.GetEntitysAsync(input.ProviderName, input.ProviderKey);
-            if (!string.IsNullOrEmpty(input.Name))
+            var datas = await SettingManager.GetEntitysAsync(input.ProviderName, input.ProviderKey, input.Name);
+            if (!string.IsNullOrEmpty(input.DisplayName))
             {
-                datas = datas.Where(a => a.DisplayName.Contains(input.Name)).ToList();
+                datas = datas.Where(a => a.DisplayName.Contains(input.DisplayName)).ToList();
             }
             return new ListResultDto<SettingDefinitionDto>(datas);
         }

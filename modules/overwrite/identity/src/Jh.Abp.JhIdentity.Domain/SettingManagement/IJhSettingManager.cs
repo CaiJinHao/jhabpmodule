@@ -8,7 +8,7 @@ namespace Jh.Abp.SettingManagement
 {
     public interface IJhSettingManager: ISettingManager
     {
-        Task<List<SettingDefinitionDto>> GetEntitysAsync(string providerName, string providerKey);
+        Task<List<SettingDefinitionDto>> GetEntitysAsync(string providerName, string providerKey, string name = null);
         Task<SettingDefinitionDto> GetAsync(string name, string providerName, string providerKey);
     }
 }
