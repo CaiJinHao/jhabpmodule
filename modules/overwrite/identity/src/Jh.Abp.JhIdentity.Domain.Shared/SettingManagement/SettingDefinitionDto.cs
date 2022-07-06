@@ -13,7 +13,6 @@ namespace Jh.Abp.SettingManagement
         public string DisplayName { get; set; }
         public string Description { get;  set; }
         public string DefaultValue { get; private set; }
-        public bool IsVisibleToClients { get; set; }
         public bool IsInherited { get; set; }
         public Dictionary<string, object> Properties { get; set; }
         public bool IsEncrypted { get; set; }
@@ -27,7 +26,7 @@ namespace Jh.Abp.SettingManagement
             DefaultValue = value;
             ProviderName = providerName;
             ProviderKey = providerKey;
-            Id = $"{providerName}{providerKey}{name}";
+            Id = $"{providerName}_{providerKey}_{name}";
         }
     }
 }

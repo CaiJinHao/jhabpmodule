@@ -54,9 +54,10 @@
     "DisplayName:SettingDefinitionDto:DisplayName": "顯示名稱",
     "DisplayName:SettingDefinitionDto:Description": "描述",
     "DisplayName:SettingDefinitionDto:DefaultValue": "值",
-    "DisplayName:SettingDefinitionDto:IsVisibleToClients": "IsVisibleToClients",
-    "DisplayName:SettingDefinitionDto:IsInherited": "IsInherited",
-    "DisplayName:SettingDefinitionDto:Properties": "Properties",
-    "DisplayName:SettingDefinitionDto:IsEncrypted": "是否加密"
+    "DisplayName:SettingDefinitionDto:IsInherited": "是否繼承",
+    "DisplayName:SettingDefinitionDto:Properties": "屬性",
+    "DisplayName:SettingDefinitionDto:IsEncrypted": "是否加密",
+    "DisplayName:SettingDefinitionDto:ProviderName": "提供者名稱",
+    "DisplayName:SettingDefinitionDto:ProviderKey": "提供者Key"
   }
 }

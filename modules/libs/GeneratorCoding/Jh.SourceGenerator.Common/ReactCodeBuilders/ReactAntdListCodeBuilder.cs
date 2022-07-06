@@ -55,7 +55,7 @@ import { useAccess, useIntl } from 'umi';
             stringBuilder.AppendLine($"import * as defaultService from '@/services/jhabp/{JhModuleName}/{DomainType.Name}/{DomainType.Name.ToLower()}.service';");
             stringBuilder.AppendLine($"import {operationModalName} from './components/OperationModal';");
 
-            var permissionName = $"{ModuleNamespace}.{DomainType.Name}s";
+            var permissionName = $"{JhModuleName}.{DomainType.Name}s";
             var ComponentName = $"{DomainType.Name}List";//组件名称
             var ComponentDtoName = $"{ModuleNamespace}.{DomainType.Name}Dto";//组件Dto
             stringBuilder.AppendLine($"const {ComponentName} = () => {{");
@@ -229,7 +229,7 @@ import { useAccess, useIntl } from 'umi';
       valueType: 'option',
       render: (_, record) =>
         !record.isDeleted && [");
-            stringBuilder.AppendLine(@$"access['${permissionName}.Update'] && (");
+            stringBuilder.AppendLine(@$"access['{permissionName}.Update'] && (");
             stringBuilder.AppendLine(@"<a key=""edit"" onClick={() => edit(record)}>
             { intl.formatMessage({ id: 'Permission:Edit', defaultMessage: '编辑' })}
           </a>),
@@ -274,12 +274,12 @@ import { useAccess, useIntl } from 'umi';
 
             stringBuilder.AppendLine(@"  const toolBarRender = useMemo(() => {
     return [");
-            stringBuilder.AppendLine(@$"access['${permissionName}.Create'] && ( ");
+            stringBuilder.AppendLine(@$"access['{permissionName}.Create'] && ( ");
             stringBuilder.AppendLine(@"<Button type=""primary"" key =""create"" shape =""round"" onClick ={create}>
               <PlusOutlined />
               {intl.formatMessage({ id: 'Permission:Create', defaultMessage: '创建' })}
             </Button>),");
-            stringBuilder.AppendLine(@$"access['${permissionName}.BatchDelete'] && ( ");
+            stringBuilder.AppendLine(@$"access['{permissionName}.BatchDelete'] && ( ");
             stringBuilder.AppendLine(@"<Button type=""default"" key =""delete_keys"" shape =""round"" danger ={true} onClick={deleteByKeys}>
           <DeleteOutlined />
           {intl.formatMessage({
