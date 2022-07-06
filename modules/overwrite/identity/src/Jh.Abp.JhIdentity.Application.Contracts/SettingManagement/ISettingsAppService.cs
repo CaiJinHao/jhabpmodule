@@ -10,6 +10,6 @@ namespace Jh.Abp.SettingManagement
     {
         Task<string> GetAsync(SettingRetrieveInputDto input);
         Task SetAsync(SettingCreateOrUpdateInputDto input);
-        Task<List<SettingValue>> GetAllAsync(SettingRetrieveInputDto input);
+        Task<List<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input);
     }
 }

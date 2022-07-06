@@ -29,7 +29,7 @@ namespace Jh.Abp.JhIdentity.v1.SettingManagement
         [Authorize(JhSettingManagementPermissions.Settings.Default)]
         [Route("all")]
         [HttpGet]
-        public async Task<List<SettingValue>> GetAllAsync(SettingRetrieveInputDto input)
+        public async Task<List<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
         {
             return await settingsAppService.GetAllAsync(input);
         }

@@ -36,9 +36,9 @@ namespace Jh.Abp.SettingManagement
             return await SettingManager.GetOrNullAsync(input.Name, input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
         }
 
-        public virtual async Task<List<SettingValue>> GetAllAsync(SettingRetrieveInputDto input)
+        public virtual async Task<List<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
         {
-            return await SettingManager.GetAllAsync(input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
+            return await SettingManager.GetEntitysAsync(input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
         }
 
         public virtual async Task SetAsync(SettingCreateOrUpdateInputDto input)
