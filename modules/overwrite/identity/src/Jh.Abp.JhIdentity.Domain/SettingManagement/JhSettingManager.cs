@@ -32,10 +32,6 @@ namespace Jh.Abp.SettingManagement
             }
 
             var providerList = providers.Reverse().ToList();
-            if (providerList.Count < 1)
-            {
-                settingDefinitions = settingDefinitions.Where(a => !a.IsInherited).ToList();
-            }
 
             var settingValues = new Dictionary<string, SettingDefinitionDto>();
 

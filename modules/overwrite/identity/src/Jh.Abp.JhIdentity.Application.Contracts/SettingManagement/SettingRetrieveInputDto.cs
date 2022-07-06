@@ -16,5 +16,6 @@ namespace Jh.Abp.SettingManagement
         /// </summary>
         public string ProviderKey { get; set; }
         public string Name { get; set; }
+        public string DisplayName { get; set; }
     }
 }
