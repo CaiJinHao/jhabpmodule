@@ -32,9 +32,9 @@ namespace Jh.SourceGenerator.Common
         {
             var stringBuilder = new System.Text.StringBuilder();
             stringBuilder.AppendLine(@"
-import ProForm, { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-form';
-import type { FC , useMemo} from 'react';
-import { useEffect, useState } from 'react';
+import ProForm, { ModalForm, ProFormText } from '@ant-design/pro-form';
+import type { FC } from 'react';
+import { useEffect, useState , useMemo } from 'react';
 import { ViewOperator } from '@/services/jhabp/app.enums';
 import { useIntl } from 'umi';
 ");
@@ -79,16 +79,6 @@ type OperationModalProps = {
       }
     }
   };");
-
-            stringBuilder.AppendLine(@"
-/* select-demo
-  const requestOrganizationUnitOptions = async () => {
-    const data = await defaultService.GetOptions('');
-    const items = data.items as API.OptionDto<string>[];
-    return items;
-  };
-*/");
-
             stringBuilder.AppendLine($"  const operatorTitle = useMemo(() => {{ let _t = intl.formatMessage({{id: 'DisplayName:{DomainType.Name}',defaultMessage: '{DomainDescription}'}});");
             stringBuilder.AppendLine(@"
    switch (operator) {
@@ -120,22 +110,12 @@ type OperationModalProps = {
         break;
     }
     return _t;
-  }, [operator]);
-
-/*
-  const leaderSelectedChange = (value: any, option: any) => {
-    setExtraProperties({
-      ...extraProperties,
-      LeaderId: value ?? null,
-      LeaderName: value ? option.label : null,
-    });
-  };
-*/
+  }, [intl, operator]);
 
   useEffect(() => {
     setTitle(operatorTitle);
     setExtraProperties(current?.extraProperties);
-  }, [current]);
+  }, [current, operatorTitle]);
 
   if (!current && operator != ViewOperator.Add) {
     return <></>;

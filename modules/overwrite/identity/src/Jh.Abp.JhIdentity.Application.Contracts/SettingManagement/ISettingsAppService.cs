@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Settings;
 
 namespace Jh.Abp.SettingManagement
 {
     public interface ISettingsAppService
     {
-        Task<string> GetAsync(SettingRetrieveInputDto input);
+        Task<SettingDefinitionDto> GetAsync(SettingRetrieveInputDto input);
         Task SetAsync(SettingCreateOrUpdateInputDto input);
-        Task<List<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input);
+        Task<ListResultDto<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input);
     }
 }

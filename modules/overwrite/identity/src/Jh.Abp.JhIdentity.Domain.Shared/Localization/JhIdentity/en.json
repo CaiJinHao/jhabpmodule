@@ -47,6 +47,16 @@
     "DisplayName:AuditLog:Actions": "Actions",
     "DisplayName:AuditLog:EntityChanges": "Entity changes",
     "DisplayName:AuditLog:DateTimeRange": "Date time range",
-    "DisplayName:AuditLog:HasException": "Has exception"
+    "DisplayName:AuditLog:HasException": "Has exception",
+    "Permission:Settings": "Settings",
+    "DisplayName:SettingDefinitionDto": "Settings management",
+    "DisplayName:SettingDefinitionDto:Name": "Name",
+    "DisplayName:SettingDefinitionDto:DisplayName": "DisplayName",
+    "DisplayName:SettingDefinitionDto:Description": "Description",
+    "DisplayName:SettingDefinitionDto:DefaultValue": "Value",
+    "DisplayName:SettingDefinitionDto:IsVisibleToClients": "IsVisibleToClients",
+    "DisplayName:SettingDefinitionDto:IsInherited": "IsInherited",
+    "DisplayName:SettingDefinitionDto:Properties": "Properties",
+    "DisplayName:SettingDefinitionDto:IsEncrypted": "IsEncrypted"
   }
 }

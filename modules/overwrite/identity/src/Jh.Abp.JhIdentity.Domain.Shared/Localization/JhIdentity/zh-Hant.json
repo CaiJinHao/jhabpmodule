@@ -47,6 +47,16 @@
     "DisplayName:AuditLog:Actions": "執行過程",
     "DisplayName:AuditLog:EntityChanges": "更改實體",
     "DisplayName:AuditLog:DateTimeRange": "執行時間區間",
-    "DisplayName:AuditLog:HasException": "數據異常過濾"
+    "DisplayName:AuditLog:HasException": "數據異常過濾",
+    "Permission:Settings": "設置管理",
+    "DisplayName:SettingDefinitionDto": "設置管理",
+    "DisplayName:SettingDefinitionDto:Name": "名稱",
+    "DisplayName:SettingDefinitionDto:DisplayName": "顯示名稱",
+    "DisplayName:SettingDefinitionDto:Description": "描述",
+    "DisplayName:SettingDefinitionDto:DefaultValue": "值",
+    "DisplayName:SettingDefinitionDto:IsVisibleToClients": "IsVisibleToClients",
+    "DisplayName:SettingDefinitionDto:IsInherited": "IsInherited",
+    "DisplayName:SettingDefinitionDto:Properties": "Properties",
+    "DisplayName:SettingDefinitionDto:IsEncrypted": "是否加密"
   }
 }

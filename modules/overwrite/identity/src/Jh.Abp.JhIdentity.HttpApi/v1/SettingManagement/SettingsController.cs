@@ -29,14 +29,14 @@ namespace Jh.Abp.JhIdentity.v1.SettingManagement
         [Authorize(JhSettingManagementPermissions.Settings.Default)]
         [Route("all")]
         [HttpGet]
-        public async Task<List<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
+        public async Task<ListResultDto<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
         {
             return await settingsAppService.GetAllAsync(input);
         }
 
         [Authorize(JhSettingManagementPermissions.Settings.Default)]
         [HttpGet]
-        public async Task<string> GetAsync(SettingRetrieveInputDto input)
+        public async Task<SettingDefinitionDto> GetAsync(SettingRetrieveInputDto input)
         {
             return await settingsAppService.GetAsync(input);
         }

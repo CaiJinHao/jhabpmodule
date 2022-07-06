@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Emailing;
 using Volo.Abp.Features;
@@ -30,15 +31,16 @@ namespace Jh.Abp.SettingManagement
             //}
         }
 
-        public virtual async Task<string> GetAsync(SettingRetrieveInputDto input)
+        public virtual async Task<SettingDefinitionDto> GetAsync(SettingRetrieveInputDto input)
         {
             await CheckFeatureAsync();
-            return await SettingManager.GetOrNullAsync(input.Name, input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
+            return await SettingManager.GetAsync(input.Name, input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
         }
 
-        public virtual async Task<List<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
+        public virtual async Task<ListResultDto<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
         {
-            return await SettingManager.GetEntitysAsync(input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
+            var datas= await SettingManager.GetEntitysAsync(input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
+            return new ListResultDto<SettingDefinitionDto>(datas);
         }
 
         public virtual async Task SetAsync(SettingCreateOrUpdateInputDto input)

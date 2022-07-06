@@ -42,7 +42,7 @@ namespace Jh.SourceGenerator.Common
         {
             var stringBuilder = new System.Text.StringBuilder();
             stringBuilder.AppendLine(@"
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Switch, message, Modal } from 'antd';
@@ -289,7 +289,7 @@ import { useAccess, useIntl } from 'umi';
         </Button>
       ),");
             stringBuilder.AppendLine(@"];
-  }, []);
+  }, [access, intl]);
 
     const tableSearch = useMemo(() => {
     return {
@@ -303,7 +303,7 @@ import { useAccess, useIntl } from 'umi';
         defaultMessage: '重置',
       }),
     };
-    }, []);");
+  }, [intl]);");
 
 
             stringBuilder.AppendLine(@"

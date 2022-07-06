@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace Jh.Abp.SettingManagement
 {
     public class JhSettingManager : SettingManager, IJhSettingManager, ISingletonDependency
     {
+        public IAbpLazyServiceProvider LazyServiceProvider { get; set; }
+        protected IStringLocalizerFactory StringLocalizerFactory => LazyServiceProvider.LazyGetRequiredService<IStringLocalizerFactory>();
+
         public JhSettingManager(IOptions<SettingManagementOptions> options, IServiceProvider serviceProvider, ISettingDefinitionManager settingDefinitionManager, ISettingEncryptionService settingEncryptionService) : base(options, serviceProvider, settingDefinitionManager, settingEncryptionService)
         {
         }
@@ -72,19 +76,63 @@ namespace Jh.Abp.SettingManagement
 
                 if (value != null)
                 {
-                    settingValues[setting.Name] = new SettingDefinitionDto(setting.Name, value)
+                    settingValues[setting.Name] = new SettingDefinitionDto(setting.Name, value, providerName, providerKey)
                     {
-                        Description = setting.Description.ToString(),
-                        DisplayName = setting.DisplayName.ToString(),
+                        Description = setting.Description.Localize(StringLocalizerFactory).ToString(),
+                        DisplayName = setting.DisplayName.Localize(StringLocalizerFactory).ToString(),
                         IsEncrypted = setting.IsEncrypted,
                         IsInherited = setting.IsInherited,
-                        IsVisibleToClients = setting.IsVisibleToClients,
                         Properties = setting.Properties
                     };
                 }
             }
 
             return settingValues.Values.ToList();
+        }
+
+        public virtual async Task<SettingDefinitionDto> GetAsync(string name, string providerName, string providerKey, bool fallback = true)
+        {
+            var setting = SettingDefinitionManager.Get(name);
+            var providers = Enumerable
+                .Reverse(Providers);
+
+            if (providerName != null)
+            {
+                providers = providers.SkipWhile(c => c.Name != providerName);
+            }
+
+            if (!fallback || !setting.IsInherited)
+            {
+                providers = providers.TakeWhile(c => c.Name == providerName);
+            }
+
+            string value = null;
+            foreach (var provider in providers)
+            {
+                value = await provider.GetOrNullAsync(
+                    setting,
+                    provider.Name == providerName ? providerKey : null
+                );
+
+                if (value != null)
+                {
+                    break;
+                }
+            }
+
+            if (setting.IsEncrypted)
+            {
+                value = SettingEncryptionService.Decrypt(setting, value);
+            }
+
+            return new SettingDefinitionDto(setting.Name, value,providerName,providerKey)
+            {
+                Description = setting.Description.Localize(StringLocalizerFactory).ToString(),
+                DisplayName = setting.DisplayName.Localize(StringLocalizerFactory).ToString(),
+                IsEncrypted = setting.IsEncrypted,
+                IsInherited = setting.IsInherited,
+                Properties = setting.Properties
+            };
         }
     }
 }

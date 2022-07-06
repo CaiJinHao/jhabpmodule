@@ -1,6 +1,8 @@
 ﻿using Jh.Abp.AuditLogging;
 using Jh.Abp.JhIdentity.v1;
+using Jh.Abp.JhIdentity.v1.SettingManagement;
 using Jh.Abp.PermissionManagement;
+using Jh.Abp.SettingManagement;
 using Jh.SourceGenerator.Common;
 using Jh.SourceGenerator.Common.GeneratorDtos;
 using System;
@@ -23,8 +25,8 @@ namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon
             var moduleNamespace = $"API.{moduleName}";
             var generatorPath = @"G:\Temp";
             var service = new GeneratorService(new GeneratorOptions(generatorPath), GneratorType.AllField);
-            service.GeneratorCodeByAppService(moduleNamespace, "API", $"{moduleName}_API", new Type[] { typeof(AuditLoggingController) });
-            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(AuditLog) }, moduleName);
+            service.GeneratorCodeByAppService(moduleNamespace, "API", $"{moduleName}_API", new Type[] { typeof(SettingsController) });
+            service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(SettingDefinitionDto) }, moduleName);
         }
     }
 }
