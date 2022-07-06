@@ -26,17 +26,15 @@ namespace Jh.Abp.SettingManagement
         {
             var settingDefinitions = SettingDefinitionManager.GetAll();
             var providers = Enumerable.Reverse(Providers);
-
             if (!string.IsNullOrEmpty(providerName))
             {
                 providers = providers.Where(c => c.Name == providerName);
             }
 
             var providerList = providers.Reverse().ToList();
-
-            if (!providerList.Any())
+            if (providerList.Count < 1)
             {
-                return new List<SettingDefinitionDto>();
+                settingDefinitions = settingDefinitions.Where(a => !a.IsInherited).ToList();
             }
 
             var settingValues = new Dictionary<string, SettingDefinitionDto>();
@@ -47,12 +45,18 @@ namespace Jh.Abp.SettingManagement
                 string valueProviderName = null;
                 if (setting.IsInherited)
                 {
+                    var i = 0;
                     foreach (var provider in providerList)
                     {
                         var providerValue = await provider.GetOrNullAsync(
                             setting,
                             provider.Name == providerName ? providerKey : null
                         );
+                        if (i == 0)
+                        {
+                            i++;
+                            valueProviderName = provider.Name;
+                        }
                         if (providerValue != null)
                         {
                             value = providerValue;
@@ -83,7 +87,7 @@ namespace Jh.Abp.SettingManagement
                 };
             }
 
-            return settingValues.Values.ToList();
+            return settingValues.Values.OrderByDescending(a => a.ProviderNameEnum).ToList();
         }
 
         public virtual async Task<SettingDefinitionDto> GetAsync(string name, string providerName, string providerKey)

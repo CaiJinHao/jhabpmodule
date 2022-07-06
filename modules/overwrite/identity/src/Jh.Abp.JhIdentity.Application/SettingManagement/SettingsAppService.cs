@@ -10,6 +10,7 @@ using Volo.Abp.Emailing;
 using Volo.Abp.Features;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
+using System.Linq;
 
 namespace Jh.Abp.SettingManagement
 {
