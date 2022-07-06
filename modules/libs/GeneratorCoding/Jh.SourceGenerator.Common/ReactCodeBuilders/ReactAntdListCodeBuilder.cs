@@ -173,18 +173,17 @@ import { useAccess, useIntl } from 'umi';
     }
   };
 ");
-            stringBuilder.AppendLine($"const loadDetail = async (record: {ComponentDtoName}) => {{");
-            stringBuilder.AppendLine(@"setVisibleOperation(true);
-    const detailDto = await defaultService.Get(record.id);//如果有额外得字段才会需要重新获取,否则可以直接使用record传递
+            stringBuilder.AppendLine($"const loadDetail = async (operation: ViewOperator,record: {ComponentDtoName}) => {{");
+            stringBuilder.AppendLine(@"setDetailOperation(operation);
+    setVisibleOperation(true);
+    const detailDto = await defaultService.Get(record.id);
     setCurrentOperation(detailDto);
   };");
             stringBuilder.AppendLine($"const edit = async (record: {ComponentDtoName}) => {{");
-            stringBuilder.AppendLine(@"setDetailOperation(ViewOperator.Edit);
-    await loadDetail(record);
+            stringBuilder.AppendLine(@"await loadDetail(ViewOperator.Edit, record);
   };");
             stringBuilder.AppendLine($"const detail = async (record: {ComponentDtoName}) => {{");
-            stringBuilder.AppendLine(@"setDetailOperation(ViewOperator.Detail);
-    await loadDetail(record);
+            stringBuilder.AppendLine(@"await loadDetail(ViewOperator.Detail, record);
   };");
             stringBuilder.AppendLine(@"
   useEffect(() => {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -21,17 +22,14 @@ namespace Jh.Abp.SettingManagement
         {
         }
 
-        public virtual async Task<List<SettingDefinitionDto>> GetEntitysAsync(string providerName, string providerKey, bool fallback = true)
+        public virtual async Task<List<SettingDefinitionDto>> GetEntitysAsync([CanBeNull]string providerName, string providerKey)
         {
-            Check.NotNull(providerName, nameof(providerName));
-
             var settingDefinitions = SettingDefinitionManager.GetAll();
-            var providers = Enumerable.Reverse(Providers)
-                .SkipWhile(c => c.Name != providerName);
+            var providers = Enumerable.Reverse(Providers);
 
-            if (!fallback)
+            if (!string.IsNullOrEmpty(providerName))
             {
-                providers = providers.TakeWhile(c => c.Name == providerName);
+                providers = providers.Where(c => c.Name == providerName);
             }
 
             var providerList = providers.Reverse().ToList();
@@ -46,7 +44,7 @@ namespace Jh.Abp.SettingManagement
             foreach (var setting in settingDefinitions)
             {
                 string value = null;
-
+                string valueProviderName = null;
                 if (setting.IsInherited)
                 {
                     foreach (var provider in providerList)
@@ -58,6 +56,7 @@ namespace Jh.Abp.SettingManagement
                         if (providerValue != null)
                         {
                             value = providerValue;
+                            valueProviderName = provider.Name;//根据provider提供顺序加载
                         }
                     }
                 }
@@ -74,24 +73,22 @@ namespace Jh.Abp.SettingManagement
                     value = SettingEncryptionService.Decrypt(setting, value);
                 }
 
-                if (value != null)
+                settingValues[setting.Name] = new SettingDefinitionDto(setting.Name, value, valueProviderName, providerKey)
                 {
-                    settingValues[setting.Name] = new SettingDefinitionDto(setting.Name, value, providerName, providerKey)
-                    {
-                        Description = setting.Description.Localize(StringLocalizerFactory).ToString(),
-                        DisplayName = setting.DisplayName.Localize(StringLocalizerFactory).ToString(),
-                        IsEncrypted = setting.IsEncrypted,
-                        IsInherited = setting.IsInherited,
-                        Properties = setting.Properties
-                    };
-                }
+                    Description = setting.Description.Localize(StringLocalizerFactory).ToString(),
+                    DisplayName = setting.DisplayName.Localize(StringLocalizerFactory).ToString(),
+                    IsEncrypted = setting.IsEncrypted,
+                    IsInherited = setting.IsInherited,
+                    Properties = setting.Properties
+                };
             }
 
             return settingValues.Values.ToList();
         }
 
-        public virtual async Task<SettingDefinitionDto> GetAsync(string name, string providerName, string providerKey, bool fallback = true)
+        public virtual async Task<SettingDefinitionDto> GetAsync(string name, string providerName, string providerKey)
         {
+            Check.NotNull(providerName, nameof(providerName));
             var setting = SettingDefinitionManager.Get(name);
             var providers = Enumerable
                 .Reverse(Providers);
@@ -101,7 +98,7 @@ namespace Jh.Abp.SettingManagement
                 providers = providers.SkipWhile(c => c.Name != providerName);
             }
 
-            if (!fallback || !setting.IsInherited)
+            if (!setting.IsInherited)
             {
                 providers = providers.TakeWhile(c => c.Name == providerName);
             }

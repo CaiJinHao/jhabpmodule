@@ -10,13 +10,11 @@ namespace Jh.Abp.SettingManagement
         /// <summary>
         /// 数据类型
         /// </summary>
-        [Required]
-        public ProviderNameEnum ProviderName { get; set; }
+        public string ProviderName { get; set; }
         /// <summary>
         /// 当ProviderName 为U和T的时候必填
         /// </summary>
         public string ProviderKey { get; set; }
         public string Name { get; set; }
-        public bool Fallback { get; set; } = false; 
     }
 }

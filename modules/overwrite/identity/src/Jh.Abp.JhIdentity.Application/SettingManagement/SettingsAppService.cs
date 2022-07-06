@@ -34,12 +34,12 @@ namespace Jh.Abp.SettingManagement
         public virtual async Task<SettingDefinitionDto> GetAsync(SettingRetrieveInputDto input)
         {
             await CheckFeatureAsync();
-            return await SettingManager.GetAsync(input.Name, input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
+            return await SettingManager.GetAsync(input.Name, input.ProviderName, input.ProviderKey);
         }
 
         public virtual async Task<ListResultDto<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
         {
-            var datas= await SettingManager.GetEntitysAsync(input.ProviderName.ToString(), input.ProviderKey, input.Fallback);
+            var datas = await SettingManager.GetEntitysAsync(input.ProviderName, input.ProviderKey);
             return new ListResultDto<SettingDefinitionDto>(datas);
         }
 
@@ -50,7 +50,9 @@ namespace Jh.Abp.SettingManagement
             {
                 case ProviderNameEnum.D:
                 case ProviderNameEnum.C:
-                    { 
+                    {
+                 /*   DefaultValueSettingManagementProvider: 从设置定义的默认值中获取值,由于默认值是硬编码在设置定义上的,所以无法更改默认值.
+ConfigurationSettingManagementProvider:从 IConfiguration 服务中获取值.由于无法在运行时更改配置值,所以无法更改配置值.*/
                         throw new UserFriendlyException("不支持的配置");
                     }
                 case ProviderNameEnum.U:

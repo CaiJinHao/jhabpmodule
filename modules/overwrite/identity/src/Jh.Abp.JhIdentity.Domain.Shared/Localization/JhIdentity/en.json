@@ -53,11 +53,12 @@
     "DisplayName:SettingDefinitionDto:Name": "Name",
     "DisplayName:SettingDefinitionDto:DisplayName": "DisplayName",
     "DisplayName:SettingDefinitionDto:Description": "Description",
-    "DisplayName:SettingDefinitionDto:DefaultValue": "Value",
+    "DisplayName:SettingDefinitionDto:Value": "Value",
     "DisplayName:SettingDefinitionDto:IsInherited": "IsInherited",
     "DisplayName:SettingDefinitionDto:Properties": "Properties",
     "DisplayName:SettingDefinitionDto:IsEncrypted": "IsEncrypted",
     "DisplayName:SettingDefinitionDto:ProviderName": "ProviderName",
-    "DisplayName:SettingDefinitionDto:ProviderKey": "ProviderKey"
+    "DisplayName:SettingDefinitionDto:ProviderKey": "ProviderKey",
+    "DisplayName:SettingDefinitionDto:ForceToSet": "ForceToSet"
   }
 }

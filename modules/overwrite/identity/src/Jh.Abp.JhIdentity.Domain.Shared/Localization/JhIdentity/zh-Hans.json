@@ -53,11 +53,12 @@
     "DisplayName:SettingDefinitionDto:Name": "名称",
     "DisplayName:SettingDefinitionDto:DisplayName": "显示名称",
     "DisplayName:SettingDefinitionDto:Description": "描述",
-    "DisplayName:SettingDefinitionDto:DefaultValue": "值",
+    "DisplayName:SettingDefinitionDto:Value": "值",
     "DisplayName:SettingDefinitionDto:IsInherited": "是否继承",
     "DisplayName:SettingDefinitionDto:Properties": "属性",
     "DisplayName:SettingDefinitionDto:IsEncrypted": "是否加密",
     "DisplayName:SettingDefinitionDto:ProviderName": "提供者名称",
-    "DisplayName:SettingDefinitionDto:ProviderKey": "提供者Key"
+    "DisplayName:SettingDefinitionDto:ProviderKey": "提供者Key",
+    "DisplayName:SettingDefinitionDto:ForceToSet": "强制更新"
   }
 }
