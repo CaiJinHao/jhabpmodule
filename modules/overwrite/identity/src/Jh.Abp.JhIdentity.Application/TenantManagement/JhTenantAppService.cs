@@ -28,12 +28,5 @@ namespace Jh.Abp.TenantManagement
                 entity.DeletionTime = Clock.Now;
             }
         }
-
-        //public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync()
-        //{
-        //    var query = await IdentityUserRepository.GetQueryableAsync(true);
-        //    return new ListResultDto<OptionDto<Guid>>(query.Where(a => a.UserName != JhIdentitySettings.SuperadminUserName)
-        //        .Select(a => new OptionDto<Guid> { Label = $"{a.Name}-{a.UserName}", Value = a.Id }).ToList());
-        //}
     }
 }

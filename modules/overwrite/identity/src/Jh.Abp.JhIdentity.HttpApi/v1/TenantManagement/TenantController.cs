@@ -76,18 +76,18 @@ namespace Jh.Abp.JhIdentity.v1.TenantManagement
 		[Authorize(TenantManagementPermissions.Tenants.Default)]
 		[Route("{id}")]
 		[HttpGet]
-		public virtual async Task<TenantDto> GetAsync(System.Guid id)
+		public virtual  Task<TenantDto> GetAsync(System.Guid id)
 		{
-			return await jhTenantAppService.GetAsync(id);
+			throw new NotImplementedException();
 		}
 
 
 		[Authorize(TenantManagementPermissions.Tenants.Default)]
 		[Route("all")]
 		[HttpGet]
-		public virtual async Task<ListResultDto<TenantDto>> GetEntitysAsync([FromQuery] TenantRetrieveInputDto inputDto)
+		public virtual  Task<ListResultDto<TenantDto>> GetEntitysAsync([FromQuery] TenantRetrieveInputDto inputDto)
 		{
-			return await jhTenantAppService.GetEntitysAsync(inputDto);
+			throw new NotImplementedException();
 		}
 
 
