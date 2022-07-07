@@ -554,5 +554,10 @@
             当ProviderName 为U和T的时候必填
             </summary>
         </member>
+        <member name="P:Jh.Abp.TenantManagement.TenantRetrieveInputDto.MethodInput">
+            <summary>
+            方法参数回调
+            </summary>
+        </member>
     </members>
 </doc>
