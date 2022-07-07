@@ -5,7 +5,7 @@
     "QrLogin": "掃碼登錄",
     "The {0} field is required.": "{0}不可爲空.",
     "Permission:IdentityManagement": "身份標識管理",
-    "Permission:ChangePermissions": "管理權限",
+    "Permission:ChangePermissions": "權限修改",
     "Permission:JhAuditLogging": "審計日志模塊",
     "Permission:AuditLoggings": "審計日志管理",
     "Permission:OrganizationUnits": "組織管理",

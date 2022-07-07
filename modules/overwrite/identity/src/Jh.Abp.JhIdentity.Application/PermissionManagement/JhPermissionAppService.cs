@@ -13,6 +13,7 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SimpleStateChecking;
+using Volo.Abp.TenantManagement;
 
 namespace Jh.Abp.PermissionManagement
 {
@@ -31,7 +32,16 @@ namespace Jh.Abp.PermissionManagement
         /// <returns></returns>
         protected bool CheckPermission(string permissionName, string providerName)
         {
-            return CurrentUser.Roles.Any(a => (PermissionManager.GetAsync(permissionName, providerName, a).Result).IsGranted);
+            return CurrentUser.Roles.Any(a => PermissionManager.GetAsync(permissionName, providerName, a).Result.IsGranted);
+        }
+
+        protected bool CheckManagerPermission(IEnumerable<PermissionDefinition> permissionDefinitions,string providerName) {
+            var permissionManager = permissionDefinitions.FirstOrDefault(a => a.Name.Contains(".ManagePermissions"));
+            if (permissionManager != null)
+            {
+                return CurrentUser.Roles.Any(a => PermissionManager.GetAsync(permissionManager.Name, providerName, a).Result.IsGranted);
+            }
+            return true;
         }
 
         public virtual async Task UpdateAsync(PermissionGrantedCreateInputDto inputDto)
@@ -87,9 +97,13 @@ namespace Jh.Abp.PermissionManagement
 
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
         {
-            //TODO:是不是没有管理权限也可以修改权限
             await CheckPolicyAsync(JhIdentityPermissions.JhPermissions.Default);
             var permissions = PermissionDefinitionManager.GetGroups();
+            if (CurrentUser.Roles.Contains(JhIdentityConsts.AdminRoleName) && !CurrentUser.TenantId.HasValue)
+            {
+                //不存在任何租户，并且是admin
+                permissions = permissions.Where(a => a.Name != TenantManagementPermissions.GroupName).ToList();
+            }
             List<TreeAntdDto> GetChildrens(IEnumerable<PermissionDefinition> _pDefinitions)
             {
                 var _p = new List<TreeAntdDto>();
@@ -97,28 +111,33 @@ namespace Jh.Abp.PermissionManagement
                                     .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
                                     .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName))
                                     .ToList();
-                foreach (var item in _pDefinitions)
+                foreach (var item in pdefs)
                 {
-                    //判断权限,必须要有父级权限
-                    if (CheckPermission(item.Name, inputDto.ProviderName))
+                    if (CheckPermission(item.Name, inputDto.ProviderName)&& CheckManagerPermission(pdefs, inputDto.ProviderName))
                     {
                         var node = new TreeAntdDto(item.Name, item.DisplayName.Localize(StringLocalizerFactory), item.Name);
                         if (item.Children.Count > 0)
                         {
-                            node.id = $"{JhIdentityConsts.PermissionGroupPrefix}{item.Name}";
-                            node.children = new List<TreeAntdDto>() { new TreeAntdDto(item.Name, node.title, item.Name) { isLeaf = true } };
-                            node.children.AddRange(GetChildrens(item.Children));
+                            var children = GetChildrens(item.Children);
+                            if (children.Any())
+                            {
+                                node.id = $"{JhIdentityConsts.PermissionGroupPrefix}{item.Name}";
+                                node.children = new List<TreeAntdDto>() { new TreeAntdDto(item.Name, node.title, item.Name) { isLeaf = true } };
+                                node.children.AddRange(children);
+                                _p.Add(node);
+                            }
                         }
                         else
                         {
                             node.isLeaf = true;
+                            _p.Add(node);
                         }
-                        _p.Add(node);
                     }
                 }
                 return _p;
             }
             var trees = new List<TreeAntdDto>();
+            //租户管理只有全局admin可以查看，不能分配权限
             foreach (var item in permissions.Where(a =>
                                     a.Permissions.Where(x => x.IsEnabled)
                                     .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
@@ -127,7 +146,10 @@ namespace Jh.Abp.PermissionManagement
             {
                 var node = new TreeAntdDto(item.Name, item.DisplayName.Localize(StringLocalizerFactory), item.Name);//保存的时候需要过滤掉
                 node.children = GetChildrens(item.Permissions);
-                trees.Add(node);
+                if (node.children.Any())
+                {
+                    trees.Add(node);
+                }
             }
             return new ListResultDto<TreeAntdDto>(trees);
         }

@@ -1,15 +1,22 @@
 {
   "culture": "zh-Hant",
   "texts": {
-    "Permission:Export": "導出",
-    "Permission:Detail": "詳細",
+    "Permission:Detail": "詳情",
     "Permission:Create": "創建",
-    "Permission:BatchCreate": "批量創建",
     "Permission:Edit": "編輯",
-    "Permission:PortionEdit": "局部更新",
     "Permission:Delete": "刪除",
     "Permission:BatchDelete": "批量刪除",
     "Permission:Recover": "恢復",
-    "Permission:ManagePermissions": "管理權限"
+    "Permission:ManagePermissions": "權限修改",
+    "JhAbp:Operation": "操作",
+    "JhAbp:TenantId": "租戶",
+    "JhAbp:IsDeleted": "是否刪除",
+    "JhAbp:DeleterId": "刪除人",
+    "JhAbp:DeletionTime": "刪除時間",
+    "JhAbp:LastModificationTime": "最後修改時間",
+    "JhAbp:LastModifierId": "最後修改人",
+    "JhAbp:CreationTime": "創建時間",
+    "JhAbp:CreatorId": "創建人",
+    "JhAbp:ExtraProperties": "擴展屬性"
   }
 }

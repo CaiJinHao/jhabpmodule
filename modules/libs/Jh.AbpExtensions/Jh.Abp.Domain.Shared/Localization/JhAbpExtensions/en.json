@@ -3,22 +3,20 @@
   "texts": {
     "Permission:Detail": "Detail",
     "Permission:Create": "Create",
-    "Permission:BatchCreate": "Batch Create",
     "Permission:Edit": "Edit",
-    "Permission:PortionEdit": "Portion Edit",
     "Permission:Delete": "Delete",
-    "Permission:BatchDelete": "Batch Delete",
+    "Permission:BatchDelete": "BatchDelete",
     "Permission:Recover": "Recover",
-    "Permission:ManagePermissions": "Manage Permissions",
+    "Permission:ManagePermissions": "Change permissions",
     "JhAbp:Operation": "Operation",
     "JhAbp:TenantId": "Tenant",
-    "JhAbp:IsDeleted": "Is Deleted",
+    "JhAbp:IsDeleted": "IsDeleted",
     "JhAbp:DeleterId": "Deleter",
-    "JhAbp:DeletionTime": "Deletion Time",
-    "JhAbp:LastModificationTime": "Last Modification Time",
+    "JhAbp:DeletionTime": "DeletionTime",
+    "JhAbp:LastModificationTime": "LastModificationTime",
     "JhAbp:LastModifierId": "LastModifier",
-    "JhAbp:CreationTime": "Creation Time",
+    "JhAbp:CreationTime": "CreationTime",
     "JhAbp:CreatorId": "Creator",
-    "JhAbp:ExtraProperties": "Extra Properties"
+    "JhAbp:ExtraProperties": "ExtraProperties"
   }
 }

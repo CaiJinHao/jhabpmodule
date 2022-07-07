@@ -5,7 +5,7 @@
     "QrLogin": "扫码登录",
     "The {0} field is required.": "{0}不可为空.",
     "Permission:IdentityManagement": "身份标识管理",
-    "Permission:ChangePermissions": "管理权限",
+    "Permission:ChangePermissions": "权限修改",
     "Permission:JhAuditLogging": "审计日志模块",
     "Permission:AuditLoggings": "审计日志管理",
     "Permission:OrganizationUnits": "组织管理",

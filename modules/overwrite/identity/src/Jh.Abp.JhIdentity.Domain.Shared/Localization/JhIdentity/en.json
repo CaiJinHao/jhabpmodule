@@ -5,7 +5,7 @@
     "QrLogin": "QRCode Login",
     "The {0} field is required.": "{0} Do not empty.",
     "Permission:IdentityManagement": "Identity management",
-    "Permission:ChangePermissions": "Manage permissions",
+    "Permission:ChangePermissions": "Change permissions",
     "Permission:JhAuditLogging": "Audit log module",
     "Permission:AuditLoggings": "Audit log management",
     "Permission:OrganizationUnits": "Organization management",
