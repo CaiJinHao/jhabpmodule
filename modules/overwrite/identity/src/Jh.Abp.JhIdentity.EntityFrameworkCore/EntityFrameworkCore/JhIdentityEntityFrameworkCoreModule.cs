@@ -4,12 +4,14 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Modularity;
+using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity.EntityFrameworkCore;
 
 [DependsOn(
     typeof(JhIdentityDomainModule),
     typeof(AbpEntityFrameworkCoreModule),
+    typeof(AbpTenantManagementEntityFrameworkCoreModule),
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpIdentityEntityFrameworkCoreModule)
 )]

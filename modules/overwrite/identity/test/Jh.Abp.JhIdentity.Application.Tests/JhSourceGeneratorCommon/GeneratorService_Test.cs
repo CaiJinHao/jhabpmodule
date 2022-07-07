@@ -4,6 +4,7 @@ using Jh.Abp.JhIdentity.v1.SettingManagement;
 using Jh.Abp.JhIdentity.v1.TenantManagement;
 using Jh.Abp.PermissionManagement;
 using Jh.Abp.SettingManagement;
+using Jh.Abp.TenantManagement;
 using Jh.SourceGenerator.Common;
 using Jh.SourceGenerator.Common.GeneratorDtos;
 using System;
@@ -13,7 +14,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.Identity;
-using Volo.Abp.TenantManagement;
 using Xunit;
 
 namespace Jh.Abp.JhIdentity.JhSourceGeneratorCommon

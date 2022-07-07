@@ -67,8 +67,7 @@ type OperationModalProps = {
     if (current) {
       const _data = Object.assign(current, values);");
             stringBuilder.AppendLine($"const updateDto = await defaultService.Update(current.id,_data as {ComponentUpdateInputDtoName});");
-            stringBuilder.AppendLine(@"
-      if (updateDto) {
+            stringBuilder.AppendLine(@"if (updateDto) {
         onSubmit(updateDto);
       }
     } else {");

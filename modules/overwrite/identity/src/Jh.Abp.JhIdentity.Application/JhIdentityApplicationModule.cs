@@ -5,10 +5,12 @@ using Volo.Abp.Application;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.SettingManagement;
+using Volo.Abp.TenantManagement;
 
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
+    typeof(AbpTenantManagementApplicationModule),
     typeof(AbpSettingManagementApplicationModule),
     typeof(JhIdentityDomainModule),
     typeof(JhIdentityApplicationContractsModule),

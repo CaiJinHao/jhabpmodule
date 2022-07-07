@@ -59,6 +59,8 @@
     "DisplayName:SettingDefinitionDto:IsEncrypted": "IsEncrypted",
     "DisplayName:SettingDefinitionDto:ProviderName": "ProviderName",
     "DisplayName:SettingDefinitionDto:ProviderKey": "ProviderKey",
-    "DisplayName:SettingDefinitionDto:ForceToSet": "ForceToSet"
+    "DisplayName:SettingDefinitionDto:ForceToSet": "ForceToSet",
+    "DisplayName:Tenant": "Tenant",
+    "DisplayName:Tenant:Name": "Name"
   }
 }

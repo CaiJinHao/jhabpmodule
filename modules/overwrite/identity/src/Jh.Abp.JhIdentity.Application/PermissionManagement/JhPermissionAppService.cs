@@ -87,6 +87,7 @@ namespace Jh.Abp.PermissionManagement
 
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
         {
+            //TODO:是不是没有管理权限也可以修改权限
             await CheckPolicyAsync(JhIdentityPermissions.JhPermissions.Default);
             var permissions = PermissionDefinitionManager.GetGroups();
             List<TreeAntdDto> GetChildrens(IEnumerable<PermissionDefinition> _pDefinitions)

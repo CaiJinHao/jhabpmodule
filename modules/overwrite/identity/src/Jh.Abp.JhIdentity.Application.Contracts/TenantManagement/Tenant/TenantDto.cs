@@ -11,5 +11,6 @@ namespace Jh.Abp.TenantManagement
     {
         public string Name { get; set; }
         public string ConcurrencyStamp { get; set; }
+        //public virtual List<TenantConnectionString> ConnectionStrings { get; protected set; }
     }
 }

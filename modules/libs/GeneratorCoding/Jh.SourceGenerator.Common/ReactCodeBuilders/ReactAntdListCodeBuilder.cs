@@ -95,9 +95,6 @@ import { useAccess, useIntl } from 'umi';
         ),
         onOk: async () => {
           await defaultService.Recover(record.id);
-          message.success(
-            intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }),
-          );
           reloadProTable();
         },
         onCancel() {},
@@ -115,9 +112,6 @@ import { useAccess, useIntl } from 'umi';
         ),
         onOk: async () => {
           await defaultService.DeleteById(record.id);
-          message.success(
-            intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }),
-          );
           reloadProTable();
         },
         onCancel() {},
@@ -131,7 +125,6 @@ import { useAccess, useIntl } from 'umi';
 
   const onSubmitOperation = () => {
     setVisibleOperation(false);
-    message.success(intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }));
     reloadProTable();
   };
 
@@ -155,9 +148,6 @@ import { useAccess, useIntl } from 'umi';
         ),
         onOk: async () => {
           await defaultService.DeleteByKeys(selectedRowKeys);
-          message.success(
-            intl.formatMessage({ id: 'message.success', defaultMessage: '操作成功' }),
-          );
           reloadProTable();
         },
         onCancel() {},
@@ -205,10 +195,14 @@ import { useAccess, useIntl } from 'umi';
       search: false,
       render: (text, record, index, action) => {
         return (
-            <Switch disabled={");
-          stringBuilder.AppendLine($"!(access['{permissionName}.Recover'] &&access['{permissionName}.Delete'])");
-            stringBuilder.AppendLine(@");
-} checked={record.isDeleted} onChange={() => handlerIsDeleted(record, action)} />
+          <Switch
+            disabled={");
+            stringBuilder.AppendLine($"!(access['{permissionName}.Recover'] &&access['{permissionName}.Delete'])");
+            stringBuilder.AppendLine(@"}
+            checked={record.isDeleted}
+            onChange={() => handlerIsDeleted(record, action)}
+          />
+        );
       },
     },
     {

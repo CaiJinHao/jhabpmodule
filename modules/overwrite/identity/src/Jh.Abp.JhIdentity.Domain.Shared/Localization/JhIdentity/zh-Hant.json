@@ -59,6 +59,8 @@
     "DisplayName:SettingDefinitionDto:IsEncrypted": "是否加密",
     "DisplayName:SettingDefinitionDto:ProviderName": "提供者名稱",
     "DisplayName:SettingDefinitionDto:ProviderKey": "提供者Key",
-    "DisplayName:SettingDefinitionDto:ForceToSet": "強製更新"
+    "DisplayName:SettingDefinitionDto:ForceToSet": "強製更新",
+    "DisplayName:Tenant": "租戶管理",
+    "DisplayName:Tenant:Name": "名稱"
   }
 }

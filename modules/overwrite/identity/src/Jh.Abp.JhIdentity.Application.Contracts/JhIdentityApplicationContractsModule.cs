@@ -6,10 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Volo.Abp.Identity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
+using Volo.Abp.TenantManagement;
 
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
+    typeof(AbpTenantManagementApplicationContractsModule),
     typeof(AbpSettingManagementApplicationContractsModule),
     typeof(JhIdentityDomainSharedModule),
     typeof(AbpDddApplicationContractsModule),

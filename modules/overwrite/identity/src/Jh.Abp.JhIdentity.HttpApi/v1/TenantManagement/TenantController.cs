@@ -98,5 +98,13 @@ namespace Jh.Abp.JhIdentity.v1.TenantManagement
 		{
 			throw new NotImplementedException();
 		}
+
+		[Authorize(JhIdentityPermissions.IdentityUsers.Recover)]
+		[Route("{id}/Recover")]
+		[HttpPut]
+		public async Task RecoverAsync(Guid id)
+		{
+			await jhTenantAppService.RecoverAsync(id);
+		}
 	}
 }

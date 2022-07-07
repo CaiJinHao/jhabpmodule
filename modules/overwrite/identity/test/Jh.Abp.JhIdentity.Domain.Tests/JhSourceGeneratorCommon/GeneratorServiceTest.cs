@@ -11,6 +11,7 @@ using Jh.SourceGenerator.Common.GeneratorDtos;
 using Volo.Abp.Identity;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.TenantManagement;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -43,7 +44,7 @@ namespace Jh.Abp.JhIdentity
             };
             var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
             //var mapTables = service.GetTableClassByGeneratorClass(typeof(Entity));
-            Assert.True(service.GeneratorCode(new Type[] { typeof(IdentityUser),typeof(OrganizationUnit),typeof(IdentityRole) }));
+            Assert.True(service.GeneratorCode(new Type[] { typeof(Tenant) }));
 
             //var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
             //var mapTables = service.GetLoadableTypes().Where(cla => cla.IsClass && typeof(IAggregateRoot).IsAssignableFrom(cla)).ToArray();
