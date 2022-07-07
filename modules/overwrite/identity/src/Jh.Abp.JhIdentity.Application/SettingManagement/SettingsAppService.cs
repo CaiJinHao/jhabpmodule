@@ -35,12 +35,12 @@ namespace Jh.Abp.SettingManagement
         public virtual async Task<SettingDefinitionDto> GetAsync(SettingRetrieveInputDto input)
         {
             await CheckFeatureAsync();
-            return await SettingManager.GetAsync(input.Name, input.ProviderName, input.ProviderKey);
+            return await SettingManager.GetAsync(input.Name, input.ProviderName?.ToString(), input.ProviderKey);
         }
 
         public virtual async Task<ListResultDto<SettingDefinitionDto>> GetAllAsync(SettingRetrieveInputDto input)
         {
-            var datas = await SettingManager.GetEntitysAsync(input.ProviderName, input.ProviderKey, input.Name);
+            var datas = await SettingManager.GetEntitysAsync(input.ProviderName?.ToString(), input.ProviderKey, input.Name);
             if (!string.IsNullOrEmpty(input.DisplayName))
             {
                 datas = datas.Where(a => a.DisplayName.Contains(input.DisplayName)).ToList();

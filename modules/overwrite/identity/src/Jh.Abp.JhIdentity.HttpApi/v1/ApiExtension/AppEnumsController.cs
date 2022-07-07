@@ -7,6 +7,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Auditing;
 using System.Linq;
+using Jh.Abp.SettingManagement;
 
 namespace Jh.Abp.JhIdentity.v1
 {
@@ -21,6 +22,14 @@ namespace Jh.Abp.JhIdentity.v1
         public virtual Task<List<OptionDto<int>>> GetYesOrNoAsync()
         {
             var datas = UtilEnums.GetEnumListByDescription<YesOrNo>().ToList();
+            return Task.FromResult(datas);
+        }
+
+        [Route("Provider")]
+        [HttpGet]
+        public virtual Task<List<OptionDto<int>>> GetSettingProviderAsync()
+        {
+            var datas = UtilEnums.GetEnumListByDescription<ProviderNameEnum>().ToList();
             return Task.FromResult(datas);
         }
     }

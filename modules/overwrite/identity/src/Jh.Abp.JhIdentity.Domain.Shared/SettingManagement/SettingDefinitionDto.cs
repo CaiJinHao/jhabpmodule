@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jh.Abp.Common;
+using System;
 using System.Collections.Generic;
 
 namespace Jh.Abp.SettingManagement
@@ -13,7 +14,7 @@ namespace Jh.Abp.SettingManagement
         public bool IsInherited { get; set; }
         public Dictionary<string, object> Properties { get; set; }
         public bool IsEncrypted { get; set; }
-        public string ProviderName { get { return ProviderNameEnum.ToString(); } }
+        public string ProviderName { get { return ProviderNameEnum.ToDescription(); } }
         public string ProviderKey { get; private set; }
         public ProviderNameEnum ProviderNameEnum { get; private set; }
 

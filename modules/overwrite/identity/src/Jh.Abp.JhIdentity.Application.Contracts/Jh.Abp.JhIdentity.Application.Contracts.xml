@@ -546,7 +546,7 @@
         </member>
         <member name="P:Jh.Abp.SettingManagement.SettingRetrieveInputDto.ProviderName">
             <summary>
-            数据类型
+            数据类型,可以接收字符串和int
             </summary>
         </member>
         <member name="P:Jh.Abp.SettingManagement.SettingRetrieveInputDto.ProviderKey">

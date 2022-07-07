@@ -8,9 +8,9 @@ namespace Jh.Abp.SettingManagement
     public class SettingRetrieveInputDto
     {
         /// <summary>
-        /// 数据类型
+        /// 数据类型,可以接收字符串和int
         /// </summary>
-        public string ProviderName { get; set; }
+        public ProviderNameEnum? ProviderName { get; set; }
         /// <summary>
         /// 当ProviderName 为U和T的时候必填
         /// </summary>
