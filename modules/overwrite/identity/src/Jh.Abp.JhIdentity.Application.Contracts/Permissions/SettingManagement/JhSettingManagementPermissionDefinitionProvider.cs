@@ -10,7 +10,7 @@ namespace Jh.Abp.SettingManagement.Permissions
         {
             var JhSettingManagementPermissionGroup = context.GetGroup(JhSettingManagementPermissions.GroupName);
             var JhSettingManagementPermission = JhSettingManagementPermissionGroup.AddPermission(JhSettingManagementPermissions.Settings.Default, L("Permission:Settings"));
-            JhSettingManagementPermission.AddChild(JhSettingManagementPermissions.Settings.Update, L("Permission:Update"));
+            JhSettingManagementPermission.AddChild(JhSettingManagementPermissions.Settings.Update, L("Permission:Edit"));
             JhSettingManagementPermission.AddChild(JhSettingManagementPermissions.Settings.ManagePermissions, L("Permission:ManagePermissions"));
         }
 

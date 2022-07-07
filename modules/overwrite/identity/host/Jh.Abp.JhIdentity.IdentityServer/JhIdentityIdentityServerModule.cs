@@ -124,6 +124,12 @@ public class JhIdentityIdentityServerModule : AbpModule
                 .AddVirtualJson("/Localization/JhIdentity")
                 .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
                ;
+
+            options.Resources
+                .Get<Volo.Abp.SettingManagement.Localization.AbpSettingManagementResource>()
+                .AddVirtualJson("/Localization/JhIdentity")
+                .AddVirtualJson("/Localization/JhAbpExtensions")//使用虚拟路径加载，并覆盖资源得键值对
+                ;
         });
     }
 
