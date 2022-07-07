@@ -69,7 +69,6 @@ import { useAccess, useIntl } from 'umi';
   const proTableActionRef = useRef<ActionType>();
   const [totalPage, setTotalPage] = useState(0);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [yesOrNoOptions, setYesOrNoOptions] = useState([]);
 ");
             stringBuilder.AppendLine($"  const [currentOperation, setCurrentOperation] = useState<{ComponentDtoName} | undefined>(undefined);");
             stringBuilder.AppendLine(@"  const reloadProTable = () => {
@@ -78,12 +77,8 @@ import { useAccess, useIntl } from 'umi';
   };");
             stringBuilder.AppendLine(@"
   const requestYesOrNoOptions = async () => {
-    if (yesOrNoOptions.length == 0) {
       const data = await getYesOrNo();
-      setYesOrNoOptions(data);
       return data;
-    }
-    return yesOrNoOptions;
   };
 ");
             stringBuilder.AppendLine($"const handlerIsDeleted = async (record: {ComponentDtoName}, action: any) => {{");

@@ -16,8 +16,9 @@ using Jh.Abp.SettingManagement;
 using Jh.Abp.SettingManagement.Permissions;
 using Volo.Abp.Settings;
 using Jh.Abp.TenantManagement;
-using Volo.Abp.TenantManagement;
 using Volo.Abp.Data;
+using Volo.Abp.TenantManagement;
+using TenantDto = Jh.Abp.TenantManagement.TenantDto;
 
 namespace Jh.Abp.JhIdentity.v1.TenantManagement
 {
