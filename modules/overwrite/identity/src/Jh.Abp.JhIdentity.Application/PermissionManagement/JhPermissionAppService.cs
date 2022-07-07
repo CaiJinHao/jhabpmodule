@@ -99,7 +99,7 @@ namespace Jh.Abp.PermissionManagement
         {
             await CheckPolicyAsync(JhIdentityPermissions.JhPermissions.Default);
             var permissions = PermissionDefinitionManager.GetGroups();
-            if (CurrentUser.Roles.Contains(JhIdentityConsts.AdminRoleName) && !CurrentUser.TenantId.HasValue)
+            if (!(CurrentUser.Roles.Any(a => a == JhIdentityConsts.AdminRoleName) && !CurrentUser.TenantId.HasValue))
             {
                 //不存在任何租户，并且是admin
                 permissions = permissions.Where(a => a.Name != TenantManagementPermissions.GroupName).ToList();
