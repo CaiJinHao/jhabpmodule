@@ -74,6 +74,7 @@ import { useAccess, useIntl } from 'umi';
             stringBuilder.AppendLine($"  const [currentOperation, setCurrentOperation] = useState<{ComponentDtoName} | undefined>(undefined);");
             stringBuilder.AppendLine(@"  const reloadProTable = () => {
     proTableActionRef.current?.reload();
+    setSelectedRowKeys([]);
   };");
             stringBuilder.AppendLine(@"
   const requestYesOrNoOptions = async () => {
@@ -268,28 +269,9 @@ import { useAccess, useIntl } from 'umi';
   const rowSelection = {
     selectedRowKeys,
     onChange: (srk: any) => setSelectedRowKeys(srk),
-  };
-");
+  };");
 
-            stringBuilder.AppendLine(@"  const toolBarRender = useMemo(() => {
-    return [");
-            stringBuilder.AppendLine(@$"access['{permissionName}.Create'] && ( ");
-            stringBuilder.AppendLine(@"<Button type=""primary"" key =""create"" shape =""round"" onClick ={create}>
-              <PlusOutlined />
-              {intl.formatMessage({ id: 'Permission:Create', defaultMessage: '创建' })}
-            </Button>),");
-            stringBuilder.AppendLine(@$"access['{permissionName}.BatchDelete'] && ( ");
-            stringBuilder.AppendLine(@"<Button type=""default"" key =""delete_keys"" shape =""round"" danger ={true} onClick={deleteByKeys}>
-          <DeleteOutlined />
-          {intl.formatMessage({
-            id: 'Permission:BatchDelete',
-            defaultMessage: '批量删除',
-          })}
-        </Button>
-      ),");
-            stringBuilder.AppendLine(@"];
-  }, [access, intl]);
-
+            stringBuilder.AppendLine(@"
     const tableSearch = useMemo(() => {
     return {
       labelWidth: 100,
@@ -320,7 +302,21 @@ import { useAccess, useIntl } from 'umi';
             total: totalPage,
           }}
           dateFormatter=""string""
-          toolBarRender={() => toolBarRender}
+          toolBarRender ={() => [");
+            stringBuilder.AppendLine(@$"access['{permissionName}.Create'] && ( ");
+            stringBuilder.AppendLine(@"<Button type=""primary"" key =""create"" shape =""round"" onClick ={create}>
+              <PlusOutlined />
+              {intl.formatMessage({ id: 'Permission:Create', defaultMessage: '创建' })}
+            </Button>),");
+            stringBuilder.AppendLine(@$"access['{permissionName}.BatchDelete'] && ( ");
+            stringBuilder.AppendLine(@"<Button type=""default"" key =""delete_keys"" shape =""round"" danger ={true} onClick={deleteByKeys}>
+          <DeleteOutlined />
+          {intl.formatMessage({
+            id: 'Permission:BatchDelete',
+            defaultMessage: '批量删除',
+          })}
+        </Button>),
+          ]}
           search={tableSearch}
         />
       </PageContainer>");
