@@ -250,6 +250,7 @@ public class JhIdentityIdentityServerModule : AbpModule
             });
         });
 
+        //context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, IMailKitSmtpEmailSender>());
 #if DEBUG
         //context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());//不发送电子邮件
 #endif

@@ -6,10 +6,12 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Abp.MailKit;
 
 namespace Jh.Abp.JhIdentity;
 
 [DependsOn(
+    typeof(AbpMailKitModule),
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpSettingManagementApplicationModule),
     typeof(JhIdentityDomainModule),
