@@ -10,4 +10,6 @@ public interface ISampleAppService : IApplicationService
     Task<SampleDto> GetAuthorizedAsync();
 
     Task TestTaskFactoryAsync();
+
+    Task TestEmailSenderAsync();
 }

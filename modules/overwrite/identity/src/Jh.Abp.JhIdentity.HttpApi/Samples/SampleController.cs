@@ -81,4 +81,12 @@ public class SampleController : JhIdentityController, ISampleAppService
     {
         await _sampleAppService.TestTaskFactoryAsync();
     }
+
+    [Authorize]
+    [HttpGet]
+    [Route("TestEmailSender")]
+    public async Task TestEmailSenderAsync()
+    {
+        await _sampleAppService.TestEmailSenderAsync();
+    }
 }

@@ -251,7 +251,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         });
 
 #if DEBUG
-        context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
+        //context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());//不发送电子邮件
 #endif
 
         //context.Services.AddSameSiteCookiePolicy();//去除https
