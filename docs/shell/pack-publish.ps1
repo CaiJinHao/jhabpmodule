@@ -5,7 +5,7 @@ using namespace System.Xml;
 param (
     [string] $apiKey,
     [string] $execPath = '../../',
-    [string] $outPath = 'G:\Publish\nuget-local',#G
+    [string] $outPath = 'E:\publish\nugetpackage',#G
     [string] $module = '',
     [string] $publishSource = "https://api.nuget.org/v3/index.json"
 )
@@ -147,8 +147,6 @@ function New-PackByNupkg() {
             # cmd /c "dotnet pack $($file.FullName) -o $outPath"
         }
     }
-
-    # Publish-PackNuget;
 }
 
 function Publish-PackNuget() {
@@ -163,5 +161,6 @@ function Publish-PackNuget() {
 
 Write-Host '正在处理，请稍后。。。';
 New-PackByNupkg;
-# Publish-PackNuget;
+Write-Host '发布中，请稍后。。。';
+Publish-PackNuget;
 Write-Host "处理完成"
