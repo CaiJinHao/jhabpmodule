@@ -151,6 +151,7 @@ function New-PackByNupkg() {
 
 function Publish-PackNuget() {
     if (![System.String]::IsNullOrEmpty($apiKey)) {
+        Write-Host '发布中，请稍后。。。';
         $files = Get-ChildItem -Path $outPath | Where-Object -FilterScript { $_.Extension -eq '.nupkg' };
         foreach ($item in $files) {
             # pwsh -Command "dotnet nuget push $($item.FullName) --api-key $apiKey --source $publishSource --skip-duplicate";
@@ -161,6 +162,5 @@ function Publish-PackNuget() {
 
 Write-Host '正在处理，请稍后。。。';
 New-PackByNupkg;
-Write-Host '发布中，请稍后。。。';
 Publish-PackNuget;
 Write-Host "处理完成"
