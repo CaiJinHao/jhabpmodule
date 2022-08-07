@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props" />
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -11,6 +11,6 @@
   <ItemGroup>
     <PackageReference Include="DmProvider" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Dm" Version="5.0.0" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.3.3" />
   </ItemGroup>
 </Project>

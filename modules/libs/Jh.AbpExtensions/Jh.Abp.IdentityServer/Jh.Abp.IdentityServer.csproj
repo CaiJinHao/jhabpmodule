@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props" />
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,12 +8,12 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Account.Web" Version="5.2.2" />
-    <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="5.2.2" />
-    <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.2.2" />
-    <PackageReference Include="Volo.Abp.Core" Version="5.2.2" />
-    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="5.2.2" />
-    <PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.2.2" />
+    <PackageReference Include="Volo.Abp.Account.Web" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.Core" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.3.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Jh.Abp.Common\Jh.Abp.Common.csproj" />
