@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Data;
+﻿using MongoDB.Driver;
+using Volo.Abp.Data;
 using Volo.Abp.MongoDB;
 
 namespace Jh.Abp.JhIdentity.MongoDB;
@@ -9,4 +10,6 @@ public interface IJhIdentityMongoDbContext : IAbpMongoDbContext
     /* Define mongo collections here. Example:
      * IMongoCollection<Question> Questions { get; }
      */
+    public IMongoCollection<JhOrganizationUnit> OrganizationUnits { get; }
+
 }

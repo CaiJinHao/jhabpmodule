@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Data;
+﻿using MongoDB.Driver;
+using Volo.Abp.Data;
 using Volo.Abp.MongoDB;
 
 namespace Jh.Abp.JhIdentity.MongoDB;
@@ -9,6 +10,7 @@ public class JhIdentityMongoDbContext : AbpMongoDbContext, IJhIdentityMongoDbCon
     /* Add mongo collections here. Example:
      * public IMongoCollection<Question> Questions => Collection<Question>();
      */
+    public IMongoCollection<JhOrganizationUnit> OrganizationUnits => Collection<JhOrganizationUnit>();
 
     protected override void CreateModel(IMongoModelBuilder modelBuilder)
     {

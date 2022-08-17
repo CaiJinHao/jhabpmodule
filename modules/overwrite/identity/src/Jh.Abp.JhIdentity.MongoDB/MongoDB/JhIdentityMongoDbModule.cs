@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Jh.Abp.MongoDB;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Modularity;
 using Volo.Abp.MongoDB;
 
@@ -6,6 +7,7 @@ namespace Jh.Abp.JhIdentity.MongoDB;
 
 [DependsOn(
     typeof(JhIdentityDomainModule),
+    typeof(JhAbpMongoDBModule),
     typeof(AbpMongoDbModule)
     )]
 public class JhIdentityMongoDbModule : AbpModule
