@@ -1,6 +1,6 @@
 using Jh.Abp.IdentityServer;
-using Jh.Abp.JhIdentity.EntityFrameworkCore;
 using Jh.Abp.JhIdentity.Localization;
+using Jh.Abp.JhIdentity.MongoDB;
 using Jh.Abp.JhIdentity.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Swagger;
@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using StackExchange.Redis;
 using System;
@@ -29,28 +28,25 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Auditing;
-using Volo.Abp.AuditLogging.EntityFrameworkCore;
+using Volo.Abp.AuditLogging.MongoDB;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
-using Volo.Abp.Emailing;
-using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.FeatureManagement;
-using Volo.Abp.FeatureManagement.EntityFrameworkCore;
+using Volo.Abp.FeatureManagement.MongoDB;
 using Volo.Abp.Identity;
-using Volo.Abp.Identity.EntityFrameworkCore;
-using Volo.Abp.IdentityServer.EntityFrameworkCore;
+using Volo.Abp.Identity.MongoDB;
+using Volo.Abp.IdentityServer.MongoDB;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
-using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.PermissionManagement.Identity;
+using Volo.Abp.PermissionManagement.MongoDB;
 using Volo.Abp.SettingManagement;
-using Volo.Abp.SettingManagement.EntityFrameworkCore;
+using Volo.Abp.SettingManagement.MongoDB;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
@@ -66,23 +62,21 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
     typeof(AbpAspNetCoreMvcModule),
     typeof(AbpAspNetCoreMvcUiBasicThemeModule),
-    typeof(AbpAuditLoggingEntityFrameworkCoreModule),
+    typeof(AbpAuditLoggingMongoDbModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    //typeof(AbpEntityFrameworkCoreSqlServerModule),
-    typeof(AbpEntityFrameworkCoreMySQLModule),
-    typeof(AbpIdentityEntityFrameworkCoreModule),
+    typeof(AbpIdentityMongoDbModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),
-    typeof(AbpIdentityServerEntityFrameworkCoreModule),
+    typeof(AbpIdentityServerMongoDbModule),
     typeof(AbpPermissionManagementDomainIdentityModule),
-    typeof(AbpPermissionManagementEntityFrameworkCoreModule),
+    typeof(AbpPermissionManagementMongoDbModule),
     typeof(AbpPermissionManagementApplicationModule),
     typeof(AbpPermissionManagementHttpApiModule),
-    typeof(AbpSettingManagementEntityFrameworkCoreModule),
+    typeof(AbpSettingManagementMongoDbModule),
     typeof(AbpSettingManagementApplicationModule),
     typeof(AbpSettingManagementHttpApiModule),
-    typeof(AbpFeatureManagementEntityFrameworkCoreModule),
+    typeof(AbpFeatureManagementMongoDbModule),
     typeof(AbpFeatureManagementApplicationModule),
     typeof(AbpFeatureManagementHttpApiModule),
     typeof(AbpTenantManagementEntityFrameworkCoreModule),
@@ -94,7 +88,7 @@ namespace Jh.Abp.JhIdentity;
 
     typeof(JhAbpIdentityServerModule),
     typeof(JhIdentityApplicationModule),
-    typeof(JhIdentityEntityFrameworkCoreModule),
+    typeof(JhIdentityMongoDbModule),
     typeof(JhIdentityHttpApiModule),
     //typeof(JhMenuApplicationModule),
     //typeof(JhMenuEntityFrameworkCoreModule),
@@ -139,13 +133,6 @@ public class JhIdentityIdentityServerModule : AbpModule
         configuration = context.Services.GetConfiguration();
         JhIdentityConsts.InitPassword = configuration["App:InitPassword"];
         ConfigureLocalizationOptions();
-        Configure<AbpDbContextOptions>(options =>
-        {
-            //options.UseSqlServer(options => {
-            //    options.UseRowNumberForPaging();//todo:兼容SQLSERVER 2008
-            //});
-            options.UseMySQL();
-        });
 
         context.Services.AddApiVersion();
         if (Convert.ToBoolean(configuration["AppSettings:SwaggerUI"]))

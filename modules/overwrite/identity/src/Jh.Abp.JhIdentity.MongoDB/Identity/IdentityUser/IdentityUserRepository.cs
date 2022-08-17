@@ -27,52 +27,38 @@ namespace Jh.Abp.JhIdentity
 	
 
 		public virtual async Task<List<Volo.Abp.Identity.IdentityRole>> GetRolesAsync(
-			Guid userid,
+			Guid id,
 			bool includeDetails = false,
 			CancellationToken cancellationToken = default)
 		{
-
-			var query = from userRole in (await GetMongoQueryableAsync<IdentityUserRole>())
-						join role in (await GetMongoQueryableAsync<IdentityRole>()) on userRole.RoleId equals role.Id
-						where userRole.UserId == userid
-						select role;
-
-			return await query.ToListAsync(GetCancellationToken(cancellationToken));
+			var user = await GetAsync(id, cancellationToken: cancellationToken);
+			var userRoleIds = user.Roles.Select(a=>a.RoleId).ToArray();
+			return await (await GetMongoQueryableAsync<IdentityRole>()).Where(a=> userRoleIds.Contains(a.Id))
+				.ToListAsync();
 		}
 
 		public virtual async Task<List<OrganizationUnit>> GetOrganizationUnitsAsync(
 			Guid id,
 			CancellationToken cancellationToken = default)
 		{
-			var IdentityUsers = await GetMongoQueryableAsync<IdentityUser>();
-			var IdentityUserOrganizationUnits = await GetMongoQueryableAsync<IdentityUserOrganizationUnit>();
-			var OrganizationUnits = await GetMongoQueryableAsync<OrganizationUnit>();
-
+			var user = await GetAsync(id,cancellationToken:cancellationToken);
+			var userOrganizationUnitIds = user.OrganizationUnits.Select(a=>a.OrganizationUnitId).ToArray();
 			//获取用户所属组织
-			var query = from user in IdentityUsers
-						join userOu in IdentityUserOrganizationUnits on user.Id equals userOu.UserId
-								 join ou in OrganizationUnits on userOu.OrganizationUnitId equals ou.Id
-								 where user.Id == id
-							   select ou;
-
-            return await query.ToListAsync(GetCancellationToken(cancellationToken));
+			return await (await GetMongoQueryableAsync<OrganizationUnit>()).Where(a => userOrganizationUnitIds.Contains(a.Id))
+				.ToListAsync();
 		}
 
-		public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default)
+		public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid id,CancellationToken cancellationToken = default)
 		{
-			var IdentityUsers = await GetMongoQueryableAsync<IdentityUser>();
-			var IdentityUserOrganizationUnits = await GetMongoQueryableAsync<IdentityUserOrganizationUnit>();
-			var OrganizationUnits = await GetMongoQueryableAsync<OrganizationUnit>();
-
+			var user = await GetAsync(id,cancellationToken:cancellationToken);
+			var userOrganizationUnitId = user.OrganizationUnits.OrderByDescending(a => a.CreationTime).FirstOrDefault()?.OrganizationUnitId;
 			//获取用户所属组织
-			var userOrg = await (from user in IdentityUsers
-								 join userOu in IdentityUserOrganizationUnits on user.Id equals userOu.UserId
-									join ou in OrganizationUnits on userOu.OrganizationUnitId equals ou.Id
-                                    where user.Id == userId orderby userOu.CreationTime descending
-                                    select ou).FirstOrDefaultAsync(cancellationToken);
+			var userOrg = await (await GetMongoQueryableAsync<OrganizationUnit>())
+				.FirstOrDefaultAsync(a=>a.Id== userOrganizationUnitId);
+
             //获取这个组织的负责人
             var superiorUserId = userOrg.GetProperty<Guid?>(nameof(JhOrganizationUnit.LeaderId));
-            if (superiorUserId.Equals(userId))//创建实例人与负责人不相等时处理，否则返回null跳过该步骤
+            if (superiorUserId.Equals(id))//创建实例人与负责人不相等时处理，否则返回null跳过该步骤
             {
                 //当前用户是组织负责人时，获取上级组织负责人
                 if (userOrg.ParentId.HasValue)
@@ -86,11 +72,14 @@ namespace Jh.Abp.JhIdentity
 					}
 				}
             }
-            var data = await IdentityUsers.FirstOrDefaultAsync(a => a.Id == superiorUserId, cancellationToken);
-            if (data != null)
+            if (superiorUserId.HasValue)
             {
-                return data;
-            }
+				var data = await GetAsync(superiorUserId.Value, cancellationToken: cancellationToken);
+				if (data != null)
+				{
+					return data;
+				}
+			}
             return default;
         }
 	}

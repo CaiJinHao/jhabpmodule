@@ -21,7 +21,7 @@ namespace Jh.Abp.JhIdentity
         }
 
 
-        /// <summary>
+       /* /// <summary>
         /// 针对用户组织的处理
         /// </summary>
         /// <param name="id"></param>
@@ -108,6 +108,6 @@ namespace Jh.Abp.JhIdentity
                 resultQuery = query;
             }
             return await resultQuery.ToListAsync(GetCancellationToken(cancellationToken));
-        }
+        }*/
     }
 }
