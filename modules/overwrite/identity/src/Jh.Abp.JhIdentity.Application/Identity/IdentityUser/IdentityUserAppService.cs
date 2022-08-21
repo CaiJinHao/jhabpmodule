@@ -242,8 +242,8 @@ namespace Jh.Abp.JhIdentity
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync()
         {
             var query = await IdentityUserRepository.GetQueryableAsync(true);
-            return new ListResultDto<OptionDto<Guid>>(query.Where(a => a.UserName != JhIdentityConsts.AdminRoleName)
-                .Select(a => new OptionDto<Guid> { Label = $"{a.Name}-{a.UserName}", Value = a.Id }).ToList());
+            var datas = await IdentityUserRepository.GetListAsync(query.Where(a => a.UserName != JhIdentityConsts.AdminRoleName));
+            return new ListResultDto<OptionDto<Guid>>(datas.Select(a => new OptionDto<Guid> { Label = $"{a.Name}-{a.UserName}", Value = a.Id }).ToList());
         }
     }
 }

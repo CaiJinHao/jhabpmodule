@@ -261,11 +261,8 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetRoleOptionsAsync(Guid[] orgIds)
         {
-            var queryOrganizationUnitRole = (await OrganizationUnitRepository.GetQueryableAsync<OrganizationUnitRole>()).Where(a => orgIds.Contains(a.OrganizationUnitId));
-            var queryIdentityRole = await OrganizationUnitRepository.GetQueryableAsync<IdentityRole>();
-            var dataOptions = from role in queryIdentityRole
-                        join organizationUnitRole in queryOrganizationUnitRole on role.Id equals organizationUnitRole.RoleId
-                        select new OptionDto<Guid>() { Label = role.Name, Value = role.Id };
+            var roles = await OrganizationUnitRepository.GetRolesAsync(orgIds);
+            var dataOptions = roles.Select(role => new OptionDto<Guid>() { Label = role.Name, Value = role.Id });
             return new ListResultDto<OptionDto<Guid>>(dataOptions.Distinct().ToList());
         }
     }
