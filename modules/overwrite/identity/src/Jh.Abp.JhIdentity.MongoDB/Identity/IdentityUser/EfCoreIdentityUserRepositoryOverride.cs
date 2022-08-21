@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -9,6 +8,8 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.MongoDB;
 using Volo.Abp.MongoDB;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Jh.Abp.JhIdentity
 {

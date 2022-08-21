@@ -142,5 +142,25 @@ namespace Jh.Abp.EntityFrameworkCore
             var dbSet = (await GetDbContextAsync().ConfigureAwait(continueOnCapturedContext: false)).Set<T>();
             await dbSet.AddAsync(entity, cancellationToken);
         }
+
+        public async Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
+        {
+            return await query.ToListAsync();
+        }
+
+        public async Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
+        {
+            return await query.LongCountAsync();
+        }
+
+        public Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking)
+        {
+            //TODO:跟踪可以获取到扩展字段，不跟踪获取不到扩展字段
+            if (!isTracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return Task.FromResult(query);
+        }
     }
 }

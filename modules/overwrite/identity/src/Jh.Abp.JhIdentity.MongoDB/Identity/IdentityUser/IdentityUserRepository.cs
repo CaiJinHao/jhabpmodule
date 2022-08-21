@@ -1,6 +1,5 @@
 using Jh.Abp.JhIdentity.MongoDB;
 using Jh.Abp.MongoDB;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -13,10 +12,11 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.MongoDB;
 using Volo.Abp.MongoDB;
+using MongoDB.Driver.Linq;
 
 namespace Jh.Abp.JhIdentity
 {
-    public class IdentityUserRepository : CrudRepository<IAbpIdentityMongoDbContext, Volo.Abp.Identity.IdentityUser, System.Guid>, IIdentityUserRepository
+	public class IdentityUserRepository : CrudRepository<IAbpIdentityMongoDbContext, Volo.Abp.Identity.IdentityUser, System.Guid>, IIdentityUserRepository
 	{
         public IdentityUserRepository(IMongoDbContextProvider<IAbpIdentityMongoDbContext> dbContextProvider) : base(dbContextProvider)
         {

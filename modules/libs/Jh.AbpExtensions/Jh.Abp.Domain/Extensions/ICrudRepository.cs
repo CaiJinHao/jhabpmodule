@@ -14,9 +14,16 @@ namespace Jh.Abp.Domain
          where TEntity : class, IEntity<TKey>
     {
         /// <summary>
-        /// 创建一条数据
+        /// 获取列表
         /// </summary>
-        Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default);
+        Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default);
+        Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query,bool isTracking);
+
+       /// <summary>
+       /// 创建一条数据
+       /// </summary>
+       Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 创建多条数据

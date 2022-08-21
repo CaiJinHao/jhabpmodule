@@ -2,7 +2,6 @@
 using Jh.Abp.Common.Entity;
 using Jh.Abp.Common.Linq;
 using Jh.Abp.Domain;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,7 +90,7 @@ namespace Jh.Abp.Application
                     }
                 }
             }
-            var entities = await query.ToListAsync(cancellationToken);
+            var entities = await crudRepository.GetListAsync(query,cancellationToken);
             if (methodDto != null)
             {
                 if (methodDto.MethodInput != null)
@@ -120,7 +119,7 @@ namespace Jh.Abp.Application
         {
             var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(includeDetails), input);
 
-            var totalCount = await query.LongCountAsync(cancellationToken);
+            var totalCount = await crudRepository.GetCountAsync(query, cancellationToken);
 
             query = ApplySorting(query, input);
             query = ApplyPaging(query, input);
@@ -135,7 +134,7 @@ namespace Jh.Abp.Application
                     }
                 }
             }
-            var entities = await query.ToListAsync(cancellationToken);
+            var entities = await crudRepository.GetListAsync(query, cancellationToken);
             if (methodDto != null)
             {
                 if (methodDto.MethodInput != null)
@@ -167,12 +166,9 @@ namespace Jh.Abp.Application
             return await CreateFilteredQueryAsync(await ReadOnlyRepository.GetQueryableAsync(), inputDto);
         }
 
-        protected virtual Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> queryable, TWhere inputDto)
+        protected virtual async Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> queryable, TWhere inputDto)
         {
-            if (!IsTracking)
-            {
-                queryable = queryable.AsNoTracking();//加上之后获取不到扩展字段
-            }
+            queryable = await crudRepository.GetTrackingAsync(queryable, IsTracking);//加上之后获取不到扩展字段
             var methodDto = inputDto as IMethodDto<TEntity>;
             var methodStringType = methodDto?.MethodInput?.StringTypeQueryMethod;
             var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, methodStringType ?? ObjectMethodConsts.ContainsMethod);
@@ -213,7 +209,7 @@ namespace Jh.Abp.Application
                     }
                 }
             }
-            return Task.FromResult(query);
+            return query;
         }
 
         protected virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default)

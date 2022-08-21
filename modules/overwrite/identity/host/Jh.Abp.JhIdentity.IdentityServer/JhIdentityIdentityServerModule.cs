@@ -4,7 +4,6 @@ using Jh.Abp.JhIdentity.MongoDB;
 using Jh.Abp.JhIdentity.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Swagger;
-using Jh.Abp.Workflow;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
@@ -49,8 +48,8 @@ using Volo.Abp.SettingManagement;
 using Volo.Abp.SettingManagement.MongoDB;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement;
-using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.Localization;
+using Volo.Abp.TenantManagement.MongoDB;
 using Volo.Abp.UI.Navigation.Urls;
 
 namespace Jh.Abp.JhIdentity;
@@ -79,7 +78,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(AbpFeatureManagementMongoDbModule),
     typeof(AbpFeatureManagementApplicationModule),
     typeof(AbpFeatureManagementHttpApiModule),
-    typeof(AbpTenantManagementEntityFrameworkCoreModule),
+    typeof(AbpTenantManagementMongoDbModule),
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpTenantManagementHttpApiModule),
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
@@ -90,10 +89,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityMongoDbModule),
     typeof(JhIdentityHttpApiModule),
-    //typeof(JhMenuApplicationModule),
-    //typeof(JhMenuEntityFrameworkCoreModule),
-    //typeof(JhMenuHttpApiModule),
-    typeof(WorkflowHttpApiModule),
+    //typeof(WorkflowHttpApiModule),
     typeof(AbpQuickComponentsModule)
     )]
 public class JhIdentityIdentityServerModule : AbpModule

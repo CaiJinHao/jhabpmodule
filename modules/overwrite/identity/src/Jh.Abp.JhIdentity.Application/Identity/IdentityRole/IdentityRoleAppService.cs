@@ -1,13 +1,12 @@
 using Jh.Abp.Application;
-using System;
-using System.Threading.Tasks;
-using Volo.Abp.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Volo.Abp.Application.Dtos;
-using Jh.Abp.Common.Utils;
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common;
+using Jh.Abp.Common.Utils;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -35,7 +34,8 @@ namespace Jh.Abp.JhIdentity
 
         public async Task<Guid?> GetAdminRoleIdAsync()
         {
-            var role = await (await IdentityRoleRepository.GetQueryableAsync()).AsNoTracking().FirstOrDefaultAsync(a => a.Name == JhIdentity.JhIdentityConsts.AdminRoleName);
+            var query = await IdentityRoleRepository.GetTrackingAsync((await IdentityRoleRepository.GetQueryableAsync()), false);
+            var role = (await IdentityRoleRepository.GetListAsync(query.Where(a => a.Name == JhIdentity.JhIdentityConsts.AdminRoleName))).FirstOrDefault();
             if (role!=null)
             {
 				return role.Id;

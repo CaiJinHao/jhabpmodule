@@ -1,7 +1,6 @@
 using IdentityModel;
 using Jh.Abp.Application;
 using Jh.Abp.Application.Contracts;
-using Jh.Abp.Common.Extensions;
 using Jh.Abp.Common.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -16,7 +15,6 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
-using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -211,8 +209,8 @@ namespace Jh.Abp.JhIdentity
             user.Roles = CurrentUser.FindClaims(JwtClaimTypes.Role).Select(a=> a.Value).ToArray();
             if (user.OrganizationUnitIds.Length>0)
             {
-                user.OrganizationUnits = (await (OrganizationUnits.GetQueryableAsync(true))).AsNoTracking()
-                         .Where(a => user.OrganizationUnitIds.Contains(a.Id)).Select(a => a.DisplayName).ToArray();
+                var orgsQuery = await OrganizationUnits.GetTrackingAsync(await OrganizationUnits.GetQueryableAsync(true), false);
+                user.OrganizationUnits = orgsQuery.Where(a => user.OrganizationUnitIds.Contains(a.Id)).Select(a => a.DisplayName).ToArray();
             }
             return user;
         }

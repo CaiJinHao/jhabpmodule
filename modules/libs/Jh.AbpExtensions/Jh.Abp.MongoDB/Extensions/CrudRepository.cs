@@ -1,6 +1,6 @@
 ﻿using Jh.Abp.Domain;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +42,13 @@ namespace Jh.Abp.MongoDB
         public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var _dbSet = await GetQueryableAsync();
-            var entitys = _dbSet.AsNoTracking().Where(predicate).ToArray();
+            var entitys = _dbSet.Where(predicate).ToArray();
             return await DeleteAsync(autoSave, isHard, cancellationToken, entitys: entitys);
         }
 
         public virtual async Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var entitys = query.AsNoTracking().ToArray();
+            var entitys = query.ToArray();
             return await DeleteAsync(autoSave, isHard, cancellationToken, entitys: entitys);
         }
 
@@ -127,6 +127,21 @@ namespace Jh.Abp.MongoDB
         {
             var dbSet = (await GetDbContextAsync().ConfigureAwait(continueOnCapturedContext: false)).Collection<T>();
             await dbSet.InsertOneAsync(entity,cancellationToken:cancellationToken);
+        }
+
+        public async Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await (query as IMongoQueryable<TEntity>).ToListAsync(GetCancellationToken(cancellationToken));
+        }
+
+        public async Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await (query as IMongoQueryable<TEntity>).LongCountAsync(GetCancellationToken(cancellationToken));
+        }
+
+        public Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking)
+        {
+            return Task.FromResult(query);
         }
     }
 }

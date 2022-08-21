@@ -2,11 +2,9 @@ using Jh.Abp.Application;
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common;
 using Jh.Abp.Common.Utils;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -50,6 +48,7 @@ namespace Jh.Abp.JhIdentity
                     {
                         entity = entity.Where(a => a.Code.StartsWith(input.Code));
                     }
+#if EF
                     if (input.LeaderId.HasValue)
                     {
                         entity = entity.Where(a => EF.Property<Guid>(a, nameof(JhOrganizationUnit.LeaderId)) == input.LeaderId);
@@ -58,6 +57,7 @@ namespace Jh.Abp.JhIdentity
                     {
                         entity = entity.Where(a => EF.Property<string>(a, nameof(JhOrganizationUnit.LeaderName)).StartsWith(input.LeaderName));
                     }
+#endif
                     return entity;
                 }
             };
@@ -191,13 +191,15 @@ namespace Jh.Abp.JhIdentity
 
 		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
-            var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync(true)).AsNoTracking().Select(a =>
+            var orgQuery = await OrganizationUnitRepository.GetTrackingAsync(await OrganizationUnitRepository.GetQueryableAsync(true), false);
+            var datas = await OrganizationUnitRepository.GetListAsync(orgQuery);
+            var resutlMenus = datas.Select(a =>
                new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
                {
                    parentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null,
                    data = a
                }
-           ).ToListAsync();
+           ).ToList();
             var data= await UtilTree.GetTreeByAntdAsync(resutlMenus);
             return new ListResultDto<TreeAntdDto>(data);
         }
@@ -231,7 +233,10 @@ namespace Jh.Abp.JhIdentity
 
         private async Task<Guid[]> GetAllRoleIdAsync()
         {
-            return (await IdentityRoleRepository.GetQueryableAsync(false)).AsNoTracking().Where(a => a.Name != JhIdentityConsts.AdminRoleName).Select(a => a.Id).ToArray();
+            var roleQuery = await IdentityRoleRepository.GetTrackingAsync(await IdentityRoleRepository.GetQueryableAsync(false),false);
+            roleQuery = roleQuery.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
+            var datas = await IdentityRoleRepository.GetListAsync(roleQuery);
+            return datas.Select(a => a.Id).ToArray();//TODO:不使用GetListAsync，使用ToList()是否也可以;
         }
 
         public virtual async Task CreateByRoleAsync(Guid roleId)
