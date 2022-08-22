@@ -70,7 +70,7 @@ namespace Jh.Abp.JhIdentity
         public override async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateInputDto input)
 		{
             await CheckCreatePolicyAsync();
-            var organizationUnit = new JhOrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId)
+            var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId)
             {
                 ConcurrencyStamp = input.ConcurrencyStamp
             };

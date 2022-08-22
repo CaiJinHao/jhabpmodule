@@ -22,10 +22,6 @@ namespace Jh.Abp.JhIdentity
         {
         }
 
-        public IJhIdentityMongoDbContext jhIdentityDbContext { get; set; }
-		public IRepository<JhOrganizationUnit, Guid> _appRoleRepository { get; set; }
-	
-
 		public virtual async Task<List<Volo.Abp.Identity.IdentityRole>> GetRolesAsync(
 			Guid id,
 			bool includeDetails = false,
@@ -48,6 +44,8 @@ namespace Jh.Abp.JhIdentity
 				.ToListAsync();
 		}
 
+		/*
+		todo:组织负责人暂时没有用到
 		public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid id,CancellationToken cancellationToken = default)
 		{
 			var user = await GetAsync(id,cancellationToken:cancellationToken);
@@ -81,7 +79,7 @@ namespace Jh.Abp.JhIdentity
 				}
 			}
             return default;
-        }
+        }*/
 
         public virtual async Task<IQueryable<IdentityUser>> GetByOrganizationUnitCodeAsync(IQueryable<IdentityUser> entity, string organizationUnitCode)
         {

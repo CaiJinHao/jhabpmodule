@@ -10,7 +10,6 @@ public class JhIdentityMongoDbContext : AbpMongoDbContext, IJhIdentityMongoDbCon
     /* Add mongo collections here. Example:
      * public IMongoCollection<Question> Questions => Collection<Question>();
      */
-    public IMongoCollection<JhOrganizationUnit> OrganizationUnits => Collection<JhOrganizationUnit>();
 
     protected override void CreateModel(IMongoModelBuilder modelBuilder)
     {

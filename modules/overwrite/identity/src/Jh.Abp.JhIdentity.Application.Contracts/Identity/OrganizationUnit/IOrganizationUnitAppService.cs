@@ -10,7 +10,7 @@ using Volo.Abp.Identity;
 namespace Jh.Abp.JhIdentity
 {
     public interface IOrganizationUnitAppService
-		: ICrudApplicationService<JhOrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>
+		: ICrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>
 	{
 		Task RecoverAsync(Guid id);
 		Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync();

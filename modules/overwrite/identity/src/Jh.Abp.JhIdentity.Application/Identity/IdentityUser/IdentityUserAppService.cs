@@ -210,12 +210,13 @@ namespace Jh.Abp.JhIdentity
         }
 
         /// <summary>
-        /// 获取部门领导
+        /// 获取当前用户的部门领导
         /// </summary>
         public virtual async Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId)
         {
-            var user= await IdentityUserRepository.GetSuperiorUserAsync(userId); 
-            return await MapToGetOutputDtoAsync(user);
+            //var user= await IdentityUserRepository.GetSuperiorUserAsync(userId); 
+            //return await MapToGetOutputDtoAsync(user);
+            return await GetAsync(userId);
         }
 
         public virtual async Task<ListResultDto<IdentityUserDto>> GetOrganizationsAsync(Guid id)
