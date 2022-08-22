@@ -11,14 +11,13 @@ namespace Jh.Abp.JhIdentity
     /// <summary>
     /// 只能用来查询
     /// </summary>
-    public class JhOrganizationUnit : FullAuditedAggregateRoot<Guid>, IMultiTenant
+    public class JhOrganizationUnit : OrganizationUnit, IMultiTenant
     {
-        protected JhOrganizationUnit() { }
-        public virtual Guid? TenantId { get; protected set; }
-        public virtual Guid? ParentId { get; internal set; }
-        public virtual string Code { get; internal set; }
-        public virtual string DisplayName { get; set; }
+        public JhOrganizationUnit(Guid id, string displayName, Guid? parentId = null, Guid? tenantId = null) : base(id, displayName, parentId, tenantId)
+        {
+        }
 
+        protected JhOrganizationUnit() { }
 
         public virtual Guid? LeaderId { get; set; }
         public virtual string LeaderName { get; set; }

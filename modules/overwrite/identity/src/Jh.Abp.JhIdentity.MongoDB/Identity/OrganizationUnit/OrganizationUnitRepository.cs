@@ -42,5 +42,11 @@ namespace Jh.Abp.JhIdentity
                }
             ).ToList();
         }
+
+        public virtual Task<IQueryable<OrganizationUnit>> GetByLeaderAsync(IQueryable<OrganizationUnit> entity,Guid? LeaderId,string LeaderName)
+        {
+            //TODO:可以使用扩展表
+            return Task.FromResult(entity);
+        }
     }
 }

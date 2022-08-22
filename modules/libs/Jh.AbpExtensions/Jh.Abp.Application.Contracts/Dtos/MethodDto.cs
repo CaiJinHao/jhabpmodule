@@ -12,6 +12,9 @@ namespace Jh.Abp.Application.Contracts
     /// <typeparam name="TEntity"></typeparam>
     public class MethodDto<TEntity>
     {
+        /// <summary>
+        /// 查询时Mongodb使用无效
+        /// </summary>
         public Action<TEntity> CreateOrUpdateEntityAction;
         public Func<IQueryable<TEntity>, IQueryable<TEntity>> QueryAction;
         public Func<IQueryable<TEntity>, IQueryable<TEntity>> SelectAction;

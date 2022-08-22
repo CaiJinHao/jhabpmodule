@@ -5,6 +5,7 @@ using System.Threading;
 using System;
 using Volo.Abp.Identity;
 using Jh.Abp.Common;
+using System.Linq;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -16,5 +17,6 @@ namespace Jh.Abp.JhIdentity
             CancellationToken cancellationToken = default(CancellationToken));
 
         Task<List<TreeAntdDto>> GetTreeAntdDtosAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<IQueryable<OrganizationUnit>> GetByLeaderAsync(IQueryable<OrganizationUnit> entity, Guid? LeaderId, string LeaderName);
     }
 }

@@ -48,16 +48,8 @@ namespace Jh.Abp.JhIdentity
                     {
                         entity = entity.Where(a => a.Code.StartsWith(input.Code));
                     }
-#if EF
-                    if (input.LeaderId.HasValue)
-                    {
-                        entity = entity.Where(a => EF.Property<Guid>(a, nameof(JhOrganizationUnit.LeaderId)) == input.LeaderId);
-                    }
-                    if (!string.IsNullOrEmpty(input.LeaderName))
-                    {
-                        entity = entity.Where(a => EF.Property<string>(a, nameof(JhOrganizationUnit.LeaderName)).StartsWith(input.LeaderName));
-                    }
-#endif
+
+                    entity = OrganizationUnitRepository.GetByLeaderAsync(entity, input.LeaderId, input.LeaderName).Result;
                     return entity;
                 }
             };
@@ -78,7 +70,7 @@ namespace Jh.Abp.JhIdentity
         public override async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateInputDto input)
 		{
             await CheckCreatePolicyAsync();
-            var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId)
+            var organizationUnit = new JhOrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId)
             {
                 ConcurrencyStamp = input.ConcurrencyStamp
             };
@@ -146,6 +138,7 @@ namespace Jh.Abp.JhIdentity
                     entity.SetProperty(item.Key, item.Value);
                 }
             }
+            await crudRepository.UpdateAsync(entity);
             await CurrentUnitOfWork.SaveChangesAsync();
             await OrganizationUnitManager.MoveAsync(id, input.ParentId);
 			return await MapToGetOutputDtoAsync(entity);

@@ -257,6 +257,7 @@ namespace Jh.Abp.Application
                     methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(entity);
                 }
             }
+            await crudRepository.UpdateAsync(entity);
             return await MapToGetOutputDtoAsync(entity);
         }
 

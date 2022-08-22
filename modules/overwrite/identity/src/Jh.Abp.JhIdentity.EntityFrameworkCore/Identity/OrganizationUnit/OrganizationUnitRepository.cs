@@ -47,5 +47,19 @@ namespace Jh.Abp.JhIdentity
                }
             ).ToListAsync();
         }
+
+        public virtual Task<IQueryable<OrganizationUnit>> GetByLeaderAsync(IQueryable<OrganizationUnit> entity, Guid? LeaderId, string LeaderName)
+        {
+            return Task.FromResult(entity);
+            //if (LeaderId.HasValue)
+            //{
+            //    entity = entity.Where(a => EF.Property<Guid>(a, nameof(JhOrganizationUnit.LeaderId)) == LeaderId.Value);
+            //}
+            //if (!string.IsNullOrEmpty(LeaderName))
+            //{
+            //    entity = entity.Where(a => EF.Property<string>(a, nameof(JhOrganizationUnit.LeaderName)).StartsWith(LeaderName));
+            //}
+            //return Task.FromResult(entity);
+        }
     }
 }
