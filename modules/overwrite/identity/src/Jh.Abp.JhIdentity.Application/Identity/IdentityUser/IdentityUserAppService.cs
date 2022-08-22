@@ -176,11 +176,12 @@ namespace Jh.Abp.JhIdentity
             {
                 input.MethodInput = new MethodDto<IdentityUser>()
                 {
-                    QueryAction =  async (entity) =>
+                    QueryAction = (entity) =>
                     {
-                        var orgAllChildrens = (await OrganizationUnits.GetQueryableAsync(true, isTracking: IsTracking))
+                        //TODO:考虑是否可以优化
+                        var orgAllChildrens = (OrganizationUnits.GetQueryableAsync(true, isTracking: IsTracking).Result)
                                              .Where(a => a.Code.StartsWith(input.OrganizationUnitCode)).Select(a => a.Id);
-                        var userOrgs = await OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>(false);
+                        var userOrgs = (OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>()).Result;
                         var query = from user in entity
                                     join userOrg in userOrgs on user.Id equals userOrg.UserId
                                     where orgAllChildrens.Contains(userOrg.OrganizationUnitId)

@@ -18,8 +18,12 @@ namespace Jh.Abp.Domain
         /// .AsNoTracking()不跟踪加载不到扩展属性
         /// </summary>
         Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false, bool isTracking = false);
-        //Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking = false);
-        //Task<IQueryable<T>> GetQueryableAsync<T>() where T : class;
+        /// <summary>
+        /// 只能用于关联查询过滤
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        Task<IQueryable<T>> GetQueryableAsync<T>() where T : class;
         //todo:为什么不用扩展，因为没有和仓储层引用
         /// <summary>
         /// 尽可能使用对应仓储
