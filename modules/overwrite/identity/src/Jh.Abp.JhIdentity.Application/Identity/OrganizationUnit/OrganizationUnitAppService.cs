@@ -191,15 +191,7 @@ namespace Jh.Abp.JhIdentity
 
 		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
-            //TODO:思考是否有必要返回整个实体
-            var datas = await OrganizationUnitRepository.GetListAsync();
-            var resutlMenus = datas.Select(a =>
-               new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
-               {
-                   parentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null,
-                   data = a
-               }
-           ).ToList();
+            var resutlMenus = await OrganizationUnitRepository.GetTreeAntdDtosAsync();
             var data= await UtilTree.GetTreeByAntdAsync(resutlMenus);
             return new ListResultDto<TreeAntdDto>(data);
         }
@@ -229,15 +221,6 @@ namespace Jh.Abp.JhIdentity
                 dtos.Add(ObjectMapper.Map<IdentityUser, IdentityUserDto>(entity));
             }
             return new ListResultDto<IdentityUserDto>(dtos);
-        }
-
-        private async Task<Guid[]> GetAllRoleIdAsync()
-        {
-            //TODO:考虑封装到仓储层
-            var roleQuery = await IdentityRoleRepository.GetQueryableAsync(false, isTracking: IsTracking);
-            roleQuery = roleQuery.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
-            var datas = await IdentityRoleRepository.GetListAsync(roleQuery);
-            return datas.Select(a => a.Id).ToArray();//TODO:不使用GetListAsync，使用ToList()是否也可以;
         }
 
         public virtual async Task CreateByRoleAsync(Guid roleId)

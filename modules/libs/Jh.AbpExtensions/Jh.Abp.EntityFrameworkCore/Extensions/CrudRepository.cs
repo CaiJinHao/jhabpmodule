@@ -141,16 +141,6 @@ namespace Jh.Abp.EntityFrameworkCore
             return await query.LongCountAsync(GetCancellationToken(cancellationToken));
         }
 
-        //TODO:跟踪可以获取到扩展字段，不跟踪获取不到扩展字段
-        public Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking = false)
-        {
-            if (!isTracking)
-            {
-                query = query.AsNoTracking();
-            }
-            return Task.FromResult(query);
-        }
-
 /*
         public async Task<int> ContextSaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

@@ -85,5 +85,17 @@ namespace Jh.Abp.JhIdentity
             }
             return default;
         }
+
+		public virtual async Task<IQueryable<IdentityUser>> GetByOrganizationUnitCodeAsync(IQueryable<IdentityUser> entity,string organizationUnitCode)
+		{
+            var dbContext = await GetDbContextAsync();
+            var queryOrganizationUnit = dbContext.OrganizationUnits.Where(a => a.Code.StartsWith(organizationUnitCode));
+
+            var userOrgs = dbContext.Set<IdentityUserOrganizationUnit>();
+            return from user in entity
+                   join userOrg in userOrgs on user.Id equals userOrg.UserId
+                   join org in queryOrganizationUnit on userOrg.OrganizationUnitId equals org.Id
+                   select user;
+        }
 	}
 }

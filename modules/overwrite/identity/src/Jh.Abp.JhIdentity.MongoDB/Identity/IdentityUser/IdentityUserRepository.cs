@@ -82,5 +82,12 @@ namespace Jh.Abp.JhIdentity
 			}
             return default;
         }
-	}
+
+        public virtual async Task<IQueryable<IdentityUser>> GetByOrganizationUnitCodeAsync(IQueryable<IdentityUser> entity, string organizationUnitCode)
+        {
+			var organizationUnits = await GetMongoQueryableAsync<OrganizationUnit>();
+			var queryOrganizationUnit = await organizationUnits.Where(a => a.Code.StartsWith(organizationUnitCode)).Select(a=>a.Id).ToListAsync();
+            return entity.Where(a => a.OrganizationUnits.Any(a => queryOrganizationUnit.Contains(a.OrganizationUnitId)));
+		}
+    }
 }

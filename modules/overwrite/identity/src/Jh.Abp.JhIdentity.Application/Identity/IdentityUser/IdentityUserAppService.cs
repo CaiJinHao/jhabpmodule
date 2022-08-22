@@ -176,18 +176,11 @@ namespace Jh.Abp.JhIdentity
             {
                 input.MethodInput = new MethodDto<IdentityUser>()
                 {
-                    QueryAction = (entity) =>
+                    QueryAction =  (entity) =>
                     {
-                        //TODO:考虑是否可以优化
-                        var orgAllChildrens = (OrganizationUnits.GetQueryableAsync(true, isTracking: IsTracking).Result)
-                                             .Where(a => a.Code.StartsWith(input.OrganizationUnitCode)).Select(a => a.Id);
-                        var userOrgs = (OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>()).Result;
-                        var query = from user in entity
-                                    join userOrg in userOrgs on user.Id equals userOrg.UserId
-                                    where orgAllChildrens.Contains(userOrg.OrganizationUnitId)
-                                    && user.UserName != JhIdentity.JhIdentityConsts.AdminUserName
-                                    select user;
-                        return (query).Distinct();
+                        var query = IdentityUserRepository.GetByOrganizationUnitCodeAsync(entity, input.OrganizationUnitCode).Result;
+                        entity = query.Where(a => a.UserName != JhIdentity.JhIdentityConsts.AdminUserName);
+                        return query.Distinct();
                     }
                 };
             }

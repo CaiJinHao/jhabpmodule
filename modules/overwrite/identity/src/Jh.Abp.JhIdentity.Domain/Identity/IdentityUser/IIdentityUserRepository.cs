@@ -1,6 +1,7 @@
 using Jh.Abp.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Identity;
@@ -12,10 +13,12 @@ namespace Jh.Abp.JhIdentity
 		Task<List<Volo.Abp.Identity.IdentityRole>> GetRolesAsync(
 			Guid id,
 			bool includeDetails = false,
-			CancellationToken cancellationToken = default);
+			CancellationToken cancellationToken = default(CancellationToken));
 
-		Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default);
+		Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default(CancellationToken));
 
-		Task<List<OrganizationUnit>> GetOrganizationUnitsAsync(Guid id,CancellationToken cancellationToken = default);
+		Task<List<OrganizationUnit>> GetOrganizationUnitsAsync(Guid id,CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<IQueryable<IdentityUser>> GetByOrganizationUnitCodeAsync(IQueryable<IdentityUser> entity, string organizationUnitCode);
 	}
 }
