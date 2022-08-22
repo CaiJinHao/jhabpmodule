@@ -71,6 +71,7 @@ namespace Jh.Abp.Application
                     methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(entity);
                 }
             }
+            await crudRepository.UpdateAsync(entity);
         }
 
         protected virtual async Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
@@ -90,7 +91,7 @@ namespace Jh.Abp.Application
                     }
                 }
             }
-            var entities = await crudRepository.GetListAsync(query,cancellationToken);
+            var entities = await crudRepository.GetListAsync(query, cancellationToken);
             if (methodDto != null)
             {
                 if (methodDto.MethodInput != null)

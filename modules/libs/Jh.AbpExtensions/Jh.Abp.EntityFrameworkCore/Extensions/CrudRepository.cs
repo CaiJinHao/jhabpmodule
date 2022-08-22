@@ -25,58 +25,41 @@ namespace Jh.Abp.EntityFrameworkCore
         {
         }
 
-        public virtual async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             //使用SqlBulk
             await (await GetDbSetAsync()).AddRangeAsync(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken));
             }
             return entitys;
         }
 
-        public virtual async Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             await (await GetDbSetAsync()).AddAsync(entity);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken));
             }
             return entity;
         }
 
-        public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             var _dbSet = await GetQueryableAsync();
             var entitys = _dbSet.AsNoTracking().Where(predicate).ToArray();
-            return await DeleteAsync(autoSave, isHard, cancellationToken, entitys: entitys);
+            return await DeleteAsync(autoSave, isHard, GetCancellationToken(cancellationToken), entitys: entitys);
         }
 
-        public virtual async Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             var entitys = query.AsNoTracking().ToArray();
-            return await DeleteAsync(autoSave, isHard, cancellationToken, entitys: entitys);
+            return await DeleteAsync(autoSave, isHard, GetCancellationToken(cancellationToken), entitys: entitys);
         }
 
-        /// <summary>
-        /// .AsNoTracking() 不跟踪加载不到扩展属性
-        /// </summary>
-        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false)
-        {
-            var query = includeDetails ? await WithDetailsAsync() : await GetDbSetAsync();
-            return inApplyDataFilters ? ApplyDataFilters(query) : query;//添加数据过滤
-        }
-
-        /// <summary>
-        /// .AsNoTracking() 不跟踪加载不到扩展属性
-        /// </summary>
-        public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
-        {
-            return (await GetDbContextAsync()).Set<T>();
-        }
-
-        public virtual async Task<TEntity[]> DeleteAsync(bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken), params TEntity[] entitys)
+        public virtual async Task<TEntity[]> DeleteAsync(bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default, params TEntity[] entitys)
         {
             if (entitys == null || !entitys.Any())
             {
@@ -96,12 +79,12 @@ namespace Jh.Abp.EntityFrameworkCore
             _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken));
             }
             return entitys;
         }
 
-        protected virtual async Task HardDeleteWithUnitOfWorkAsync(Action<HashSet<IEntity>> deleteFun, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task HardDeleteWithUnitOfWorkAsync(Action<HashSet<IEntity>> deleteFun, CancellationToken cancellationToken = default)
         {
             var uowManager = base.UnitOfWorkManager;
             if (uowManager == null)
@@ -114,7 +97,7 @@ namespace Jh.Abp.EntityFrameworkCore
                 using (var uow = uowManager.Begin())
                 {
                     HardDelete(currentUow, deleteFun);
-                    await uow.CompleteAsync(cancellationToken);
+                    await uow.CompleteAsync(GetCancellationToken(cancellationToken));
                 }
             }
             else
@@ -132,35 +115,47 @@ namespace Jh.Abp.EntityFrameworkCore
             deleteFun(hardDeleteEntities);
         }
 
-        public async Task<int> ContextSaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// .AsNoTracking() 不跟踪加载不到扩展属性
+        /// </summary>
+        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false)
         {
-            return await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
+            var query = includeDetails ? await WithDetailsAsync() : await GetDbSetAsync();
+            return inApplyDataFilters ? ApplyDataFilters(query) : query;//添加数据过滤
         }
 
-        public async Task AddAsync<T>(T entity, CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        /// <summary>
+        /// .AsNoTracking() 不跟踪加载不到扩展属性
+        /// </summary>
+        public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
         {
-            var dbSet = (await GetDbContextAsync().ConfigureAwait(continueOnCapturedContext: false)).Set<T>();
-            await dbSet.AddAsync(entity, cancellationToken);
+            return (await GetDbContextAsync()).Set<T>();
         }
 
-        public async Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
+        public async Task<List<T>> GetListAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
         {
-            return await query.ToListAsync();
+            return await query.ToListAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
+        public async Task<long> GetCountAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
         {
-            return await query.LongCountAsync();
+            return await query.LongCountAsync(GetCancellationToken(cancellationToken));
         }
 
-        public Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking)
+        //TODO:跟踪可以获取到扩展字段，不跟踪获取不到扩展字段
+        public Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking = false)
         {
-            //TODO:跟踪可以获取到扩展字段，不跟踪获取不到扩展字段
             if (!isTracking)
             {
                 query = query.AsNoTracking();
             }
             return Task.FromResult(query);
         }
+
+/*
+        public async Task<int> ContextSaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken);
+        }*/
     }
 }
