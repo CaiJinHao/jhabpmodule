@@ -1,20 +1,18 @@
 using Jh.Abp.Common;
 using Jh.Abp.MongoDB;
 using MongoDB.Driver;
-using System;
+using MongoDB.Driver.Linq;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.Identity;
 using Volo.Abp.Identity.MongoDB;
 using Volo.Abp.MongoDB;
-using Volo.Abp.TenantManagement;
-using Volo.Abp.TenantManagement.MongoDB;
-
+using System.Linq;
 
 namespace Jh.Abp.JhIdentity
 {
-    public class JhIdentityRoleRepository : CrudRepository<IAbpIdentityMongoDbContext, Volo.Abp.Identity.IdentityRole, System.Guid>, IJhIdentityRoleRepository
+    public class JhIdentityRoleRepository : CrudRepository<IAbpIdentityMongoDbContext, IdentityRole, System.Guid>, IJhIdentityRoleRepository
     {
         public JhIdentityRoleRepository(IMongoDbContextProvider<IAbpIdentityMongoDbContext> dbContextProvider) : base(dbContextProvider)
         {
@@ -22,7 +20,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<List<TreeAntdDto>> GetTreeAntdDtosAsync(CancellationToken cancellationToken = default)
         {
-            var datas = await (await GetMongoQueryableAsync()).ToListAsync(GetCancellationToken(cancellationToken));
+            var datas = await (await GetMongoQueryableAsync()).Select(a => new IdentityRole(a.Id, a.Name, a.TenantId)).ToListAsync(GetCancellationToken(cancellationToken));
             return datas.Select(a => new TreeAntdDto(a.Id.ToString(), a.Name, a.NormalizedName) { isLeaf = true }).ToList();
         }
     }
