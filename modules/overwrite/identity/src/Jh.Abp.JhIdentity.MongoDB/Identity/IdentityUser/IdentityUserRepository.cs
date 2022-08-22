@@ -27,9 +27,11 @@ namespace Jh.Abp.JhIdentity
 			bool includeDetails = false,
 			CancellationToken cancellationToken = default)
 		{
-			var user = await GetAsync(id, cancellationToken: cancellationToken);
-			var userRoleIds = user.Roles.Select(a=>a.RoleId).ToArray();
-			return await (await GetMongoQueryableAsync<IdentityRole>()).Where(a=> userRoleIds.Contains(a.Id))
+			var query = await GetMongoQueryableAsync();
+			var userRoleIds = await  query.SelectMany(a => a.Roles)
+				.Select(b => b.RoleId).ToListAsync(GetCancellationToken(cancellationToken));
+			return await (await GetMongoQueryableAsync<IdentityRole>())
+				.Where(a=> userRoleIds.Contains(a.Id))
 				.ToListAsync();
 		}
 
@@ -37,11 +39,13 @@ namespace Jh.Abp.JhIdentity
 			Guid id,
 			CancellationToken cancellationToken = default)
 		{
-			var user = await GetAsync(id,cancellationToken:cancellationToken);
-			var userOrganizationUnitIds = user.OrganizationUnits.Select(a=>a.OrganizationUnitId).ToArray();
+			var query = await GetMongoQueryableAsync();
+			var userOrganizationUnitIds = await query.SelectMany(a=>a.OrganizationUnits)
+				.Select(b => b.OrganizationUnitId).ToListAsync(GetCancellationToken(cancellationToken));
 			//获取用户所属组织
-			return await (await GetMongoQueryableAsync<OrganizationUnit>()).Where(a => userOrganizationUnitIds.Contains(a.Id))
-				.ToListAsync();
+			return await (await GetMongoQueryableAsync<OrganizationUnit>())
+				.Where(a => userOrganizationUnitIds.Contains(a.Id))
+				.ToListAsync(GetCancellationToken(cancellationToken));
 		}
 
 		/*
