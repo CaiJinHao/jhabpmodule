@@ -115,13 +115,15 @@ namespace Jh.Abp.EntityFrameworkCore
             deleteFun(hardDeleteEntities);
         }
 
-        /// <summary>
-        /// .AsNoTracking() 不跟踪加载不到扩展属性
-        /// </summary>
-        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false)
+        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false, bool isTracking = false)
         {
             var query = includeDetails ? await WithDetailsAsync() : await GetDbSetAsync();
-            return inApplyDataFilters ? ApplyDataFilters(query) : query;//添加数据过滤
+            query = inApplyDataFilters ? ApplyDataFilters(query) : query;//添加数据过滤
+            if (!isTracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return query;
         }
 
         /// <summary>

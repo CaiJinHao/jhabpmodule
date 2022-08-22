@@ -15,16 +15,11 @@ namespace Jh.Abp.Domain
     {
         /// <summary>
         /// 获取Queryable
+        /// .AsNoTracking()不跟踪加载不到扩展属性
         /// </summary>
-        Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false);
-        Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking = false);
-
-        /// <summary>
-        /// 尽可能使用对应仓储
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        Task<IQueryable<T>> GetQueryableAsync<T>() where T : class;
+        Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false, bool isTracking = false);
+        //Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking = false);
+        //Task<IQueryable<T>> GetQueryableAsync<T>() where T : class;
         //todo:为什么不用扩展，因为没有和仓储层引用
         /// <summary>
         /// 尽可能使用对应仓储
@@ -33,8 +28,8 @@ namespace Jh.Abp.Domain
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<List<T>> GetListAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default(CancellationToken));
-        Task<long> GetCountAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default(CancellationToken));
+        Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default(CancellationToken));
+        Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 创建一条数据

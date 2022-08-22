@@ -34,18 +34,19 @@ namespace Jh.Abp.JhIdentity
 
         public async Task<Guid?> GetAdminRoleIdAsync()
         {
-            var query = await IdentityRoleRepository.GetTrackingAsync((await IdentityRoleRepository.GetQueryableAsync()), false);
-            var role = (await IdentityRoleRepository.GetListAsync(query.Where(a => a.Name == JhIdentity.JhIdentityConsts.AdminRoleName))).FirstOrDefault();
-            if (role!=null)
+            var query = await IdentityRoleRepository.GetQueryableAsync(true, isTracking: IsTracking);
+            query = query.Where(a => a.Name == JhIdentity.JhIdentityConsts.AdminRoleName);
+            var role = (await IdentityRoleRepository.GetListAsync(query)).FirstOrDefault();
+            if (role != null)
             {
-				return role.Id;
+                return role.Id;
             }
-			return null;
+            return null;
         }
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
         {
-            var query = await IdentityRoleRepository.GetQueryableAsync(true);
+            var query = await IdentityRoleRepository.GetQueryableAsync(true, isTracking: IsTracking);
             query = query.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
             if (!string.IsNullOrEmpty(name))
             {
@@ -56,7 +57,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync()
         {
-            var query = await IdentityRoleRepository.GetQueryableAsync(true);
+            var query = await IdentityRoleRepository.GetQueryableAsync(true, isTracking: IsTracking);
             query = query.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
             return new ListResultDto<TreeAntdDto>(query.Select(a => new TreeAntdDto(a.Id.ToString(), a.Name, a.NormalizedName) { isLeaf = true }).ToList());
         }

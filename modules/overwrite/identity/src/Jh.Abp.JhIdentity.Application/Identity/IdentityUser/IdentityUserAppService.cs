@@ -176,11 +176,11 @@ namespace Jh.Abp.JhIdentity
             {
                 input.MethodInput = new MethodDto<IdentityUser>()
                 {
-                    QueryAction =  (entity) =>
+                    QueryAction =  async (entity) =>
                     {
-                        var orgAllChildrens = OrganizationUnits.GetQueryableAsync(true).Result
+                        var orgAllChildrens = (await OrganizationUnits.GetQueryableAsync(true, isTracking: IsTracking))
                                              .Where(a => a.Code.StartsWith(input.OrganizationUnitCode)).Select(a => a.Id);
-                        var userOrgs = OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>().Result;
+                        var userOrgs = await OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>(false);
                         var query = from user in entity
                                     join userOrg in userOrgs on user.Id equals userOrg.UserId
                                     where orgAllChildrens.Contains(userOrg.OrganizationUnitId)
@@ -209,7 +209,7 @@ namespace Jh.Abp.JhIdentity
             user.Roles = CurrentUser.FindClaims(JwtClaimTypes.Role).Select(a=> a.Value).ToArray();
             if (user.OrganizationUnitIds.Length>0)
             {
-                var orgsQuery = await OrganizationUnits.GetTrackingAsync(await OrganizationUnits.GetQueryableAsync(true), false);
+                var orgsQuery = await OrganizationUnits.GetQueryableAsync(true,isTracking: IsTracking);
                 user.OrganizationUnits = orgsQuery.Where(a => user.OrganizationUnitIds.Contains(a.Id)).Select(a => a.DisplayName).ToArray();
             }
             return user;
@@ -241,7 +241,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync()
         {
-            var query = await IdentityUserRepository.GetQueryableAsync(true);
+            var query = await IdentityUserRepository.GetQueryableAsync(true, isTracking: IsTracking);
             var datas = await IdentityUserRepository.GetListAsync(query.Where(a => a.UserName != JhIdentityConsts.AdminRoleName));
             return new ListResultDto<OptionDto<Guid>>(datas.Select(a => new OptionDto<Guid> { Label = $"{a.Name}-{a.UserName}", Value = a.Id }).ToList());
         }

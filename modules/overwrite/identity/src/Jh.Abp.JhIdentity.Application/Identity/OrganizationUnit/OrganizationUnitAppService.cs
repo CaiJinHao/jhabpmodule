@@ -171,7 +171,7 @@ namespace Jh.Abp.JhIdentity
             var data = new List<OrganizationUnit>();
             async Task GetParent(Guid parenttid)
             {
-                var dbset = await crudRepository.GetQueryableAsync(true);
+                var dbset = await crudRepository.GetQueryableAsync(true, isTracking: IsTracking);
                 var root = dbset.FirstOrDefault(a => a.Id == (Guid)parenttid && a.IsDeleted == isDeleted);
                 if (root != null)
                 {
@@ -191,8 +191,8 @@ namespace Jh.Abp.JhIdentity
 
 		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
-            var orgQuery = await OrganizationUnitRepository.GetTrackingAsync(await OrganizationUnitRepository.GetQueryableAsync(true), false);
-            var datas = await OrganizationUnitRepository.GetListAsync(orgQuery);
+            //TODO:思考是否有必要返回整个实体
+            var datas = await OrganizationUnitRepository.GetListAsync();
             var resutlMenus = datas.Select(a =>
                new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
                {
@@ -233,7 +233,8 @@ namespace Jh.Abp.JhIdentity
 
         private async Task<Guid[]> GetAllRoleIdAsync()
         {
-            var roleQuery = await IdentityRoleRepository.GetTrackingAsync(await IdentityRoleRepository.GetQueryableAsync(false),false);
+            //TODO:考虑封装到仓储层
+            var roleQuery = await IdentityRoleRepository.GetQueryableAsync(false, isTracking: IsTracking);
             roleQuery = roleQuery.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
             var datas = await IdentityRoleRepository.GetListAsync(roleQuery);
             return datas.Select(a => a.Id).ToArray();//TODO:不使用GetListAsync，使用ToList()是否也可以;
@@ -255,7 +256,7 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
         {
-            var datas = await OrganizationUnitRepository.GetQueryableAsync(true);
+            var datas = await OrganizationUnitRepository.GetQueryableAsync(true, isTracking: IsTracking);
             return new ListResultDto<OptionDto<Guid>>(datas.Select(a => new OptionDto<Guid> { Label = a.DisplayName, Value = a.Id }).ToList());
         }
 

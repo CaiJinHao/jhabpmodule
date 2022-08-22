@@ -105,7 +105,7 @@ namespace Jh.Abp.MongoDB
         }
 
 
-        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false)
+        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool inApplyDataFilters, bool includeDetails = false, bool isTracking = false)
         {
             var query = await GetMongoQueryableAsync();
             return inApplyDataFilters ? ApplyDataFilters(query) : query;//添加数据过滤
@@ -116,19 +116,19 @@ namespace Jh.Abp.MongoDB
             return Task.FromResult(query);
         }
 
-        public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
+        public async Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
+        {
+            return await (query as IMongoQueryable<TEntity>).ToListAsync(GetCancellationToken(cancellationToken));
+        }
+
+        public async Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
+        {
+            return await (query as IMongoQueryable<TEntity>).LongCountAsync(GetCancellationToken(cancellationToken));
+        }
+
+        /*public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
         {
             return await GetMongoQueryableAsync<T>();
-        }
-
-        public async Task<List<T>> GetListAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
-        {
-            return await (query as IMongoQueryable<T>).ToListAsync(GetCancellationToken(cancellationToken));
-        }
-
-        public async Task<long> GetCountAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
-        {
-            return await (query as IMongoQueryable<T>).LongCountAsync(GetCancellationToken(cancellationToken));
-        }
+        }*/
     }
 }
