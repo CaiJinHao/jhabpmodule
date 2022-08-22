@@ -33,14 +33,14 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<List<TreeAntdDto>> GetTreeAntdDtosAsync(CancellationToken cancellationToken = default)
         {
-            var query = await GetMongoQueryableAsync();
-            return await query.Select(a =>
+            var datas = await (await GetMongoQueryableAsync()).ToListAsync(GetCancellationToken(cancellationToken));
+            return  datas.Select(a =>
                new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
                {
                    parentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null,
                    data = a
                }
-            ).ToListAsync(GetCancellationToken(cancellationToken));
+            ).ToList();
         }
     }
 }
