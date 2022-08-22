@@ -7,14 +7,14 @@ namespace Jh.Abp.JhIdentity
 {
     public static class JhIdentityModuleExtensionConfigurator
     {
-        private static readonly OneTimeRunner OneTimeRunner = new();
+        //private static readonly OneTimeRunner OneTimeRunner = new();
 
         public static void Configure()
         {
-            OneTimeRunner.Run(() =>
-            {
-                ConfigureExistingProperties();
-            });
+            //OneTimeRunner.Run(() =>
+            //{
+            //    ConfigureExistingProperties();
+            //});
         }
 
         private static void ConfigureExistingProperties()

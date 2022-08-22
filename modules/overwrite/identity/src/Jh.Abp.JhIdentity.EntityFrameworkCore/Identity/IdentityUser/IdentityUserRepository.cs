@@ -17,8 +17,6 @@ namespace Jh.Abp.JhIdentity
 {
     public class IdentityUserRepository : CrudRepository<IIdentityDbContext, Volo.Abp.Identity.IdentityUser, System.Guid>, IIdentityUserRepository
 	{
-		public IJhIdentityDbContext jhIdentityDbContext { get; set; }
-		public IRepository<JhOrganizationUnit, Guid> _appRoleRepository { get; set; }
 		 public IdentityUserRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider) : base(dbContextProvider)
 		{
 		}
@@ -54,7 +52,7 @@ namespace Jh.Abp.JhIdentity
             return await query.ToListAsync(GetCancellationToken(cancellationToken));
 		}
 
-		public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default)
+		/*public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default)
 		{
 			var dbContext = await GetDbContextAsync();
             //获取用户所属组织
@@ -84,7 +82,7 @@ namespace Jh.Abp.JhIdentity
                 return data;
             }
             return default;
-        }
+        }*/
 
 		public virtual async Task<IQueryable<IdentityUser>> GetByOrganizationUnitCodeAsync(IQueryable<IdentityUser> entity,string organizationUnitCode)
 		{

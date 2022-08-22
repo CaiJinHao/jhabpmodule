@@ -11,9 +11,6 @@ namespace Jh.Abp.JhIdentity.EntityFrameworkCore;
 public class JhIdentityDbContext : AbpDbContext<JhIdentityDbContext>, IJhIdentityDbContext
 {
 
-    public DbSet<JhOrganizationUnit> OrganizationUnits { get; set; }
-
-
     public JhIdentityDbContext(DbContextOptions<JhIdentityDbContext> options)
         : base(options)
     {
@@ -23,21 +20,6 @@ public class JhIdentityDbContext : AbpDbContext<JhIdentityDbContext>, IJhIdentit
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-
-        //一个数据上下文只能配置一个实体对应一个表
-
-        //扩展只能用来查询
-        builder.Entity<JhOrganizationUnit>(b => {
-
-            b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "OrganizationUnits", AbpIdentityDbProperties.DbSchema);
-            b.ConfigureByConvention();
-
-            b.ApplyObjectExtensionMappings();
-        });
-
-
         builder.ConfigureJhIdentity();
-
     }
 }
