@@ -126,9 +126,6 @@ namespace Jh.Abp.EntityFrameworkCore
             return query;
         }
 
-        /// <summary>
-        /// .AsNoTracking() 不跟踪加载不到扩展属性
-        /// </summary>
         public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
         {
             return (await GetDbContextAsync()).Set<T>();

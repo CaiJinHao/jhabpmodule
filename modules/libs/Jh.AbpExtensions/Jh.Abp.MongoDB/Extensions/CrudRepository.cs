@@ -111,9 +111,9 @@ namespace Jh.Abp.MongoDB
             return inApplyDataFilters ? ApplyDataFilters(query) : query;//添加数据过滤
         }
 
-        public Task<IQueryable<TEntity>> GetTrackingAsync(IQueryable<TEntity> query, bool isTracking = false)
+        public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class
         {
-            return Task.FromResult(query);
+            return await GetMongoQueryableAsync<T>();
         }
 
         public async Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
