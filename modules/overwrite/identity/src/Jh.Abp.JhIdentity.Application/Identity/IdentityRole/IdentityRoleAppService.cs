@@ -57,9 +57,8 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync()
         {
-            var query = await IdentityRoleRepository.GetQueryableAsync(true, isTracking: IsTracking);
-            query = query.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
-            return new ListResultDto<TreeAntdDto>(query.Select(a => new TreeAntdDto(a.Id.ToString(), a.Name, a.NormalizedName) { isLeaf = true }).ToList());
+            var datas = await IdentityRoleRepository.GetTreeAntdDtosAsync();
+            return new ListResultDto<TreeAntdDto>(datas);
         }
     }
 }
