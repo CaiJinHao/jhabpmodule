@@ -134,12 +134,12 @@ namespace Jh.Abp.EntityFrameworkCore
             return (await GetDbContextAsync()).Set<T>();
         }
 
-        public async Task<List<T>> GetListAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
+        public async Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
         {
             return await query.ToListAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<long> GetCountAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
+        public async Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
         {
             return await query.LongCountAsync(GetCancellationToken(cancellationToken));
         }
