@@ -116,6 +116,10 @@ b.HasIndex(ege => new { ege.EquipmentGroupId, ege.EquipmentId });
 
 ### 缓存使用注意
 
+1. 缓存雪崩
+2. 缓存穿透
+3. 缓存击穿
+
 ### 查询优化
 
 ``` 查询优化
