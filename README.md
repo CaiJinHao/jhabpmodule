@@ -1,6 +1,21 @@
 # JH ABP Module Extension
 
-JH ABP Module Extension 基于[Abp VNext](https://docs.abp.io) 构造的快速开发框架。整合项目开发中常用的基础模块，迅速进入业务开发阶段。
+JH ABP Module Extension 基于[Abp VNext](https://docs.abp.io) 构造的快速开发框架。整合项目开发中常用的基础模块，迅速进入业务开发阶段。配合jhabpadmin使用，前后端分离。包含基础代码生成器。
+
+## 功能介绍
+
+### docs文件夹
+
+这个文件夹主要用于存储项目使用到的一些文档。如设计文件、脚本等
+
+### 类库介绍
+
+* Jh.Abp.Common 公共的操作类库
+* Jh.SourceGenerator.Common 代码生成器
+* Jh.AbpExtensions 针对Abp的CRUD二次封装
+* Jh.Abp.QuickComponents 主启动程序需要引入的一些组件及设置，如默认语言修改、Cors、JSON格式配置、Jwt相关设置、Swagger配置等。
+* module_extend 文件夹下是每个模块的功能实现即插即用，可分库及微服务单独部署。
+* overwrite 文件夹下是基于abp模块的重写。(使用官方提供的重写服务方法进行重写)
 
 ## 使用说明
 
@@ -50,7 +65,7 @@ css
 安装依赖：yarn
 修改environments配置
 批量修改系统名称：JH Abp Admin 
-批量修改公司名称：金浩出品必属精品
+批量修改名称：JhAbp
 修改logo: 将public文件下logo.png替换
 替换favicon.ico
 删除public下无用的文件
@@ -99,11 +114,49 @@ b.HasIndex(ege => new { ege.EquipmentGroupId, ege.EquipmentId });
 
 ## 开发过程注意
 
-根据SQL查询需要添加数据库索引
+### 缓存使用注意
 
-## 设计
+### 查询优化
 
-基于[AbpVnext](https://docs.abp.io/)的设计及开发方式进行。
+``` 查询优化
+1. 索引建立原则
+  a. 频繁搜索的列
+  b. 被分组、排序的列
+  c. 外键引用列
+  d. 建立索引应按照最左匹配原则建立索引
+    ⅰ. index(a,b,c)  = index(a) index(a,b) index (a,b,c)
+  e. 不适合建立索引
+    ⅰ. 重复值较多、查询较少的列不要建立索引。如性别、状态
+    ⅱ. 小表不时候建立索引，比如配置表（数量超过300）
+  f. 索引的影响
+    ⅰ. 索引会影响操作表的性能，因为需要更新索引
+  g. 索引应该建立在小字段上，对于大的文本字段不要建立索引
+  h. 如果既有单字段索引又有复合索引，应考虑建立单字段索引
+  i. 删除无用的索引，避免对执行计划造成影响
+2. 表字段创建原则
+  a. 尽量使用数字类型字段
+  b. 字段不要定义可空字段，使用默认值代替
+  c. 对固定格式的字段应使用定长char，节约存储，chart比varchar要快
+3. SQL查询优化
+  a. 避免全表扫描查询
+  b. 避免在where条件对字段进行null值判断，可以使用默认值(0,-1、等)代替null。
+    ⅰ. 因为索引不存储null值。
+    ⅱ. 查询为null，只能进行全表扫描
+  c. 避免使用操作符:   !=、<>、 Like '%_%'、Like '%_'、表达式操作、函数操作、
+  d. 避免where条件使用or连接条件，应拆分成多个查询，使用union代替or连接
+    ⅰ. 因为会放弃索引，进行全表扫描
+  e. 优先使用exists代替 in 和 not in，对于有序的使用between代替in
+    ⅰ. in查询，将出现最多的值放在最前面，减少判断的次数
+  f. 查询语句尽量不要查询本次业务逻辑使用不到字段。
+  g. 尽量使用表别名查询字段，可以减少解析时间。如a.col1,a.col2
+  h. 临时表(存储在TempDb数据库)和视图的需求都可以用nosql来处理
+  i. 使用exists代替select count(1)判断是否存在记录
+    ⅰ. count函数只有统计所有行数时使用
+    ⅱ. count(*)可能会锁表
+  j. 必要时，SQL可以强制指定索引进行查询，避免全表扫描
+  k. 避免使用distionct，使用Group By代替
+  l. 查询时应把操作及计算移植操作符右边。如 a.money < 1000/3
+```
 
 ## Quick Start
 
