@@ -23,9 +23,7 @@ JH ABP Module Extension 基于[Abp VNext](https://docs.abp.io) 构造的快速�
 
 ```Use Steps
 
-abp new YourCompany.YourProjectName -t module -d ef -cs "server=127.0.0.1;database=EquipmentManagement;uid=root;pwd=1234565"
-
-.\addrefrence.ps1 -execPath ..\..\modules\module_extend\menu\ -slnName Jh.Abp.JhMenu
+abp new YourCompany.YourProjectName -t module -d ef -cs "server=127.0.0.1;database=YourProjectDBName;uid=root;pwd=1234565"
 
 DomainSharedModule添加本地资源继承
     .AddBaseTypes(typeof(Jh.Abp.Domain.Localization.JhAbpExtensionsResource))

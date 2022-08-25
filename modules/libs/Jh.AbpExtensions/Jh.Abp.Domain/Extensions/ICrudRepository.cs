@@ -28,9 +28,6 @@ namespace Jh.Abp.Domain
         /// <summary>
         /// 尽可能使用对应仓储
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default(CancellationToken));
         Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default(CancellationToken));
