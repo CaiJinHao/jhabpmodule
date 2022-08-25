@@ -1,0 +1,97 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.Account.Localization
+@using Volo.Abp.Account.Settings
+@using Volo.Abp.Settings
+@using Volo.Abp.Ui.Branding
+
+@model Jh.Abp.JhIdentity.Pages.Account.LoginModel
+@inject IHtmlLocalizer<AccountResource> L
+@inject Volo.Abp.Settings.ISettingProvider SettingProvider
+@inject IBrandingProvider BrandingProvider
+
+
+@section styles{
+<style>
+    body {
+        background-image: url(/appresources/images/login/loginbg.jpg);
+        background-repeat: no-repeat;
+    }
+
+    .container {
+        margin-right: 0px;
+        max-width: 980px;
+    }
+
+    .abp-account-container {
+        margin-top: 10em;
+    }
+
+    .nav-pills .nav-item {
+        flex: 1;
+        text-align: center;
+    }
+
+    .nav-pills .nav-link.active {
+        color: #0d6efd;
+        background-color: #fff;
+        border-bottom: 1px solid #0d6efd;
+        border-radius: inherit;
+    }
+
+    .nav-pills .nav-link {
+        color: black;
+    }
+    #AbpPageAlerts{
+        position:absolute;
+        min-width: 415px;
+    }
+</style>
+}
+
+<div class="card mt-3 shadow-sm rounded">
+    <div class="card-body p-5">
+        <h4 style="text-align:center;">
+            <img src="@(BrandingProvider.LogoUrl)" class="rounded-circle" width="32"/>
+            @BrandingProvider.AppName
+        </h4>
+        @if (Model.EnableLocalLogin)
+        {
+            <abp-tabs tab-style="Pill">
+                <abp-tab title="@Model.GetLocalizedString("AccountLogin")">
+                    <form method="post" class="mt-4">
+                        <div class="form-group mb-3">
+                            <label asp-for="LoginInput.UserNameOrEmailAddress" class="mb-1"></label>
+                            <input asp-for="LoginInput.UserNameOrEmailAddress" class="form-control" />
+                            <span asp-validation-for="LoginInput.UserNameOrEmailAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="LoginInput.Password" class="mb-1"></label>
+                            <input asp-for="LoginInput.Password" class="form-control" />
+                            <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
+                        </div>
+                         @*<abp-row class="mb-3">
+                            <abp-column>
+                                <abp-input asp-for="LoginInput.RememberMe" />
+                            </abp-column>
+                           <abp-column class="text-right">
+                                <a href="@Url.Page("./ForgotPassword", new {returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash})">@L["ForgotPassword"]</a>
+                            </abp-column>
+                        </abp-row>*@
+                        <div>
+                            <abp-button type="submit" button-type="Primary" name="Action" value="Login" class="btn-block btn-lg w-100">@L["Login"]</abp-button>
+                        </div>
+                        @if (Model.ShowCancelButton)
+                        {
+                            <abp-button type="submit" button-type="Secondary" formnovalidate="formnovalidate" name="Action" value="Cancel" class="btn-block btn-lg mt-3">@L["Cancel"]</abp-button>
+                        }
+                    </form>
+                </abp-tab>
+                @*   <abp-tab title="@Model.GetLocalizedString("QrLogin")">
+                    Content_Profile
+                    </abp-tab>*@
+            </abp-tabs>
+        }
+    </div>
+</div>
+
