@@ -330,7 +330,7 @@ public class JhIdentityIdentityServerModule : AbpModule
                     .GetRequiredService<IDataSeeder>();
         var dataSeedContext = new DataSeedContext()
             .WithProperty("AdminEmail", "531003539@qq.com")
-            .WithProperty("AdminPassword", "KimHo@123");
+            .WithProperty("AdminPassword", "JinHao@123");
 
         await data.SeedAsync(dataSeedContext);
     }
