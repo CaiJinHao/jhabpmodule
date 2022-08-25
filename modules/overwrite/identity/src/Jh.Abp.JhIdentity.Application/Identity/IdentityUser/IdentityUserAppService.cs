@@ -1,7 +1,6 @@
 using IdentityModel;
 using Jh.Abp.Application;
 using Jh.Abp.Application.Contracts;
-using Jh.Abp.Common.Extensions;
 using Jh.Abp.Common.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -16,7 +15,6 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
-using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -180,15 +178,9 @@ namespace Jh.Abp.JhIdentity
                 {
                     QueryAction =  (entity) =>
                     {
-                        var orgAllChildrens = OrganizationUnits.GetQueryableAsync(true).Result
-                                             .Where(a => a.Code.StartsWith(input.OrganizationUnitCode)).Select(a => a.Id);
-                        var userOrgs = OrganizationUnits.GetQueryableAsync<IdentityUserOrganizationUnit>().Result;
-                        var query = from user in entity
-                                    join userOrg in userOrgs on user.Id equals userOrg.UserId
-                                    where orgAllChildrens.Contains(userOrg.OrganizationUnitId)
-                                    && user.UserName != JhIdentity.JhIdentityConsts.AdminUserName
-                                    select user;
-                        return (query).Distinct();
+                        var query = IdentityUserRepository.GetByOrganizationUnitCodeAsync(entity, input.OrganizationUnitCode).Result;
+                        entity = query.Where(a => a.UserName != JhIdentity.JhIdentityConsts.AdminUserName);
+                        return query.Distinct();
                     }
                 };
             }
@@ -211,19 +203,20 @@ namespace Jh.Abp.JhIdentity
             user.Roles = CurrentUser.FindClaims(JwtClaimTypes.Role).Select(a=> a.Value).ToArray();
             if (user.OrganizationUnitIds.Length>0)
             {
-                user.OrganizationUnits = (await (OrganizationUnits.GetQueryableAsync(true))).AsNoTracking()
-                         .Where(a => user.OrganizationUnitIds.Contains(a.Id)).Select(a => a.DisplayName).ToArray();
+                var orgsQuery = await OrganizationUnits.GetQueryableAsync(true,isTracking: IsTracking);
+                user.OrganizationUnits = orgsQuery.Where(a => user.OrganizationUnitIds.Contains(a.Id)).Select(a => a.DisplayName).ToArray();
             }
             return user;
         }
 
         /// <summary>
-        /// 获取部门领导
+        /// 获取当前用户的部门领导
         /// </summary>
         public virtual async Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId)
         {
-            var user= await IdentityUserRepository.GetSuperiorUserAsync(userId); 
-            return await MapToGetOutputDtoAsync(user);
+            //var user= await IdentityUserRepository.GetSuperiorUserAsync(userId); 
+            //return await MapToGetOutputDtoAsync(user);
+            return await GetAsync(userId);
         }
 
         public virtual async Task<ListResultDto<IdentityUserDto>> GetOrganizationsAsync(Guid id)
@@ -243,9 +236,9 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync()
         {
-            var query = await IdentityUserRepository.GetQueryableAsync(true);
-            return new ListResultDto<OptionDto<Guid>>(query.Where(a => a.UserName != JhIdentityConsts.AdminRoleName)
-                .Select(a => new OptionDto<Guid> { Label = $"{a.Name}-{a.UserName}", Value = a.Id }).ToList());
+            var query = await IdentityUserRepository.GetQueryableAsync(true, isTracking: IsTracking);
+            var datas = await IdentityUserRepository.GetListAsync(query.Where(a => a.UserName != JhIdentityConsts.AdminRoleName));
+            return new ListResultDto<OptionDto<Guid>>(datas.Select(a => new OptionDto<Guid> { Label = $"{a.Name}-{a.UserName}", Value = a.Id }).ToList());
         }
     }
 }

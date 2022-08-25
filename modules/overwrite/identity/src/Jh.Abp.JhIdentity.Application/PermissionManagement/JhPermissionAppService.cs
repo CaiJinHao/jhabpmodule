@@ -87,12 +87,11 @@ namespace Jh.Abp.PermissionManagement
             var permissionGroupDefinition = PermissionDefinitionManager.GetGroups();//根据模块名称分组的权限
             var permissionsDefinition = permissionGroupDefinition.SelectMany(a => a.Permissions);//根据表名分组的权限
             //当前用户角色有管理权限的表名权限集合
-            var permissions = permissionsDefinition
+            return permissionsDefinition
                                     .Where(x => x.IsEnabled)
                                     .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
                                     .Where(x => !x.Providers.Any() || x.Providers.Contains(providerName))
                                     .ToList();
-            return permissions;
         }
 
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync(PermissionTreesRetrieveInputDto inputDto)
@@ -104,13 +103,13 @@ namespace Jh.Abp.PermissionManagement
                 //不存在任何租户，并且是admin
                 permissions = permissions.Where(a => a.Name != TenantManagementPermissions.GroupName).ToList();
             }
-            List<TreeAntdDto> GetChildrens(IEnumerable<PermissionDefinition> _pDefinitions)
+
+            List <TreeAntdDto> GetChildrens(IReadOnlyList<PermissionDefinition> _pDefinitions)
             {
                 var _p = new List<TreeAntdDto>();
                 var pdefs= _pDefinitions.Where(x => x.IsEnabled)
                                     .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
-                                    .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName))
-                                    .ToList();
+                                    .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName));
                 foreach (var item in pdefs)
                 {
                     if (CheckPermission(item.Name, inputDto.ProviderName)&& CheckManagerPermission(pdefs, inputDto.ProviderName))
@@ -139,14 +138,14 @@ namespace Jh.Abp.PermissionManagement
             var trees = new List<TreeAntdDto>();
             //租户管理只有全局admin可以查看，不能分配权限
             foreach (var item in permissions.Where(a =>
-                                    a.Permissions.Where(x => x.IsEnabled)
-                                    .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
-                                    .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName)).Any())
-                )
+                            a.Permissions.Where(x => x.IsEnabled)
+                            .Where(x => x.MultiTenancySide.HasFlag(CurrentTenant.GetMultiTenancySide()))
+                            .Where(x => !x.Providers.Any() || x.Providers.Contains(inputDto.ProviderName)).Any()
+                        ))
             {
                 var node = new TreeAntdDto(item.Name, item.DisplayName.Localize(StringLocalizerFactory), item.Name);//保存的时候需要过滤掉
                 node.children = GetChildrens(item.Permissions);
-                if (node.children.Any())
+                if (node.children != null && node.children.Any())
                 {
                     trees.Add(node);
                 }

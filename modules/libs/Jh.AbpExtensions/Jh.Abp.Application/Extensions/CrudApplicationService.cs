@@ -2,7 +2,6 @@
 using Jh.Abp.Common.Entity;
 using Jh.Abp.Common.Linq;
 using Jh.Abp.Domain;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,12 +71,13 @@ namespace Jh.Abp.Application
                     methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(entity);
                 }
             }
+            await crudRepository.UpdateAsync(entity);
         }
 
         protected virtual async Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
-            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(includeDetails), inputDto);
+            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, includeDetails: includeDetails, isTracking: IsTracking), inputDto);
             query = ApplySorting(query, inputDto);
             query = ApplyPaging(query, inputDto);
             var methodDto = inputDto as IMethodDto<TEntity>;
@@ -91,7 +91,7 @@ namespace Jh.Abp.Application
                     }
                 }
             }
-            var entities = await query.ToListAsync(cancellationToken);
+            var entities = await crudRepository.GetListAsync(query, cancellationToken);
             if (methodDto != null)
             {
                 if (methodDto.MethodInput != null)
@@ -118,9 +118,9 @@ namespace Jh.Abp.Application
 
         protected virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
-            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(includeDetails), input);
+            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, includeDetails: includeDetails, isTracking: IsTracking), input);
 
-            var totalCount = await query.LongCountAsync(cancellationToken);
+            var totalCount = await crudRepository.GetCountAsync(query, cancellationToken);
 
             query = ApplySorting(query, input);
             query = ApplyPaging(query, input);
@@ -135,7 +135,7 @@ namespace Jh.Abp.Application
                     }
                 }
             }
-            var entities = await query.ToListAsync(cancellationToken);
+            var entities = await crudRepository.GetListAsync(query, cancellationToken);
             if (methodDto != null)
             {
                 if (methodDto.MethodInput != null)
@@ -164,15 +164,11 @@ namespace Jh.Abp.Application
 
         protected virtual async Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(TWhere inputDto)
         {
-            return await CreateFilteredQueryAsync(await ReadOnlyRepository.GetQueryableAsync(), inputDto);
+            return await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true,isTracking: IsTracking), inputDto);
         }
 
-        protected virtual Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> queryable, TWhere inputDto)
+        protected virtual  Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> queryable, TWhere inputDto)
         {
-            if (!IsTracking)
-            {
-                queryable = queryable.AsNoTracking();//加上之后获取不到扩展字段
-            }
             var methodDto = inputDto as IMethodDto<TEntity>;
             var methodStringType = methodDto?.MethodInput?.StringTypeQueryMethod;
             var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, methodStringType ?? ObjectMethodConsts.ContainsMethod);
@@ -218,7 +214,7 @@ namespace Jh.Abp.Application
 
         protected virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default)
         {
-            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(), inputDto);
+            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, isTracking: IsTracking), inputDto);
             return query.Any();
         }
 
@@ -261,6 +257,7 @@ namespace Jh.Abp.Application
                     methodDto.MethodInput.CreateOrUpdateEntityAction?.Invoke(entity);
                 }
             }
+            await crudRepository.UpdateAsync(entity);
             return await MapToGetOutputDtoAsync(entity);
         }
 

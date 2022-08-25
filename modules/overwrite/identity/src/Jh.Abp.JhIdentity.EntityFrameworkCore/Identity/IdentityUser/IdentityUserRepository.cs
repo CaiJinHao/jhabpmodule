@@ -17,8 +17,6 @@ namespace Jh.Abp.JhIdentity
 {
     public class IdentityUserRepository : CrudRepository<IIdentityDbContext, Volo.Abp.Identity.IdentityUser, System.Guid>, IIdentityUserRepository
 	{
-		public IJhIdentityDbContext jhIdentityDbContext { get; set; }
-		public IRepository<JhOrganizationUnit, Guid> _appRoleRepository { get; set; }
 		 public IdentityUserRepository(IDbContextProvider<IIdentityDbContext> dbContextProvider) : base(dbContextProvider)
 		{
 		}
@@ -54,7 +52,7 @@ namespace Jh.Abp.JhIdentity
             return await query.ToListAsync(GetCancellationToken(cancellationToken));
 		}
 
-		public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default)
+		/*public virtual async Task<IdentityUser> GetSuperiorUserAsync(Guid userId,CancellationToken cancellationToken = default)
 		{
 			var dbContext = await GetDbContextAsync();
             //获取用户所属组织
@@ -84,6 +82,18 @@ namespace Jh.Abp.JhIdentity
                 return data;
             }
             return default;
+        }*/
+
+		public virtual async Task<IQueryable<IdentityUser>> GetByOrganizationUnitCodeAsync(IQueryable<IdentityUser> entity,string organizationUnitCode)
+		{
+            var dbContext = await GetDbContextAsync();
+            var queryOrganizationUnit = dbContext.OrganizationUnits.Where(a => a.Code.StartsWith(organizationUnitCode));
+
+            var userOrgs = dbContext.Set<IdentityUserOrganizationUnit>();
+            return from user in entity
+                   join userOrg in userOrgs on user.Id equals userOrg.UserId
+                   join org in queryOrganizationUnit on userOrg.OrganizationUnitId equals org.Id
+                   select user;
         }
 	}
 }

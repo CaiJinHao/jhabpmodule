@@ -1,16 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.AuditLogging.MongoDB;
 using Volo.Abp.DependencyInjection;
-using Volo.Abp.Domain.Repositories.MongoDB;
 using Volo.Abp.MongoDB;
 
 namespace Jh.Abp.AuditLogging

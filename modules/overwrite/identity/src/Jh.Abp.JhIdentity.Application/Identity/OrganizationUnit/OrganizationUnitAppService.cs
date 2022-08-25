@@ -2,11 +2,9 @@ using Jh.Abp.Application;
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common;
 using Jh.Abp.Common.Utils;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -50,14 +48,8 @@ namespace Jh.Abp.JhIdentity
                     {
                         entity = entity.Where(a => a.Code.StartsWith(input.Code));
                     }
-                    if (input.LeaderId.HasValue)
-                    {
-                        entity = entity.Where(a => EF.Property<Guid>(a, nameof(JhOrganizationUnit.LeaderId)) == input.LeaderId);
-                    }
-                    if (!string.IsNullOrEmpty(input.LeaderName))
-                    {
-                        entity = entity.Where(a => EF.Property<string>(a, nameof(JhOrganizationUnit.LeaderName)).StartsWith(input.LeaderName));
-                    }
+
+                    entity = OrganizationUnitRepository.GetByLeaderAsync(entity, input.LeaderId, input.LeaderName).Result;
                     return entity;
                 }
             };
@@ -146,6 +138,7 @@ namespace Jh.Abp.JhIdentity
                     entity.SetProperty(item.Key, item.Value);
                 }
             }
+            await crudRepository.UpdateAsync(entity);
             await CurrentUnitOfWork.SaveChangesAsync();
             await OrganizationUnitManager.MoveAsync(id, input.ParentId);
 			return await MapToGetOutputDtoAsync(entity);
@@ -171,7 +164,7 @@ namespace Jh.Abp.JhIdentity
             var data = new List<OrganizationUnit>();
             async Task GetParent(Guid parenttid)
             {
-                var dbset = await crudRepository.GetQueryableAsync(true);
+                var dbset = await crudRepository.GetQueryableAsync(true, isTracking: IsTracking);
                 var root = dbset.FirstOrDefault(a => a.Id == (Guid)parenttid && a.IsDeleted == isDeleted);
                 if (root != null)
                 {
@@ -191,13 +184,7 @@ namespace Jh.Abp.JhIdentity
 
 		public virtual async Task<ListResultDto<TreeAntdDto>> GetOrganizationTreeAsync()
 		{
-            var resutlMenus = await (await OrganizationUnitRepository.GetQueryableAsync(true)).AsNoTracking().Select(a =>
-               new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
-               {
-                   parentId = a.ParentId.HasValue ? a.ParentId.Value.ToString() : null,
-                   data = a
-               }
-           ).ToListAsync();
+            var resutlMenus = await OrganizationUnitRepository.GetTreeAntdDtosAsync();
             var data= await UtilTree.GetTreeByAntdAsync(resutlMenus);
             return new ListResultDto<TreeAntdDto>(data);
         }
@@ -229,11 +216,6 @@ namespace Jh.Abp.JhIdentity
             return new ListResultDto<IdentityUserDto>(dtos);
         }
 
-        private async Task<Guid[]> GetAllRoleIdAsync()
-        {
-            return (await IdentityRoleRepository.GetQueryableAsync(false)).AsNoTracking().Where(a => a.Name != JhIdentityConsts.AdminRoleName).Select(a => a.Id).ToArray();
-        }
-
         public virtual async Task CreateByRoleAsync(Guid roleId)
         {
             await CheckCreatePolicyAsync();
@@ -250,17 +232,14 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
         {
-            var datas = await OrganizationUnitRepository.GetQueryableAsync(true);
+            var datas = await OrganizationUnitRepository.GetQueryableAsync(true, isTracking: IsTracking);
             return new ListResultDto<OptionDto<Guid>>(datas.Select(a => new OptionDto<Guid> { Label = a.DisplayName, Value = a.Id }).ToList());
         }
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetRoleOptionsAsync(Guid[] orgIds)
         {
-            var queryOrganizationUnitRole = (await OrganizationUnitRepository.GetQueryableAsync<OrganizationUnitRole>()).Where(a => orgIds.Contains(a.OrganizationUnitId));
-            var queryIdentityRole = await OrganizationUnitRepository.GetQueryableAsync<IdentityRole>();
-            var dataOptions = from role in queryIdentityRole
-                        join organizationUnitRole in queryOrganizationUnitRole on role.Id equals organizationUnitRole.RoleId
-                        select new OptionDto<Guid>() { Label = role.Name, Value = role.Id };
+            var roles = await OrganizationUnitRepository.GetRolesAsync(orgIds);
+            var dataOptions = roles.Select(role => new OptionDto<Guid>() { Label = role.Name, Value = role.Id });
             return new ListResultDto<OptionDto<Guid>>(dataOptions.Distinct().ToList());
         }
     }

@@ -14,7 +14,7 @@ namespace Jh.Abp.QuickComponents
     /// <summary>
     /// 此过滤器会将所有方法添加授权验证，如果需要某些方法不进行授权请手动过滤或添加表达式过滤
     /// </summary>
-    [Obsolete("不建议使用，请移步使用授权策略验证或者手动添加特性")]
+    [Obsolete("不建议使用，请移步使用授权策略验证或者手动添加特性,添加对url得过滤，nginx转发挡再外面了")]
     public class JhAuthorizationFilter : AuthorizeFilter
     {
         public IConfiguration Configuration;
@@ -46,7 +46,6 @@ namespace Jh.Abp.QuickComponents
                     }
                 }
             }
-            //TODO: 添加对url得过滤，nginx转发挡再外面了
             return base.OnAuthorizationAsync(context);
         }
     }

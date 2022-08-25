@@ -1,7 +1,6 @@
 ﻿using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common.Linq;
 using Jh.Abp.JhIdentity;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace Jh.Abp.AuditLogging
         public virtual async Task<AuditLog[]> DeleteAsync(AuditLoggingDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var lambda = LinqExpression.ConvetToExpression<AuditLoggingDeleteInputDto, AuditLog>(deleteInputDto, methodStringType);
-            var query = (await auditLogsRepository.GetQueryableAsync()).AsNoTracking().Where(lambda);
+            var query = (await auditLogsRepository.GetQueryableAsync()).Where(lambda);
             return await auditLogsRepository.DeleteEntitysAsync(query, autoSave, cancellationToken);
         }
 

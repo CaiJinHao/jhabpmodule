@@ -1,0 +1,45 @@
+{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information", //最小日志记录级别
+      "Override": { //系统日志最小记录级别
+        "Default": "Warning",
+        "System": "Warning",
+        "Microsoft": "Information",
+        "Microsoft.EntityFrameworkCore": "Warning"
+      }
+    },
+    "WriteTo": [
+      { "Name": "Console" }, //输出到控制台
+      {
+        "Name": "Async", //异步写入日志
+        "Args": {
+          "configure": [
+            {
+              "Name": "File", //最小级别Information
+              "Args": {
+                "path": "Logs/Information/logs.txt",
+                "restrictedToMinimumLevel": 2,
+                "outputTemplate": "{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}LogLevel：{Level}{NewLine}Class:{SourceContext}{NewLine}Message：{Message}{NewLine}{Exception}{NewLine}",
+                "rollingInterval": 3,
+                "retainedFileCountLimit": 90,
+                "fileSizeLimitBytes": 1024000
+              }
+            },
+            {
+              "Name": "File", //最小级别Warning
+              "Args": {
+                "path": "Logs/Warning/logs.txt",
+                "restrictedToMinimumLevel": 3,
+                "outputTemplate": "{NewLine}Date：{Timestamp:yyyy-MM-dd HH:mm:ss.fff}{NewLine}LogLevel：{Level}{NewLine}Class:{SourceContext}{NewLine}Message：{Message}{NewLine}{Exception}{NewLine}",
+                "rollingInterval": 3,
+                "retainedFileCountLimit": 90,
+                "fileSizeLimitBytes": 1024000
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

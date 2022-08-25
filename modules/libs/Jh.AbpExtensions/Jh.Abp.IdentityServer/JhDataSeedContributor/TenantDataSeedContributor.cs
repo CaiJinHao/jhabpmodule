@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
-using Volo.Abp.TenantManagement;
 
 namespace Jh.Abp.IdentityServer.JhDataSeedContributor
 {

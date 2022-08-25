@@ -1,13 +1,12 @@
 using Jh.Abp.Application;
-using System;
-using System.Threading.Tasks;
-using Volo.Abp.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Volo.Abp.Application.Dtos;
-using Jh.Abp.Common.Utils;
 using Jh.Abp.Application.Contracts;
 using Jh.Abp.Common;
+using Jh.Abp.Common.Utils;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Identity;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -35,17 +34,19 @@ namespace Jh.Abp.JhIdentity
 
         public async Task<Guid?> GetAdminRoleIdAsync()
         {
-            var role = await (await IdentityRoleRepository.GetQueryableAsync()).AsNoTracking().FirstOrDefaultAsync(a => a.Name == JhIdentity.JhIdentityConsts.AdminRoleName);
-            if (role!=null)
+            var query = await IdentityRoleRepository.GetQueryableAsync(true, isTracking: IsTracking);
+            query = query.Where(a => a.Name == JhIdentity.JhIdentityConsts.AdminRoleName);
+            var role = (await IdentityRoleRepository.GetListAsync(query)).FirstOrDefault();
+            if (role != null)
             {
-				return role.Id;
+                return role.Id;
             }
-			return null;
+            return null;
         }
 
         public virtual async Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name)
         {
-            var query = await IdentityRoleRepository.GetQueryableAsync(true);
+            var query = await IdentityRoleRepository.GetQueryableAsync(true, isTracking: IsTracking);
             query = query.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
             if (!string.IsNullOrEmpty(name))
             {
@@ -56,9 +57,8 @@ namespace Jh.Abp.JhIdentity
 
         public virtual async Task<ListResultDto<TreeAntdDto>> GetTreesAsync()
         {
-            var query = await IdentityRoleRepository.GetQueryableAsync(true);
-            query = query.Where(a => a.Name != JhIdentityConsts.AdminRoleName);
-            return new ListResultDto<TreeAntdDto>(query.Select(a => new TreeAntdDto(a.Id.ToString(), a.Name, a.NormalizedName) { isLeaf = true }).ToList());
+            var datas = await IdentityRoleRepository.GetTreeAntdDtosAsync();
+            return new ListResultDto<TreeAntdDto>(datas);
         }
     }
 }

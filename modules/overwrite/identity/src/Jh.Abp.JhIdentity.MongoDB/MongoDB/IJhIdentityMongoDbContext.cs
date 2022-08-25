@@ -10,6 +10,5 @@ public interface IJhIdentityMongoDbContext : IAbpMongoDbContext
     /* Define mongo collections here. Example:
      * IMongoCollection<Question> Questions { get; }
      */
-    public IMongoCollection<JhOrganizationUnit> OrganizationUnits { get; }
 
 }
