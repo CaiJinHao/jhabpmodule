@@ -36,5 +36,15 @@ IMethodDto<OrganizationUnit>
 		public string ConcurrencyStamp { get; set; }
 
 		public Guid[] RoleIds { get; set; }
-	}
+
+
+        /// <summary>
+        /// 领导id
+        /// </summary>
+        public  Guid? LeaderId { get; set; }
+        /// <summary>
+        /// 领导类型，可以使用多选枚举判断
+        /// </summary>
+        public  int? LeaderType { get; set; }
+    }
 }

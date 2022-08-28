@@ -16,9 +16,11 @@ public class JhIdentityMongoDbModule : AbpModule
     {
         context.Services.AddMongoDbContext<JhIdentityMongoDbContext>(options =>
         {
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, MongoQuestionRepository>();
-                 */
+            /* Add custom repositories here. Example:
+             * options.AddRepository<Question, MongoQuestionRepository>();
+             */
+            //为非聚合根的实体也创建默认仓储
+            options.AddDefaultRepositories(includeAllEntities: true);
         });
     }
 }

@@ -37,5 +37,14 @@ namespace Jh.Abp.JhIdentity
 		[Newtonsoft.Json.JsonIgnore]
 		public virtual ICollection<OrganizationUnitRole> Roles { get; set; }
 
-	}
+        /// <summary>
+        /// 领导id
+        /// </summary>
+        public Guid? LeaderId { get; set; }
+		public string LeaderName { get; set; }
+        /// <summary>
+        /// 领导类型，可以使用多选枚举判断
+        /// </summary>
+        public int? LeaderType { get; set; }
+    }
 }

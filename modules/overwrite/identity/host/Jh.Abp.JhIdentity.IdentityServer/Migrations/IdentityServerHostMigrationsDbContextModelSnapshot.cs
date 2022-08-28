@@ -18,8 +18,30 @@ namespace Jh.Abp.JhIdentity.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.MySql)
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Jh.Abp.JhIdentity.OrganizationUnitExtension", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("LeaderId")
+                        .HasColumnType("char(36)")
+                        .HasComment("用户ID");
+
+                    b.Property<int?>("LeaderType")
+                        .HasColumnType("int")
+                        .HasComment("领导类型");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeaderId");
+
+                    b.ToTable("AbpOrganizationUnitExtensions", (string)null);
+
+                    b.HasComment("组织扩展表");
+                });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {
@@ -880,15 +902,6 @@ namespace Jh.Abp.JhIdentity.Migrations
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnType("char(36)")
                         .HasColumnName("LastModifierId");
-
-                    b.Property<Guid?>("LeaderId")
-                        .HasColumnType("char(36)")
-                        .HasComment("直系领导ID");
-
-                    b.Property<string>("LeaderName")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasComment("直系领导名称");
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("char(36)");

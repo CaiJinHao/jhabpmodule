@@ -10,6 +10,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
 using Volo.Abp.Identity;
+using Volo.Abp.TenantManagement;
 
 namespace Jh.Abp.JhIdentity
 {
@@ -21,10 +22,12 @@ namespace Jh.Abp.JhIdentity
 		: CrudApplicationService<OrganizationUnit, OrganizationUnitDto, OrganizationUnitDto, System.Guid, OrganizationUnitRetrieveInputDto, OrganizationUnitCreateInputDto, OrganizationUnitUpdateInputDto, OrganizationUnitDeleteInputDto>,
 		IOrganizationUnitAppService
 	{
+        protected JhIdentityUserManager JhIdentityUserManager => LazyServiceProvider.LazyGetRequiredService<JhIdentityUserManager>();
         protected IJhIdentityRoleRepository IdentityRoleRepository=>LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleRepository>();
         protected Volo.Abp.Identity.IOrganizationUnitRepository OrganizationUnitsRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         private readonly IOrganizationUnitRepository OrganizationUnitRepository;
 		private JhOrganizationUnitManager OrganizationUnitManager => LazyServiceProvider.LazyGetRequiredService<JhOrganizationUnitManager>();
+        protected OrganizationUnitExtensionManager organizationUnitExtensionManager => LazyServiceProvider.LazyGetRequiredService<OrganizationUnitExtensionManager>();
         public OrganizationUnitAppService(IOrganizationUnitRepository repository) : base(repository)
         {
             OrganizationUnitRepository = repository;
@@ -55,25 +58,41 @@ namespace Jh.Abp.JhIdentity
             };
         }
 
-        public override Task<OrganizationUnitDto> GetAsync(Guid id)
+        protected async Task MapToOrganizationUnitDto(OrganizationUnitDto organizationUnitDto)
         {
-            return base.GetAsync(id,true);
+            var entity = await organizationUnitExtensionManager.GetAsync(organizationUnitDto.Id);
+            if (entity == null)
+            {
+                return;
+            }
+            organizationUnitDto.LeaderId = entity.LeaderId;
+            organizationUnitDto.LeaderName = await JhIdentityUserManager.GetIdentityUserNameAsync(entity.LeaderId);
+            organizationUnitDto.LeaderType = entity.LeaderType;
+        }
+
+        public override async Task<OrganizationUnitDto> GetAsync(Guid id)
+        {
+            var OrganizationUnitDto = await base.GetAsync(id, true);
+            await MapToOrganizationUnitDto(OrganizationUnitDto);
+            return OrganizationUnitDto;
         }
 
         public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
             input.MethodInput = GetMethodDto(input);
-            return await base.GetListAsync(input);
+            var pageResult= await base.GetListAsync(input);
+            foreach (var item in pageResult.Items)
+            {
+                await MapToOrganizationUnitDto(item);
+            }
+            return pageResult;
         }
 
         public override async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateInputDto input)
 		{
             await CheckCreatePolicyAsync();
-            var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId)
-            {
-                ConcurrencyStamp = input.ConcurrencyStamp
-            };
+            var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId);
             if (input.RoleIds != null)
             {
                 foreach (var item in input.RoleIds)
@@ -81,14 +100,9 @@ namespace Jh.Abp.JhIdentity
                     organizationUnit.AddRole(item);
                 }
             }
-            if (input.ExtraProperties.Count > 0)
-            {
-                foreach (var item in input.ExtraProperties)
-                {
-                    organizationUnit.SetProperty(item.Key, item.Value);
-                }
-            }
+            
             await OrganizationUnitManager.CreateAsync(organizationUnit);
+            await organizationUnitExtensionManager.CreateAsync(new OrganizationUnitExtension(organizationUnit.Id, input.LeaderId, input.LeaderType));
             return MapToGetOutputDto(organizationUnit);
 		}
 
@@ -120,7 +134,8 @@ namespace Jh.Abp.JhIdentity
         public override async Task<OrganizationUnitDto> UpdateAsync(Guid id, OrganizationUnitUpdateInputDto input)
         {
             await CheckUpdatePolicyAsync();
-            var entity = await crudRepository.FindAsync(id);
+            var entity = await crudRepository.GetAsync(id);
+            entity.ConcurrencyStamp = input.ConcurrencyStamp;
 			entity.DisplayName = input.DisplayName;
             if (input.RoleIds != null)
             {
@@ -130,16 +145,9 @@ namespace Jh.Abp.JhIdentity
                     entity.AddRole(item);
                 }
             }
-            //扩展属性值修改值为null,前端直接给null
-            if (input.ExtraProperties.Count > 0)
-            {
-                foreach (var item in input.ExtraProperties)
-                {
-                    entity.SetProperty(item.Key, item.Value);
-                }
-            }
             await crudRepository.UpdateAsync(entity);
-            await CurrentUnitOfWork.SaveChangesAsync();
+            await organizationUnitExtensionManager.UpdateAsync(id, input.LeaderId, input.LeaderType);
+            await CurrentUnitOfWork.SaveChangesAsync();//目的是在移动之前要保存组织信息
             await OrganizationUnitManager.MoveAsync(id, input.ParentId);
 			return await MapToGetOutputDtoAsync(entity);
         }

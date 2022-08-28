@@ -21,7 +21,7 @@ namespace Jh.Abp.JhIdentity
         public void TestGetTableClass()
         {
             //模板路径为空不生成
-            var basePathTemp = @"G:\Temp";
+            var basePathTemp = @"F:\Temp";
             var basePath = @"D:\github\mygithub\business\jhabpmodule\modules\identity";
             basePath = basePathTemp;
             var domainAssembly = typeof(JhIdentityDomainModule).Assembly;
@@ -40,11 +40,11 @@ namespace Jh.Abp.JhIdentity
                 CreateHttpApiPath = @$"{basePath}\src\{itemName}.HttpApi\v1{domain}",
                 CreateHtmlPath = @$"{basePathTemp}\host\{itemName}.Web.Unified\wwwroot\main\view",
                 //CreateHtmlTemplatePath = @"G:\github\mygithub\jhabpmodule\modules\abpjh\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
-                CreateHtmlTemplatePath = @"F:\github\mygithub\public\jh-abp-module-extension\modules\libs\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
+                //CreateHtmlTemplatePath = @"F:\github\mygithub\public\jh-abp-module-extension\modules\libs\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
             var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
             //var mapTables = service.GetTableClassByGeneratorClass(typeof(Entity));
-            Assert.True(service.GeneratorCode(new Type[] { typeof(Tenant) }));
+            Assert.True(service.GeneratorCode(new Type[] { typeof(OrganizationUnitExtension) }));
 
             //var service = new GeneratorService(domainAssembly, options, GneratorType.AllField);
             //var mapTables = service.GetLoadableTypes().Where(cla => cla.IsClass && typeof(IAggregateRoot).IsAssignableFrom(cla)).ToArray();

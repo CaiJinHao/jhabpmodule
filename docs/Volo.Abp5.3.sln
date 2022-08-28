@@ -641,11 +641,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.Identity.MongoDB",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.Users.MongoDB", "..\modules\users\src\Volo.Abp.Users.MongoDB\Volo.Abp.Users.MongoDB.csproj", "{F8DA92D5-0062-4D2F-8B1C-6D34B41A42A0}"
 EndProject
+<<<<<<< HEAD
 <<<<<<<< HEAD:docs/Volo.Abp5.3.sln
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.RemoteServices", "src\Volo.Abp.RemoteServices\Volo.Abp.RemoteServices.csproj", "{4FCEE458-4290-4991-98BB-ACB39F1178D4}"
 EndProject
 ========
 >>>>>>>> mongodb:docs/Volo.Abp5.3ef.sln
+=======
+<<<<<<<< HEAD:docs/Volo.Abp5.3ef.sln
+========
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.RemoteServices", "src\Volo.Abp.RemoteServices\Volo.Abp.RemoteServices.csproj", "{4FCEE458-4290-4991-98BB-ACB39F1178D4}"
+EndProject
+>>>>>>>> dev:docs/Volo.Abp5.3.sln
+>>>>>>> mongodb
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1860,13 +1868,22 @@ Global
 		{F8DA92D5-0062-4D2F-8B1C-6D34B41A42A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8DA92D5-0062-4D2F-8B1C-6D34B41A42A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8DA92D5-0062-4D2F-8B1C-6D34B41A42A0}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 <<<<<<<< HEAD:docs/Volo.Abp5.3.sln
+=======
+<<<<<<<< HEAD:docs/Volo.Abp5.3ef.sln
+========
+>>>>>>> mongodb
 		{4FCEE458-4290-4991-98BB-ACB39F1178D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FCEE458-4290-4991-98BB-ACB39F1178D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FCEE458-4290-4991-98BB-ACB39F1178D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FCEE458-4290-4991-98BB-ACB39F1178D4}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 ========
 >>>>>>>> mongodb:docs/Volo.Abp5.3ef.sln
+=======
+>>>>>>>> dev:docs/Volo.Abp5.3.sln
+>>>>>>> mongodb
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2187,10 +2204,17 @@ Global
 		{2400FEB0-7B52-47AC-868A-8EAF1D1DE9A3} = {3009545D-C5E4-4D97-9B7A-D413C9CF1A48}
 		{4F685B9E-0C7F-4677-8B01-6129232B6AC3} = {46020236-5517-40B3-96E1-DFC21BD90EA2}
 		{F8DA92D5-0062-4D2F-8B1C-6D34B41A42A0} = {995F235A-11A5-429B-84F9-4832D98A0C33}
+<<<<<<< HEAD
 <<<<<<<< HEAD:docs/Volo.Abp5.3.sln
 		{4FCEE458-4290-4991-98BB-ACB39F1178D4} = {5DF0E140-0513-4D0D-BE2E-3D4D85CD70E6}
 ========
 >>>>>>>> mongodb:docs/Volo.Abp5.3ef.sln
+=======
+<<<<<<<< HEAD:docs/Volo.Abp5.3ef.sln
+========
+		{4FCEE458-4290-4991-98BB-ACB39F1178D4} = {5DF0E140-0513-4D0D-BE2E-3D4D85CD70E6}
+>>>>>>>> dev:docs/Volo.Abp5.3.sln
+>>>>>>> mongodb
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB97ECF4-9A84-433F-A80B-2A3285BDD1D5}
