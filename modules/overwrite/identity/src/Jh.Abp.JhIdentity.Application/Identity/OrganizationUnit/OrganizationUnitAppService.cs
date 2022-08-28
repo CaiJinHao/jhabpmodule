@@ -147,7 +147,6 @@ namespace Jh.Abp.JhIdentity
                     entity.AddRole(item);
                 }
             }
-            //await OrganizationUnitManager.UpdateAsync(entity);//mongodb modify
             await organizationUnitExtensionManager.UpdateAsync(id, input.LeaderId, input.LeaderType);
             await CurrentUnitOfWork.SaveChangesAsync();
             await OrganizationUnitManager.MoveAsync(id, input.ParentId);

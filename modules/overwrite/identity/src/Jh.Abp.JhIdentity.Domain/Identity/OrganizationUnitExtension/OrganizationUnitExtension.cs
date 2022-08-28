@@ -15,6 +15,7 @@ namespace Jh.Abp.JhIdentity
         /// 领导类型，可以使用多选枚举判断
         /// </summary>
         public virtual int? LeaderType { get; set; }
+        public OrganizationUnitExtension() { }
         public OrganizationUnitExtension(Guid OrganizationUnitId)
         {
             Id = OrganizationUnitId;
