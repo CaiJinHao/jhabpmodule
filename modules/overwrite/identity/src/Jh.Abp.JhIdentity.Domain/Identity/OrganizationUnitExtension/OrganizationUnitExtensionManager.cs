@@ -27,11 +27,12 @@ namespace Jh.Abp.JhIdentity
             }
             entity.LeaderId = leaderId;
             entity.LeaderType = leaderType;
+            await organizationUnitExtensionRepository.UpdateAsync(entity);
         }
 
         public async Task<OrganizationUnitExtension> GetAsync(Guid OrganizationUnitId)
         {
-            return await organizationUnitExtensionRepository.GetAsync(OrganizationUnitId);
+            return await organizationUnitExtensionRepository.FindAsync(OrganizationUnitId);
         }
     }
 }

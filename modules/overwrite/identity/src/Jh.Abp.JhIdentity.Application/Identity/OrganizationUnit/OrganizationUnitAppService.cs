@@ -92,10 +92,7 @@ namespace Jh.Abp.JhIdentity
         public override async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateInputDto input)
 		{
             await CheckCreatePolicyAsync();
-            var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId)
-            {
-                ConcurrencyStamp = input.ConcurrencyStamp
-            };
+            var organizationUnit = new OrganizationUnit(GuidGenerator.Create(), input.DisplayName, input.ParentId, CurrentUser.TenantId);
             if (input.RoleIds != null)
             {
                 foreach (var item in input.RoleIds)
@@ -138,6 +135,7 @@ namespace Jh.Abp.JhIdentity
         {
             await CheckUpdatePolicyAsync();
             var entity = await crudRepository.GetAsync(id);
+            entity.ConcurrencyStamp = input.ConcurrencyStamp;
 			entity.DisplayName = input.DisplayName;
             if (input.RoleIds != null)
             {
@@ -147,8 +145,9 @@ namespace Jh.Abp.JhIdentity
                     entity.AddRole(item);
                 }
             }
+            await crudRepository.UpdateAsync(entity);
             await organizationUnitExtensionManager.UpdateAsync(id, input.LeaderId, input.LeaderType);
-            await CurrentUnitOfWork.SaveChangesAsync();
+            await CurrentUnitOfWork.SaveChangesAsync();//目的是在移动之前要保存组织信息
             await OrganizationUnitManager.MoveAsync(id, input.ParentId);
 			return await MapToGetOutputDtoAsync(entity);
         }
