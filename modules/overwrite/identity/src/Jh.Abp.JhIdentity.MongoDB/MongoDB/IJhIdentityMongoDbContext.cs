@@ -7,8 +7,5 @@ namespace Jh.Abp.JhIdentity.MongoDB;
 [ConnectionStringName(JhIdentityDbProperties.ConnectionStringName)]
 public interface IJhIdentityMongoDbContext : IAbpMongoDbContext
 {
-    /* Define mongo collections here. Example:
-     * IMongoCollection<Question> Questions { get; }
-     */
-
+    IMongoCollection<OrganizationUnitExtension> OrganizationUnitExtensions { get; }
 }

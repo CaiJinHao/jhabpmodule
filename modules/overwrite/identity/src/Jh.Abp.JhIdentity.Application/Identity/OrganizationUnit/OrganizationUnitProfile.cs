@@ -10,7 +10,12 @@ namespace Jh.Abp.JhIdentity
     {
         public OrganizationUnitProfile()
         {
-            CreateMap<OrganizationUnit, OrganizationUnitDto>().ForMember(dest => dest.RoleIds, option => option.MapFrom(src => src.Roles.Select(a => a.RoleId).ToArray()));
+            CreateMap<OrganizationUnit, OrganizationUnitDto>()
+                .ForMember(dest => dest.RoleIds, option => option.MapFrom(src => src.Roles.Select(a => a.RoleId).ToArray()))
+                .Ignore(a => a.LeaderId)
+                .Ignore(a => a.LeaderName)
+                .Ignore(a => a.LeaderType)
+                ;
         }
     }
 }

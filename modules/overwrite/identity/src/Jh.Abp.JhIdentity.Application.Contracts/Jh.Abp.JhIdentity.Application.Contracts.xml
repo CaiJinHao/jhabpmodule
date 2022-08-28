@@ -421,6 +421,16 @@
             并发检测字段 必须和数据库中的值一样才会允许更新
             </summary>
         </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.LeaderId">
+            <summary>
+            领导id
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.LeaderType">
+            <summary>
+            领导类型，可以使用多选枚举判断
+            </summary>
+        </member>
         <member name="T:Jh.Abp.JhIdentity.OrganizationUnitDto">
             <summary>
             
@@ -444,6 +454,16 @@
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitDto.ConcurrencyStamp">
             <summary>
             并发标识
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitDto.LeaderId">
+            <summary>
+            领导id
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitDto.LeaderType">
+            <summary>
+            领导类型，可以使用多选枚举判断
             </summary>
         </member>
         <member name="T:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto">
@@ -504,6 +524,16 @@
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.MethodInput">
             <summary>
             方法参数回调
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.LeaderId">
+            <summary>
+            领导id
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.LeaderType">
+            <summary>
+            领导类型，可以使用多选枚举判断
             </summary>
         </member>
         <member name="M:Jh.Abp.PermissionManagement.IJhPermissionAppService.GetTreesAsync(Jh.Abp.PermissionManagement.PermissionTreesRetrieveInputDto)">

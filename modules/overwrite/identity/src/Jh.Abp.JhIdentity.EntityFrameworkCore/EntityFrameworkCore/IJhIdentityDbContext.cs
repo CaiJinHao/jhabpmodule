@@ -7,4 +7,5 @@ namespace Jh.Abp.JhIdentity.EntityFrameworkCore;
 [ConnectionStringName(JhIdentityDbProperties.ConnectionStringName)]
 public interface IJhIdentityDbContext : IEfCoreDbContext
 {
+    DbSet<OrganizationUnitExtension> OrganizationUnitExtensions { get; }
 }

@@ -25,6 +25,7 @@ public class JhIdentityEntityFrameworkCoreModule : AbpModule
     {
         context.Services.AddAbpDbContext<JhIdentityDbContext>(options =>
         {
+            options.AddDefaultRepositories(includeAllEntities: true);
             options.AddRepository<IdentityUser, EfCoreIdentityUserRepository>();
             options.AddRepository<IdentityRole, EfCoreIdentityRoleRepository>();
             options.AddRepository<IdentityClaimType, EfCoreIdentityClaimTypeRepository>();
