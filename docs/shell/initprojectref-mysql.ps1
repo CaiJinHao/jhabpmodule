@@ -27,15 +27,15 @@ dotnet add $execPath\src\$slnName.Domain.Shared\$slnName.Domain.Shared.csproj pa
 
 dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj reference $execPath\src\$slnName.Domain\$slnName.Domain.csproj
 
-
-
 # 模块引用
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.HttpApi
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.Application
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.EntityFrameworkCore
 
 # MySql
-# dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Volo.Abp.EntityFrameworkCore.MySQL
+# 删除sqlserver
+dotnet remove $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Volo.Abp.EntityFrameworkCore.SqlServer
+dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Volo.Abp.EntityFrameworkCore.MySQL
 
 
 # dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.HttpApi
