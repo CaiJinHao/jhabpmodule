@@ -35,6 +35,7 @@ $packagesDto =
 @{Name = "Jh.Abp.Domain"; },
 @{Name = "Jh.Abp.Domain.Shared";},
 @{Name = "Jh.Abp.EntityFrameworkCore"; },
+@{Name = "Jh.Abp.MongoDB"; },
 
 
 # Éí·ÝÄ£¿é
@@ -44,6 +45,7 @@ $packagesDto =
 @{Name = "Jh.Abp.JhIdentity.Domain";  },
 @{Name = "Jh.Abp.JhIdentity.Domain.Shared";   },
 @{Name = "Jh.Abp.JhIdentity.EntityFrameworkCore";  },
+@{Name = "Jh.Abp.JhIdentity.MongoDB";  },
 @{Name = "Jh.Abp.JhIdentity.HttpApi"; },
 @{Name = "Jh.Abp.JhIdentity.HttpApi.Client";  }
 
