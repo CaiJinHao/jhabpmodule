@@ -42,20 +42,14 @@ namespace Jh.Abp.JhIdentity
 
         protected virtual Func<IQueryable<OrganizationUnit>, IQueryable<OrganizationUnit>> GetQueryAction(OrganizationUnitRetrieveInputDto input)
         {
-            IsTracking = true;
             return entity =>
             {
-                if (!string.IsNullOrEmpty(input.Code))
-                {
-                    entity = entity.Where(a => a.Code.StartsWith(input.Code));
-                }
-
                 entity = OrganizationUnitRepository.GetByLeaderAsync(entity, input.LeaderId, input.LeaderName).Result;
                 return entity;
             };
         }
 
-        protected async Task MapToOrganizationUnitDto(OrganizationUnitDto organizationUnitDto)
+        protected virtual async Task MapToOrganizationUnitDto(OrganizationUnitDto organizationUnitDto)
         {
             var entity = await organizationUnitExtensionManager.GetAsync(organizationUnitDto.Id);
             if (entity == null)
@@ -77,7 +71,7 @@ namespace Jh.Abp.JhIdentity
         public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
-            var pageResult = await base.GetListAsync(input, QueryAction: GetQueryAction(input));
+            var pageResult = await base.GetListAsync(input, queryAction: GetQueryAction(input));
             foreach (var item in pageResult.Items)
             {
                 await MapToOrganizationUnitDto(item);

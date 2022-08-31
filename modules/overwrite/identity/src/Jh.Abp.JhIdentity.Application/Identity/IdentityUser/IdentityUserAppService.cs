@@ -192,7 +192,7 @@ namespace Jh.Abp.JhIdentity
 
         public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(IdentityUserRetrieveInputDto input)
         {
-            return await base.GetListAsync(input, QueryAction: GetQueryAction(input));
+            return await base.GetListAsync(input, queryAction: GetQueryAction(input));
         }
 
         public virtual async Task<IdentityUserDto> GetCurrentAsync()

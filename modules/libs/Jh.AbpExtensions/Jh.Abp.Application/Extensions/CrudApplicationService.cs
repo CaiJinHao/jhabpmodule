@@ -67,15 +67,15 @@ namespace Jh.Abp.Application
             await crudRepository.UpdateAsync(entity);
         }
 
-        protected virtual async Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto, Func<IQueryable<TEntity>, IQueryable<TEntity>> QueryAction = null, Action<TEntity> CreateOrUpdateEntityAction = null, bool includeDetails = false, CancellationToken cancellationToken = default)
+        protected virtual async Task<ListResultDto<TPagedRetrieveOutputDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string stringTypeQueryMethod = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> selectAction = null, Action<TEntity> CreateOrUpdateEntityAction = null, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
-            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, includeDetails: includeDetails, isTracking: IsTracking), inputDto);
+            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, includeDetails: includeDetails, isTracking: IsTracking), inputDto, stringTypeQueryMethod, queryAction);
             query = ApplySorting(query, inputDto);
             query = ApplyPaging(query, inputDto);
-            if (QueryAction != null)
+            if (selectAction != null)
             {
-                query = QueryAction?.Invoke(query);
+                query = selectAction?.Invoke(query);
             }
             var entities = await crudRepository.GetListAsync(query, cancellationToken);
             if (CreateOrUpdateEntityAction != null)
@@ -96,17 +96,17 @@ namespace Jh.Abp.Application
             return await MapToGetOutputDtoAsync(entity);
         }
 
-        protected virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, Func<IQueryable<TEntity>, IQueryable<TEntity>> QueryAction = null, Action<TEntity> CreateOrUpdateEntityAction = null, bool includeDetails = false, CancellationToken cancellationToken = default)
+        protected virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string stringTypeQueryMethod = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> selectAction = null, Action<TEntity> CreateOrUpdateEntityAction = null, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
-            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, includeDetails: includeDetails, isTracking: IsTracking), input);
+            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, includeDetails: includeDetails, isTracking: IsTracking), input, stringTypeQueryMethod, queryAction);
 
             var totalCount = await crudRepository.GetCountAsync(query, cancellationToken);
 
             query = ApplySorting(query, input);
             query = ApplyPaging(query, input);
-            if (QueryAction != null)
+            if (selectAction != null)
             {
-                query = QueryAction?.Invoke(query);
+                query = selectAction?.Invoke(query);//指定查询字段
             }
             var entities = await crudRepository.GetListAsync(query, cancellationToken);
             if (CreateOrUpdateEntityAction != null)
@@ -129,18 +129,18 @@ namespace Jh.Abp.Application
             return await CreateFilteredQueryAsync(inputDto);
         }
 
-        protected virtual async Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(TWhere inputDto)
+        protected virtual async Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(TWhere inputDto, string stringTypeQueryMethod = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction = null)
         {
-            return await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true,isTracking: IsTracking), inputDto);
+            return await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, isTracking: IsTracking), inputDto, stringTypeQueryMethod, queryAction);
         }
 
-        protected virtual Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> queryable, TWhere inputDto, string StringTypeQueryMethod = ObjectMethodConsts.ContainsMethod, Func<IQueryable<TEntity>, IQueryable<TEntity>> QueryAction = null)
+        protected virtual Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> queryable, TWhere inputDto, string stringTypeQueryMethod, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction)
         {
-            var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, StringTypeQueryMethod ?? ObjectMethodConsts.ContainsMethod);
+            var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, stringTypeQueryMethod ?? ObjectMethodConsts.StartsWithMethod);
             var query = queryable.Where(lambda);
-            if (QueryAction != null)
+            if (queryAction != null)
             {
-                query = QueryAction?.Invoke(query);
+                query = queryAction?.Invoke(query);
             }
             if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
             {
@@ -171,15 +171,15 @@ namespace Jh.Abp.Application
             return Task.FromResult(query);
         }
 
-        protected virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default)
+        protected virtual async Task<bool> AnyAsync(TRetrieveInputDto inputDto, string stringTypeQueryMethod = ObjectMethodConsts.EqualsMethod, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction = null, CancellationToken cancellationToken = default)
         {
-            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, isTracking: IsTracking), inputDto);
+            var query = await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, isTracking: IsTracking), stringTypeQueryMethod, queryAction: queryAction);
             return query.Any();
         }
 
-        protected virtual async Task DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
+        protected virtual async Task DeleteAsync(TDeleteInputDto deleteInputDto, string stringTypeQueryMethod = ObjectMethodConsts.EqualsMethod, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction = null, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
-            var query = await CreateFilteredQueryAsync(deleteInputDto);
+            var query = await CreateFilteredQueryAsync(deleteInputDto, stringTypeQueryMethod, queryAction);
             await crudRepository.DeleteEntitysAsync(query, autoSave, isHard, cancellationToken);
         }
 

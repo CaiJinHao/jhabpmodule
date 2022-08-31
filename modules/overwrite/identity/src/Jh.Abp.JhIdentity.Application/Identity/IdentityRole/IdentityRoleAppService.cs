@@ -30,7 +30,7 @@ namespace Jh.Abp.JhIdentity
 
         public override Task<PagedResultDto<IdentityRoleDto>> GetListAsync(IdentityRoleRetrieveInputDto input)
         {
-            return base.GetListAsync(input, QueryAction: GetQueryAction(input));
+            return base.GetListAsync(input, queryAction: GetQueryAction(input));
         }
 
         public async Task<Guid?> GetAdminRoleIdAsync()

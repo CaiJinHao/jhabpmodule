@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Volo.Abp.Application.Dtos;
 
 namespace Jh.Abp.AuditLogging
 {
-    public class AuditLogDto
+    public class AuditLogDto : ExtensibleEntityDto<System.Guid>
     {
         public virtual string ApplicationName { get; set; }
 
