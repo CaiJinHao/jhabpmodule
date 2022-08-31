@@ -44,6 +44,10 @@ namespace Jh.Abp.JhIdentity
         {
             return entity =>
             {
+                if (!string.IsNullOrEmpty(input.Code))
+                {
+                    entity = entity.Where(a=>a.Code.StartsWith(input.Code));
+                }
                 entity = OrganizationUnitRepository.GetByLeaderAsync(entity, input.LeaderId, input.LeaderName).Result;
                 return entity;
             };

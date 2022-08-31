@@ -33,7 +33,7 @@ namespace Jh.Abp.Common.Linq
     public static class LinqExpression
     {
         /// <summary>
-        /// 转换为表达式
+        /// 转换为表达式,只能用于EF
         /// 该查询值对表字段相同都会查询、否则使用自定义字段不能和表字段相投，自己添加查询条件
         /// </summary>
         /// <typeparam name="TWhere">要生成linq条件的类</typeparam>
@@ -43,7 +43,7 @@ namespace Jh.Abp.Common.Linq
         /// <returns></returns>
         public static Expression<Func<TSource, bool>> ConvetToExpression<TWhere, TSource>(TWhere inputDto,string methodStringType= "Equals")
         {
-            Expression<Func<TSource, bool>> expression = e => true;
+            Expression<Func<TSource, bool>> left = e => true;
             if (inputDto == null)
             {
                 throw new ArgumentNullException(nameof(inputDto));
@@ -64,6 +64,7 @@ namespace Jh.Abp.Common.Linq
                 {
                     continue;
                 }
+
                 //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
                 //2.创建属性表达式
                 MethodInfo? method = null;
@@ -124,17 +125,104 @@ namespace Jh.Abp.Common.Linq
                 //3.创建常数表达式
                 ConstantExpression constantExpression = Expression.Constant(propertyVal, propertyType);
                 //4.创建方法调用表达式
-                var filterMethod = Expression.Call(proerty, method, new Expression[] { constantExpression });
+                var filterMethod = Expression.Call(proerty, method, constantExpression);
                 //5.创建Lambda表达式
-                var right = Expression.Lambda<Func<TSource, bool>>(filterMethod, new ParameterExpression[] { parameterExpression });
-                expression = expression == null ? right : CombineExpressions(expression, right);
+                var right = Expression.Lambda<Func<TSource, bool>>(filterMethod, parameterExpression);
+                left = CombineExpressions(left, right);
+            }
+            return left;
+        }
+
+        public static Expression<Func<TSource, bool>> ConvetToExpressionMongoOld<TWhere, TSource>(TWhere inputDto, string methodStringType = "Equals")
+        {
+            Expression<Func<TSource, bool>> expression = e => true;
+            if (inputDto == null)
+            {
+                throw new ArgumentNullException(nameof(inputDto));
+            }
+
+            //1.创建别名
+            ParameterExpression lambdaParam = Expression.Parameter(typeof(TSource), "e");
+            var sourcePropertyInfosNames = typeof(TSource).GetProperties().Select(a => a.Name);
+            var inputPropertyInfos = inputDto.GetType().GetProperties();
+            foreach (var item in inputPropertyInfos)
+            {
+                if (!sourcePropertyInfosNames.Contains(item.Name))
+                {
+                    continue;
+                }
+                var propertyVal = item.GetValue(inputDto, null);
+                if (propertyVal == null)
+                {
+                    continue;
+                }
+
+                var valueType = propertyVal.GetType().GetObjectType();
+                switch (valueType)
+                {
+                    case Enums.ObjectType.Enum:
+                        {
+                            propertyVal = (int)propertyVal;
+                        }
+                        break;
+                    case Enums.ObjectType.Int16:
+                    case Enums.ObjectType.Int32:
+                    case Enums.ObjectType.Int64:
+                    case Enums.ObjectType.Float:
+                    case Enums.ObjectType.Double:
+                    case Enums.ObjectType.Decimal:
+                    case Enums.ObjectType.Boolean:
+                        {
+                            //只要不是null就添加查询条件
+                        }
+                        break;
+                    case Enums.ObjectType.Guid:
+                        {
+                            if (propertyVal.Equals(Guid.Empty))
+                            {
+                                continue;
+                            }
+                        }
+                        break;
+                    case Enums.ObjectType.String:
+                        {
+                            if (propertyVal.Equals(string.Empty))
+                            {
+                                continue;
+                            }
+                        }
+                        break;
+                    case Enums.ObjectType.DateTime:
+                    default:
+                        //其他不添加查询条件
+                        continue;
+                }
+
+                var leftExpression = Expression.PropertyOrField(lambdaParam, item.Name);
+                var propertyValue = Convert.ChangeType(propertyVal, propertyVal.GetType());
+                Expression<Func<object>> closure = () => propertyValue;
+                var rightExpression = Expression.Convert(closure.Body, leftExpression.Type);
+                var lambdaBody = Expression.Equal(leftExpression, rightExpression);
+                var newExpression = Expression.Lambda<Func<TSource, bool>>(lambdaBody, lambdaParam);
+                expression = expression == null ? newExpression : CombineExpressions(expression, newExpression);
+            }
+            if (expression == null)
+            {
+                expression = e => true;
             }
             return expression;
         }
 
+        /// <summary>
+        /// 组合两个表达式
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression1"></param>
+        /// <param name="expression2"></param>
+        /// <returns></returns>
         public static Expression<Func<T, bool>> CombineExpressions<T>(Expression<Func<T, bool>> expression1, Expression<Func<T, bool>> expression2)
         {
-            var parameter = Expression.Parameter(typeof(T));
+            var parameter = Expression.Parameter(typeof(T),"e");
 
             var leftVisitor = new ReplaceExpressionVisitor(expression1.Parameters[0], parameter);
             var left = leftVisitor.Visit(expression1.Body);

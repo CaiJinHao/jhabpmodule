@@ -134,10 +134,10 @@ namespace Jh.Abp.Application
             return await CreateFilteredQueryAsync(await crudRepository.GetQueryableAsync(true, isTracking: IsTracking), inputDto, stringTypeQueryMethod, queryAction);
         }
 
-        protected virtual Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> queryable, TWhere inputDto, string stringTypeQueryMethod, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction)
+        protected virtual Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(IQueryable<TEntity> query, TWhere inputDto, string stringTypeQueryMethod, Func<IQueryable<TEntity>, IQueryable<TEntity>> queryAction)
         {
             var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, stringTypeQueryMethod ?? ObjectMethodConsts.StartsWithMethod);
-            var query = queryable.Where(lambda);
+            query = query.Where(lambda);
             if (queryAction != null)
             {
                 query = queryAction?.Invoke(query);
