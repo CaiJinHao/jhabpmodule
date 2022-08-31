@@ -6,8 +6,8 @@ param (
 )
 
 # host
-dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.QuickComponents
-dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.JhIdentity.HttpApi.Client
+dotnet add $execPath\host\$slnName.HttpApi.Host.MongoDB\$slnName.HttpApi.Host.MongoDB.csproj package Jh.Abp.QuickComponents
+dotnet add $execPath\host\$slnName.HttpApi.Host.MongoDB\$slnName.HttpApi.Host.MongoDB.csproj package Jh.Abp.JhIdentity.HttpApi.Client
 
 dotnet add $execPath\host\$slnName.IdentityServer.MongoDB\$slnName.IdentityServer.MongoDB.csproj package Jh.Abp.IdentityServer
 dotnet add $execPath\host\$slnName.IdentityServer.MongoDB\$slnName.IdentityServer.MongoDB.csproj package Jh.Abp.QuickComponents
@@ -21,8 +21,8 @@ dotnet add $execPath\src\$slnName.Domain\$slnName.Domain.csproj package Jh.Sourc
 dotnet add $execPath\src\$slnName.Domain.Shared\$slnName.Domain.Shared.csproj package Jh.Abp.Domain.Shared
 
 # 项目引用
-
-dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj reference $execPath\src\$slnName.Domain\$slnName.Domain.csproj
+# 已用之后可能导致不兼容
+# dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj reference $execPath\src\$slnName.Domain\$slnName.Domain.csproj
 
 
 

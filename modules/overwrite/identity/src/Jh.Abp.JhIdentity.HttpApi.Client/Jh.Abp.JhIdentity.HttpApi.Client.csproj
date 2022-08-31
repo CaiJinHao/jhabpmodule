@@ -3,12 +3,12 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Jh.Abp.JhIdentity</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Http.Client" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.Http.Client" Version="5.3.4" />
     <ProjectReference Include="..\Jh.Abp.JhIdentity.Application.Contracts\Jh.Abp.JhIdentity.Application.Contracts.csproj" />
   </ItemGroup>
 

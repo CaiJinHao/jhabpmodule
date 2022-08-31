@@ -9,10 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.IdentityServer.EntityFrameworkCore" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.IdentityServer.EntityFrameworkCore" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="5.3.4" />
   </ItemGroup>
 </Project>

@@ -8,17 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.MailKit" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.MailKit" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="5.3.4" />
     <PackageReference Include="IdentityModel" Version="5.1.0" />
-    <PackageReference Include="Volo.Abp.IdentityModel" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.Account.Application" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.AutoMapper" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.Identity.Application" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Application" Version="5.3.3" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.3.3" />
+    <PackageReference Include="Volo.Abp.IdentityModel" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.Account.Application" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.Identity.Application" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Application" Version="5.3.4" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.3.4" />
     <ProjectReference Include="..\Jh.Abp.JhIdentity.Application.Contracts\Jh.Abp.JhIdentity.Application.Contracts.csproj" />
     <ProjectReference Include="..\Jh.Abp.JhIdentity.Domain\Jh.Abp.JhIdentity.Domain.csproj" />
   </ItemGroup>
