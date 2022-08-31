@@ -170,31 +170,29 @@ namespace Jh.Abp.JhIdentity
             );
         }
 
-        public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(IdentityUserRetrieveInputDto input)
+        protected virtual Func<IQueryable<IdentityUser>, IQueryable<IdentityUser>> GetQueryAction(IdentityUserRetrieveInputDto input)
         {
             if (!string.IsNullOrEmpty(input.OrganizationUnitCode))
             {
-                input.MethodInput = new MethodDto<IdentityUser>()
+                return (entity) =>
                 {
-                    QueryAction =  (entity) =>
-                    {
-                        var query = IdentityUserRepository.GetByOrganizationUnitCodeAsync(entity, input.OrganizationUnitCode).Result;
-                        entity = query.Where(a => a.UserName != JhIdentity.JhIdentityConsts.AdminUserName);
-                        return query.Distinct();
-                    }
+                    var query = IdentityUserRepository.GetByOrganizationUnitCodeAsync(entity, input.OrganizationUnitCode).Result;
+                    entity = query.Where(a => a.UserName != JhIdentity.JhIdentityConsts.AdminUserName);
+                    return query.Distinct();
                 };
             }
             else
             {
-                input.MethodInput = new MethodDto<IdentityUser>()
+                return (entity) =>
                 {
-                    QueryAction = (entity) =>
-                    {
-                        return entity.Where(a=>a.UserName != JhIdentity.JhIdentityConsts.AdminUserName);
-                    }
+                    return entity.Where(a => a.UserName != JhIdentity.JhIdentityConsts.AdminUserName);
                 };
             }
-            return await base.GetListAsync(input);
+        }
+
+        public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(IdentityUserRetrieveInputDto input)
+        {
+            return await base.GetListAsync(input, QueryAction: GetQueryAction(input));
         }
 
         public virtual async Task<IdentityUserDto> GetCurrentAsync()

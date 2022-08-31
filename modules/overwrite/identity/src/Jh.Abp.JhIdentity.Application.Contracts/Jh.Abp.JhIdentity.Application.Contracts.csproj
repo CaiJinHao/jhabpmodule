@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\libs\Jh.AbpExtensions\Jh.Abp.Application.Contracts\Jh.Abp.Application.Contracts.csproj" />
-    <ProjectReference Include="..\Jh.Abp.JhIdentity.Domain\Jh.Abp.JhIdentity.Domain.csproj" />
   </ItemGroup>
 
 </Project>

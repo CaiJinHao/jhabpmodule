@@ -8,7 +8,7 @@ using Volo.Abp.Identity;
 namespace Jh.Abp.JhIdentity
 {
     public interface IJhIdentityRoleAppService
-		: ICrudApplicationService<IdentityRole, IdentityRoleDto, IdentityRoleDto, System.Guid, IdentityRoleRetrieveInputDto, IdentityRoleCreateInputDto, IdentityRoleUpdateInputDto, IdentityRoleDeleteInputDto>
+		: ICrudApplicationService<IdentityRoleDto, IdentityRoleDto, System.Guid, IdentityRoleRetrieveInputDto, IdentityRoleCreateInputDto, IdentityRoleUpdateInputDto, IdentityRoleDeleteInputDto>
 	{
 		Task<Guid?> GetAdminRoleIdAsync();
 		Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync(string name);

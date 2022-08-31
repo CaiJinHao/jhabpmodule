@@ -8,7 +8,7 @@ using Volo.Abp.TenantManagement;
 namespace Jh.Abp.TenantManagement
 {
     public interface IJhTenantAppService
-        : ICrudApplicationService<Tenant, TenantDto, TenantDto, System.Guid, TenantRetrieveInputDto, TenantCreateDto, TenantUpdateDto, TenantRetrieveInputDto>
+        : ICrudApplicationService<TenantDto, TenantDto, System.Guid, TenantRetrieveInputDto, TenantCreateDto, TenantUpdateDto, TenantRetrieveInputDto>
     {
         Task RecoverAsync(System.Guid id);
         //Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync();

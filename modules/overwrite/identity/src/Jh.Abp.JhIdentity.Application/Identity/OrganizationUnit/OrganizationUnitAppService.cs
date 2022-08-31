@@ -40,21 +40,18 @@ namespace Jh.Abp.JhIdentity
             BatchDeletePolicyName = JhIdentityPermissions.OrganizationUnits.BatchDelete;
         }
 
-        private MethodDto<OrganizationUnit> GetMethodDto(OrganizationUnitRetrieveInputDto input)
+        protected virtual Func<IQueryable<OrganizationUnit>, IQueryable<OrganizationUnit>> GetQueryAction(OrganizationUnitRetrieveInputDto input)
         {
             IsTracking = true;
-            return new MethodDto<OrganizationUnit>()
+            return entity =>
             {
-                QueryAction = entity =>
+                if (!string.IsNullOrEmpty(input.Code))
                 {
-                    if (!string.IsNullOrEmpty(input.Code))
-                    {
-                        entity = entity.Where(a => a.Code.StartsWith(input.Code));
-                    }
-
-                    entity = OrganizationUnitRepository.GetByLeaderAsync(entity, input.LeaderId, input.LeaderName).Result;
-                    return entity;
+                    entity = entity.Where(a => a.Code.StartsWith(input.Code));
                 }
+
+                entity = OrganizationUnitRepository.GetByLeaderAsync(entity, input.LeaderId, input.LeaderName).Result;
+                return entity;
             };
         }
 
@@ -80,8 +77,7 @@ namespace Jh.Abp.JhIdentity
         public override async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(OrganizationUnitRetrieveInputDto input)
         {
             await CheckGetListPolicyAsync();
-            input.MethodInput = GetMethodDto(input);
-            var pageResult= await base.GetListAsync(input);
+            var pageResult = await base.GetListAsync(input, QueryAction: GetQueryAction(input));
             foreach (var item in pageResult.Items)
             {
                 await MapToOrganizationUnitDto(item);

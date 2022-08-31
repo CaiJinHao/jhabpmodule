@@ -9,7 +9,6 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
 using Volo.Abp.Identity;
-using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace Jh.Abp.JhIdentity.v1
 {

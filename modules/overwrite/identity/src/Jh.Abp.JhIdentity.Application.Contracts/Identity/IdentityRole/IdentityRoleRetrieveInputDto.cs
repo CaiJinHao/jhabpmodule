@@ -8,7 +8,7 @@ namespace Jh.Abp.JhIdentity
     /// <summary>
     /// 
     /// </summary>
-    public class IdentityRoleRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<IdentityRole>
+    public class IdentityRoleRetrieveInputDto: PagedAndSortedResultRequestDto
 	{
 		/// <summary>
 		/// 
@@ -30,11 +30,5 @@ namespace Jh.Abp.JhIdentity
 		/// 
 		/// </summary>
 		public Boolean? IsPublic { get; set; }
-		/// <summary>
-		/// 方法参数回调
-		/// </summary>
-		[System.Text.Json.Serialization.JsonIgnore]
-		[Newtonsoft.Json.JsonIgnore]
-		public MethodDto<IdentityRole> MethodInput { get; set; }
 	}
 }

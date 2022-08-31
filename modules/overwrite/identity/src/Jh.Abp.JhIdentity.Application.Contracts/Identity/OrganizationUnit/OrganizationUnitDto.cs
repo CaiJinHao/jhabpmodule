@@ -33,10 +33,6 @@ namespace Jh.Abp.JhIdentity
 
 		public Guid[] RoleIds { get; set; }
 
-		[System.Text.Json.Serialization.JsonIgnore]
-		[Newtonsoft.Json.JsonIgnore]
-		public virtual ICollection<OrganizationUnitRole> Roles { get; set; }
-
         /// <summary>
         /// ¡Ïµºid
         /// </summary>

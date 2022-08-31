@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Auditing;
-using Volo.Abp.AuditLogging;
 
 namespace Jh.Abp.AuditLogging
 {
@@ -46,7 +45,7 @@ namespace Jh.Abp.AuditLogging
 		[Authorize(JhAuditLoggingPermissions.AuditLoggings.Detail)]
         [Route("{id}")]
         [HttpGet]
-        public virtual async Task<AuditLog> GetAsync(System.Guid id)
+        public virtual async Task<AuditLogDto> GetAsync(System.Guid id)
         {
             return await auditLoggingAppService.GetAsync(id,true);
         }
@@ -58,7 +57,7 @@ namespace Jh.Abp.AuditLogging
         /// <returns></returns>
 		[Authorize(JhAuditLoggingPermissions.AuditLoggings.Default)]
         [HttpGet]
-        public virtual async Task<PagedResultDto<AuditLog>> GetListAsync([FromQuery] AuditLoggingRetrieveInputDto input)
+        public virtual async Task<PagedResultDto<AuditLogDto>> GetListAsync([FromQuery] AuditLoggingRetrieveInputDto input)
         {
             return await auditLoggingAppService.GetListAsync(input, true);
         }
@@ -71,7 +70,7 @@ namespace Jh.Abp.AuditLogging
 		[Authorize(JhAuditLoggingPermissions.AuditLoggings.Default)]
         [Route("all")]
         [HttpGet]
-        public virtual async Task<ListResultDto<AuditLog>> GetEntitysAsync([FromQuery] AuditLoggingRetrieveInputDto inputDto)
+        public virtual async Task<ListResultDto<AuditLogDto>> GetEntitysAsync([FromQuery] AuditLoggingRetrieveInputDto inputDto)
         {
             return await auditLoggingAppService.GetEntitysAsync(inputDto, true);
         }

@@ -8,8 +8,7 @@ namespace Jh.Abp.JhIdentity
     /// <summary>
     /// 
     /// </summary>
-    public class IdentityUserRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<IdentityUser>
-, IRetrieveDelete
+    public class IdentityUserRetrieveInputDto: PagedAndSortedResultRequestDto,IRetrieveDelete
 	{
 		/// <summary>
 		/// 
@@ -79,12 +78,6 @@ namespace Jh.Abp.JhIdentity
 		/// 是否删除
 		/// </summary>
 		public int? Deleted { get; set; }
-		/// <summary>
-		/// 方法参数回调
-		/// </summary>
-		[System.Text.Json.Serialization.JsonIgnore]
-		[Newtonsoft.Json.JsonIgnore]
-		public MethodDto<IdentityUser> MethodInput { get; set; }
 		public string OrganizationUnitCode { get; set; }
 	}
 }

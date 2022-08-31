@@ -8,8 +8,7 @@ namespace Jh.Abp.JhIdentity
     /// <summary>
     /// 
     /// </summary>
-    public class OrganizationUnitRetrieveInputDto: PagedAndSortedResultRequestDto, IMethodDto<OrganizationUnit>
-, IRetrieveDelete
+    public class OrganizationUnitRetrieveInputDto: PagedAndSortedResultRequestDto,IRetrieveDelete
 	{
 		/// <summary>
 		/// 查询负责人
@@ -32,11 +31,5 @@ namespace Jh.Abp.JhIdentity
 		/// 是否删除
 		/// </summary>
 		public int? Deleted { get; set; }
-		/// <summary>
-		/// 方法参数回调
-		/// </summary>
-		[System.Text.Json.Serialization.JsonIgnore]
-		[Newtonsoft.Json.JsonIgnore]
-		public MethodDto<OrganizationUnit> MethodInput { get; set; }
 	}
 }

@@ -8,15 +8,9 @@ using Volo.Abp.TenantManagement;
 
 namespace Jh.Abp.TenantManagement
 {
-    public class TenantRetrieveInputDto : PagedAndSortedResultRequestDto, IMethodDto<Tenant>, IRetrieveDelete
+    public class TenantRetrieveInputDto : PagedAndSortedResultRequestDto, IRetrieveDelete
     {
         public string Name { get; set; }
-        /// <summary>
-        /// 方法参数回调
-        /// </summary>
-        [System.Text.Json.Serialization.JsonIgnore]
-        [Newtonsoft.Json.JsonIgnore]
-        public MethodDto<Tenant> MethodInput { get; set; }
         public int? Deleted { get; set; }
     }
 }

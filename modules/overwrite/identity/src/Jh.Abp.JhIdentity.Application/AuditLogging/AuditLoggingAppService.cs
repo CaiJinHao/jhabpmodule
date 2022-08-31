@@ -2,6 +2,7 @@
 using Jh.Abp.Common.Linq;
 using Jh.Abp.JhIdentity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,19 +17,19 @@ namespace Jh.Abp.AuditLogging
     public class AuditLoggingAppService : JhIdentityAppService, IAuditLoggingAppService, ITransientDependency
     {
         public IAuditLoggingRepository auditLogsRepository => LazyServiceProvider.LazyGetRequiredService<IAuditLoggingRepository>();
-        public virtual async Task<AuditLog[]> DeleteAsync(AuditLoggingDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default)
+        public virtual async Task DeleteAsync(AuditLoggingDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var lambda = LinqExpression.ConvetToExpression<AuditLoggingDeleteInputDto, AuditLog>(deleteInputDto, methodStringType);
-            var query = (await auditLogsRepository.GetQueryableAsync()).Where(lambda);
-            return await auditLogsRepository.DeleteEntitysAsync(query, autoSave, cancellationToken);
+            await auditLogsRepository.DeleteListAsync(lambda, autoSave, cancellationToken);
         }
 
-        public virtual async Task<AuditLog> GetAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<AuditLogDto> GetAsync(Guid id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await auditLogsRepository.GetAsync(id, includeDetails, cancellationToken);
+            var data= await auditLogsRepository.GetAsync(id, includeDetails, cancellationToken);
+            return ObjectMapper.Map<AuditLog, AuditLogDto>(data);
         }
 
-        public virtual async Task<PagedResultDto<AuditLog>> GetListAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<PagedResultDto<AuditLogDto>> GetListAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var datas = await auditLogsRepository.GetListAsync(
                 sorting: retrieveInputDto.Sorting,
@@ -64,24 +65,24 @@ namespace Jh.Abp.AuditLogging
                 httpStatusCode: retrieveInputDto.HttpStatusCode,
                 cancellationToken: cancellationToken);
 
-            return new PagedResultDto<AuditLog>()
+            return new PagedResultDto<AuditLogDto>()
             {
-                Items = datas,
+                Items = ObjectMapper.Map<List<AuditLog>, List<AuditLogDto>>(datas),
                 TotalCount = totalCount
             };
         }
 
-        public virtual async Task<AuditLog[]> DeleteAsync(Guid[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task DeleteAsync(Guid[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await auditLogsRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken);
+             await auditLogsRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken);
         }
 
-        public virtual async Task<AuditLog> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return (await auditLogsRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken)).FirstOrDefault();
+            await auditLogsRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken);
         }
 
-        public virtual async Task<ListResultDto<AuditLog>> GetEntitysAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<ListResultDto<AuditLogDto>> GetEntitysAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var datas = await auditLogsRepository.GetListAsync(
                 sorting: retrieveInputDto.Sorting,
@@ -101,9 +102,10 @@ namespace Jh.Abp.AuditLogging
                 httpStatusCode: retrieveInputDto.HttpStatusCode,
                 includeDetails: includeDetails,
                 cancellationToken: cancellationToken);
-            return new ListResultDto<AuditLog>()
+
+            return new ListResultDto<AuditLogDto>()
             {
-                Items = datas
+                Items = ObjectMapper.Map<List<AuditLog>, List<AuditLogDto>>(datas)
             };
         }
     }

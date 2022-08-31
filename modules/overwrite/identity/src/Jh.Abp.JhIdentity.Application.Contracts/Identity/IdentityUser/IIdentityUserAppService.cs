@@ -9,7 +9,7 @@ using Volo.Abp.Identity;
 namespace Jh.Abp.JhIdentity
 {
     public interface IIdentityUserAppService
-        : ICrudApplicationService<IdentityUser, IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>
+        : ICrudApplicationService<IdentityUserDto, IdentityUserDto, System.Guid, IdentityUserRetrieveInputDto, IdentityUserCreateInputDto, IdentityUserUpdateInputDto, IdentityUserDeleteInputDto>
     {
 		Task ChangePasswordAsync(ChangePasswordInputDto input);
 		Task RecoverAsync(System.Guid id);
@@ -18,7 +18,6 @@ namespace Jh.Abp.JhIdentity
 		Task<IdentityUserDto> GetCurrentAsync();
 		Task UpdateLockoutEnabledAsync(Guid id, bool lockoutEnabled);
 		Task<IdentityUserDto> GetSuperiorUserAsync(Guid userId);
-
 		Task<ListResultDto<OptionDto<Guid>>> GetOptionsAsync();
 	}
 }

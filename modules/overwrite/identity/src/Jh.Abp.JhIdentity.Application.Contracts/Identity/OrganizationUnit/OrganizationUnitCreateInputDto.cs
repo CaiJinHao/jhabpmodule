@@ -11,8 +11,7 @@ namespace Jh.Abp.JhIdentity
     /// 
     /// </summary>
     public class OrganizationUnitCreateInputDto:
-ExtensibleObject, IHasConcurrencyStamp,
-IMethodDto<OrganizationUnit>
+ExtensibleObject, IHasConcurrencyStamp
 	{
 		public new ExtraPropertyDictionary ExtraProperties { get; set; }
 
@@ -24,12 +23,6 @@ IMethodDto<OrganizationUnit>
 		/// 
 		/// </summary>
 		public String DisplayName { get; set; }
-		/// <summary>
-		/// 方法参数回调
-		/// </summary>
-		[System.Text.Json.Serialization.JsonIgnore]
-		[Newtonsoft.Json.JsonIgnore]
-		public MethodDto<OrganizationUnit> MethodInput { get; set; }
 		/// <summary>
 		/// 并发检测字段 必须和数据库中的值一样才会允许更新
 		/// </summary>

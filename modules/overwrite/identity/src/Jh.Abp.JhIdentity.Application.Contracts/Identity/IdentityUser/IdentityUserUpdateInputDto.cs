@@ -13,8 +13,7 @@ namespace Jh.Abp.JhIdentity
     /// </summary>
     public class IdentityUserUpdateInputDto:
 IdentityUserCreateOrUpdateDto,
-IHasConcurrencyStamp,
-IMethodDto<IdentityUser>
+IHasConcurrencyStamp
 	{
 		[DisableAuditing]
 		[DynamicStringLength(typeof(IdentityUserConsts), nameof(IdentityUserConsts.MaxPasswordLength))]
@@ -23,12 +22,6 @@ IMethodDto<IdentityUser>
 		/// 并发检测字段 必须和数据库中的值一样才会允许更新
 		/// </summary>
 		public string ConcurrencyStamp { get; set; }
-		/// <summary>
-		/// 方法参数回调
-		/// </summary>
-		[System.Text.Json.Serialization.JsonIgnore]
-		[Newtonsoft.Json.JsonIgnore]
-		public MethodDto<IdentityUser> MethodInput { get; set; }
 	}
 
 

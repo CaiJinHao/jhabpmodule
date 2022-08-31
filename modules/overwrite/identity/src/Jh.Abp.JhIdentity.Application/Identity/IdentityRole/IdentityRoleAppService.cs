@@ -20,16 +20,17 @@ namespace Jh.Abp.JhIdentity
 		IdentityRoleRepository = repository;
 		}
 
+        protected virtual Func<IQueryable<IdentityRole>, IQueryable<IdentityRole>> GetQueryAction(IdentityRoleRetrieveInputDto input)
+        {
+            return (entity) =>
+            {
+                return entity.Where(a => a.Name != JhIdentity.JhIdentityConsts.AdminRoleName);
+            };
+        }
+
         public override Task<PagedResultDto<IdentityRoleDto>> GetListAsync(IdentityRoleRetrieveInputDto input)
         {
-            input.MethodInput = new MethodDto<IdentityRole>()
-            {
-                QueryAction = (entity) =>
-                {
-                    return entity.Where(a => a.Name != JhIdentity.JhIdentityConsts.AdminRoleName);
-                }
-            };
-            return base.GetListAsync(input);
+            return base.GetListAsync(input, QueryAction: GetQueryAction(input));
         }
 
         public async Task<Guid?> GetAdminRoleIdAsync()

@@ -71,11 +71,6 @@
             并发检测字段 必须和数据库中的值一样才会允许更新
             </summary>
         </member>
-        <member name="P:Jh.Abp.JhIdentity.IdentityRoleCreateInputDto.MethodInput">
-            <summary>
-            方法参数回调
-            </summary>
-        </member>
         <member name="T:Jh.Abp.JhIdentity.IdentityRoleDto">
             <summary>
             
@@ -141,11 +136,6 @@
             
             </summary>
         </member>
-        <member name="P:Jh.Abp.JhIdentity.IdentityRoleRetrieveInputDto.MethodInput">
-            <summary>
-            方法参数回调
-            </summary>
-        </member>
         <member name="T:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto">
             <summary>
             
@@ -181,11 +171,6 @@
             并发检测字段 必须和数据库中的值一样才会允许更新
             </summary>
         </member>
-        <member name="P:Jh.Abp.JhIdentity.IdentityRoleUpdateInputDto.MethodInput">
-            <summary>
-            方法参数回调
-            </summary>
-        </member>
         <member name="T:Jh.Abp.JhIdentity.IdentityUserCreateInputDto">
             <summary>
             
@@ -194,11 +179,6 @@
         <member name="P:Jh.Abp.JhIdentity.IdentityUserCreateInputDto.ConcurrencyStamp">
             <summary>
             并发检测字段 必须和数据库中的值一样才会允许更新
-            </summary>
-        </member>
-        <member name="P:Jh.Abp.JhIdentity.IdentityUserCreateInputDto.MethodInput">
-            <summary>
-            方法参数回调
             </summary>
         </member>
         <member name="P:Jh.Abp.JhIdentity.IdentityUserDto.UserName">
@@ -376,11 +356,6 @@
             是否删除
             </summary>
         </member>
-        <member name="P:Jh.Abp.JhIdentity.IdentityUserRetrieveInputDto.MethodInput">
-            <summary>
-            方法参数回调
-            </summary>
-        </member>
         <member name="T:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto">
             <summary>
             
@@ -389,11 +364,6 @@
         <member name="P:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto.ConcurrencyStamp">
             <summary>
             并发检测字段 必须和数据库中的值一样才会允许更新
-            </summary>
-        </member>
-        <member name="P:Jh.Abp.JhIdentity.IdentityUserUpdateInputDto.MethodInput">
-            <summary>
-            方法参数回调
             </summary>
         </member>
         <member name="T:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto">
@@ -409,11 +379,6 @@
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.DisplayName">
             <summary>
             
-            </summary>
-        </member>
-        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.MethodInput">
-            <summary>
-            方法参数回调
             </summary>
         </member>
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitCreateInputDto.ConcurrencyStamp">
@@ -496,11 +461,6 @@
             是否删除
             </summary>
         </member>
-        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitRetrieveInputDto.MethodInput">
-            <summary>
-            方法参数回调
-            </summary>
-        </member>
         <member name="T:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto">
             <summary>
             
@@ -519,11 +479,6 @@
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.ConcurrencyStamp">
             <summary>
             并发检测字段 必须和数据库中的值一样才会允许更新
-            </summary>
-        </member>
-        <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.MethodInput">
-            <summary>
-            方法参数回调
             </summary>
         </member>
         <member name="P:Jh.Abp.JhIdentity.OrganizationUnitUpdateInputDto.LeaderId">
@@ -582,11 +537,6 @@
         <member name="P:Jh.Abp.SettingManagement.SettingRetrieveInputDto.ProviderKey">
             <summary>
             当ProviderName 为U和T的时候必填
-            </summary>
-        </member>
-        <member name="P:Jh.Abp.TenantManagement.TenantRetrieveInputDto.MethodInput">
-            <summary>
-            方法参数回调
             </summary>
         </member>
     </members>
