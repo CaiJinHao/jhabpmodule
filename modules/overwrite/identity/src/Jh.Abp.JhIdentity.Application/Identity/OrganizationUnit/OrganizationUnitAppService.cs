@@ -24,7 +24,7 @@ namespace Jh.Abp.JhIdentity
 	{
         protected JhIdentityUserManager JhIdentityUserManager => LazyServiceProvider.LazyGetRequiredService<JhIdentityUserManager>();
         protected IJhIdentityRoleRepository IdentityRoleRepository=>LazyServiceProvider.LazyGetRequiredService<IJhIdentityRoleRepository>();
-        protected Volo.Abp.Identity.IOrganizationUnitRepository OrganizationUnitsRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
+        protected Volo.Abp.Identity.IOrganizationUnitRepository AbpOrganizationUnitsRepository => LazyServiceProvider.LazyGetRequiredService<Volo.Abp.Identity.IOrganizationUnitRepository>();
         private readonly IOrganizationUnitRepository OrganizationUnitRepository;
 		private JhOrganizationUnitManager OrganizationUnitManager => LazyServiceProvider.LazyGetRequiredService<JhOrganizationUnitManager>();
         protected OrganizationUnitExtensionManager organizationUnitExtensionManager => LazyServiceProvider.LazyGetRequiredService<OrganizationUnitExtensionManager>();
@@ -111,9 +111,9 @@ namespace Jh.Abp.JhIdentity
             await CheckDeletePolicyAsync();
             foreach (var item in keys)
             {
-				await OrganizationUnitManager.DeleteAsync(item);//自动禁用下级
-			}
-		}
+                await OrganizationUnitManager.DeleteAsync(item);//自动禁用下级
+            }
+        }
 
         protected virtual async Task DeleteAsync(OrganizationUnitDeleteInputDto deleteInputDto)
         {
@@ -196,7 +196,7 @@ namespace Jh.Abp.JhIdentity
         {
             await CheckGetListPolicyAsync();
             var org = await GetEntityByIdAsync(organizationUnitId);
-            var entities = await OrganizationUnitsRepository.GetRolesAsync(org);
+            var entities = await AbpOrganizationUnitsRepository.GetRolesAsync(org);
 
             var dtos = new List<IdentityRoleDto>();
             foreach (var entity in entities)
@@ -210,7 +210,7 @@ namespace Jh.Abp.JhIdentity
         {
             await CheckGetListPolicyAsync();
             var org = await GetEntityByIdAsync(organizationUnitId);
-            var entities = await OrganizationUnitsRepository.GetMembersAsync(org);
+            var entities = await AbpOrganizationUnitsRepository.GetMembersAsync(org);
             var dtos = new List<IdentityUserDto>();
             foreach (var entity in entities)
             {
