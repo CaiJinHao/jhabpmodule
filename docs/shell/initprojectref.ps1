@@ -3,7 +3,7 @@
 param (
     [string]$execPath = '../../modules/demo/aspnet-core',
     [string]$slnName = 'YourCompany.YourProjectName',
-    [string]$db= 'ef',
+    [string]$database= 'ef',
     #.MongoDB
     [string]$suffix=''
 )
@@ -28,14 +28,16 @@ dotnet add $execPath\src\$slnName.Domain\$slnName.Domain.csproj package Jh.Abp.D
 dotnet add $execPath\src\$slnName.Domain\$slnName.Domain.csproj package Jh.SourceGenerator.Common
 dotnet add $execPath\src\$slnName.Domain.Shared\$slnName.Domain.Shared.csproj package Jh.Abp.Domain.Shared
 
-if ($db=='ef') {
+# JhIdentity
+dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj package Jh.Abp.JhIdentity.Application.Contracts
+if ($database -eq 'ef') {
     # dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj package Volo.Abp.Dapper
-    dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj package Jh.Abp.EntityFrameworkCore
-    dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.EntityFrameworkCore
+   dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj package Jh.Abp.EntityFrameworkCore
+   dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer$suffix.csproj package Jh.Abp.JhIdentity.EntityFrameworkCore
 }
 else{
-    dotnet add $execPath\src\$slnName.MongoDB\$slnName.MongoDB.csproj package Jh.Abp.MongoDB
-    dotnet add $execPath\host\$slnName.IdentityServer$suffix\$slnName.IdentityServer$suffix.csproj package Jh.Abp.JhIdentity.MongoDB
+   dotnet add $execPath\src\$slnName.MongoDB\$slnName.MongoDB.csproj package Jh.Abp.MongoDB
+   dotnet add $execPath\host\$slnName.IdentityServer$suffix\$slnName.IdentityServer$suffix.csproj package Jh.Abp.JhIdentity.MongoDB
 }
 
 # MySql
