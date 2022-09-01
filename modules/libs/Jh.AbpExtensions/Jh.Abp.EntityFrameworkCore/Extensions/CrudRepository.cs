@@ -65,7 +65,6 @@ namespace Jh.Abp.EntityFrameworkCore
             {
                 return default;
             }
-            var _dbSet = await GetDbSetAsync();
             if (isHard)
             {
                 await HardDeleteWithUnitOfWorkAsync((hardDeleteEntities) =>
@@ -76,6 +75,7 @@ namespace Jh.Abp.EntityFrameworkCore
                     }
                 });
             }
+            var _dbSet = await GetDbSetAsync();
             _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
@@ -131,11 +131,23 @@ namespace Jh.Abp.EntityFrameworkCore
             return (await GetDbContextAsync()).Set<T>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query">使用 IsTracking 字段为false不跟踪</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<List<TEntity>> GetListAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
         {
             return await query.ToListAsync(GetCancellationToken(cancellationToken));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query">使用 IsTracking 字段为false不跟踪</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
         {
             return await query.LongCountAsync(GetCancellationToken(cancellationToken));

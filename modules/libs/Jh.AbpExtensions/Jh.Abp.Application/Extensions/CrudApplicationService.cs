@@ -17,7 +17,7 @@ namespace Jh.Abp.Application
 {
     public abstract class CrudApplicationService<TEntity, TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
         : CrudAppService<TEntity, TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto>
-        , ICrudApplicationService<TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
+        ICrudApplicationService<TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
         where TPagedRetrieveOutputDto : IEntityDto<TKey>
@@ -78,7 +78,7 @@ namespace Jh.Abp.Application
                 query = selectAction?.Invoke(query);
             }
             var entities = await crudRepository.GetListAsync(query, cancellationToken);
-            if (CreateOrUpdateEntityAction != null)
+            if (CreateOrUpdateEntityAction != null && IsTracking)
             {
                 foreach (var item in entities)
                 {
@@ -109,7 +109,7 @@ namespace Jh.Abp.Application
                 query = selectAction?.Invoke(query);//指定查询字段
             }
             var entities = await crudRepository.GetListAsync(query, cancellationToken);
-            if (CreateOrUpdateEntityAction != null)
+            if (CreateOrUpdateEntityAction != null && IsTracking)
             {
                 foreach (var item in entities)
                 {

@@ -30,15 +30,15 @@ namespace Jh.Abp.JhIdentity
             bool includeDetails = false,
             CancellationToken cancellationToken = default)
         {
-            var query = await GetQueryableAsync();
+            var query = (await GetQueryableAsync()).AsNoTracking();
             var roles = await query.IncludeDetails(true).Where(a => ids.Contains(a.Id)).SelectMany(a => a.Roles).ToListAsync();
             var orgRoleIds = roles.Select(a => a.RoleId).ToArray();
-            return await (await GetQueryableAsync<IdentityRole>()).Where(a => orgRoleIds.Contains(a.Id)).ToListAsync();
+            return await (await GetQueryableAsync<IdentityRole>()).AsNoTracking().Where(a => orgRoleIds.Contains(a.Id)).ToListAsync();
         }
 
         public virtual async Task<List<TreeAntdDto>> GetTreeAntdDtosAsync(CancellationToken cancellationToken = default)
         {
-            var query = await GetQueryableAsync();
+            var query = (await GetQueryableAsync()).AsNoTracking();
             return await query.Select(a =>
                new TreeAntdDto(a.Id.ToString(), a.DisplayName, a.Code)
                {
