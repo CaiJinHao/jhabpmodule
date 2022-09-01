@@ -17,7 +17,7 @@ namespace Jh.Abp.Application
 {
     public abstract class CrudApplicationService<TEntity, TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
         : CrudAppService<TEntity, TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto>
-        ICrudApplicationService<TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
+        ,ICrudApplicationService<TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
         where TPagedRetrieveOutputDto : IEntityDto<TKey>
