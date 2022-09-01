@@ -2,8 +2,10 @@
 [CmdletBinding()]
 param (
     [string]$execPath = '../../modules/demo/aspnet-core',
-    [string]$slnName = 'YourCompany.YourProjectName'
+    [string]$slnName = 'YourCompany.YourProjectName',
+    [string]$db= 'ef'
 )
+
 
 # host
 dotnet add $execPath\host\$slnName.HttpApi.Host.MongoDB\$slnName.HttpApi.Host.MongoDB.csproj package Jh.Abp.QuickComponents
@@ -15,21 +17,20 @@ dotnet add $execPath\host\$slnName.IdentityServer.MongoDB\$slnName.IdentityServe
 # src
 dotnet add $execPath\src\$slnName.Application\$slnName.Application.csproj package Jh.Abp.Application
 dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj package Jh.Abp.Application.Contracts
-dotnet add $execPath\src\$slnName.MongoDB\$slnName.MongoDB.csproj package Jh.Abp.MongoDB
 dotnet add $execPath\src\$slnName.Domain\$slnName.Domain.csproj package Jh.Abp.Domain
 dotnet add $execPath\src\$slnName.Domain\$slnName.Domain.csproj package Jh.SourceGenerator.Common
 dotnet add $execPath\src\$slnName.Domain.Shared\$slnName.Domain.Shared.csproj package Jh.Abp.Domain.Shared
 
+dotnet add $execPath\src\$slnName.MongoDB\$slnName.MongoDB.csproj package Jh.Abp.MongoDB
+
 # 项目引用
-# 已用之后可能导致不兼容
-# dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj reference $execPath\src\$slnName.Domain\$slnName.Domain.csproj
-
-
 
 # 模块引用
 dotnet add $execPath\host\$slnName.IdentityServer.MongoDB\$slnName.IdentityServer.MongoDB.csproj package Jh.Abp.JhIdentity.HttpApi
 dotnet add $execPath\host\$slnName.IdentityServer.MongoDB\$slnName.IdentityServer.MongoDB.csproj package Jh.Abp.JhIdentity.Application
 dotnet add $execPath\host\$slnName.IdentityServer.MongoDB\$slnName.IdentityServer.MongoDB.csproj package Jh.Abp.JhIdentity.MongoDB
+
+
 
 # dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.HttpApi
 # dotnet add $execPath\host\$slnName.HttpApi.Host\$slnName.HttpApi.Host.csproj package Jh.Abp.Workflow.Application

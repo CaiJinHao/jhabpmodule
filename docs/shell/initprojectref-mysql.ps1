@@ -23,9 +23,6 @@ dotnet add $execPath\src\$slnName.Domain.Shared\$slnName.Domain.Shared.csproj pa
 # Volo
 # dotnet add $execPath\src\$slnName.EntityFrameworkCore\$slnName.EntityFrameworkCore.csproj package Volo.Abp.Dapper
 
-# 项目引用
-
-dotnet add $execPath\src\$slnName.Application.Contracts\$slnName.Application.Contracts.csproj reference $execPath\src\$slnName.Domain\$slnName.Domain.csproj
 
 # 模块引用
 dotnet add $execPath\host\$slnName.IdentityServer\$slnName.IdentityServer.csproj package Jh.Abp.JhIdentity.HttpApi
