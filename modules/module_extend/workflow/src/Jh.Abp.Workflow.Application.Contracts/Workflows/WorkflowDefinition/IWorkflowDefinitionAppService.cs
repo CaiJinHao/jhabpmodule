@@ -7,7 +7,7 @@ using Volo.Abp.Application.Dtos;
 namespace Jh.Abp.Workflow
 {
     public interface IWorkflowDefinitionAppService
-		: ICrudApplicationService<WorkflowDefinition, WorkflowDefinitionDto, WorkflowDefinitionDto, System.Guid, WorkflowDefinitionRetrieveInputDto, WorkflowDefinitionCreateInputDto, WorkflowDefinitionUpdateInputDto, WorkflowDefinitionDeleteInputDto>
+		: ICrudApplicationService<WorkflowDefinitionDto, WorkflowDefinitionDto, System.Guid, WorkflowDefinitionRetrieveInputDto, WorkflowDefinitionCreateInputDto, WorkflowDefinitionUpdateInputDto, WorkflowDefinitionDeleteInputDto>
 	{
 		Task RecoverAsync(Guid id);
 		Task<ListResultDto<WorkflowStepDto>> GetApplicationStepsAsync();

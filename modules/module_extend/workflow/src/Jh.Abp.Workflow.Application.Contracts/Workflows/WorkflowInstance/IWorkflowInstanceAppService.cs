@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Jh.Abp.Workflow
 {
     public interface IWorkflowInstanceAppService
-		: ICrudApplicationService<WorkflowInstance, WorkflowInstanceDto, WorkflowInstanceDto, System.Guid, WorkflowInstanceRetrieveInputDto, WorkflowInstanceCreateInputDto, WorkflowInstanceUpdateInputDto, WorkflowInstanceDeleteInputDto>
+		: ICrudApplicationService<WorkflowInstanceDto, WorkflowInstanceDto, System.Guid, WorkflowInstanceRetrieveInputDto, WorkflowInstanceCreateInputDto, WorkflowInstanceUpdateInputDto, WorkflowInstanceDeleteInputDto>
 	{
 		/// <summary>
 		/// 启动工作流

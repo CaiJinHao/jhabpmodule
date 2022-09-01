@@ -12,8 +12,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Jh.Abp.JhIdentity.Migrations
 {
     [DbContext(typeof(IdentityServerHostMigrationsDbContext))]
-    [Migration("20220828061255_initial")]
-    partial class initial
+    [Migration("20220901044441_inital")]
+    partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
