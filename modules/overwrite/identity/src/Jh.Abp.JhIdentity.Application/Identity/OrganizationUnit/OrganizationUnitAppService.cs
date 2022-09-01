@@ -157,6 +157,7 @@ namespace Jh.Abp.JhIdentity
                     item.IsDeleted = false;
                     item.DeleterId = CurrentUser.Id;
                     item.DeletionTime = Clock.Now;
+                    await crudRepository.UpdateAsync(item);
                 }
             }
 		}
