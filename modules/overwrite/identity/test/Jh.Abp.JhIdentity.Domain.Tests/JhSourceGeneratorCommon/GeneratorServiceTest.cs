@@ -36,7 +36,7 @@ namespace Jh.Abp.JhIdentity
                 CreateContractsPath = @$"{basePath}\src\{itemName}.Application.Contracts{domain}",
                 CreateApplicationPath = @$"{basePath}\src\{itemName}.Application{domain}",
                 CreateDomainPath = @$"{basePath}\src\{itemName}.Domain{domain}",
-                CreateEfCorePath = @$"{basePath}\src\{itemName}.EntityFrameworkCore{domain}",
+                CreateRepositoryPath = @$"{basePath}\src\{itemName}.EntityFrameworkCore{domain}",
                 CreateHttpApiPath = @$"{basePath}\src\{itemName}.HttpApi\v1{domain}",
                 CreateHtmlPath = @$"{basePathTemp}\host\{itemName}.Web.Unified\wwwroot\main\view",
                 //CreateHtmlTemplatePath = @"G:\github\mygithub\jhabpmodule\modules\abpjh\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"

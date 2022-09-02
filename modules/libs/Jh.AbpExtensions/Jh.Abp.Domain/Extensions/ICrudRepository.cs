@@ -33,16 +33,6 @@ namespace Jh.Abp.Domain
         Task<long> GetCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// 创建一条数据
-        /// </summary>
-        Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// 创建多条数据
-        /// </summary>
-        Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// 根据条件删除
         /// </summary>
         Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));

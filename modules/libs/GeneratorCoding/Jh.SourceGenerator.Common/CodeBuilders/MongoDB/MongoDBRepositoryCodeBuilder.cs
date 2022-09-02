@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Jh.SourceGenerator.Common.CodeBuilders
 {
-    public class RepositoryCodeBuilder : CodeBuilderAbs
+    public class MongoDBRepositoryCodeBuilder : CodeBuilderAbs
     {
-        public RepositoryCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
+        public MongoDBRepositoryCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             this.FileName = $"{table.Name}Repository";
         }
@@ -15,26 +15,11 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
-            if (table.DbContext.ToLower().Contains("mongo"))
-            {
-                builder.AppendLine($@"
+            builder.AppendLine($@"
 using {table.Namespace}.MongoDB;
-using Jh.Abp.JhIdentity.MongoDB;
 using Jh.Abp.MongoDB;
 using Volo.Abp.MongoDB;");
-            }
-            else
-            {
-                builder.AppendLine($@"
-using {table.Namespace}.EntityFrameworkCore;
-using Jh.Abp.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Volo.Abp.EntityFrameworkCore;");
-            }
-            
+
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
@@ -42,7 +27,7 @@ using Volo.Abp.EntityFrameworkCore;");
                 builder.AppendLine("\t{");
                 //builder.AppendLine($"\t\t protected readonly I{table.Name}DapperRepository {table.Name}DapperRepository;");
                 //, I{table.Name}DapperRepository {table.Name.ToLower()}DapperRepository
-                builder.AppendLine($"\t\t public {FileName}(IDbContextProvider<{table.DbContext}> dbContextProvider) : base(dbContextProvider)");
+                builder.AppendLine($"\t\t public {FileName}(IMongoDbContextProvider<{table.DbContext}> dbContextProvider) : base(dbContextProvider)");
                 builder.AppendLine("\t\t{");
                 //builder.AppendLine($"\t\t\t{table.Name}DapperRepository={table.Name.ToLower()}DapperRepository;");
                 builder.AppendLine("\t\t}");

@@ -25,27 +25,6 @@ namespace Jh.Abp.EntityFrameworkCore
         {
         }
 
-        public virtual async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            //使用SqlBulk
-            await (await GetDbSetAsync()).AddRangeAsync(entitys);
-            if (autoSave)
-            {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken));
-            }
-            return entitys;
-        }
-
-        public virtual async Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            await (await GetDbSetAsync()).AddAsync(entity);
-            if (autoSave)
-            {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken));
-            }
-            return entity;
-        }
-
         public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             var _dbSet = await GetQueryableAsync();
@@ -75,12 +54,7 @@ namespace Jh.Abp.EntityFrameworkCore
                     }
                 });
             }
-            var _dbSet = await GetDbSetAsync();
-            _dbSet.RemoveRange(entitys);
-            if (autoSave)
-            {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken));
-            }
+            await DeleteManyAsync(entitys, autoSave, cancellationToken);
             return entitys;
         }
 

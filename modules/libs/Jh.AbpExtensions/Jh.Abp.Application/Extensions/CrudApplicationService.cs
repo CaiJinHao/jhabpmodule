@@ -43,7 +43,7 @@ namespace Jh.Abp.Application
             {
                 CreateOrUpdateEntityAction?.Invoke(entity);
             }
-            return await crudRepository.CreateAsync(entity, autoSave, cancellationToken);
+            return await crudRepository.InsertAsync(entity, autoSave, cancellationToken);
         }
 
         protected virtual async Task DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)

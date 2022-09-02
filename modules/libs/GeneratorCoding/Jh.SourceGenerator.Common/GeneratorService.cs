@@ -212,6 +212,15 @@ namespace Jh.SourceGenerator.Common
             return property.Name;
         }
 
+        protected virtual bool CheckPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return false;
+            }
+            return true;
+        }
+
         public virtual bool GeneratorCode(IEnumerable<Type> tableClass)
         {
             if (!tableClass.Any())
@@ -224,33 +233,55 @@ namespace Jh.SourceGenerator.Common
             foreach (var tableDto in tables)
             {
                 //contracts
-                CreateFile(new CreateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
-                CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                if (CheckPath(generatorOptions.CreateContractsPath))
+                {
+                    CreateFile(new CreateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                }
+
 
                 //Domain
-                CreateFile(new IDapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
-                CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
-                CreateFile(new DomainManager(tableDto, generatorOptions.CreateDomainPath));
-                CreateFile(new DataSeedContributor(tableDto, generatorOptions.CreateDomainPath));
+                if (CheckPath(generatorOptions.CreateDomainPath))
+                {
+                    CreateFile(new IDapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
+                    CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
+                    CreateFile(new DomainManager(tableDto, generatorOptions.CreateDomainPath));
+                    CreateFile(new DataSeedContributor(tableDto, generatorOptions.CreateDomainPath));
+                }
 
                 //EfCore
-                //CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));//使用频率不高，不再自动生成，需要手动
-                CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateRepositoryPath));
+                if (CheckPath(generatorOptions.CreateRepositoryPath))
+                {
+                    if (tableDto.DbContext.ToLower().Contains("mongo"))
+                    {
+                        CreateFile(new MongoDBRepositoryCodeBuilder(tableDto, generatorOptions.CreateRepositoryPath));
+                    }
+                    else
+                    {
+                        //CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));//使用频率不高，不再自动生成，需要手动
+                        CreateFile(new EFRepositoryCodeBuilder(tableDto, generatorOptions.CreateRepositoryPath));
+                    }
+                }
 
                 //Application
-                CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
-                CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
+                if (CheckPath(generatorOptions.CreateApplicationPath))
+                {
+                    CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
+                    CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
+                }
 
                 //HttpApi
-                CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath));
+                if (CheckPath(generatorOptions.CreateHttpApiPath))
+                {
+                    CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath));
+                }
 
                 //Html
-                //获取去模板列表
-                if (!string.IsNullOrEmpty(generatorOptions.CreateHtmlTemplatePath))
+                if (CheckPath(generatorOptions.CreateHtmlTemplatePath))
                 {
                     foreach (var file in new DirectoryInfo(generatorOptions.CreateHtmlTemplatePath).GetFiles())
                     {
