@@ -22,7 +22,7 @@ using System.Threading.Tasks;");
             builder.AppendLine("{");
             {
                 builder.AppendLine($"\tpublic interface {FileName}");
-                builder.AppendLine($"\t\t: ICrudApplicationService<{table.Name}, {table.Name}Dto, {table.Name}Dto, {table.KeyType}, {table.Name}RetrieveInputDto, {table.Name}CreateInputDto, {table.Name}UpdateInputDto, {table.Name}DeleteInputDto>");
+                builder.AppendLine($"\t\t: ICrudApplicationService<{table.Name}Dto, {table.Name}Dto, {table.KeyType}, {table.Name}RetrieveInputDto, {table.Name}CreateInputDto, {table.Name}UpdateInputDto, {table.Name}DeleteInputDto>");
                 builder.AppendLine("\t{");
                 if (table.IsDelete)
                 {

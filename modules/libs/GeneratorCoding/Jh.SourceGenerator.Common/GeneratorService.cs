@@ -239,7 +239,7 @@ namespace Jh.SourceGenerator.Common
 
                 //EfCore
                 //CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));//使用频率不高，不再自动生成，需要手动
-                CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
+                CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateRepositoryPath));
 
                 //Application
                 CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));

@@ -11,7 +11,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public string DomainAssemblyDllFilePath { get; set; }
         /// <summary>
-        /// Ef数据上下文类名
+        /// 数据上下文类名 MongoDB使用MongoDB的上下文类名
         /// </summary>
         public string DbContext { get; set; } = "MenuManagementDbContext";
         /// <summary>
@@ -34,9 +34,9 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public string CreateDomainPath { get; set; }
         /// <summary>
-        /// EFCore 上级文件夹表名称 CreateRepository
+        /// 文件夹名称 MongoDB使用MongoDB的路径
         /// </summary>
-        public string CreateEfCorePath { get; set; }
+        public string CreateRepositoryPath { get; set; }
         /// <summary>
         /// Application 上级文件夹表名称 CreateProfile,CreateAppService
         /// </summary>
