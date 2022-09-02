@@ -4,6 +4,25 @@
         <name>Jh.Abp.JhIdentity.Application.Contracts</name>
     </assembly>
     <members>
+        <member name="M:Jh.Abp.JhIdentity.IEmailAppService.GeneratorVerificationCodeAsync(System.Int32)">
+            <summary>
+            生成验证码
+            </summary>
+            <param name="len"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jh.Abp.JhIdentity.IEmailAppService.SendEmailVerificationCodeAsync(System.String,System.String,System.String)">
+            <summary>
+            发送邮箱验证码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jh.Abp.JhIdentity.IEmailAppService.ValidateEmailVerificationCodeAsync(System.String,System.String)">
+            <summary>
+            验证邮箱验证码
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Jh.Abp.JhIdentity.AccessTokenRequestDto.UserNameOrEmailAddress">
             <summary>
             用户名或者邮箱地址

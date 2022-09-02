@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,7 @@ namespace Jh.Abp.JhIdentity.Samples;
 [Dependency(ServiceLifetime.Singleton, ReplaceServices = true)]
 public class SampleAppService : JhIdentityAppService, ISampleAppService
 {
-    protected IEmailSender emailSender => LazyServiceProvider.LazyGetRequiredService<IEmailSender>();
+    protected IEmailAppService emailAppService => LazyServiceProvider.LazyGetRequiredService<IEmailAppService>();
     protected IIdentityUserAppService IdentityUserAppService =>LazyServiceProvider.LazyGetRequiredService<IIdentityUserAppService>();
     public Task<SampleDto> GetAsync()
     {
@@ -46,6 +47,10 @@ public class SampleAppService : JhIdentityAppService, ISampleAppService
 
     public async Task TestEmailSenderAsync()
     {
-        await emailSender.SendAsync("caijinhao@inspur.com", "金浩测试", "这是一个测试的邮件");
+        var code = await emailAppService.GeneratorVerificationCodeAsync(6);
+        var key = System.Guid.NewGuid().ToString("n");
+        await emailAppService.SendEmailVerificationCodeAsync("caijinhaovip@126.com", key, code);
+        Thread.Sleep(2000);
+        var result = await emailAppService.ValidateEmailVerificationCodeAsync(key, code);
     }
 }

@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jh.Abp.JhIdentity.Application\Jh.Abp.JhIdentity.Application.csproj" />
-    <ProjectReference Include="..\..\src\Jh.Abp.JhIdentity.HttpApi\Jh.Abp.JhIdentity.HttpApi.csproj" />
     <ProjectReference Include="..\Jh.Abp.JhIdentity.Domain.Tests\Jh.Abp.JhIdentity.Domain.Tests.csproj" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
   </ItemGroup>
