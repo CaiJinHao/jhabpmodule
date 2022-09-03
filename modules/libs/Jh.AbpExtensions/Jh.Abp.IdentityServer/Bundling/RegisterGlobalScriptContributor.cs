@@ -11,7 +11,7 @@ namespace Jh.Abp.IdentityServer
     {
         public override void ConfigureBundle(BundleConfigurationContext context)
         {
-            context.Files.Add("/libs/register/register.js");
+            context.Files.Add("/libs/register/register.es5.min.js");
         }
     }
 }

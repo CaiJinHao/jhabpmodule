@@ -76,6 +76,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\register.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\register.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Pages\Account\LoggedOut.cshtml" />
     <None Include="Pages\Account\Login.cshtml" />
     <None Include="Pages\Account\Register.cshtml" />

@@ -29,7 +29,7 @@
                 <span>*</span>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="EmailCode" data-val="true" data-val-required="请填写邮箱验证码" name="EmailCode" placeholder="验证码" aria-label="验证码" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="sendcode">发送验证码</button>
+                    <span class="btn btn-outline-secondary" type="button" id="sendcode">发送验证码</span>
                 </div>
                 <span class="text-danger field-validation-valid" data-valmsg-for="EmailCode" data-valmsg-replace="true"></span>
             </div>
@@ -46,5 +46,6 @@
 @* 使用 js 异步发送邮箱验证码 *@
 
 @section scripts{
-    <abp-script-bundle name="@ThemeBundles.Scripts.Register" />
+    @*<abp-script-bundle name="@ThemeBundles.Scripts.Register" />*@
+    <script src="/register.js"></script>
 }
