@@ -4,6 +4,7 @@
 @using Volo.Abp.Account.Settings
 @using Volo.Abp.Settings
 @using Volo.Abp.Ui.Branding
+@using Jh.Blog
 
 @model Jh.Abp.JhIdentity.Pages.Account.LoginModel
 @inject IHtmlLocalizer<AccountResource> L
@@ -12,41 +13,7 @@
 
 
 @section styles{
-<style>
-    body {
-        background-image: url(/appresources/images/login/loginbg.jpg);
-        background-repeat: no-repeat;
-    }
-
-    .container {
-        margin-right: 0px;
-        max-width: 980px;
-    }
-
-    .abp-account-container {
-        margin-top: 10em;
-    }
-
-    .nav-pills .nav-item {
-        flex: 1;
-        text-align: center;
-    }
-
-    .nav-pills .nav-link.active {
-        color: #0d6efd;
-        background-color: #fff;
-        border-bottom: 1px solid #0d6efd;
-        border-radius: inherit;
-    }
-
-    .nav-pills .nav-link {
-        color: black;
-    }
-    #AbpPageAlerts{
-        position:absolute;
-        min-width: 415px;
-    }
-</style>
+    <abp-style-bundle name="@ThemeBundles.Styles.Login" />
 }
 
 <div class="card mt-3 shadow-sm rounded">
@@ -91,6 +58,16 @@
                     Content_Profile
                     </abp-tab>*@
             </abp-tabs>
+
+            @if (await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled))
+            {
+            <div class="register">
+               <strong>
+                    @L["AreYouANewUser"]
+                <a href="@Url.Page("./Register", new {returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash})" class="text-decoration-none">@L["Register"]</a>
+               </strong>
+            </div>
+            }
         }
     </div>
 </div>

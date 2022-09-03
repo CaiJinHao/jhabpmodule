@@ -4,14 +4,12 @@ using Jh.Abp.JhIdentity.Localization;
 using Jh.Abp.JhIdentity.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Swagger;
-using Jh.Abp.Workflow;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using StackExchange.Redis;
 using System;
@@ -34,7 +32,6 @@ using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
-using Volo.Abp.Emailing;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.FeatureManagement;
@@ -96,10 +93,7 @@ namespace Jh.Abp.JhIdentity;
     typeof(JhIdentityApplicationModule),
     typeof(JhIdentityEntityFrameworkCoreModule),
     typeof(JhIdentityHttpApiModule),
-    //typeof(JhMenuApplicationModule),
-    //typeof(JhMenuEntityFrameworkCoreModule),
-    //typeof(JhMenuHttpApiModule),
-    typeof(WorkflowHttpApiModule),
+    //typeof(WorkflowHttpApiModule),
     typeof(AbpQuickComponentsModule)
     )]
 public class JhIdentityIdentityServerModule : AbpModule

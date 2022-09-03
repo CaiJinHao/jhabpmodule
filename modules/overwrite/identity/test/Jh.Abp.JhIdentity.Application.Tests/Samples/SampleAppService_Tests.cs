@@ -33,9 +33,9 @@ public class SampleAppService_Tests : JhIdentityApplicationTestBase
     [Fact]
     public async Task SendEmailAsync()
     {
-        var code = await emailAppService.GeneratorVerificationCodeAsync(6);
+        var code = "123456";
         var key = System.Guid.NewGuid().ToString("n");
-        await emailAppService.SendEmailVerificationCodeAsync("caijinhaovip@126.com", key, code);
+        await emailAppService.SendEmailVerificationCodeAsync(new SendEmailVerificationCodeInputDto() {Email= "caijinhaovip@126.com" });
         Thread.Sleep(2000);
         var result= await emailAppService.ValidateEmailVerificationCodeAsync(key, code);
         result.ShouldBeTrue();

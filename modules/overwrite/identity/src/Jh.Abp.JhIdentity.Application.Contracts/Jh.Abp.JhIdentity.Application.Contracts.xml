@@ -4,14 +4,7 @@
         <name>Jh.Abp.JhIdentity.Application.Contracts</name>
     </assembly>
     <members>
-        <member name="M:Jh.Abp.JhIdentity.IEmailAppService.GeneratorVerificationCodeAsync(System.Int32)">
-            <summary>
-            生成验证码
-            </summary>
-            <param name="len"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Jh.Abp.JhIdentity.IEmailAppService.SendEmailVerificationCodeAsync(System.String,System.String,System.String)">
+        <member name="M:Jh.Abp.JhIdentity.IEmailAppService.SendEmailVerificationCodeAsync(Jh.Abp.JhIdentity.SendEmailVerificationCodeInputDto)">
             <summary>
             发送邮箱验证码
             </summary>

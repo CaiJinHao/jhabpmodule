@@ -1,12 +1,16 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.Account.Localization
+@using Jh.Blog
 @model Jh.Abp.JhIdentity.Pages.Account.RegisterModel
 @inject IHtmlLocalizer<AccountResource> L
 
+@section styles{
+    <abp-style-bundle name="@ThemeBundles.Styles.Register" />
+}
+
 <div class="card mt-3 shadow-sm rounded">
     <div class="card-body p-5">
-        <h6>这里只注册外部用户</h6>
         <h4>@L["Register"]</h4>
         <strong>
             @L["AlreadyRegistered"]
@@ -20,6 +24,16 @@
 
             <abp-input asp-for="Input.EmailAddress" />
 
+            <div class="mb-3">
+                <label for="MyModel_EmailAddress">Email Code</label>
+                <span>*</span>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="EmailCode" data-val="true" data-val-required="请填写邮箱验证码" name="EmailCode" placeholder="验证码" aria-label="验证码" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">发送验证码</button>
+                </div>
+                <span class="text-danger field-validation-valid" data-valmsg-for="EmailCode" data-valmsg-replace="true"></span>
+            </div>
+
             @if (!Model.IsExternalLogin)
             {
                 <abp-input asp-for="Input.Password" />
@@ -29,3 +43,4 @@
         </form>
     </div>
 </div>
+@* 使用 js 异步发送邮箱验证码 *@
