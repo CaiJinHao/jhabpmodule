@@ -5,8 +5,13 @@
     Layout = "~/Pages/Layouts/Account.cshtml";
 }
 
-@await RenderSectionAsync("styles", false)
-
+@section styles{
+    @await RenderSectionAsync("styles", false)
+}
 <div class="abp-account-container">
     @RenderBody()
 </div>
+
+@section scripts{
+    @await RenderSectionAsync("scripts", false)
+}

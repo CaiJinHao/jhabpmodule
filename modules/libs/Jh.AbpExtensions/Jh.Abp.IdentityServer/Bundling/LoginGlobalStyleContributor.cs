@@ -8,7 +8,7 @@ namespace Jh.Abp.IdentityServer
     {
         public override void ConfigureBundle(BundleConfigurationContext context)
         {
-            context.Files.Add("/libs/themes/login.css");
+            context.Files.Add("/libs/login/login.min.css");
         }
     }
 }

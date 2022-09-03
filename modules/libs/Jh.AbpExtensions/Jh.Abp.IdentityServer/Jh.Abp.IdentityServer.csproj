@@ -8,6 +8,14 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="wwwroot\libs\register\register.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\libs\login\login.min.css" />
+    <EmbeddedResource Include="wwwroot\libs\register\register.js" />
+    <EmbeddedResource Include="wwwroot\libs\register\register.min.css" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Volo.Abp.Account.Web" Version="5.3.4" />
     <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="5.3.4" />
     <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.3.4" />

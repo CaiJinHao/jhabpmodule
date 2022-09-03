@@ -267,6 +267,13 @@ public class JhIdentityIdentityServerModule : AbpModule
                     bundle.AddContributors(typeof(RegisterGlobalStyleContributor));
                 })
                 ;
+
+            options
+            .ScriptBundles
+            .Configure(ThemeBundles.Scripts.Register, bundle =>
+            {
+                bundle.AddContributors(typeof(RegisterGlobalScriptContributor));
+            });
         });
     }
 

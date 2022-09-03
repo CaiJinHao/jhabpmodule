@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "wwwroot/libs/register/register.css",
+    "inputFile": "wwwroot/libs/register/register.scss"
+  },
+  {
+    "outputFile": "wwwroot/libs/login/login.css",
+    "inputFile": "wwwroot/libs/login/login.scss"
+  },
+  {
+    "outputFile": "wwwroot/libs/register/register.es5.js",
+    "inputFile": "wwwroot/libs/register/register.js"
+  }
+]
