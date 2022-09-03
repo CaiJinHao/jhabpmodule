@@ -1,4 +1,4 @@
-﻿namespace Jh.Blog
+﻿namespace Jh.Abp.IdentityServer
 {
     public static class ThemeBundles
     {

@@ -1,12 +1,12 @@
 ﻿using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 
-namespace Jh.Blog
+namespace Jh.Abp.IdentityServer
 {
     public class RegisterGlobalStyleContributor : BundleContributor
     {
         public override void ConfigureBundle(BundleConfigurationContext context)
         {
-            context.Files.Add("/themes/register.css");
+            context.Files.Add("/libs/themes/register.css");
         }
     }
 }

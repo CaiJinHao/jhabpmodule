@@ -22,6 +22,7 @@ using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
@@ -251,6 +252,21 @@ public class JhIdentityIdentityServerModule : AbpModule
             var _b = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             options.SendExceptionsDetailsToClients = _b;
             options.SendStackTraceToClients = _b;
+        });
+
+        Configure<AbpBundlingOptions>(options =>
+        {
+            options
+                .StyleBundles
+                .Configure(ThemeBundles.Styles.Login, bundle =>
+                {
+                    bundle.AddContributors(typeof(LoginGlobalStyleContributor));
+                })
+                .Configure(ThemeBundles.Styles.Register, bundle =>
+                {
+                    bundle.AddContributors(typeof(RegisterGlobalStyleContributor));
+                })
+                ;
         });
     }
 
