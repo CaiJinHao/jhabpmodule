@@ -12,6 +12,8 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.MailKit;
 using Volo.Abp.EventBus.Distributed;
 using Microsoft.CodeAnalysis.Emit;
+using Volo.Abp;
+using JetBrains.Annotations;
 
 namespace Jh.Abp.JhIdentity.Email
 {
@@ -23,11 +25,22 @@ namespace Jh.Abp.JhIdentity.Email
 
         public virtual async Task SendEmailVerificationCodeAsync(SendEmailVerificationCodeInputDto input)
         {
-            await distributedEventBus.PublishAsync(new EmailVerificationCodeEto(input.Email, 6));
+            //判断是否还在有效期
+            var emailCode = await codeDistributedCache.GetAsync(input.Email);
+            if (emailCode == null)
+            {
+                await distributedEventBus.PublishAsync(new EmailVerificationCodeEto(input.Email, 6));
+            }
+            else
+            {
+                throw new UserFriendlyException($"邮箱验证码未过期，过期时间{EmailVerificationCodeEventHandler.ExpirationMinutes}分钟");
+            }
         }
 
-        public virtual async Task<bool> ValidateEmailVerificationCodeAsync(string key, string code)
+        public virtual async Task<bool> ValidateEmailVerificationCodeAsync([NotNull]string key, [NotNull] string code)
         {
+            Check.NotNull(key,nameof(key));
+            Check.NotNull(code, nameof(code));
             var emailCode = await codeDistributedCache.GetAsync(key);
             return code.Equals(emailCode);
         }

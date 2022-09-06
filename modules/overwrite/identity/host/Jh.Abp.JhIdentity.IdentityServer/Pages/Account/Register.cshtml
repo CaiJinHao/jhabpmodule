@@ -1,12 +1,16 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.Account.Localization
+@using Jh.Abp.IdentityServer
 @model Jh.Abp.JhIdentity.Pages.Account.RegisterModel
 @inject IHtmlLocalizer<AccountResource> L
 
+@section styles{
+    <abp-style-bundle name="@ThemeBundles.Styles.Register" />
+}
+
 <div class="card mt-3 shadow-sm rounded">
     <div class="card-body p-5">
-        <h6>这里只注册外部用户</h6>
         <h4>@L["Register"]</h4>
         <strong>
             @L["AlreadyRegistered"]
@@ -19,6 +23,17 @@
             }
 
             <abp-input asp-for="Input.EmailAddress" />
+            @*<abp-input asp-for="EmailCode" /> 使用该数据转换得来的form TODO:多语言修改 *@
+
+            <div class="mb-3">
+                <label class="form-label" for="MyModel_EmailAddress">验证码</label>
+                <span>*</span>
+                <div class="input-group">
+                    <input type="text" data-val="true" data-val-regex="验证码是6位数字组成的" data-val-regex-pattern="\d{6}" data-val-required="邮箱验证码的长度为6位." id="EmailCode" name="EmailCode" value="" class="form-control ">
+                    <span class="btn btn-outline-secondary" type="button" id="sendcode">发送验证码</span>
+                </div>
+                <span class="text-danger field-validation-valid" data-valmsg-for="EmailCode" data-valmsg-replace="true"></span>
+            </div>
 
             @if (!Model.IsExternalLogin)
             {
@@ -29,3 +44,8 @@
         </form>
     </div>
 </div>
+
+@section scripts{
+    <abp-script-bundle name="@ThemeBundles.Scripts.Register" />
+    @*<script src="/register.js"></script>*@
+}

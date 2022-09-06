@@ -67,10 +67,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Account\LoggedOut.cshtml" />
+    <Content Remove="Pages\Account\Login.cshtml" />
+    <Content Remove="Pages\Account\Register.cshtml" />
+    <Content Remove="Pages\Account\_Layout.cshtml" />
+    <Content Remove="wwwroot\register.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Pages\Account\LoggedOut.cshtml" />
     <None Include="Pages\Account\Login.cshtml" />
     <None Include="Pages\Account\Register.cshtml" />
     <None Include="Pages\Account\_Layout.cshtml" />
+    <None Include="wwwroot\register.js" />
   </ItemGroup>
 
   <ItemGroup>

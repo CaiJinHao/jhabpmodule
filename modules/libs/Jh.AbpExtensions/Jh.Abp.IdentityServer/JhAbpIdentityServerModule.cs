@@ -5,6 +5,7 @@ using System.IO;
 using Volo.Abp;
 using Volo.Abp.Application;
 using Volo.Abp.AspNetCore.MultiTenancy;
+using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.Authorization;
 using Volo.Abp.IdentityServer.Localization;
 using Volo.Abp.Localization;
@@ -46,6 +47,29 @@ namespace Jh.Abp.IdentityServer
             });
 
             context.Services.AddTransient<JhAbpClaimsPrincipalContributor>();
+
+            //全局样式
+            Configure<AbpBundlingOptions>(options =>
+            {
+                options
+                    .StyleBundles
+                    .Configure(ThemeBundles.Styles.Login, bundle =>
+                    {
+                        bundle.AddContributors(typeof(LoginGlobalStyleContributor));
+                    })
+                    .Configure(ThemeBundles.Styles.Register, bundle =>
+                    {
+                        bundle.AddContributors(typeof(RegisterGlobalStyleContributor));
+                    })
+                    ;
+
+                options
+                .ScriptBundles
+                .Configure(ThemeBundles.Scripts.Register, bundle =>
+                {
+                    bundle.AddContributors(typeof(RegisterGlobalScriptContributor));
+                });
+            });
         }
     }
 }

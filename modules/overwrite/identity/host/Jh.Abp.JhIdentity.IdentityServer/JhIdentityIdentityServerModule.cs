@@ -142,7 +142,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         });
 
         context.Services.AddApiVersion();
-        if (Convert.ToBoolean(configuration["AppSettings:SwaggerUI"]))
+        if (Convert.ToBoolean(configuration["App:SwaggerUI"]))
         {
             var Audience = configuration.GetValue<string>("AuthServer:ApiName");
             context.Services.AddJhAbpSwagger(configuration,
@@ -256,13 +256,13 @@ public class JhIdentityIdentityServerModule : AbpModule
         //禁用授权系统方式二
         //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());
 
-        context.Services.Configure<AbpExceptionHandlingOptions>(options =>
-        {
-            //配置是否发送错误信息到客户端
-            var _b = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
-            options.SendExceptionsDetailsToClients = _b;
-            options.SendStackTraceToClients = _b;
-        });
+        //context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+        //{
+        //    //配置是否发送错误信息到客户端,配置为true之后，不友好显示
+        //    var _b = true;
+        //    options.SendExceptionsDetailsToClients = _b;
+        //    options.SendStackTraceToClients = _b;
+        //});
     }
 
     public async override Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
@@ -301,7 +301,7 @@ public class JhIdentityIdentityServerModule : AbpModule
         app.UseAbpRequestLocalization();
         app.UseIdentityServer();
         app.UseAuthorization();
-        if (Convert.ToBoolean(configuration["AppSettings:SwaggerUI"]))
+        if (Convert.ToBoolean(configuration["App:SwaggerUI"]))
         {
             app.UseSwagger();
             app.UseAbpSwaggerUI(options =>

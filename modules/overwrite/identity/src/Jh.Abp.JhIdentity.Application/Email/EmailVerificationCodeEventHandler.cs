@@ -14,6 +14,7 @@ namespace Jh.Abp.JhIdentity
     {
         public IEmailSender emailSender { get; set; }
         public IDistributedCache<string, string> codeDistributedCache { get; set; }
+        public static short ExpirationMinutes { get; set; } = 5;
 
         protected virtual Task<string> GeneratorVerificationCodeAsync(int len = 6)
         {
@@ -32,7 +33,7 @@ namespace Jh.Abp.JhIdentity
             var code = await GeneratorVerificationCodeAsync(inputData.CodeLength);
             await codeDistributedCache.SetAsync(inputData.ToEmail, code, new Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions()
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5)
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(ExpirationMinutes)
             });
             await emailSender.SendAsync(inputData.ToEmail, "验证码", $"您的验证码是:【{code}】");
         }

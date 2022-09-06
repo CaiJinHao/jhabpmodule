@@ -23,12 +23,13 @@
             }
 
             <abp-input asp-for="Input.EmailAddress" />
+            @*<abp-input asp-for="EmailCode" /> 使用该数据转换得来的form TODO:多语言修改 *@
 
             <div class="mb-3">
-                <label for="MyModel_EmailAddress">Email Code</label>
+                <label class="form-label" for="MyModel_EmailAddress">验证码</label>
                 <span>*</span>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="EmailCode" data-val="true" data-val-required="请填写邮箱验证码" name="EmailCode" placeholder="验证码" aria-label="验证码" aria-describedby="button-addon2">
+                <div class="input-group">
+                    <input type="text" data-val="true" data-val-regex="验证码是6位数字组成的" data-val-regex-pattern="\d{6}" data-val-required="邮箱验证码的长度为6位." id="EmailCode" name="EmailCode" value="" class="form-control ">
                     <span class="btn btn-outline-secondary" type="button" id="sendcode">发送验证码</span>
                 </div>
                 <span class="text-danger field-validation-valid" data-valmsg-for="EmailCode" data-valmsg-replace="true"></span>
@@ -43,9 +44,8 @@
         </form>
     </div>
 </div>
-@* 使用 js 异步发送邮箱验证码 *@
 
 @section scripts{
-    @*<abp-script-bundle name="@ThemeBundles.Scripts.Register" />*@
-    <script src="/register.js"></script>
+    <abp-script-bundle name="@ThemeBundles.Scripts.Register" />
+    @*<script src="/register.js"></script>*@
 }
