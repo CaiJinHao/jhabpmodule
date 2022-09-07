@@ -113,9 +113,10 @@ typeof(AbpQuickComponentsModule)
 
 ## admin
 
+clone [jhabpadmin](https://gitee.com/CaiJinHao/jhabpadmin/tree/dev/jhabpadmin)
+
 ``` shell
 git clone https://gitee.com/CaiJinHao/jhabpadmin.git
-# 使用[jhabpadmin](https://gitee.com/CaiJinHao/jhabpadmin/tree/dev/jhabpadmin)
 # 执行yarn 
 # 修改配置
 # 找到 environment.ts文件，修改为你的配置
