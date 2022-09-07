@@ -35,7 +35,6 @@ using Volo.Abp.ObjectExtending;");
                 { 
                     builder.AppendLine($"IHasConcurrencyStamp,");
                 }
-                builder.AppendLine($"IMethodDto<{table.Name}>");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)
@@ -63,13 +62,6 @@ using Volo.Abp.ObjectExtending;");
                         builder.AppendLine("\t\t/// </summary>");
                         builder.AppendLine("\t\tpublic string ConcurrencyStamp { get; set; }");
                     }
-
-                    builder.AppendLine("\t\t/// <summary>");
-                    builder.AppendLine("\t\t/// 方法参数回调");
-                    builder.AppendLine("\t\t/// </summary>");
-                    builder.AppendLine("\t\t[System.Text.Json.Serialization.JsonIgnore]");
-                    builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
-
                 }
                 builder.AppendLine("\t}");
             }

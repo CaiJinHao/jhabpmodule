@@ -24,7 +24,7 @@ using Volo.Abp.Application.Dtos;");
                 builder.AppendLine($"\t/// <summary>");
                 builder.AppendLine($"\t/// {table.Comment}");
                 builder.AppendLine($"\t/// </summary>");
-                builder.AppendLine($"\tpublic class {FileName}: PagedAndSortedResultRequestDto, IMethodDto<{table.Name}>");
+                builder.AppendLine($"\tpublic class {FileName}: PagedAndSortedResultRequestDto");
                 if (table.IsDelete)
                 {
                     builder.AppendLine(", IRetrieveDelete");
@@ -47,13 +47,6 @@ using Volo.Abp.Application.Dtos;");
                         builder.AppendLine("\t\t/// </summary>");
                         builder.AppendLine("\t\tpublic int? Deleted { get; set; }");
                     }
-
-                    builder.AppendLine("\t\t/// <summary>");
-                    builder.AppendLine("\t\t/// 方法参数回调");
-                    builder.AppendLine("\t\t/// </summary>");
-                    builder.AppendLine("\t\t[System.Text.Json.Serialization.JsonIgnore]");
-                    builder.AppendLine("\t\t[Newtonsoft.Json.JsonIgnore]");
-                    builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
 
                 }
                 builder.AppendLine("\t}");
