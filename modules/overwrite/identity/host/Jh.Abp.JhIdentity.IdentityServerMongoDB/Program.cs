@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Jh.Abp.QuickComponents;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ public class Program
 #endif
     .CreateLogger();*/
         //获取配置文件
-        Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(GetLogBuildConfiguration()).CreateLogger();
+        Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(AppUtils.GetLogBuildConfiguration("logconfig.json")).CreateLogger();
         try
         {
             Log.Information("Starting web host.");
@@ -57,13 +58,5 @@ public class Program
         {
             Log.CloseAndFlush();
         }
-    }
-
-    private static IConfiguration GetLogBuildConfiguration()
-    {
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("logconfig.json", optional: false);
-        return builder.Build();
     }
 }
