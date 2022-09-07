@@ -32,7 +32,7 @@ Configure<AbpLocalizationOptions>(options =>
 
 ### IdentityServerModule
 
-[参照配置](https://gitee.com/CaiJinHao/jhabpmodule/blob/dev/modules/overwrite/identity/host/Jh.Abp.JhIdentity.IdentityServer/JhIdentityIdentityServerModule.cs)
+[参照配置](./modules/overwrite/identity/host/Jh.Abp.JhIdentity.IdentityServer/JhIdentityIdentityServerModule.cs)
 
 ``` C#
 //在MyDemoIdentityServerModule添加依赖
