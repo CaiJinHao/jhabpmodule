@@ -178,7 +178,7 @@ window.Demo_API = configEnv.api;
 * 修改编辑页面、去除表单TenantId
 * 本地化
 
-``` Json
+```shell
 //在MyDemo.Domain.Shared本地化添加DisplayName，为类名、字段名添加；如："DisplayName:Category": "类别"，DisplayName:Category:Name
     "Permission:Categorys": "类别管理",
     "DisplayName:Category": "类别",
