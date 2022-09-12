@@ -130,12 +130,63 @@ git clone https://gitee.com/CaiJinHao/jhabpadmin.git
 
 ## 业务API开发
 
+* 通用语言设计，CDM、LDM、PDM、OOM、通过OOM生成Domain
 * 创建Domain,根据需求继承IMultiTenant
-* 将实体添加到EF数据上下文
+* 将实体添加到EF数据上下文、创建ModelCreatingExtensions、数据库迁移
 * 使用单元测试生成代码,[参照生成代码](./modules/overwrite/identity/test/Jh.Abp.JhIdentity.Domain.Tests/JhSourceGeneratorCommon/GeneratorServiceTest.cs)，你可以直接设置为你的项目根路径，也可以使用缓存文件夹来存储，生成之后copy到你的项目中。
 * copy文件顺序Domain、EntityFrameworkCore、Application.Contracts、MyDemo.Application、MyDemo.HttpApi
-* 注意修改Permissions和Localization
+* 注意修改Permissions和Localization、Profile
 
 ## admin ui
 
-待整理  
+* 在Application.Tests中创建代码生成类，并运行单元测试生成代码，将生成后的代码复制到你的项目中
+
+```C#
+    [Fact]
+    public void ReactProxyServiceCodeBuilder_Test()
+    {
+        var moduleName = "Demo";
+        var moduleNamespace = $"API.{moduleName}";
+        var generatorPath = @"F:\Temp";
+        var service = new GeneratorService(new GeneratorOptions(generatorPath), GneratorType.AllField);
+        service.GeneratorCodeByAppService(moduleNamespace, "API", $"{moduleName}_API", new Type[] { typeof(CategoryController) });
+        service.GeneratorCodeByTsx(moduleNamespace, new Type[] { typeof(CategoryDto) }, moduleName);
+    }
+```
+
+* 注意需要后台配置文件需要重启对应的服务，否则不生效
+* 将pages文件copy到pages下，并使用模块名称作为文件夹，如Demo模块，src/pages/Demo;src/services/Demo;
+* 添加路由配置，在config/RoutesConfig 下添加 demo.config.ts
+
+``` typescript
+export default [
+  {
+    path: 'Category',
+    name: 'Category',
+    icon: 'table',
+    access: 'MyDemo.Categorys', //参照程序集MyDemo.Application.Contracts/Permissions/PermissionDefinitionProvider定义名
+    component: './Demo/Category',
+  },
+];
+//在typings.d.ts定义API 
+declare const Demo_API: string;
+//在environment.ts定义API 
+window.Demo_API = configEnv.api;
+```
+
+* 如果创建等操作按钮没有显示，请核对权限名称是否正确。需要匹配MyDemo.Application.Contracts/Permissions/PermissionDefinitionProvider 权限定义名
+* 修改编辑页面、去除表单TenantId
+* 本地化
+
+``` Json
+//在MyDemo.Domain.Shared本地化添加DisplayName，为类名、字段名添加；如："DisplayName:Category": "类别"，DisplayName:Category:Name
+    "Permission:Categorys": "类别管理",
+    "DisplayName:Category": "类别",
+    "DisplayName:Category:Name": "名称",
+    "DisplayName:Category:Description": "描述"
+// src/locales添加
+    'menu.demo': 'Demo',
+    'menu.demo.Category': '类别管理'
+```
+
+* 启动项目
